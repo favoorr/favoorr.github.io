@@ -1,0 +1,860 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux,gcc," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="环境 
+CentOS 6.6 64位gcc 4.8.1
+为何要手工编译 gcc 4.8.1
+为了编译 ycm YouCompleteMe 一个vim自动补全插件，我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0自己动手 …
+YouCompleteMe –&amp;gt; clang –&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos6.6源码安装gcc4.8.1">
+<meta property="og:url" content="https://favoorr.github.io/2015/07/22/centos6.6-build-gcc5.2-from-source/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="环境 
+CentOS 6.6 64位gcc 4.8.1
+为何要手工编译 gcc 4.8.1
+为了编译 ycm YouCompleteMe 一个vim自动补全插件，我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0自己动手 …
+YouCompleteMe –&amp;gt; clang –&amp;gt;">
+<meta property="og:updated_time" content="2016-06-25T11:33:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos6.6源码安装gcc4.8.1">
+<meta name="twitter:description" content="环境 
+CentOS 6.6 64位gcc 4.8.1
+为何要手工编译 gcc 4.8.1
+为了编译 ycm YouCompleteMe 一个vim自动补全插件，我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0自己动手 …
+YouCompleteMe –&amp;gt; clang –&amp;gt;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2015/07/22/centos6.6-build-gcc5.2-from-source/"/>
+
+  <title> centos6.6源码安装gcc4.8.1 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                centos6.6源码安装gcc4.8.1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T13:58:16+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gcc/" itemprop="url" rel="index">
+                    <span itemprop="name">gcc</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gcc/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/centos6.6-build-gcc5.2-from-source/" class="leancloud_visitors" data-flag-title="centos6.6源码安装gcc4.8.1">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>环境 </p>
+<p>CentOS 6.6 64位<br>gcc 4.8.1</p>
+<p>为何要手工编译 gcc 4.8.1</p>
+<p>为了编译 ycm YouCompleteMe 一个vim自动补全插件，<br>我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0<br>自己动手 …</p>
+<p>YouCompleteMe –&gt; clang –&gt; gcc</p>
+<p>下载 gcc4.8.1 源码</p>
+<p>国内gcc下载地址 <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> 华科的下载略慢 、、、</p>
+<p>官方 ftp地址  <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> <a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查看 CentOS 6.6 自带的 gcc 信息</span><br><span class="line">[root@dev1 build]# gcc -v</span><br><span class="line"></span><br><span class="line">使用内建 specs。</span><br><span class="line">目标：x86_64-redhat-linux</span><br><span class="line">配置为：../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</span><br><span class="line">线程模型：posix</span><br><span class="line">gcc 版本 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">执行安装命令</span><br><span class="line"></span><br><span class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++</span><br><span class="line"></span><br><span class="line">检查安装配置，报错如下</span><br><span class="line">configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.</span><br><span class="line">Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify</span><br><span class="line">their locations.  Source code for these libraries can be found at</span><br><span class="line">their respective hosting sites as well as at</span><br><span class="line">ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also</span><br><span class="line">http://gcc.gnu.org/install/prerequisites.html for additional info.  If</span><br><span class="line">you obtained GMP, MPFR and/or MPC from a vendor distribution package,</span><br><span class="line">make sure that you have installed both the libraries and the header</span><br><span class="line">files.  They may be located in separate packages.</span><br><span class="line"></span><br><span class="line">开始配置安装环境</span><br><span class="line"></span><br><span class="line">1.安装 GMP https://gmplib.org/</span><br><span class="line"></span><br><span class="line">wget http://mirrors.ustc.edu.cn/gnu/gmp/gmp-6.0.0a.tar.bz2</span><br><span class="line"></span><br><span class="line">tar -jxv -f gmp-6.0.0a.tar.bz2</span><br><span class="line"></span><br><span class="line">cd gmp-6.0.0</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/gmp-6.0.0/</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">2.安装 mpfr</span><br><span class="line"></span><br><span class="line">wget  http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.3.tar.bz2</span><br><span class="line"></span><br><span class="line">tar -jxv -f mpfr-3.1.3.tar.bz2</span><br><span class="line"></span><br><span class="line">mkdir /usr/local/mpfr-3.1.3</span><br><span class="line"></span><br><span class="line">cd mpfr-3.1.3</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/mpfr-3.1.3 --with-gmp=/usr/local/gmp-6.0.0/</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make check</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">3.安装 mpc</span><br><span class="line"></span><br><span class="line">wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxv -f mpc-1.0.3.tar.gz</span><br><span class="line"></span><br><span class="line">cd mpc-1.0.3</span><br><span class="line"></span><br><span class="line">mkdir /usr/local/mpc-1.0.3</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/mpc-1.0.3 --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make check</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">4.设置环境变量 $LD_LIBRARY_PATH</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.0.0/lib:/usr/local/mpfr-3.1.3/lib</span><br><span class="line"></span><br><span class="line">不然会碰到错误 configure: error: cannot compute suffix of object files: cannot compile</span><br><span class="line"></span><br><span class="line">5.需要安装 32 位的 glibc-devel</span><br><span class="line"></span><br><span class="line">yum list | grep glibc-devel</span><br><span class="line"></span><br><span class="line">yum install glibc-devel.i686</span><br><span class="line"></span><br><span class="line">不然会遇到错误 </span><br><span class="line"></span><br><span class="line">/usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: 没有那个文件或目录</span><br><span class="line"> # include &lt;gnu/stubs-32.h&gt; </span><br><span class="line"></span><br><span class="line">6.全部安装完之后，再次执行安装，执行 make 会耗时很长，需要耐心等待</span><br><span class="line"></span><br><span class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++ --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3 --with-mpc=/usr/local/mpc-1.0.3</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">执行命令</span><br><span class="line"></span><br><span class="line">ln -s /usr/local/gcc-4.8.1/include/c++/4.8.1 /usr/include/c++/4.8.1 # 在 include/c++ 文件夹下添加最新的 c++ 4.8.1 版本(这是个符号链接)；</span><br><span class="line"></span><br><span class="line">配置系统环境变量</span><br><span class="line">vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">export PATH=/usr/local/gcc/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</span><br><span class="line">export C_INCLUDE_PATH=/usr/include</span><br><span class="line">export CPLUS_INCLUDE_PATH=/usr/include/c++/4.8.1:/usr/include/c++/4.8.1/x86_64-unknown-linux-gnu</span><br><span class="line"></span><br><span class="line">source ~/.bash_profile</span><br><span class="line"></span><br><span class="line">至此，整个 gcc 4.8.1 源码编译安装完成</span><br></pre></td></tr></table></figure>
+<p>后续</p>
+<p>1.在使用 gcc 编译 clang 时，由于 LD_LIBRARY_PATH 配置错误，会碰到如下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/gcc/libexec/gcc/x86_64-unknown-linux-gnu/4.8.1/cc1plus: error while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>google 答案<a href="http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984" target="_blank" rel="external">http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</span><br></pre></td></tr></table></figure>
+<p>一开始我写成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=/usr/local/lib</span><br></pre></td></tr></table></figure>
+<p>然后就跪的很彻底</p>
+<p>2.编译 clang 碰到错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/buildllvm/build/Release+Asserts/bin/llvm-tblgen: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15&apos; not found (required by /root/buildllvm/build/Release+Asserts/bin/llvm-tblgen)</span><br></pre></td></tr></table></figure></p>
+<p>google答案<a href="http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found" target="_blank" rel="external">http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found</a></p>
+<p>解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">替换 libstdc++.so.6 为最新编译的 libstdc++.so.6.0.18</span><br><span class="line">cp ~/buildgcc/x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.18 /usr/lib64/ # ~/buildgcc 为gcc 安装的路径</span><br><span class="line"></span><br><span class="line">rm /usr/lib64/libstdc++.so.6</span><br><span class="line"></span><br><span class="line">ln -s libstdc++.so.6.0.18 libstdc++.so.6</span><br></pre></td></tr></table></figure>
+<p>验证编译成功，和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@dev1 ~]# gcc --version</span><br><span class="line">gcc (GCC) 4.8.1</span><br><span class="line">Copyright © 2013 Free Software Foundation, Inc.</span><br><span class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</span><br><span class="line">包括没有适销性和某一专用目的下的适用性担保。</span><br></pre></td></tr></table></figure>
+<p>参考文档</p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/" target="_blank" rel="external">gcc官方文档</a></p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85gcc-481" target="_blank" rel="external">centos下安装gcc-4.8.1</a></p>
+<p><a href="http://www.cnblogs.com/peterpanzsy/archive/2013/04/10/3006838.html" target="_blank" rel="external">centos 6 升级gcc</a></p>
+<p><a href="http://robbiefeng.iteye.com/blog/2163305" target="_blank" rel="external">centos6.5上升级gcc到gcc4.9.2</a></p>
+<p>-EOF-</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: block;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+            <a href="/tags/gcc/" rel="tag">#gcc</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/22/crontab-ntp-synchronized-date/" rel="next" title="cron表达式同步Linux服务器时间">
+                <i class="fa fa-chevron-left"></i> cron表达式同步Linux服务器时间
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/22/build-clang-from-source/" rel="prev" title="centos6.6 源码编译 clang">
+                centos6.6 源码编译 clang <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/"
+           data-title="centos6.6源码安装gcc4.8.1" data-url="https://favoorr.github.io/2015/07/22/centos6.6-build-gcc5.2-from-source/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

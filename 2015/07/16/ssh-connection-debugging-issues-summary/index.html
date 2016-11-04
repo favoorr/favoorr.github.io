@@ -1,0 +1,865 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux,ssh," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="环境 
+服务端 Centos 6.6 64 位客户端 Mac OS X 10.10.4
+常用调试方法
+1.查看客户端发送到服务器端的私钥信息
+12345ssh -v root@dev1ssh -vv root@dev1ssh -vvv root@dev1
+2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH认证-无密码配置问题总结">
+<meta property="og:url" content="https://favoorr.github.io/2015/07/16/ssh-connection-debugging-issues-summary/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="环境 
+服务端 Centos 6.6 64 位客户端 Mac OS X 10.10.4
+常用调试方法
+1.查看客户端发送到服务器端的私钥信息
+12345ssh -v root@dev1ssh -vv root@dev1ssh -vvv root@dev1
+2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_">
+<meta property="og:updated_time" content="2016-06-25T11:33:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH认证-无密码配置问题总结">
+<meta name="twitter:description" content="环境 
+服务端 Centos 6.6 64 位客户端 Mac OS X 10.10.4
+常用调试方法
+1.查看客户端发送到服务器端的私钥信息
+12345ssh -v root@dev1ssh -vv root@dev1ssh -vvv root@dev1
+2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2015/07/16/ssh-connection-debugging-issues-summary/"/>
+
+  <title> SSH认证-无密码配置问题总结 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SSH认证-无密码配置问题总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-16T14:29:31+08:00" content="2015-07-16">
+              2015-07-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/ssh/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/16/ssh-connection-debugging-issues-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/16/ssh-connection-debugging-issues-summary/" class="leancloud_visitors" data-flag-title="SSH认证-无密码配置问题总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>环境 </p>
+<p>服务端 Centos 6.6 64 位<br>客户端 Mac OS X 10.10.4</p>
+<p>常用调试方法</p>
+<p>1.查看客户端发送到服务器端的私钥信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh -v root@dev1</span><br><span class="line"></span><br><span class="line">ssh -vv root@dev1</span><br><span class="line"></span><br><span class="line">ssh -vvv root@dev1</span><br></pre></td></tr></table></figure>
+<p>2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_keys文件等信息，这些信息对调试很有帮助</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/sshd -p 2121 -D -d -e</span><br><span class="line"></span><br><span class="line">ssh -v root@dev1 -p 2121</span><br></pre></td></tr></table></figure>
+<p>3.查看服务器端日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/audit/audit.log (这个是重点)</span><br><span class="line"></span><br><span class="line">tail -f /var/log/secure (帮助不大)</span><br></pre></td></tr></table></figure>
+<p>遇到问题总结</p>
+<p>1./etc/ssh/sshd_config 文件 47-49行，不打开注释，也可以直接配置免密码登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile      authorized_keys</span><br></pre></td></tr></table></figure>
+<p>2.<code>.ssh</code> 目录不能手工创建，否则在 selinux 开启的情况下会因为文件和文件夹上下文问题无法访问文件 <code>authorized_keys</code>，这个问题很严重，今天上午找了半天，终于发现问题了，目录权限建议设置为 700，而且所属是当前用户，不能使root</p>
+<p>3.<code>authorized_keys</code>这个文件可以手工创建，也可以使用<code>ssh-copy-id</code>，文件权限建议设置为 600,所属是当前用户，不能使root</p>
+<p>4.Selinux 打开引起的因为上下文无法访问文件，造成 ssh 配置后，还是需要密码登录，/var/log/audit/audit.log 日志片段如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:890): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=6e:96:69:b9:69:45:93:0d:89:da:e0:9c:e4:bb:04:04 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</span><br><span class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:891): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=ae:5b:f9:c5:a2:08:c5:9a:15:a7:4c:ad:18:d8:44:a1 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</span><br><span class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:892): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-client cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</span><br><span class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:893): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-server cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</span><br><span class="line"></span><br><span class="line">type=AVC msg=audit(1437024048.567:894): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</span><br><span class="line">type=SYSCALL msg=audit(1437024048.567:894): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246160 a1=800 a2=1 a3=4 items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</span><br><span class="line">siy</span><br><span class="line">type=AVC msg=audit(1437024048.567:895): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</span><br><span class="line">type=SYSCALL msg=audit(1437024048.567:895): arch=c000003e syscall=2 success=no exit=-13 a0=7f83732487a0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</span><br><span class="line"></span><br><span class="line">type=USER_AUTH msg=audit(1437024048.567:896): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</span><br><span class="line">type=AVC msg=audit(1437024048.569:897): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</span><br><span class="line">type=SYSCALL msg=audit(1437024048.569:897): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</span><br><span class="line"></span><br><span class="line">type=AVC msg=audit(1437024048.569:898): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</span><br><span class="line">type=SYSCALL msg=audit(1437024048.569:898): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</span><br><span class="line"></span><br><span class="line">type=USER_AUTH msg=audit(1437024048.569:899): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</span><br></pre></td></tr></table></figure>
+<p>解决方法，可以使用<code>restorecon</code>还原上下文，或者关闭 selinux </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">restorecon authorized_keys</span><br><span class="line"></span><br><span class="line">临时关闭 selinux </span><br><span class="line">setenforce 0</span><br><span class="line"></span><br><span class="line">永久关闭 </span><br><span class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config</span><br></pre></td></tr></table></figure>
+<p>5.客户端生成多对 ssh 公钥私钥的时候，注意 ssh-add 添加，在 mac 上使用 ssh-add 的时候，又需要机器重启就失效问题</p>
+<p>6.可以提高速度</p>
+<pre><code>ssh -o GSSAPIAuthentication=no xxx@dev1 `-o GSSAPIAuthentication=no` 
+</code></pre><p>7.Authentication refused: bad ownership or modes for file /home/work/.ssh/authorized_keys</p>
+<pre><code>chmod 600 authorized_keys
+</code></pre><p>爬坑记录</p>
+<p>安装机器，手工创建 .ssh 目录 和 authorized_keys 文件，然后直接贴 客户端的公钥，以为可以正常访问了，结果各种坑，还是需要输入密码，<br>最后通过好几篇文章找到调试日志，是 selinux 造成的问题，文件和目录上下文不一致，造成不能正常访问，然后就 ssh 新技能get<br>自己玩的时候，就把 selinux 停了吧，或者通过 ssh-keygen 生成.ssh 目录，不要手工创建</p>
+<p>参考文章</p>
+<p><a href="/git-more-sshkeys-more-host/">git配置多个不同邮箱</a></p>
+<p><a href="/macosx-config-ssh-login-virtual-machine-without-password/">LInux实战–Mac配置ssh免密码登录到虚拟主机</a></p>
+<p><a href="http://phutchins.com/blog/2015/03/09/debug-ssh-connections/" target="_blank" rel="external">Debugging SSH Connection Issues</a></p>
+<p><a href="http://www.saltycrane.com/blog/2011/08/notes-debugging-ssh-connection-problems/" target="_blank" rel="external">Notes on debugging ssh connection problems</a></p>
+<p><a href="https://blog.tinned-software.net/ssh-key-authentication-is-not-working-selinux/" target="_blank" rel="external">SSH-Key authentication is not working – SELinux</a></p>
+<p><a href="http://doiido.blog.51cto.com/5503054/1554485" target="_blank" rel="external">linux/centos6 查看SELinux状态 关闭SELinux</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: block;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+            <a href="/tags/ssh/" rel="tag">#ssh</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/14/mysql-replace/" rel="next" title="mysql replace 学习">
+                <i class="fa fa-chevron-left"></i> mysql replace 学习
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/19/install-vim-from-source/" rel="prev" title="源码安装vim">
+                源码安装vim <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/"
+           data-title="SSH认证-无密码配置问题总结" data-url="https://favoorr.github.io/2015/07/16/ssh-connection-debugging-issues-summary/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

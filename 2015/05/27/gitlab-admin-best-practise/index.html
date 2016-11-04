@@ -1,0 +1,906 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gitlab," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="修改 /etc/gitlab/gitlab.rb 后重新加载配置
+gitlab-ctl reconfigure
+
+gitlab-ctl start|stop|restart
+调试常用配置
+查看后台运行状态sudo gitlab-ctl status
+
+run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
+run: nginx: (pid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab admin 使用实践">
+<meta property="og:url" content="https://favoorr.github.io/2015/05/27/gitlab-admin-best-practise/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="修改 /etc/gitlab/gitlab.rb 后重新加载配置
+gitlab-ctl reconfigure
+
+gitlab-ctl start|stop|restart
+调试常用配置
+查看后台运行状态sudo gitlab-ctl status
+
+run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
+run: nginx: (pid">
+<meta property="og:updated_time" content="2015-11-24T14:52:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gitlab admin 使用实践">
+<meta name="twitter:description" content="修改 /etc/gitlab/gitlab.rb 后重新加载配置
+gitlab-ctl reconfigure
+
+gitlab-ctl start|stop|restart
+调试常用配置
+查看后台运行状态sudo gitlab-ctl status
+
+run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
+run: nginx: (pid">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2015/05/27/gitlab-admin-best-practise/"/>
+
+  <title> gitlab admin 使用实践 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                gitlab admin 使用实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-27T11:57:13+08:00" content="2015-05-27">
+              2015-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">gitlab</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/27/gitlab-admin-best-practise/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/gitlab-admin-best-practise/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/27/gitlab-admin-best-practise/" class="leancloud_visitors" data-flag-title="gitlab admin 使用实践">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>修改 /etc/gitlab/gitlab.rb 后重新加载配置</p>
+<pre><code>gitlab-ctl reconfigure
+
+gitlab-ctl start|stop|restart
+</code></pre><p>调试常用配置</p>
+<h1 id="查看后台运行状态"><a href="#查看后台运行状态" class="headerlink" title="查看后台运行状态"></a>查看后台运行状态</h1><pre><code>sudo gitlab-ctl status
+
+run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
+run: nginx: (pid 743) 197s; run: log: (pid 731) 197s
+run: postgresql: (pid 748) 197s; run: log: (pid 738) 197s
+run: redis: (pid 746) 197s; run: log: (pid 734) 197s
+run: sidekiq: (pid 747) 197s; run: log: (pid 736) 197s
+run: unicorn: (pid 745) 197s; run: log: (pid 735) 197s
+
+追踪日志
+gitlab-ctl tail
+
+单独查看 postgresql 日志
+gitlab-ctl tail postgresql
+</code></pre><p>查看系统发邮件</p>
+<pre><code>tail -f /var/log/maillog
+</code></pre><h1 id="配置邮件发送"><a href="#配置邮件发送" class="headerlink" title="配置邮件发送"></a>配置邮件发送</h1><pre><code>仅配置 postfix 发送邮件 
+gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@dev1.localdomain&apos;
+gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;gitlab_mail_display_name&apos;
+
+测试
+echo &quot;Test mail from postfix normal 22&quot; | mail -s &quot;Test Postfix normal22&quot; qingyun@yourdomain.com 
+会被腾讯识别为垃圾邮件，直接拒绝，然后需要添加白名单 
+
+通过查看 root 邮箱可以看到回复 vim /var/mail/root
+
+http://service.mail.qq.com/cgi-bin/help?subtype=1&amp;&amp;no=113&amp;&amp;id=16
+
+配置 SMTP 发送邮件
+
+gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@yourdomain.com&apos;
+gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;yourdomain-gitlab&apos;
+
+gitlab_rails[&apos;smtp_enable&apos;] = true
+gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.exmail.qq.com&quot;
+gitlab_rails[&apos;smtp_port&apos;] = 465
+gitlab_rails[&apos;smtp_user_name&apos;] = &quot;gitlab@yourdomain.com&quot;
+gitlab_rails[&apos;smtp_password&apos;] = &quot;xxxxxxxx&quot;
+gitlab_rails[&apos;smtp_domain&apos;] = &quot;yourdomain.com&quot;
+gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;
+gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true
+gitlab_rails[&apos;smtp_tls&apos;] = true
+
+新建账号
+添加 ssh key 都会触发给当前用户发送邮件
+</code></pre><h1 id="修改管理员邮箱"><a href="#修改管理员邮箱" class="headerlink" title="修改管理员邮箱"></a>修改管理员邮箱</h1><pre><code>root 用户登录 gitlab 后台，然后通过 profile 修改邮箱为 devops@yourdomain.com，保存后，会有下面这句话
+
+Please click the link in the confirmation email before continuing, it was sent to devops@yourdomain.com
+
+需要点击邮箱确认
+</code></pre><h1 id="修改图像上传功能"><a href="#修改图像上传功能" class="headerlink" title="修改图像上传功能"></a>修改图像上传功能</h1><pre><code>gitlab_rails[&apos;gravatar_plain_url&apos;] = &apos;http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&amp;d=identicon&apos;
+有一个 `gitlab_ci[&apos;gravatar_plain_url&apos;]` 
+不要配置错了，对的，我就是配置错了，然后老半天不知道，页面打开很慢，结果调试后，才知道这里改错位置了
+</code></pre><h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><p>gitlab omnibus 版本内置了一个nginx，可以通过 nginx[‘enable’] = true 启用禁用</p>
+<pre><code>external_url 这个链接的配置会影响内置 nginx 启动监听的端口
+
+external_url &apos;http://192.168.143.129&apos;  默认监听 80 端口，直接输入ip就可以访问
+
+external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如果修改了端口，需要手工将之前的nginx进程干掉
+</code></pre><h1 id="安装路径"><a href="#安装路径" class="headerlink" title="安装路径"></a>安装路径</h1><p><code>/opt/gitlab</code> gitlab和依赖应用的代码<br><code>/var/opt/gitlab</code> <code>gitlab-ctl reconfigure</code>命令写入的地方，存放应用数据和配置文件<br><code>/etc/gitlab</code> omnibus 版本 gitlab的配置文件，平常只需要修改这个配置文件就够了<br><code>/var/log/gitlab</code> 包含 omnibus 版本 gitlab 所有组件的日志数据</p>
+<p><code>/var/opt/gitlab/nginx/conf</code> 找到nginx配置，然后找到源码位置，修改了对 /<code>/opt/gitlab/embedded/service/gitlab-rails/app/views/events/event</code> 去掉分享事件 Twitter widgets.js 的引用，直接删除第九行后面的代码</p>
+<h1 id="管理注册邮箱白名单"><a href="#管理注册邮箱白名单" class="headerlink" title="管理注册邮箱白名单"></a>管理注册邮箱白名单</h1><p>管理白名单，仅仅限制公司的邮箱注册 *.yourdomain.com</p>
+<p>操作方法：</p>
+<p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
+<h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
+<p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/gitlab/gitlab.rb</span><br><span class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
+<p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
+<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
+<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings" target="_blank" rel="external">SMTP 发送邮件配置</a></p>
+<p><a href="https://www.owent.net/2015/01/gitlab%E8%85%BE%E8%AE%AF%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE.html" target="_blank" rel="external">gitlab腾讯企业邮箱配置</a></p>
+<p><a href="http://borghan.com/archives/some-problems-when-build-gitlab-on-aliyun.html" target="_blank" rel="external">阿里云安装 gitlab</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: block;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gitlab/" rel="tag">#gitlab</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/27/modify-yum-gems-source/" rel="next" title="修改 yum 和 gems 为国内源">
+                <i class="fa fa-chevron-left"></i> 修改 yum 和 gems 为国内源
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/27/git-more-sshkeys-more-host/" rel="prev" title="git配置多个不同邮箱">
+                git配置多个不同邮箱 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/27/gitlab-admin-best-practise/"
+           data-title="gitlab admin 使用实践" data-url="https://favoorr.github.io/2015/05/27/gitlab-admin-best-practise/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#查看后台运行状态"><span class="nav-number">1.</span> <span class="nav-text">查看后台运行状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置邮件发送"><span class="nav-number">2.</span> <span class="nav-text">配置邮件发送</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改管理员邮箱"><span class="nav-number">3.</span> <span class="nav-text">修改管理员邮箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改图像上传功能"><span class="nav-number">4.</span> <span class="nav-text">修改图像上传功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-配置"><span class="nav-number">5.</span> <span class="nav-text">nginx 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装路径"><span class="nav-number">6.</span> <span class="nav-text">安装路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理注册邮箱白名单"><span class="nav-number">7.</span> <span class="nav-text">管理注册邮箱白名单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置新建用户不能建组"><span class="nav-number">8.</span> <span class="nav-text">设置新建用户不能建组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
