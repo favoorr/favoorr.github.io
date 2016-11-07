@@ -258,336 +258,6 @@
             
               
                 
-                <a class="post-title-link" href="/2014/09/02/config-nginx-fastcgi/" itemprop="url">
-                  Mac10.9.4配置Nginx解析php
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-02T16:48:02+08:00" content="2014-09-02">
-              2014-09-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/02/config-nginx-fastcgi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/02/config-nginx-fastcgi/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/02/config-nginx-fastcgi/" class="leancloud_visitors" data-flag-title="Mac10.9.4配置Nginx解析php">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac10-9-4配置Nginx解析php"><a href="#Mac10-9-4配置Nginx解析php" class="headerlink" title="Mac10.9.4配置Nginx解析php"></a>Mac10.9.4配置Nginx解析php</h1><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>参照文章 <a href="/install-nginx-on-mac/" title="Mac10.9.3仅安装Nginx">Mac10.9.3仅安装Nginx</a></p>
-<h2 id="配置php文件"><a href="#配置php文件" class="headerlink" title="配置php文件"></a>配置php文件</h2><p>10.9.4 默认安装了php，配置文件路径</p>
-<p>/private/etc/php-fpm.conf.default</p>
-<p>/private/etc/php.ini.default </p>
-<pre><code>cd /private/etc/  
-sudo cp php-fpm.conf.default php-fpm.conf  
-sudo cp php.ini.default php.ini  
-
-sudo vim php-fpm.conf  
-去掉注释的pid和log,&apos;;&apos;表示注释
-;pid = run/php-fpm.pid  
-;error_log = log/php-fpm.log  
-
-cp php-fpm.conf /usr/local/etc/php-fpm.conf  
-</code></pre><p>启动php-fpm</p>
-<pre><code>sudo php-fpm -c php.ini -y php-fpm.conf -p /usr/local/var  
-</code></pre><p>注意：该命令必须仍然在 /private/etc目录下执行，如果切换目录，需要制定ini文件和conf文件的路径</p>
-<h2 id="配置fastcgi"><a href="#配置fastcgi" class="headerlink" title="配置fastcgi"></a>配置fastcgi</h2><p>编辑nginx配置文件</p>
-<pre><code>vim /usr/local/etc/nginx/nginx.conf  
-</code></pre><p>增加server配置</p>
-<pre><code>server {  
-        listen       8082;  
-        server_name  localhost;  
-        root           /wwwroot/php1;  
-        error_page   500 502 503 504  /50x.html;  
-
-        location ~ \.php$ {  
-            fastcgi_pass   127.0.0.1:9000;  
-            fastcgi_index  index.php;  
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;  
-            include        fastcgi_params;  
-        }  
-}  
-
-说明：
-root           /wwwroot/php1; php程序的位置
-fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一定要加    $document_root不然会出现file not found的错误
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>新建测试文件</p>
-<p>/wwwroot/php1 下新建 index.php</p>
-<html><br><head><br>    <title>php hello world</title><br></head><br><body><br>    php测试<br><br>    &lt;?php phpinfo(); ?&gt;<br></body><br></html>  
-
-
-<http:localhost:8082 index.php="">
-
-<p>能够正确看到php配置说明文件</p>
-</http:localhost:8082>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
-                  Mac10.9.3仅安装Nginx
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T13:18:29+08:00" content="2014-09-01">
-              2014-09-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-nginx-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-nginx-on-mac/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/01/install-nginx-on-mac/" class="leancloud_visitors" data-flag-title="Mac10.9.3仅安装Nginx">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac10-9-3仅安装Nginx"><a href="#Mac10-9-3仅安装Nginx" class="headerlink" title="Mac10.9.3仅安装Nginx"></a>Mac10.9.3仅安装Nginx</h1><p>首先安装Homebrew</p>
-<p>参照文章 <a href="/install-homebrew-on-mac/" title="Mac安装Homebrew">Mac安装Homebrew</a></p>
-<h2 id="查看nginx信息"><a href="#查看nginx信息" class="headerlink" title="查看nginx信息"></a>查看nginx信息</h2><pre><code>brew info nginx  
-</code></pre><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>brew install nginx  </p>
-<h2 id="配置nginx开机启动"><a href="#配置nginx开机启动" class="headerlink" title="配置nginx开机启动"></a>配置nginx开机启动</h2><p>ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents  </p>
-<p>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist  </p>
-<h2 id="nginx配置文件路径"><a href="#nginx配置文件路径" class="headerlink" title="nginx配置文件路径"></a>nginx配置文件路径</h2><pre><code>/usr/local/etc/nginx/nginx.conf  
-</code></pre><h2 id="nginx常用操作"><a href="#nginx常用操作" class="headerlink" title="nginx常用操作"></a>nginx常用操作</h2><p>直接启动</p>
-<pre><code>nginx   
-</code></pre><p>修改配置后，验证配置文件语法</p>
-<pre><code>nginx -t  
-</code></pre><p>nginx运行时直接重启</p>
-<pre><code>nginx -s reload  
-</code></pre><h2 id="nginx-启动异常"><a href="#nginx-启动异常" class="headerlink" title="nginx 启动异常"></a>nginx 启动异常</h2><p>执行重启命令 nginx -s reload ,出现如下错误</p>
-<p>nginx: [error] open() “/usr/local/var/run/nginx.pid” failed (2: No such file or directory)<br>原因是当前nginx还未启动，先执行 nginx,之后可以执行重启命令</p>
-<h2 id="测试安装启动成功"><a href="#测试安装启动成功" class="headerlink" title="测试安装启动成功"></a>测试安装启动成功</h2><p>浏览器访问 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 可以看到nginx的欢迎页</p>
-<p>如果想让nginx监听 80 端口，启动时要加 sudo</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2014/09/01/install-homebrew-on-mac/" itemprop="url">
                   Mac安装Homebrew
                 </a>
@@ -618,18 +288,6 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/mac/" itemprop="url" rel="index">
                     <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/homebrew/" itemprop="url" rel="index">
-                    <span itemprop="name">homebrew</span>
                   </a>
                 </span>
 
@@ -773,18 +431,6 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/eclipse/" itemprop="url" rel="index">
                     <span itemprop="name">eclipse</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/properties-edit/" itemprop="url" rel="index">
-                    <span itemprop="name">properties-edit</span>
                   </a>
                 </span>
 
@@ -1004,6 +650,299 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/08/27/using-vim-paste/" itemprop="url">
+                  linux环境下，vim粘贴时缩进错乱解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-08-27T10:54:26+08:00" content="2014-08-27">
+              2014-08-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/08/27/using-vim-paste/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/27/using-vim-paste/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/08/27/using-vim-paste/" class="leancloud_visitors" data-flag-title="linux环境下，vim粘贴时缩进错乱解决">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="linux环境下，vim粘贴时缩进错乱解决"><a href="#linux环境下，vim粘贴时缩进错乱解决" class="headerlink" title="linux环境下，vim粘贴时缩进错乱解决"></a>linux环境下，vim粘贴时缩进错乱解决</h1><p>粘贴前使用命令</p>
+<pre><code>:set paste  
+</code></pre><p>原来进入编辑模式，状态提示为 </p>
+<pre><code>-- INSERT --
+</code></pre><p>设置命令后，进入编辑模式状态提示为</p>
+<pre><code>-- INSERT (paste) -- 
+</code></pre><p>这样子，粘贴的时候，就可以按照原来复制时的缩进</p>
+<p>设置VIM开关快捷键</p>
+<pre><code>:set pastetoggle=&lt;F11&gt;
+</code></pre><p>参考博客<a href="http://blog.csdn.net/yizhou35/article/details/17366339" target="_blank" rel="external">http://blog.csdn.net/yizhou35/article/details/17366339</a></p>
+<p>意思是在输入 i ,进入编辑模式后，如果要取消缩进，就摁F11，然后在粘贴，等于输入:set paste,<br>粘贴之后，在摁，等于输入:set nopaste</p>
+<p>“+p ,这个在一般vim下不好用，必须使用带图形界面的vim才可以</p>
+<p>大概介绍是vim有自己的寄存器，系统有剪切板，然后yy复制的时候，进入寄存器了，</p>
+<p>:reg可以查看不同寄存器上已经复制的值,”+ 表示系统剪切板，但是一般的vim不支持</p>
+<p>google关键字 vim寄存器 系统剪切板</p>
+<p>参考：<a href="http://w.gdu.me/wiki/vim/vimcopy.html" target="_blank" rel="external">http://w.gdu.me/wiki/vim/vimcopy.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/08/22/free-mirrors/" itemprop="url">
+                  免费镜像地址收集，让自己的下载更快一点
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-08-22T18:06:15+08:00" content="2014-08-22">
+              2014-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/08/22/free-mirrors/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/22/free-mirrors/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/08/22/free-mirrors/" class="leancloud_visitors" data-flag-title="免费镜像地址收集，让自己的下载更快一点">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="免费镜像地址收集，让自己的下载更快一点"><a href="#免费镜像地址收集，让自己的下载更快一点" class="headerlink" title="免费镜像地址收集，让自己的下载更快一点"></a>免费镜像地址收集，让自己的下载更快一点</h1><h2 id="免费镜像说明"><a href="#免费镜像说明" class="headerlink" title="免费镜像说明"></a>免费镜像说明</h2><p>免费镜像地址，让你的下载更快速<br>以前下载linux虚拟镜像的时候经常需要用百度网盘秒掉，然后在拉到本地下来，非常麻烦，<br>收集这个希望能够帮助更多的人节省时间 :)<br>截止博客发布，亲测所有地址可用<br>大家发现有更多可用地址，欢迎补充</p>
+<h2 id="企业贡献"><a href="#企业贡献" class="headerlink" title="企业贡献"></a>企业贡献</h2><p>搜狐开源镜像站：<a href="http://mirrors.sohu.com/" target="_blank" rel="external">http://mirrors.sohu.com/</a>(推荐)</p>
+<p>网易开源镜像站：<a href="http://mirrors.163.com/" target="_blank" rel="external">http://mirrors.163.com/</a></p>
+<p>阿里云镜像：<a href="http://mirrors.aliyun.com/" target="_blank" rel="external">http://mirrors.aliyun.com/</a>（2014年11月29日添加）</p>
+<p>国外的一个 <a href="http://mirror.cogentco.com/" target="_blank" rel="external">http://mirror.cogentco.com/</a> (2015-01-31添加)</p>
+<h2 id="国内高校的开源镜像站"><a href="#国内高校的开源镜像站" class="headerlink" title="国内高校的开源镜像站"></a>国内高校的开源镜像站</h2><p>中国科学技术大学(<a href="http://debian.ustc.edu.cn/" target="_blank" rel="external">http://debian.ustc.edu.cn/</a>)</p>
+<p>大连理工大学(<a href="http://mirror.dlut.edu.cn/" target="_blank" rel="external">http://mirror.dlut.edu.cn/</a>)</p>
+<p>北京交通大学(<a href="http://mirror.bjtu.edu.cn/cn/" target="_blank" rel="external">http://mirror.bjtu.edu.cn/cn/</a>)</p>
+<p>北京理工大学(<a href="http://mirror.bit.edu.cn/web/" target="_blank" rel="external">http://mirror.bit.edu.cn/web/</a>)</p>
+<p>东北大学(<a href="http://mirror.neu.edu.cn/" target="_blank" rel="external">http://mirror.neu.edu.cn/</a>)</p>
+<p>厦门大学(<a href="http://mirrors.xmu.edu.cn/" target="_blank" rel="external">http://mirrors.xmu.edu.cn/</a>)</p>
+<p>西安电子科技大学(<a href="http://linux.xidian.edu.cn/" target="_blank" rel="external">http://linux.xidian.edu.cn/</a>)</p>
+<p>哈尔滨工业大学(<a href="http://run.hit.edu.cn/html/" target="_blank" rel="external">http://run.hit.edu.cn/html/</a>)</p>
+<p>天津大学(<a href="http://mirror.tju.edu.cn/" target="_blank" rel="external">http://mirror.tju.edu.cn/</a>)</p>
+<p>东软信息学院(<a href="http://mirrors.neusoft.edu.cn/" target="_blank" rel="external">http://mirrors.neusoft.edu.cn/</a>)</p>
+<h2 id="美国各大学的镜像站"><a href="#美国各大学的镜像站" class="headerlink" title="美国各大学的镜像站"></a>美国各大学的镜像站</h2><p>麻省理工学院MIT(<a href="http://mirrors.mit.edu/" target="_blank" rel="external">http://mirrors.mit.edu/</a>)</p>
+<p>哥伦比亚大学(<a href="http://mirror.cc.columbia.edu/" target="_blank" rel="external">http://mirror.cc.columbia.edu/</a>)</p>
+<p>俄勒冈州立大学(<a href="http://ftp.osuosl.org/pub/" target="_blank" rel="external">http://ftp.osuosl.org/pub/</a>)</p>
+<p>伊利诺伊大学厄巴纳－香槟分校(<a href="http://cosmos.cites.illinois.edu/" target="_blank" rel="external">http://cosmos.cites.illinois.edu/</a>)</p>
+<p>杜克大学(<a href="http://archive.linux.duke.edu/" target="_blank" rel="external">http://archive.linux.duke.edu/</a>)</p>
+<h2 id="日本大学"><a href="#日本大学" class="headerlink" title="日本大学"></a>日本大学</h2><p>北陸先端科学技術大学院大学(<a href="http://ftp.jaist.ac.jp/" target="_blank" rel="external">http://ftp.jaist.ac.jp/</a>)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1049,7 +988,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">77</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1057,7 +996,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1066,7 +1005,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
