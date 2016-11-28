@@ -100,7 +100,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Mist',
-    sidebar: {"position":"right","display":"always"},
+    sidebar: {"position":"right","display":"hide"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -259,7 +259,7 @@
               
                 
                 <a class="post-title-link" href="/2016/11/28/macos-python3/" itemprop="url">
-                  2016-11-18-macos-python3-md
+                  macos-python3
                 </a>
               
             
@@ -278,6 +278,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python3/" itemprop="url" rel="index">
+                    <span itemprop="name">python3</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -294,7 +313,7 @@
 
           
           
-             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="2016-11-18-macos-python3-md">
+             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macos-python3">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -318,7 +337,15 @@
       
         
           
-            
+            <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
+<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
+<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
+<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
+<p>国内其他可选镜像如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
           
         
       
@@ -1016,7 +1043,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1025,7 +1052,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="mirror,mac,python3," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="行大于言">
+<meta name="description" content="前些天学习了下 python3，使用的是官方下载的 python-3.5.2-macosx10.6pkg这种安装方式安装的文件位置是
+12345678系统库安装路径/System/Library/Frameworks/Python.framework/Versionspip3 安装第三方库路径/Library/Frameworks/Python.framework/Versions/3.5/lib">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2016-11-18-macos-python3-md">
+<meta property="og:title" content="macos-python3">
 <meta property="og:url" content="https://favoorr.github.io/2016/11/28/macos-python3/index.html">
 <meta property="og:site_name" content="favoorr's blog">
-<meta property="og:description" content="行大于言">
-<meta property="og:updated_time" content="2016-11-28T13:33:22.000Z">
+<meta property="og:description" content="前些天学习了下 python3，使用的是官方下载的 python-3.5.2-macosx10.6pkg这种安装方式安装的文件位置是
+12345678系统库安装路径/System/Library/Frameworks/Python.framework/Versionspip3 安装第三方库路径/Library/Frameworks/Python.framework/Versions/3.5/lib">
+<meta property="og:updated_time" content="2016-11-28T14:19:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2016-11-18-macos-python3-md">
-<meta name="twitter:description" content="行大于言">
+<meta name="twitter:title" content="macos-python3">
+<meta name="twitter:description" content="前些天学习了下 python3，使用的是官方下载的 python-3.5.2-macosx10.6pkg这种安装方式安装的文件位置是
+12345678系统库安装路径/System/Library/Frameworks/Python.framework/Versionspip3 安装第三方库路径/Library/Frameworks/Python.framework/Versions/3.5/lib">
 
 
 
@@ -101,7 +104,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Mist',
-    sidebar: {"position":"right","display":"always"},
+    sidebar: {"position":"right","display":"hide"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -116,7 +119,7 @@
 
   <link rel="canonical" href="https://favoorr.github.io/2016/11/28/macos-python3/"/>
 
-  <title> 2016-11-18-macos-python3-md | favoorr's blog </title>
+  <title> macos-python3 | favoorr's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +259,7 @@
             
             
               
-                2016-11-18-macos-python3-md
+                macos-python3
               
             
           </h1>
@@ -274,6 +277,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python3/" itemprop="url" rel="index">
+                    <span itemprop="name">python3</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -290,7 +312,7 @@
 
           
           
-             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="2016-11-18-macos-python3-md">
+             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macos-python3">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -312,7 +334,15 @@
       
 
       
-        
+        <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
+<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
+<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
+<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
+<p>国内其他可选镜像如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -352,6 +382,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/mirror/" rel="tag">#mirror</a>
+          
+            <a href="/tags/mac/" rel="tag">#mac</a>
+          
+            <a href="/tags/python3/" rel="tag">#python3</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -390,7 +430,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/11/28/macos-python3/"
-           data-title="2016-11-18-macos-python3-md" data-url="https://favoorr.github.io/2016/11/28/macos-python3/">
+           data-title="macos-python3" data-url="https://favoorr.github.io/2016/11/28/macos-python3/">
       </div>
     
   </div>
@@ -443,7 +483,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -452,7 +492,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
