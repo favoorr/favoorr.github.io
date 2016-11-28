@@ -399,9 +399,9 @@ invalid target release: 1.8
 <pre><code>选择项目右键 --&gt; Configure  --&gt; Convert to maven project
 </code></pre><p>9.当两个项目引用的 jar 包 artifactId  和 version 相同，遇到的诡异问题</p>
 <p>今天业务开发同学来找到我说 guava-18.0.jar 这个包有问题，说是在本地打的包没错，<br>到测试环境上这个包总是错的，坐标如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;18.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;18.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
 <p>然后自己本地 md5 hash 947641f6bb535b1d942d1bc387c45290 ,跟 nexus 是一样的，<br>但是到测试上的包就有问题，告诉我是 jenkins 上的 guava 包有问题，后来我下载 jenkins 上<br>打的包，果然 md5 值不是 nexus 上的值，公司的 jenkins 是我维护的，我到 guava 目录看了下包<br>hash 是没错的，最后发现是某个组件依赖了一个其他的 guava，group id 不同，但是 artifactId  和 version<br>都是相同的，结果就会出现这种问题，jenkins 上有一段提示信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</span><br><span class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</span><br><span class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div><div class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</div><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div></pre></td></tr></table></figure>
 <p>可以看到在打包的时候，这个包被跳过了，这里就是问题所在，而且这种问题相当难发现</p>
 
       
@@ -536,7 +536,7 @@ invalid target release: 1.8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -258,6 +258,166 @@
             
               
                 
+                <a class="post-title-link" href="/2014/12/23/mysql-sytax-not-all/" itemprop="url">
+                  mysql语法不完全版
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-23T16:49:51+08:00" content="2014-12-23">
+              2014-12-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/23/mysql-sytax-not-all/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/23/mysql-sytax-not-all/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/23/mysql-sytax-not-all/" class="leancloud_visitors" data-flag-title="mysql语法不完全版">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>手写mysql语句需要用到的</p>
+<p>新增列时，如果直接增加COMMENTS,在很多版本中不支持，公司的测试机是5.1版本，不支持</p>
+<p>datetime 设置默认值，在5.6版本中才可以</p>
+<h2 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h2><pre><code>/* 在某列后面添加一列 */ 
+ALTER TABLE `user_call_log` ADD `callflag` TINYINT(4) UNSIGNED  DEFAULT 0  AFTER `fee`;
+
+/* 把tinyint更改为 unsigned */ 
+ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED NULL  DEFAULT 0;
+
+/* 把tinyint变成 sign */ 
+ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  NULL  DEFAULT &apos;0&apos;;
+
+/* 变更列顺序 */ 
+ALTER TABLE `user_call_log` MODIFY COLUMN `callflag` TINYINT(4) UNSIGNED NULL DEFAULT 0 AFTER `fee`;
+
+/* UNSIGNED 类型默认值 更改为 0 */ 
+ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;;
+
+/* 删除某列 */ 
+ALTER TABLE `user_call_log` DROP `callflag`;
+
+/* 添加注释 */ 
+ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;  COMMENT &apos;主叫删除标示&apos;;
+
+/*  */ 
+ALTER TABLE `user_cash_log` CHANGE `real_name` `real_name` VARCHAR(20)  CHARACTER SET utf8  COLLATE utf8_general_ci  NULL  DEFAULT NULL  COMMENT &apos;用户真实姓名&apos;;
+</code></pre><h2 id="show"><a href="#show" class="headerlink" title="show"></a>show</h2><pre><code>/* 17:02:18 172.16.12.85-user_chat */ 
+SHOW CREATE TABLE `user_call_log`;
+
+/* 显示某个表的索引 */ 
+SHOW INDEX FROM `user_call_log`;
+</code></pre><h2 id="grant"><a href="#grant" class="headerlink" title="grant"></a>grant</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">grant all on *.* to atlas@192.168.56.1 identified by &apos;atlas&apos;;</div><div class="line"></div><div class="line">grant all on hive.* to hive@&apos;%&apos; identified by &apos;hive&apos;;   //创建hive用户，并授权</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">show grants;</div><div class="line"></div><div class="line">show grants for atlas@192.168.56.1;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/12/04/maven-tips/" itemprop="url">
                   maven使用总结
                 </a>
@@ -387,9 +547,9 @@ invalid target release: 1.8
 <pre><code>选择项目右键 --&gt; Configure  --&gt; Convert to maven project
 </code></pre><p>9.当两个项目引用的 jar 包 artifactId  和 version 相同，遇到的诡异问题</p>
 <p>今天业务开发同学来找到我说 guava-18.0.jar 这个包有问题，说是在本地打的包没错，<br>到测试环境上这个包总是错的，坐标如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;18.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;18.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
 <p>然后自己本地 md5 hash 947641f6bb535b1d942d1bc387c45290 ,跟 nexus 是一样的，<br>但是到测试上的包就有问题，告诉我是 jenkins 上的 guava 包有问题，后来我下载 jenkins 上<br>打的包，果然 md5 值不是 nexus 上的值，公司的 jenkins 是我维护的，我到 guava 目录看了下包<br>hash 是没错的，最后发现是某个组件依赖了一个其他的 guava，group id 不同，但是 artifactId  和 version<br>都是相同的，结果就会出现这种问题，jenkins 上有一段提示信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</span><br><span class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</span><br><span class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div><div class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</div><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div></pre></td></tr></table></figure>
 <p>可以看到在打包的时候，这个包被跳过了，这里就是问题所在，而且这种问题相当难发现</p>
 
           
@@ -855,229 +1015,6 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="url">
-                  mac os x使用Apache与svn集成
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-01T14:17:09+08:00" content="2014-12-01">
-              2014-12-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac os x使用Apache与svn集成">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>mac os x使用<code>Apache server</code>与<code>svn</code>集成，提供<code>http</code>访问svn，下面是详细步骤，中间有遇到的各种问题<br>及解决方法.</p>
-<p>首先说既然要配置http方式访问svn，那我就默认大家已经配置了svn 本地仓库，<br>并且已经可以使用类似<code>svn://127.0.0.1/account/trunk</code>这种方式访问成功，还没有配置<br>的，可以参照<a href="/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/">这里</a></p>
-<p>以下为配置主要步骤：</p>
-<ol>
-<li><p>手工编译svn，获取依赖包mod_authz_svn.so、mod_dav_svn.so，Apache server需要的，但是<br>mac上通过homebrew安装的svn是没有这些包得，原生的Apache server也没有</p>
-</li>
-<li><p>修改Apache server配置文件/etc/apache2/httpd.conf，加载对应的module</p>
-</li>
-<li><p>建立svn.conf配置文件，添加Apache server解析svn配置</p>
-</li>
-<li><p>重启Apache server</p>
-</li>
-<li><p>使用浏览器访问，验证配置</p>
-</li>
-</ol>
-<p>下面为详细配置</p>
-<h2 id="下载，手工编译"><a href="#下载，手工编译" class="headerlink" title="下载，手工编译"></a>下载，手工编译</h2><p>svn的源码包下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
-<pre><code>编译安装
-./configure --with-apxs=/usr/sbin/apxs
-make
-
-注意这里不需要安装，如果仅仅这样安装了版本，是不支持http和https方式访问的
-
-浏览是否编译成功
-ll subversion/mod_authz_svn/.libs/mod_authz_svn.so
-ll subversion/mod_dav_svn/.libs/mod_dav_svn.so
-
-复制到Apache server的lib目录
-sudo cp subversion/mod_authz_svn/.libs/mod_authz_svn.so /usr/libexec/apache2/
-sudo cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/libexec/apache2
-
-检查
-ll /usr/libexec/apache2 | grep svn
-
-安装后，Apache server下应该有以下lib
-/usr/libexec/apache2|grep dav
-mod_dav.so
-mod_dav_fs.so
-mod_dav_lock.so
-mod_dav_svn.so
-</code></pre><h2 id="修改apache配置文件"><a href="#修改apache配置文件" class="headerlink" title="修改apache配置文件"></a>修改apache配置文件</h2><p>sudo vim /etc/apache2/httpd.conf </p>
-<pre><code>添加以下配置,左侧为行数
-152 LoadModule dav_module libexec/apache2/mod_dav.so
-153 LoadModule dav_fs_module libexec/apache2/mod_dav_fs.so
-154 LoadModule dav_svn_module libexec/apache2/mod_dav_svn.so
-155 LoadModule authz_svn_module libexec/apache2/mod_authz_svn.so
-</code></pre><h2 id="建立svn配置文件"><a href="#建立svn配置文件" class="headerlink" title="建立svn配置文件"></a>建立svn配置文件</h2><pre><code>&lt;Location /svn&gt;
-    DAV svn
-    SVNParentPath /Users/User/Documents/svn-repos
-    SVNListParentPath on
-    AuthType Basic
-    AuthName &quot;Subversion repositories&quot;
-    AuthUserFile /Users/User/Documents/svn-repos/account/conf/passwd
-    AuthzSVNAccessFile /Users/User/Documents/svn-repos/account/conf/authz
-    Require valid-user
-&lt;/Location&gt;
-</code></pre><p><code>SVNParentPath</code> 为svn仓库的根目录，参照<code>/Users/User/Documents/svn-repos/account/conf/passwd</code>,<br>看下自己该输入哪个路径</p>
-<p><code>AuthUserFile</code> 为svn密码管理的路径</p>
-<p><code>AuthzSVNAccessFile</code> 为权限配置的路径</p>
-<h2 id="添加svn用户"><a href="#添加svn用户" class="headerlink" title="添加svn用户"></a>添加svn用户</h2><pre><code>根据提示输入密码
-sudo htpasswd -c /Users/User/Documents/svn-repos/account/conf/passwd admin
-</code></pre><p>这里注意，这种添加的用户密码就不是明文了，和之前直接修改添加的不同</p>
-<h2 id="配置权限"><a href="#配置权限" class="headerlink" title="配置权限"></a>配置权限</h2><pre><code>vim /Users/User/Documents/svn-repos/account/conf/authz
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>打开浏览器访问地址
-http://localhost/svn
-
-如果配置正确，能够看到正确地svn项目列表
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我在安装的时候遇到了很多问题，我首先google的关键字是<code>mac Apache svn</code>，然后<br>发现配置需要的module没有，然后手工编译svn，</p>
-<p>编译svn的时候，我的是<code>1.8.*</code>版本，最后我用的是<code>1.8.10</code>，又下载了一系列的依赖包，而且<br><code>1.7.*</code> 和 <code>1.8.*</code> 提供http和https访问使用的还不同</p>
-<p>最后还是被我编译成功了，但是问题又出现了，在跟Apache server集成的时候，出现错误</p>
-<pre><code>httpd: Syntax error on line 120 of /etc/apache2/httpd.conf: 
-Cannot load /usr/libexec/apache2/mod_dav_svn.so into server: 
-dlopen(/usr/libexec/apache2/mod_dav_svn.so, 10): 
-Library not loaded: /usr/local/bin/apache2/lib/libaprutil-1.0.dylib\n  
-Referenced from: /usr/local/lib/libsvn_repos-1.0.dylib\n  
-Reason: Incompatible library version: libsvn_repos-1.0.dylib requires version 6.0.0 or later, 
-but libaprutil-1.0.dylib provides version 4.0.0
-</code></pre><p>最后解决的方法我在这篇文章中受到启发<a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
-<p>在解决的过程中，发现我之前自己编译安装的svn会给通过brew安装造成很多错误，<br>最好先清空下列文件夹中<code>svn</code>开头的内容</p>
-<pre><code>/usr/local/include
-/usr/local/lib
-/usr/local/share/man/man1/
-/usr/local/share/man/man5/
-/usr/local/share/man/man8/
-</code></pre><p>直到<code>brew install subversion</code>成功，</p>
-<p>启动Apache server后，又遇到错误</p>
-<p>apache 日志目录 <code>/private/var/log/apache2/</code></p>
-<pre><code>[Sat Nov 29 21:15:00.773969 2014] [auth_basic:error] [pid 45831] [client 127.0.0.1:54634] AH01617: 
-user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mismatch
-</code></pre><p>我的路径<code>/Users/User/Documents/svn-repos/account/</code> Documents,需要读写权限</p>
-<pre><code>chmod -R 755 /Users/User/Documents
-</code></pre><p>然后重启Apache server访问才成功.</p>
-<p>参考地址</p>
-<p><a href="https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0" target="_blank" rel="external">https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0</a></p>
-<p><a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1123,7 +1060,7 @@ user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mism
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

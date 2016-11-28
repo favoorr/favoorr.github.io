@@ -258,6 +258,143 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="url">
+                  重启finder的方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-22T16:00:25+08:00" content="2014-11-22">
+              2014-11-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mac/" itemprop="url" rel="index">
+                    <span itemprop="name">mac</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" class="leancloud_visitors" data-flag-title="重启finder的方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="三种重启Finder的方法"><a href="#三种重启Finder的方法" class="headerlink" title="三种重启Finder的方法"></a>三种重启Finder的方法</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>1.今天在使用<code>Sublime text</code>的时候,经常使用的 <code>Reveal In Finder</code>的功能不能使用</p>
+<p>2.昨天在Finder中使用 Go2Shell 的时候，打开Iterm非常慢</p>
+<p>然后看了监视器，Finder占用350M多内存，本来想直接重启机器，突然想了下<br>应该是Finder有问题了，需要重启，就Google了下，总共收集3种快速重启方法</p>
+<h2 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h2><p>方法一</p>
+<p>摁 <code>option</code> 之后，右键点击dock上的Finder图标，会在最下面出现 <code>重新开启</code> 的菜单</p>
+<p>方法二</p>
+<p>在命令行终端执行 <code>killall Finder</code> </p>
+<p>方法三</p>
+<p><code>option + command + esc</code> ,调出小窗口，找到Finder，强制退出重启</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/22/run-java-code-in-sublime-text/" itemprop="url">
                   run Java code in Sublime Text
                 </a>
@@ -340,9 +477,9 @@
             <h1 id="在sublime中编写运行Java代码"><a href="#在sublime中编写运行Java代码" class="headerlink" title="在sublime中编写运行Java代码"></a>在sublime中编写运行Java代码</h1><p>1.安装Java编译器</p>
 <p>步骤一：菜单栏 Sublime Text –&gt; Preferences –&gt;Browse Packages 在finder中打开目录</p>
 <p>步骤二：新建<code>Java</code>文件夹,新建文件 <code>JavaC.sublime-build</code>,内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;cmd&quot;: [&quot;javac \&quot;$file_name\&quot; &amp;&amp; java \&quot;$file_base_name\&quot;&quot;],</span><br><span class="line">    &quot;shell&quot;: true,</span><br><span class="line">    &quot;file_regex&quot;: &quot;^(...*?):([0-9]*):?([0-9]*)&quot;,</span><br><span class="line">    &quot;selector&quot;: &quot;source.java&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;cmd&quot;: [&quot;javac \&quot;$file_name\&quot; &amp;&amp; java \&quot;$file_base_name\&quot;&quot;],</div><div class="line">    &quot;shell&quot;: true,</div><div class="line">    &quot;file_regex&quot;: &quot;^(...*?):([0-9]*):?([0-9]*)&quot;,</div><div class="line">    &quot;selector&quot;: &quot;source.java&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>2.编写Java代码调试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Helloword&#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;Helloword World!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Helloword&#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		System.out.println(&quot;Helloword World!&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>3.运行测试</p>
 <p>command + b,即可运行代码</p>
 <p>ctrl + ` ，可以显示控制台查看步骤</p>
@@ -888,153 +1025,6 @@ java.net.SocketException: Can&apos;t assign requested address
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/12/mac-tips/" itemprop="url">
-                  mac 技巧积累
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-12T10:18:05+08:00" content="2014-11-12">
-              2014-11-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/12/mac-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/mac-tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/12/mac-tips/" class="leancloud_visitors" data-flag-title="mac 技巧积累">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="记录mac里面相关内容"><a href="#记录mac里面相关内容" class="headerlink" title="记录mac里面相关内容"></a>记录mac里面相关内容</h1><p>1.mac桌面背景图片路径</p>
-<p>/Library/Desktop Pictures，使用Spotlight打开即可</p>
-<p>2.打开Go2Shell更改设置，例如更改默认shell为iterm2</p>
-<pre><code>open -a Go2Shell --args config
-</code></pre><p>3.Finder中 command + shift + g ,前往文件夹</p>
-<p>4.去掉Finder中多余的现实，只显示到User</p>
-<pre><code>defaults write com.apple.finder PathBarRootAtHome -bool TRUE;killall Finder
-
-恢复
-
-defaults delete com.apple.finder PathBarRootAtHome;killall Finder
-</code></pre><p>5.在菜单栏显示和隐藏 XtraFinder </p>
-<pre><code>XtraFinder原生是默认显示的，但是为了顶部清洁，会隐藏起来
-隐藏后，可以在 Finder 下找到，方法如下：
-
-打开Finder --&gt; 菜单栏 中点击Finder，最下面
-</code></pre><p>6.点击Finder显示白条，白条可以任意拖动和变长变宽</p>
-<p>如上所述，mac开机使用一段时间后，可能出现点击Finder就会出现白条，然后当鼠标有焦点的时候就会消失，<br>在群里和大家讨论之后，发现有不少人遇到同样的问题，然后大家交流了意见，最终结论如下：</p>
-<pre><code>白条是输入法失去焦点产生的，点击Finder后，白条出现，摁 `esc` 后，可以消失
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1080,7 +1070,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

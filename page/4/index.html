@@ -258,6 +258,142 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
+                  mysql replace 学习
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
+              2015-07-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>mysql 基础修改数据语句</p>
+<p>select insert update delete ,今天学习了个新的 replace </p>
+<p>replace 根据主键或者唯一索引判断相同数据，</p>
+<p>如果数据相同，就的数据会先删除，在插入新数据</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
+<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>如果主键不同，数据不会覆盖测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/18/play-with-python/" itemprop="url">
                   使用Python开发
                 </a>
@@ -343,16 +479,16 @@
 </code></pre><p>先安装 python 的 setuptools</p>
 <p>Setuptools网址是<a href="https://pypi.python.org/pypi/setuptools，" target="_blank" rel="external">https://pypi.python.org/pypi/setuptools，</a></p>
 <p>可以下载安装最新版本，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://bootstrap.pypa.io/ez_setup.py --no-check-certificate</span><br><span class="line"></span><br><span class="line">python ez_setup.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/ez_setup.py --no-check-certificate</div><div class="line"></div><div class="line">python ez_setup.py</div></pre></td></tr></table></figure>
 <p>mysql-python 下载地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http://sourceforge.net/projects/mysql-python/</span><br><span class="line"></span><br><span class="line">在解压目录里面执行</span><br><span class="line"></span><br><span class="line">python setup.py build</span><br><span class="line"></span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http://sourceforge.net/projects/mysql-python/</div><div class="line"></div><div class="line">在解压目录里面执行</div><div class="line"></div><div class="line">python setup.py build</div><div class="line"></div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
 <p>mac 查看端口占用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:5000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof -i:5000</div></pre></td></tr></table></figure>
 <p>如果找不到，就用 sudo ，可能是 root用户启动了</p>
 <p>Centos 6.6 安装 pip，官方地址 <a href="https://pip.pypa.io/en/stable/installing.html" target="_blank" rel="external">https://pip.pypa.io/en/stable/installing.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">wget https://bootstrap.pypa.io/get-pip.py</span><br><span class="line"></span><br><span class="line">执行，如果没有安装 setuptools ，会先安装 setuptools</span><br><span class="line">python get-pip.py </span><br><span class="line"></span><br><span class="line">Collecting pip</span><br><span class="line">  Downloading pip-7.1.0-py2.py3-none-any.whl (1.1MB)</span><br><span class="line">    100% |████████████████████████████████| 1.1MB 11kB/s</span><br><span class="line">Collecting setuptools</span><br><span class="line">  Downloading setuptools-18.0.1-py2.py3-none-any.whl (461kB)</span><br><span class="line">    100% |████████████████████████████████| 462kB 9.2kB/s</span><br><span class="line">Collecting wheel</span><br><span class="line">  Downloading wheel-0.24.0-py2.py3-none-any.whl (63kB)</span><br><span class="line">    100% |████████████████████████████████| 65kB 14kB/s</span><br><span class="line">Installing collected packages: pip, setuptools, wheel</span><br><span class="line"></span><br><span class="line">安装成功</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/get-pip.py</div><div class="line"></div><div class="line">执行，如果没有安装 setuptools ，会先安装 setuptools</div><div class="line">python get-pip.py </div><div class="line"></div><div class="line">Collecting pip</div><div class="line">  Downloading pip-7.1.0-py2.py3-none-any.whl (1.1MB)</div><div class="line">    100% |████████████████████████████████| 1.1MB 11kB/s</div><div class="line">Collecting setuptools</div><div class="line">  Downloading setuptools-18.0.1-py2.py3-none-any.whl (461kB)</div><div class="line">    100% |████████████████████████████████| 462kB 9.2kB/s</div><div class="line">Collecting wheel</div><div class="line">  Downloading wheel-0.24.0-py2.py3-none-any.whl (63kB)</div><div class="line">    100% |████████████████████████████████| 65kB 14kB/s</div><div class="line">Installing collected packages: pip, setuptools, wheel</div><div class="line"></div><div class="line">安装成功</div></pre></td></tr></table></figure>
 <p>python 常用2种安装软件方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install -U Celery</span><br><span class="line"></span><br><span class="line">pip install -U Celery</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install -U Celery</div><div class="line"></div><div class="line">pip install -U Celery</div></pre></td></tr></table></figure>
 <p>查找应用，杀进程</p>
 <pre><code>ps aux|grep gunicorn | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
 </code></pre>
@@ -718,7 +854,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 <p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
 <h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
 <p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/gitlab/gitlab.rb</span><br><span class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/gitlab.rb</div><div class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</div></pre></td></tr></table></figure>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
 <p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
 <p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
@@ -855,11 +991,11 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <p>对国内网络环境恨到死，sb GFW，屏蔽你大爷</p>
 <h1 id="修改-yum-源"><a href="#修改-yum-源" class="headerlink" title="修改 yum 源"></a>修改 yum 源</h1><p>1，备份</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
 <p>2，下载阿里的yum源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div></pre></td></tr></table></figure>
 <p>3，更新玩yum源后，执行下边命令更新yum配置，使操作立即生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
 <ol>
 <li>其他 </li>
 </ol>
@@ -867,161 +1003,10 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 <p>wget <a href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo" target="_blank" rel="external">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a></p>
 <p>中科大的</p>
 <p>wget <a href="http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2" target="_blank" rel="external">http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2</a></p>
-<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gem sources --remove https://rubygems.org/</span><br><span class="line">$ sudo gem sources -a https://ruby.taobao.org/</span><br><span class="line">$ sudo gem sources -l</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line"></span><br><span class="line">https://ruby.taobao.org</span><br></pre></td></tr></table></figure>
+<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo gem sources --remove https://rubygems.org/</div><div class="line">$ sudo gem sources -a https://ruby.taobao.org/</div><div class="line">$ sudo gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://ruby.taobao.org</div></pre></td></tr></table></figure>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.oicto.com/centos-yum-163-sohu/" target="_blank" rel="external">centos6.5适用的国内yum源：网易、搜狐</a></p>
 <p><a href="http://ruby.taobao.org/" target="_blank" rel="external">RubyGems 镜像 - 淘宝网</a></p>
 <p><a href="http://mirrors.aliyun.com/help/centos" target="_blank" rel="external">阿里云centos镜像</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
-                  安装gitlab
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-26T14:36:24+08:00" content="2015-05-26">
-              2015-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gitlab/" itemprop="url" rel="index">
-                    <span itemprop="name">gitlab</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/26/install-gitlab-through-rpm-package/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/install-gitlab-through-rpm-package/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/26/install-gitlab-through-rpm-package/" class="leancloud_visitors" data-flag-title="安装gitlab">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h1><p>安装官方给的 一键安装 shell 命令走，下面列出来所有走的坑</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">首先确认机器可以联网，设置了正确得域名解析地址</span><br><span class="line"></span><br><span class="line">vim /etc/resolv.conf</span><br><span class="line"></span><br><span class="line">nameserver 114.114.114.114</span><br></pre></td></tr></table></figure>
-<p>安装或更新依赖软件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install curl openssh-server postfix cronie</span><br><span class="line">sudo service postfix start</span><br><span class="line">sudo chkconfig postfix on</span><br><span class="line"></span><br><span class="line">sudo lokkit -s http -s ssh</span><br><span class="line"></span><br><span class="line">这一步，如果 已经禁用防火墙，可忽略</span><br></pre></td></tr></table></figure>
-<p>下载一键执行脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</span><br><span class="line"></span><br><span class="line">上面是官方给的指令，但是 packages.gitlab.com 时断时连我没有运行成功一次过，只能先下载，在运行</span><br><span class="line"></span><br><span class="line">wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</span><br><span class="line"></span><br><span class="line">chmod +x script.rpm.sh</span><br><span class="line"></span><br><span class="line">sh script.rpm.sh 同样，执行的时候有时候会报下面的错误，能做的就是多执行几次</span><br></pre></td></tr></table></figure>
-<p>本来执行完 script.rpm.sh 之后会自动启动下载任务，但是经常会失败只能手工下载，而且手工下载还会失败，<br>就多执行几次，前提是域名解析 ok ，而且翻墙了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@sz-vm-test-246 git]# sudo yum install gitlab-ce</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Repository base is listed more than once in the configuration</span><br><span class="line">Repository updates is listed more than once in the configuration</span><br><span class="line">Repository extras is listed more than once in the configuration</span><br><span class="line">Repository centosplus is listed more than once in the configuration</span><br><span class="line">Repository contrib is listed more than once in the configuration</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">https://packages.gitlab.com/gitlab/gitlab-ce/el/6/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - &quot;Couldn&apos;t resolve host &apos;packages.gitlab.com&apos;&quot;</span><br><span class="line">Trying other mirror.</span><br><span class="line">Error: Cannot retrieve repository metadata (repomd.xml) for repository: gitlab_gitlab-ce. Please verify its path and try again</span><br></pre></td></tr></table></figure>
-<p>这里分享百度盘的 gitlab-ce-7.11.2~omnibus-1.x86_64.rpm下载地址 <a href="http://pan.baidu.com/s/1c0trcQk" target="_blank" rel="external">http://pan.baidu.com/s/1c0trcQk</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install gitlab-ce 执行完成过程中会出现网络断，断了就继续执行 、、、 </span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl reconfigure 执行命令后，会看到好多内容出来，直到成功</span><br></pre></td></tr></table></figure>
-<p>如果能看到下面内容，说明成功。祝君好运</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Running handlers:</span><br><span class="line">Running handlers complete</span><br><span class="line">Chef Client finished, 167/189 resources updated in 110.951922392 seconds</span><br><span class="line">gitlab Reconfigured!</span><br></pre></td></tr></table></figure>
-<p>默认使用 Postgre 和 nginx，绑定 80 端口，如果想一次配置启动成功，其他程序就给他让步</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@dev1 ~]# netstat -nplut | grep 80</span><br><span class="line">tcp        0      0 :::80                       :::*                        LISTEN      1678/httpd</span><br><span class="line"></span><br><span class="line">service httpd stop</span><br></pre></td></tr></table></figure>
-<p>默认账号密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Username: root </span><br><span class="line">Password: 5iveL!fe</span><br></pre></td></tr></table></figure>
-<p>访问浏览器 </p>
-<p><a href="http://dev1" target="_blank" rel="external">http://dev1</a> 看到界面，表示成功，登录后台，修改密码</p>
-<p>1qaz2wsx</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://about.gitlab.com/downloads/" target="_blank" rel="external">官方说明</a></p>
-<p><a href="http://segmentfault.com/a/1190000002722631" target="_blank" rel="external">GitLab 安装配置笔记</a></p>
-<p><a href="http://www.pigo.idv.tw/archives/2779" target="_blank" rel="external">用 gitlab 自架一個像 github 的平台</a></p>
 <p>-EOF-</p>
 
           
@@ -1096,7 +1081,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

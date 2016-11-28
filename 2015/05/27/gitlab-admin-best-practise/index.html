@@ -426,7 +426,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 <p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
 <h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
 <p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/gitlab/gitlab.rb</span><br><span class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/gitlab.rb</div><div class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</div></pre></td></tr></table></figure>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
 <p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
 <p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
@@ -566,7 +566,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

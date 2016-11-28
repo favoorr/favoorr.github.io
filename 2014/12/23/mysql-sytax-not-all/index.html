@@ -380,7 +380,7 @@ SHOW CREATE TABLE `user_call_log`;
 
 /* 显示某个表的索引 */ 
 SHOW INDEX FROM `user_call_log`;
-</code></pre><h2 id="grant"><a href="#grant" class="headerlink" title="grant"></a>grant</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">grant all on *.* to atlas@192.168.56.1 identified by &apos;atlas&apos;;</span><br><span class="line"></span><br><span class="line">grant all on hive.* to hive@&apos;%&apos; identified by &apos;hive&apos;;   //创建hive用户，并授权</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">show grants;</span><br><span class="line"></span><br><span class="line">show grants for atlas@192.168.56.1;</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="grant"><a href="#grant" class="headerlink" title="grant"></a>grant</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">grant all on *.* to atlas@192.168.56.1 identified by &apos;atlas&apos;;</div><div class="line"></div><div class="line">grant all on hive.* to hive@&apos;%&apos; identified by &apos;hive&apos;;   //创建hive用户，并授权</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">show grants;</div><div class="line"></div><div class="line">show grants for atlas@192.168.56.1;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -514,7 +514,7 @@ SHOW INDEX FROM `user_call_log`;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

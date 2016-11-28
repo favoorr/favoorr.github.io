@@ -347,15 +347,15 @@ Centos7 下安装
 <p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
 <p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
 <p>Centos7 下安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</span><br><span class="line">yum install the_silver_searche</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
 <p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
 <p>错误：xz compression not available，并且 yum 不能使用</p>
 <p>xz 版本如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@dev1 .vim]# xz --version</span><br><span class="line">xz (XZ Utils) 4.999.9beta</span><br><span class="line">liblzma 4.999.9beta</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
 <p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
 <p>Centos6 下编译安装</p>
 <p>1.下载源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</span><br><span class="line"></span><br><span class="line">2.安装依赖</span><br><span class="line">yum -y groupinstall &quot;Development Tools&quot;</span><br><span class="line">yum -y install pcre-devel xz-devel</span><br><span class="line"></span><br><span class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</span><br><span class="line"></span><br><span class="line">cd the_silver_searcher-0.30.0</span><br><span class="line"></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
 <p>执行成功，没有错误，则安装成功</p>
 <p>-EOF-</p>
 
@@ -493,7 +493,7 @@ Centos7 下安装
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
