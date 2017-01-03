@@ -258,6 +258,193 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/22/config-svn-server-on-mac-os-x/" itemprop="url">
+                  mac 配置svn服务器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-22T16:22:01+08:00" content="2014-11-22">
+              2014-11-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/22/config-svn-server-on-mac-os-x/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/config-svn-server-on-mac-os-x/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/22/config-svn-server-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac 配置svn服务器">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mac上配置svn服务器的步骤"><a href="#mac上配置svn服务器的步骤" class="headerlink" title="mac上配置svn服务器的步骤"></a>mac上配置svn服务器的步骤</h1><p>mac上面初始已经安装了svn服务端</p>
+<p>1.建立目录</p>
+<pre><code>cd ~/Documents
+mkdir svn-repos
+</code></pre><p>2.创建仓库</p>
+<pre><code>svnadmin create svn-repos/account
+</code></pre><p>3.配置登录用户</p>
+<p>此时的仓库匿名是可以访问的，通常会配置用户后，在使用</p>
+<p>编辑密码配置文件 </p>
+<pre><code>vim ~/Documents/svn-repos/account/conf/svnserve.conf
+</code></pre><p>以下内容取消注释</p>
+<pre><code>anon-access = read
+auth-access = write
+password-db = passwd
+authz-db = authz
+realm = local-svn-repo
+</code></pre><p>编辑权限配置文件</p>
+<pre><code>vim ~/Documents/svn-repos/account/conf/authz
+</code></pre><p>配置示例</p>
+<p>新建组manage 和 组 user，新建用户favoorr test，对目录 <code>/</code> ，<code>manage</code>组可以读写</p>
+<pre><code>[groups]
+# harry_and_sally = harry,sally
+# harry_sally_and_joe = harry,sally,&amp;joe
+manage = favoorr
+user = test
+
+
+[/]
+# harry = rw
+# &amp;joe = r
+# * =
+@manage = rw
+
+[repository:/svnroot]
+# @harry_and_sally = rw
+# * = r
+manage = rw
+</code></pre><p>编辑设置密码文件</p>
+<pre><code>vim ~/Documents/svn-repos/account/conf/passwd
+</code></pre><p>示例</p>
+<pre><code>[users]
+# harry = harryssecret
+# sally = sallyssecret
+favoorr = 000000
+</code></pre><p>4.后台启动svn服务</p>
+<pre><code>svnserve -d -r svn-repos --listen-host 0.0.0.0
+</code></pre><p>5.命令行导入文件</p>
+<p>下面命令会把当前目录下所有文件上传到svn 仓库中</p>
+<pre><code>提交到svn仓库
+svn import -m &quot;initial import&quot; . svn://127.0.0.1/account/trunk --username favoorr --password 000000
+
+由于我们的仓库在本机，也可以使用以下命令提交到本机
+svn import -m &quot;initial import&quot; . file:////Users/User/Documents/svn-repos/account/trunk --username favoorr --password 000000
+</code></pre><p>6.命令行查看文件列表</p>
+<pre><code>svn list svn://127.0.0.1/account/trunk
+
+后台查看进程
+
+ps -ef |grep svnserve
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="url">
                   重启finder的方法
                 </a>
@@ -820,211 +1007,6 @@ java.net.SocketException: Can&apos;t assign requested address
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/18/mysql-integer-type/" itemprop="url">
-                  mysql 整数表示详细介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-18T19:27:51+08:00" content="2014-11-18">
-              2014-11-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/18/mysql-integer-type/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/18/mysql-integer-type/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/18/mysql-integer-type/" class="leancloud_visitors" data-flag-title="mysql 整数表示详细介绍">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mysql-整数表示详细介绍"><a href="#mysql-整数表示详细介绍" class="headerlink" title="mysql 整数表示详细介绍"></a>mysql 整数表示详细介绍</h1><h2 id="运行版本"><a href="#运行版本" class="headerlink" title="运行版本"></a>运行版本</h2><p>以下内容版本<br>mysql 5.6.20</p>
-<h2 id="类型和范围"><a href="#类型和范围" class="headerlink" title="类型和范围"></a>类型和范围</h2><p>整数类型占用字节大小和数值范围如下</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Storage(Bytes)</th>
-<th>Minimum Value(signed/Unsigned)</th>
-<th>Maximum Value(signed/Unsigned) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TINYINT</td>
-<td>1</td>
-<td>-128</td>
-<td>127</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>255</td>
-</tr>
-<tr>
-<td>SMALLINT</td>
-<td>2</td>
-<td>-32768</td>
-<td>32767</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>65535</td>
-</tr>
-<tr>
-<td>MEDIUMINT</td>
-<td>3</td>
-<td>-8388608</td>
-<td>8388607</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>16777215</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>4</td>
-<td>-2147483648</td>
-<td>2147483647</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>4294967295</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>8</td>
-<td>-9223372036854775808</td>
-<td>9223372036854775807</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>18446744073709551615</td>
-</tr>
-</tbody>
-</table>
-<h2 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h2><p>1.使用整数时，写不写长度是没有区别的，Signed tinyint(1)  和 Signed tinyint(2) 是没有区别的，范围都只能存储到127</p>
-<p>2.Signed 和 Unsigned 区别还是很大的</p>
-<p>3.能用小点，就小点，占用空间尽量小</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1070,7 +1052,7 @@ java.net.SocketException: Can&apos;t assign requested address
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-count">79</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1078,7 +1060,7 @@ java.net.SocketException: Can&apos;t assign requested address
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1087,7 +1069,7 @@ java.net.SocketException: Can&apos;t assign requested address
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1135,7 +1117,7 @@ java.net.SocketException: Can&apos;t assign requested address
         <div class="copyright" >
   
   &copy;  2013 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

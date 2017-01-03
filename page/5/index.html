@@ -258,6 +258,153 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/27/modify-yum-gems-source/" itemprop="url">
+                  修改 yum 和 gems 为国内源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-27T11:39:16+08:00" content="2015-05-27">
+              2015-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/27/modify-yum-gems-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/modify-yum-gems-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/27/modify-yum-gems-source/" class="leancloud_visitors" data-flag-title="修改 yum 和 gems 为国内源">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对国内网络环境恨到死，sb GFW，屏蔽你大爷</p>
+<h1 id="修改-yum-源"><a href="#修改-yum-源" class="headerlink" title="修改 yum 源"></a>修改 yum 源</h1><p>1，备份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
+<p>2，下载阿里的yum源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div></pre></td></tr></table></figure>
+<p>3，更新玩yum源后，执行下边命令更新yum配置，使操作立即生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+<ol>
+<li>其他 </li>
+</ol>
+<p>sohu的yum源</p>
+<p>wget <a href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo" target="_blank" rel="external">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a></p>
+<p>中科大的</p>
+<p>wget <a href="http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2" target="_blank" rel="external">http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2</a></p>
+<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo gem sources --remove https://rubygems.org/</div><div class="line">$ sudo gem sources -a https://ruby.taobao.org/</div><div class="line">$ sudo gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://ruby.taobao.org</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.oicto.com/centos-yum-163-sohu/" target="_blank" rel="external">centos6.5适用的国内yum源：网易、搜狐</a></p>
+<p><a href="http://ruby.taobao.org/" target="_blank" rel="external">RubyGems 镜像 - 淘宝网</a></p>
+<p><a href="http://mirrors.aliyun.com/help/centos" target="_blank" rel="external">阿里云centos镜像</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
                   安装gitlab
                 </a>
@@ -810,141 +957,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/18/linux-error/" itemprop="url">
-                  linux 排错记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-18T14:05:53+08:00" content="2015-05-18">
-              2015-05-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/18/linux-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/linux-error/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/18/linux-error/" class="leancloud_visitors" data-flag-title="linux 排错记录">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux排错记录"><a href="#Linux排错记录" class="headerlink" title="Linux排错记录"></a>Linux排错记录</h1><p>记录所有在Linux上遇到的问题，以及错误解决过程和方法</p>
-<p>常用的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">查看一个进程是否运行</div><div class="line">ps aux |grep zabbix </div><div class="line">ps -ef | grep</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">查看某一个端口号是否在监听</div><div class="line">netstat -nplut | grep 22</div><div class="line">tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      2154/sshd</div><div class="line">tcp        0      0 :::22                       :::*                        LISTEN      2154/sshd</div><div class="line"></div><div class="line">查看某一个应用端口是否在监听</div><div class="line">netstat -nplut | grep mysqld</div><div class="line"></div><div class="line">tcp        0      0 :::3306                     :::*                        LISTEN      1519/mysqld</div></pre></td></tr></table></figure>
-<p>sshd 登录错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">ssh: connect to host dev1 port 22: Connection refused</div><div class="line"></div><div class="line">想到了是服务端sshd服务问题，</div><div class="line">service sshd status</div><div class="line"></div><div class="line">sshd is stopped</div><div class="line"></div><div class="line">然后启动 service sshd start</div><div class="line"></div><div class="line">Starting sshd:/var/empty/sshd must be owned by root and not group or world-writable. [FAILED]</div><div class="line"></div><div class="line">ll -d /var/empty/sshd</div><div class="line"></div><div class="line">drwxr--r--. 2 root root 4096 10月 15 2014 /var/empty/sshd/</div><div class="line"></div><div class="line">这个目录要求其他用户不能写</div><div class="line"></div><div class="line">chmod 744 /var/empty/sshd</div><div class="line"></div><div class="line">然后重新启动，启动成功，可以连接</div><div class="line"></div><div class="line">手贱不忍，之前因为日志打不了，执行了一个命令 chmod -R 777 /var  ,手贱</div></pre></td></tr></table></figure>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -990,7 +1002,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-count">79</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -998,7 +1010,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1007,7 +1019,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1055,7 +1067,7 @@
         <div class="copyright" >
   
   &copy;  2013 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

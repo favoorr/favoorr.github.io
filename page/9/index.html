@@ -258,6 +258,152 @@
             
               
                 
+                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
+                  git实战篇--将本地项目提交到github/gitlab中
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
+              2015-01-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
+<p>在github/gitlab中新建项目zhunions</p>
+<p>1.在本地目录zhunions目录下初始化本地仓库</p>
+<pre><code>git init
+</code></pre><p>2.建立.gitignore README.md文件</p>
+<p>3.本地提交</p>
+<pre><code>git add . 提交当前目录
+git commit -m &quot;first commit&quot;
+</code></pre><p>4.添加远程关联</p>
+<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
+</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
+<pre><code>git push --set-upstream origin master
+</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
+<p>执行所有操作后，有如下结果：</p>
+<p>a.产生本地分支master</p>
+<p>b.与本地仓库关联的远程仓库origin</p>
+<p>c.与本地分支关联的远程分支master</p>
+<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
                   git rebase命令学习
                 </a>
@@ -1037,140 +1183,6 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="url">
-                  Sequel Pro不执行sql问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-24T11:32:01+08:00" content="2014-12-24">
-              2014-12-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/24/sequal-pro-not-execute-sql-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/24/sequal-pro-not-execute-sql-error/" class="leancloud_visitors" data-flag-title="Sequel Pro不执行sql问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Sequel Pro使用command + R 在Query视图不执行sql问题</p>
-<p>在mac上使用了Sequel Pro作为mysql管理客户端，昨天下午遇到了一个问题，<br>Query视图command + R不能执行sql语句了，研究了之后，发现是软件本身的机制，<br>下面图片大家看下</p>
-<p>正常情况下</p>
-<p><img src="/assets/sequal-pro-not-execute-sql-1.png" alt="pic 1" title="正常的图片"></p>
-<p>如果拉下来，就不能执行了</p>
-<p><img src="/assets/sequal-pro-not-execute-sql-2.png" alt="pic 2" title="如果拉下来，就不能执行了"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1216,7 +1228,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-count">79</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1224,7 +1236,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1233,7 +1245,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1281,7 +1293,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
         <div class="copyright" >
   
   &copy;  2013 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

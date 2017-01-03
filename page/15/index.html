@@ -258,6 +258,179 @@
             
               
                 
+                <a class="post-title-link" href="/2014/09/02/config-nginx-fastcgi/" itemprop="url">
+                  Mac10.9.4配置Nginx解析php
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-09-02T16:48:02+08:00" content="2014-09-02">
+              2014-09-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/02/config-nginx-fastcgi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/02/config-nginx-fastcgi/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/09/02/config-nginx-fastcgi/" class="leancloud_visitors" data-flag-title="Mac10.9.4配置Nginx解析php">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Mac10-9-4配置Nginx解析php"><a href="#Mac10-9-4配置Nginx解析php" class="headerlink" title="Mac10.9.4配置Nginx解析php"></a>Mac10.9.4配置Nginx解析php</h1><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>参照文章 <a href="/install-nginx-on-mac/" title="Mac10.9.3仅安装Nginx">Mac10.9.3仅安装Nginx</a></p>
+<h2 id="配置php文件"><a href="#配置php文件" class="headerlink" title="配置php文件"></a>配置php文件</h2><p>10.9.4 默认安装了php，配置文件路径</p>
+<p>/private/etc/php-fpm.conf.default</p>
+<p>/private/etc/php.ini.default </p>
+<pre><code>cd /private/etc/  
+sudo cp php-fpm.conf.default php-fpm.conf  
+sudo cp php.ini.default php.ini  
+
+sudo vim php-fpm.conf  
+去掉注释的pid和log,&apos;;&apos;表示注释
+;pid = run/php-fpm.pid  
+;error_log = log/php-fpm.log  
+
+cp php-fpm.conf /usr/local/etc/php-fpm.conf  
+</code></pre><p>启动php-fpm</p>
+<pre><code>sudo php-fpm -c php.ini -y php-fpm.conf -p /usr/local/var  
+</code></pre><p>注意：该命令必须仍然在 /private/etc目录下执行，如果切换目录，需要制定ini文件和conf文件的路径</p>
+<h2 id="配置fastcgi"><a href="#配置fastcgi" class="headerlink" title="配置fastcgi"></a>配置fastcgi</h2><p>编辑nginx配置文件</p>
+<pre><code>vim /usr/local/etc/nginx/nginx.conf  
+</code></pre><p>增加server配置</p>
+<pre><code>server {  
+        listen       8082;  
+        server_name  localhost;  
+        root           /wwwroot/php1;  
+        error_page   500 502 503 504  /50x.html;  
+
+        location ~ \.php$ {  
+            fastcgi_pass   127.0.0.1:9000;  
+            fastcgi_index  index.php;  
+            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;  
+            include        fastcgi_params;  
+        }  
+}  
+
+说明：
+root           /wwwroot/php1; php程序的位置
+fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一定要加    $document_root不然会出现file not found的错误
+</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>新建测试文件</p>
+<p>/wwwroot/php1 下新建 index.php</p>
+<html><br><head><br>    <title>php hello world</title><br></head><br><body><br>    php测试<br><br>    &lt;?php phpinfo(); ?&gt;<br></body><br></html>  
+
+
+<http:localhost:8082 index.php="">
+
+<p>能够正确看到php配置说明文件</p>
+</http:localhost:8082>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
                   Mac10.9.3仅安装Nginx
                 </a>
@@ -795,150 +968,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/08/27/using-vim-paste/" itemprop="url">
-                  linux环境下，vim粘贴时缩进错乱解决
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-27T10:54:26+08:00" content="2014-08-27">
-              2014-08-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/08/27/using-vim-paste/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/27/using-vim-paste/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/08/27/using-vim-paste/" class="leancloud_visitors" data-flag-title="linux环境下，vim粘贴时缩进错乱解决">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="linux环境下，vim粘贴时缩进错乱解决"><a href="#linux环境下，vim粘贴时缩进错乱解决" class="headerlink" title="linux环境下，vim粘贴时缩进错乱解决"></a>linux环境下，vim粘贴时缩进错乱解决</h1><p>粘贴前使用命令</p>
-<pre><code>:set paste  
-</code></pre><p>原来进入编辑模式，状态提示为 </p>
-<pre><code>-- INSERT --
-</code></pre><p>设置命令后，进入编辑模式状态提示为</p>
-<pre><code>-- INSERT (paste) -- 
-</code></pre><p>这样子，粘贴的时候，就可以按照原来复制时的缩进</p>
-<p>设置VIM开关快捷键</p>
-<pre><code>:set pastetoggle=&lt;F11&gt;
-</code></pre><p>参考博客<a href="http://blog.csdn.net/yizhou35/article/details/17366339" target="_blank" rel="external">http://blog.csdn.net/yizhou35/article/details/17366339</a></p>
-<p>意思是在输入 i ,进入编辑模式后，如果要取消缩进，就摁F11，然后在粘贴，等于输入:set paste,<br>粘贴之后，在摁，等于输入:set nopaste</p>
-<p>“+p ,这个在一般vim下不好用，必须使用带图形界面的vim才可以</p>
-<p>大概介绍是vim有自己的寄存器，系统有剪切板，然后yy复制的时候，进入寄存器了，</p>
-<p>:reg可以查看不同寄存器上已经复制的值,”+ 表示系统剪切板，但是一般的vim不支持</p>
-<p>google关键字 vim寄存器 系统剪切板</p>
-<p>参考：<a href="http://w.gdu.me/wiki/vim/vimcopy.html" target="_blank" rel="external">http://w.gdu.me/wiki/vim/vimcopy.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -984,7 +1013,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-count">79</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -992,7 +1021,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1001,7 +1030,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1049,7 +1078,7 @@
         <div class="copyright" >
   
   &copy;  2013 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
