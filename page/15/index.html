@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/09/02/config-nginx-fastcgi/" itemprop="url">
-                  Mac10.9.4配置Nginx解析php
+                <a class="post-title-link" href="/2014/11/10/browsers-security-ports/" itemprop="url">
+                  浏览器限制端口处理方法
                 </a>
               
             
@@ -272,326 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-02T16:48:02+08:00" content="2014-09-02">
-              2014-09-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/02/config-nginx-fastcgi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/02/config-nginx-fastcgi/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/02/config-nginx-fastcgi/" class="leancloud_visitors" data-flag-title="Mac10.9.4配置Nginx解析php">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac10-9-4配置Nginx解析php"><a href="#Mac10-9-4配置Nginx解析php" class="headerlink" title="Mac10.9.4配置Nginx解析php"></a>Mac10.9.4配置Nginx解析php</h1><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>参照文章 <a href="/install-nginx-on-mac/" title="Mac10.9.3仅安装Nginx">Mac10.9.3仅安装Nginx</a></p>
-<h2 id="配置php文件"><a href="#配置php文件" class="headerlink" title="配置php文件"></a>配置php文件</h2><p>10.9.4 默认安装了php，配置文件路径</p>
-<p>/private/etc/php-fpm.conf.default</p>
-<p>/private/etc/php.ini.default </p>
-<pre><code>cd /private/etc/  
-sudo cp php-fpm.conf.default php-fpm.conf  
-sudo cp php.ini.default php.ini  
-
-sudo vim php-fpm.conf  
-去掉注释的pid和log,&apos;;&apos;表示注释
-;pid = run/php-fpm.pid  
-;error_log = log/php-fpm.log  
-
-cp php-fpm.conf /usr/local/etc/php-fpm.conf  
-</code></pre><p>启动php-fpm</p>
-<pre><code>sudo php-fpm -c php.ini -y php-fpm.conf -p /usr/local/var  
-</code></pre><p>注意：该命令必须仍然在 /private/etc目录下执行，如果切换目录，需要制定ini文件和conf文件的路径</p>
-<h2 id="配置fastcgi"><a href="#配置fastcgi" class="headerlink" title="配置fastcgi"></a>配置fastcgi</h2><p>编辑nginx配置文件</p>
-<pre><code>vim /usr/local/etc/nginx/nginx.conf  
-</code></pre><p>增加server配置</p>
-<pre><code>server {  
-        listen       8082;  
-        server_name  localhost;  
-        root           /wwwroot/php1;  
-        error_page   500 502 503 504  /50x.html;  
-
-        location ~ \.php$ {  
-            fastcgi_pass   127.0.0.1:9000;  
-            fastcgi_index  index.php;  
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;  
-            include        fastcgi_params;  
-        }  
-}  
-
-说明：
-root           /wwwroot/php1; php程序的位置
-fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一定要加    $document_root不然会出现file not found的错误
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>新建测试文件</p>
-<p>/wwwroot/php1 下新建 index.php</p>
-<html><br><head><br>    <title>php hello world</title><br></head><br><body><br>    php测试<br><br>    &lt;?php phpinfo(); ?&gt;<br></body><br></html>  
-
-
-<http:localhost:8082 index.php="">
-
-<p>能够正确看到php配置说明文件</p>
-</http:localhost:8082>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
-                  Mac10.9.3仅安装Nginx
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T13:18:29+08:00" content="2014-09-01">
-              2014-09-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-nginx-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-nginx-on-mac/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/01/install-nginx-on-mac/" class="leancloud_visitors" data-flag-title="Mac10.9.3仅安装Nginx">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac10-9-3仅安装Nginx"><a href="#Mac10-9-3仅安装Nginx" class="headerlink" title="Mac10.9.3仅安装Nginx"></a>Mac10.9.3仅安装Nginx</h1><p>首先安装Homebrew</p>
-<p>参照文章 <a href="/install-homebrew-on-mac/" title="Mac安装Homebrew">Mac安装Homebrew</a></p>
-<h2 id="查看nginx信息"><a href="#查看nginx信息" class="headerlink" title="查看nginx信息"></a>查看nginx信息</h2><pre><code>brew info nginx  
-</code></pre><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>brew install nginx  </p>
-<h2 id="配置nginx开机启动"><a href="#配置nginx开机启动" class="headerlink" title="配置nginx开机启动"></a>配置nginx开机启动</h2><p>ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents  </p>
-<p>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist  </p>
-<h2 id="nginx配置文件路径"><a href="#nginx配置文件路径" class="headerlink" title="nginx配置文件路径"></a>nginx配置文件路径</h2><pre><code>/usr/local/etc/nginx/nginx.conf  
-</code></pre><h2 id="nginx常用操作"><a href="#nginx常用操作" class="headerlink" title="nginx常用操作"></a>nginx常用操作</h2><p>直接启动</p>
-<pre><code>nginx   
-</code></pre><p>修改配置后，验证配置文件语法</p>
-<pre><code>nginx -t  
-</code></pre><p>nginx运行时直接重启</p>
-<pre><code>nginx -s reload  
-</code></pre><h2 id="nginx-启动异常"><a href="#nginx-启动异常" class="headerlink" title="nginx 启动异常"></a>nginx 启动异常</h2><p>执行重启命令 nginx -s reload ,出现如下错误</p>
-<p>nginx: [error] open() “/usr/local/var/run/nginx.pid” failed (2: No such file or directory)<br>原因是当前nginx还未启动，先执行 nginx,之后可以执行重启命令</p>
-<h2 id="测试安装启动成功"><a href="#测试安装启动成功" class="headerlink" title="测试安装启动成功"></a>测试安装启动成功</h2><p>浏览器访问 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 可以看到nginx的欢迎页</p>
-<p>如果想让nginx监听 80 端口，启动时要加 sudo</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/01/install-homebrew-on-mac/" itemprop="url">
-                  Mac安装Homebrew
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T12:28:39+08:00" content="2014-09-01">
-              2014-09-01
+            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
+              2014-11-10
             </time>
           </span>
 
@@ -620,8 +302,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-homebrew-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-homebrew-on-mac/" itemprop="commentsCount"></span>
+                <a href="/2014/11/10/browsers-security-ports/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/browsers-security-ports/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -631,7 +313,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/09/01/install-homebrew-on-mac/" class="leancloud_visitors" data-flag-title="Mac安装Homebrew">
+             <span id="/2014/11/10/browsers-security-ports/" class="leancloud_visitors" data-flag-title="浏览器限制端口处理方法">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -655,21 +337,1051 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="Mac安装Homebrew"><a href="#Mac安装Homebrew" class="headerlink" title="Mac安装Homebrew"></a>Mac安装Homebrew</h1><h2 id="Homebrew介绍"><a href="#Homebrew介绍" class="headerlink" title="Homebrew介绍"></a>Homebrew介绍</h2><p>类似yum 和 apt，Homebrew是Mac下的软件包管理工具</p>
-<h2 id="官方说明文档"><a href="#官方说明文档" class="headerlink" title="官方说明文档"></a>官方说明文档</h2><p><a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">http://brew.sh/index_zh-cn.html</a></p>
-<h2 id="Mac下安装命令-完全复制"><a href="#Mac下安装命令-完全复制" class="headerlink" title="Mac下安装命令(完全复制)"></a>Mac下安装命令(完全复制)</h2><pre><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;  
-</code></pre><p>在命令行运行后，根据提示安装</p>
-<h2 id="基础命令介绍"><a href="#基础命令介绍" class="headerlink" title="基础命令介绍"></a>基础命令介绍</h2><p>brew doctor 列出系统的建议和警告信息</p>
-<p>brew -v 显示版本信息</p>
-<p>brew up/update 更新brew软件包，应该是更新自己吧</p>
-<p>brew home package 查看软件包首页</p>
-<p>brew info package 查看软件包信息</p>
-<p>brew deps package  查看依赖</p>
-<p>brew search package 查找</p>
-<p>brew option package  查看软件包安装选项</p>
-<p>brew install package 如果加 -v 参数，表示显示安装编译信息</p>
-<p>brew uninstall / remove package 卸载软件包</p>
-<p>brew upgrade package 更新某个软件包，如果不加package参数，表示更新所有软件包</p>
+            <h1 id="浏览器限制端口处理方法"><a href="#浏览器限制端口处理方法" class="headerlink" title="浏览器限制端口处理方法"></a>浏览器限制端口处理方法</h1><h2 id="浏览器端口限制问题描述"><a href="#浏览器端口限制问题描述" class="headerlink" title="浏览器端口限制问题描述"></a>浏览器端口限制问题描述</h2><p>有时候本机调试服务端程序时会使用一些特殊的端口，例如6666，6000等，浏览器由于内部安全机制<br>会限制这类端口的访问，下面介绍Firefox浏览器和Google chrome浏览器遇到端口限制时的处理方法<br>记录备忘</p>
+<h2 id="chrome-处理方法"><a href="#chrome-处理方法" class="headerlink" title="chrome 处理方法"></a>chrome 处理方法</h2><p>Mac 下</p>
+<pre><code>open /Applications/Google\ Chrome.app --args --explicitly-allowed-ports=6000
+</code></pre><p>可以使用Automator</p>
+<p>windows下</p>
+<p>右键属性，选择启动exe路径，添加参数 </p>
+<pre><code>--args --explicitly-allowed-ports=6000
+</code></pre><p>参考文章 <a href="http://cubewot.de/node/266" target="_blank" rel="external">http://cubewot.de/node/266</a></p>
+<h2 id="FireFox-处理方法"><a href="#FireFox-处理方法" class="headerlink" title="FireFox 处理方法"></a>FireFox 处理方法</h2><p>1.地址栏输入</p>
+<pre><code>about:config
+</code></pre><p>2.添加以下内容</p>
+<pre><code>network.security.ports.banned.override 6000
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/10/mysql-date-api/" itemprop="url">
+                  mysql date time datetime类型操作api
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
+              2014-11-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/10/mysql-date-api/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/mysql-date-api/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/10/mysql-date-api/" class="leancloud_visitors" data-flag-title="mysql date time datetime类型操作api">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mysql-date-time-datetime类型操作api"><a href="#mysql-date-time-datetime类型操作api" class="headerlink" title="mysql date time datetime类型操作api"></a>mysql date time datetime类型操作api</h1><h2 id="返回当前时间"><a href="#返回当前时间" class="headerlink" title="返回当前时间"></a>返回当前时间</h2><p>CURDATE()    Return the current date</p>
+<pre><code>SELECT CURDATE();
+&gt; 2014-11-10
+SELECT CURDATE() + 0;
+&gt; 20141110
+</code></pre><p>CURRENT_DATE(), CURRENT_DATE    Synonyms for CURDATE()</p>
+<pre><code>select CURRENT_DATE();
+&gt; 2014-11-10
+select CURRENT_DATE;
+&gt; 2014-11-10
+</code></pre><p>CURRENT_TIME(), CURRENT_TIME    Synonyms for CURTIME()</p>
+<pre><code>select CURRENT_TIME();
+&gt; 20:10:41
+select CURRENT_TIME;
+&gt; 20:10:53
+</code></pre><p>CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP    Synonyms for NOW()</p>
+<pre><code>select CURRENT_TIMESTAMP();
+&gt; 2014-11-10 20:11:10
+</code></pre><p>select CURRENT_TIMESTAMP</p>
+<p>CURTIME()    Return the current time</p>
+<pre><code>select CURTIME()
+&gt; 20:11:49
+select CURTIME() + 0
+&gt; 201205
+</code></pre><p>LOCALTIME(), LOCALTIME    Synonym for NOW()</p>
+<p>LOCALTIMESTAMP, LOCALTIMESTAMP()    Synonym for NOW()</p>
+<p>NOW()    Return the current date and time</p>
+<pre><code>SELECT NOW();
+&gt; 2014-11-10 20:46:43
+
+SELECT NOW() + 0;
+&gt; 20141110204659
+
+SELECT NOW(), SLEEP(2), NOW();
+&gt; 2014-11-10 20:47:25    0    2014-11-10 20:47:25
+
+SELECT SYSDATE(), SLEEP(2), SYSDATE();
+&gt; 2014-11-10 20:48:03    0    2014-11-10 20:48:05
+</code></pre><p>SYSDATE()    Return the time at which the function executes</p>
+<pre><code>SELECT SYSDATE(), SLEEP(2), SYSDATE();
+&gt; 2014-11-10 20:58:11    0    2014-11-10 20:58:13
+</code></pre><p>UTC_DATE()    Return the current UTC date</p>
+<pre><code>SELECT UTC_DATE(), UTC_DATE() + 0;
+&gt; 2014-11-10    20141110
+</code></pre><p>SELECT UTC_TIME(), UTC_TIME() + 0;</p>
+<pre><code>UTC_TIME()    Return the current UTC time
+&gt; 13:10:07    131007
+</code></pre><p>UTC_TIMESTAMP()    Return the current UTC date and time</p>
+<pre><code>SELECT UTC_TIMESTAMP(), UTC_TIMESTAMP() + 0;
+&gt; 2014-11-10 13:10:35    20141110131035
+</code></pre><h2 id="获取指定字段"><a href="#获取指定字段" class="headerlink" title="获取指定字段"></a>获取指定字段</h2><p>YEAR()    Return the year</p>
+<pre><code>SELECT YEAR(&apos;1987-01-01&apos;);
+&gt; 1987
+</code></pre><p>MONTH()    Return the month from the date passed</p>
+<pre><code>SELECT MONTH(&apos;2008-02-03&apos;);
+&gt; 2
+</code></pre><p>DAY()    Synonym for DAYOFMONTH()</p>
+<p>DAYOFMONTH()    Return the day of the month (0-31)</p>
+<pre><code>SELECT DAYOFMONTH(&apos;2007-02-03&apos;);
+&gt; 3
+</code></pre><p>HOUR()    Extract the hour</p>
+<pre><code>SELECT HOUR(&apos;10:05:03&apos;);
+&gt; 10
+
+SELECT HOUR(&apos;272:59:59&apos;);
+&gt; 272
+</code></pre><p>MINUTE()    Return the minute from the argument</p>
+<pre><code>SELECT MINUTE(&apos;2008-02-03 10:05:03&apos;);
+&gt; 5
+</code></pre><p>SECOND()    Return the second (0-59)</p>
+<pre><code>SELECT SECOND(&apos;10:05:03&apos;);
+&gt; 3
+</code></pre><p>DAYNAME()    Return the name of the weekday</p>
+<pre><code>SELECT DAYNAME(&apos;2007-02-03&apos;);
+&gt; Saturday
+</code></pre><p>DAYOFWEEK()    Return the weekday index of the argument</p>
+<pre><code>SELECT DAYOFWEEK(&apos;2007-02-03&apos;);
+&gt; 7
+</code></pre><p>DAYOFYEAR()    Return the day of the year (1-366)</p>
+<pre><code>SELECT DAYOFYEAR(&apos;2007-02-03&apos;);
+&gt; 34
+</code></pre><p>EXTRACT()    Extract part of a date</p>
+<pre><code>SELECT EXTRACT(YEAR FROM &apos;2009-07-02&apos;);
+&gt; 2009
+
+SELECT EXTRACT(YEAR_MONTH FROM &apos;2009-07-02 01:02:03&apos;);
+&gt; 200907
+
+SELECT EXTRACT(DAY_MINUTE FROM &apos;2009-07-02 01:02:03&apos;);
+&gt; 20102
+
+SELECT EXTRACT(MICROSECOND FROM &apos;2003-01-02 10:30:00.000123&apos;);
+&gt; 123
+</code></pre><p>LAST_DAY    Return the last day of the month for the argument</p>
+<pre><code>SELECT LAST_DAY(&apos;2003-02-05&apos;);
+&gt; &apos;2003-02-28&apos;
+
+SELECT LAST_DAY(&apos;2004-02-05&apos;);
+&gt; &apos;2004-02-29&apos;
+
+SELECT LAST_DAY(&apos;2004-01-01 01:01:01&apos;);
+&gt; &apos;2004-01-31&apos;
+
+SELECT LAST_DAY(&apos;2003-03-32&apos;);
+&gt; NULL
+</code></pre><p>MAKEDATE()    Create a date from the year and day of year</p>
+<pre><code>SELECT MAKEDATE(2011,31), MAKEDATE(2011,32);
+&gt; &apos;2011-01-31&apos;, &apos;2011-02-01&apos;
+
+SELECT MAKEDATE(2011,365), MAKEDATE(2014,365);
+&gt; &apos;2011-12-31&apos;, &apos;2014-12-31&apos;
+
+SELECT MAKEDATE(2011,0);
+&gt; NULL
+</code></pre><p>MAKETIME    MAKETIME()</p>
+<pre><code>SELECT MAKETIME(12,15,30);
+&gt; 12:15:30
+</code></pre><p>MICROSECOND()    Return the microseconds from argument</p>
+<pre><code>SELECT MICROSECOND(&apos;12:00:00.123456&apos;);
+&gt; 123456
+
+SELECT MICROSECOND(&apos;2009-12-31 23:59:59.000010&apos;);
+&gt; 10
+</code></pre><p>MONTHNAME()    Return the name of the month</p>
+<pre><code>SELECT MONTHNAME(&apos;2008-02-03&apos;);
+&gt; February
+</code></pre><p>QUARTER()    Return the quarter from a date argument</p>
+<pre><code>SELECT QUARTER(&apos;2008-04-01&apos;);
+&gt; 2
+</code></pre><p>TIME()    Extract the time portion of the expression passed</p>
+<pre><code>SELECT TIME(&apos;2003-12-31 01:02:03&apos;);
+&gt; 01:02:03
+
+SELECT TIME(&apos;2003-12-31 01:02:03.000123&apos;);
+&gt; 01:02:03.000123
+</code></pre><p>TIMESTAMP()    With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments</p>
+<pre><code>SELECT TIMESTAMP(&apos;2003-12-31&apos;);
+&gt; 2003-12-31 00:00:00
+
+SELECT TIMESTAMP(&apos;2003-12-31 12:00:00&apos;,&apos;12:00:00&apos;);
+&gt; 2004-01-01 00:00:00
+</code></pre><p>UNIX_TIMESTAMP()    Return a UNIX timestamp</p>
+<pre><code>SELECT UNIX_TIMESTAMP();
+&gt; 1415624876
+
+SELECT UNIX_TIMESTAMP(&apos;2007-11-30 10:30:19&apos;);
+&gt; 1196389819
+
+SELECT FROM_UNIXTIME(1111885200);
+&gt; 2005-03-27 09:00:00
+</code></pre><p>WEEK()    Return the week number</p>
+<pre><code>SELECT WEEK(&apos;2008-02-20&apos;);
+&gt; 7
+SELECT WEEK(&apos;2008-02-20&apos;,0);
+&gt; 7
+
+SELECT WEEK(&apos;2008-02-20&apos;,1);
+&gt; 8
+SELECT WEEK(&apos;2008-12-31&apos;,1);
+&gt; 53
+
+SELECT YEAR(&apos;2000-01-01&apos;), WEEK(&apos;2000-01-01&apos;,0);
+&gt; 2000    0
+</code></pre><p>WEEKDAY()    Return the weekday index</p>
+<pre><code>SELECT WEEKDAY(&apos;2008-02-03 22:23:00&apos;);
+&gt; 6
+SELECT WEEKDAY(&apos;2007-11-06&apos;);
+&gt; 1
+</code></pre><p>WEEKOFYEAR()    Return the calendar week of the date (0-53)</p>
+<pre><code>SELECT WEEKOFYEAR(&apos;2008-02-20&apos;);
+&gt; 8
+</code></pre><p>YEARWEEK()    Return the year and week</p>
+<pre><code>SELECT YEARWEEK(&apos;1987-01-01&apos;);
+&gt; 198652
+</code></pre><h2 id="时间相加减计算"><a href="#时间相加减计算" class="headerlink" title="时间相加减计算"></a>时间相加减计算</h2><p>ADDDATE()    Add time values (intervals) to a date value</p>
+<pre><code>SELECT ADDDATE(&apos;2008-01-02&apos;, INTERVAL 31 DAY); 按天计算
+&gt; 2008-02-02
+SELECT ADDDATE(&apos;2008-01-02&apos;, 31);
+&gt; 2008-02-02
+</code></pre><p>ADDTIME()    Add time</p>
+<pre><code>SELECT ADDTIME(&apos;2007-12-31 23:59:59.999999&apos;, &apos;1 1:1:1.000002&apos;); 
+&gt; 2008-01-02 01:01:01.000001
+
+SELECT ADDTIME(&apos;01:00:00.999999&apos;, &apos;02:00:00.999998&apos;);
+&gt; 03:00:01.999997
+</code></pre><p>DATE_ADD()    Add time values (intervals) to a date value<br>方法语法</p>
+<pre><code>DATE_ADD(date,INTERVAL expr unit), DATE_SUB(date,INTERVAL expr unit)
+</code></pre><p>可选值列表</p>
+<table>
+<thead>
+<tr>
+<th>unit Value</th>
+<th>Expected expr Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MICROSECOND</td>
+<td>MICROSECONDS</td>
+</tr>
+<tr>
+<td>SECOND</td>
+<td>SECONDS</td>
+</tr>
+<tr>
+<td>MINUTE</td>
+<td>MINUTES</td>
+</tr>
+<tr>
+<td>HOUR</td>
+<td>HOURS</td>
+</tr>
+<tr>
+<td>DAY</td>
+<td>DAYS</td>
+</tr>
+<tr>
+<td>WEEK</td>
+<td>WEEKS</td>
+</tr>
+<tr>
+<td>MONTH</td>
+<td>MONTHS</td>
+</tr>
+<tr>
+<td>QUARTER</td>
+<td>QUARTERS</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>YEARS</td>
+</tr>
+<tr>
+<td>SECOND_MICROSECOND</td>
+<td>‘SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>MINUTE_MICROSECOND</td>
+<td>‘MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>MINUTE_SECOND</td>
+<td>‘MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_MICROSECOND</td>
+<td>‘HOURS:MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_SECOND</td>
+<td>‘HOURS:MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_MINUTE</td>
+<td>‘HOURS:MINUTES’</td>
+</tr>
+<tr>
+<td>DAY_MICROSECOND</td>
+<td>‘DAYS HOURS:MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>DAY_SECOND</td>
+<td>‘DAYS HOURS:MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>DAY_MINUTE</td>
+<td>‘DAYS HOURS:MINUTES’</td>
+</tr>
+<tr>
+<td>DAY_HOUR</td>
+<td>‘DAYS HOURS’</td>
+</tr>
+<tr>
+<td>YEAR_MONTH</td>
+<td>‘YEARS-MONTHS’</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT DATE_ADD(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2008-02-02
+
+SELECT &apos;2008-12-31 23:59:59&apos; + INTERVAL 1 SECOND;
+&gt; 2009-01-01 00:00:00
+
+SELECT INTERVAL 1 DAY + &apos;2008-12-31&apos;;
+&gt; 2009-01-01
+
+SELECT DATE_ADD(&apos;2000-12-31 23:59:59&apos;,INTERVAL 1 SECOND);
+&gt; 2001-01-01 00:00:00
+
+SELECT DATE_ADD(&apos;2010-12-31 23:59:59&apos;, INTERVAL 1 DAY);
+&gt; 2011-01-01 23:59:59
+
+SELECT DATE_ADD(&apos;2100-12-31 23:59:59&apos;, INTERVAL &apos;1:1&apos; MINUTE_SECOND);
+&gt; 2101-01-01 00:01:00
+
+SELECT DATE_SUB(&apos;2005-01-01 00:00:00&apos;, INTERVAL &apos;1 1:1:1&apos; DAY_SECOND);
+&gt; 2004-12-30 22:58:59
+
+SELECT DATE_ADD(&apos;1900-01-01 00:00:00&apos;, INTERVAL &apos;-1 10&apos; DAY_HOUR);
+&gt; 1899-12-30 14:00:00
+
+SELECT DATE_SUB(&apos;1998-01-02&apos;, INTERVAL 31 DAY);
+&gt; 1997-12-02
+
+SELECT DATE_ADD(&apos;1992-12-31 23:59:59.000002&apos;, INTERVAL &apos;1.999999&apos; SECOND_MICROSECOND);
+&gt; 1993-01-01 00:00:01.000001
+
+SELECT 6/4;
+&gt; 1.5000
+
+SELECT DATE_ADD(&apos;2009-01-01&apos;, INTERVAL 6/4 HOUR_MINUTE); 增加1小时 5000分钟
+&gt; 2009-01-04 12:20:00
+
+SELECT DATE_ADD(&apos;2009-01-01&apos;, INTERVAL 1.5 HOUR_MINUTE); 增加1小时5分钟
+&gt; 2009-01-01 01:05:00
+
+SELECT CAST(6/4 AS DECIMAL(3,1));
+&gt; 1.5
+SELECT DATE_ADD(&apos;1970-01-01 12:00:00&apos;, INTERVAL CAST(6/4 AS DECIMAL(3,1)) HOUR_MINUTE);
+&gt; 1970-01-01 13:05:00
+
+SELECT DATE_ADD(&apos;2013-01-01&apos;, INTERVAL 1 DAY);
+&gt; 2013-01-02
+
+SELECT DATE_ADD(&apos;2013-01-01&apos;, INTERVAL 1 HOUR);
+&gt; 2013-01-01 01:00:00
+
+SELECT DATE_ADD(&apos;2009-01-30&apos;, INTERVAL 1 MONTH);
+&gt; 2009-02-28
+
+SELECT DATE_ADD(&apos;2006-07-00&apos;, INTERVAL 1 DAY);
+&gt; NULL
+
+SELECT &apos;2005-03-32&apos; + INTERVAL 1 MONTH;
+&gt; NULL
+</code></pre><p>DATE_SUB()    Subtract a time value (interval) from a date</p>
+<pre><code>select DATE_SUB(&apos;2014-11-11&apos;,INTERVAL 3 DAY);
+&gt; 2014-10-08
+
+select DATE_SUB(&apos;2014-11-11&apos;,INTERVAL 30 DAY);
+&gt; 2014-10-12
+
+select date_sub(&apos;2014-01-01&apos;,interval 31 day);
+&gt; 2013-12-01
+</code></pre><p>DATE()     Extract the date part of a date or datetime expression</p>
+<pre><code>SELECT DATE(&apos;2003-12-31 01:02:03&apos;);
+&gt; 2003-12-31
+
+DATEDIFF()    Subtract two dates
+SELECT DATEDIFF(&apos;2007-12-31 23:59:59&apos;,&apos;2007-12-30&apos;);
+&gt; 1
+
+select datediff(&apos;2014-11-11&apos;,&apos;2014-11-12&apos;);
+&gt; -1
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-12&apos;);
+&gt; 0
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 13:00&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 11:00&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 00:00:01&apos;);
+&gt; 2
+
+SELECT DATEDIFF(&apos;2010-11-30 23:59:59&apos;,&apos;2010-12-31&apos;);
+&gt; -31
+</code></pre><p>SUBDATE()    A synonym for DATE_SUB() when invoked with three arguments</p>
+<pre><code>SELECT DATE_SUB(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2007-12-02
+
+SELECT SUBDATE(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2007-12-02
+
+SELECT SUBDATE(&apos;2008-01-02 12:00:00&apos;, 31);
+&gt; 2007-12-02 12:00:00
+
+SUBTIME()    Subtract times
+SELECT SUBTIME(&apos;2007-12-31 23:59:59.999999&apos;,&apos;1 1:1:1.000002&apos;);
+&gt; 2007-12-30 22:58:58.999997
+
+SELECT SUBTIME(&apos;01:00:00.999999&apos;, &apos;02:00:00.999998&apos;);
+&gt; -00:59:59.999999
+</code></pre><p>TIMEDIFF()    Subtract time</p>
+<pre><code>SELECT TIMEDIFF(&apos;2000:01:01 00:00:00&apos;, &apos;2000:01:01 00:00:00.000001&apos;);
+&gt; -00:00:00.000001
+
+SELECT TIMEDIFF(&apos;2008-12-31 23:59:59.000001&apos;, &apos;2008-12-30 01:01:01.000002&apos;);
+&gt; 46:58:57.999999
+</code></pre><p>TIMESTAMPADD()    Add an interval to a datetime expression</p>
+<pre><code>SELECT TIMESTAMPADD(MINUTE,1,&apos;2003-01-02&apos;);
+&gt; 2003-01-02 00:01:00
+
+SELECT TIMESTAMPADD(WEEK,1,&apos;2003-01-02&apos;);
+&gt; 2003-01-09
+</code></pre><p>TIMESTAMPDIFF()    Subtract an interval from a datetime expression</p>
+<pre><code>SELECT TIMESTAMPDIFF(MONTH,&apos;2003-02-01&apos;,&apos;2003-05-01&apos;);
+&gt; 3
+
+SELECT TIMESTAMPDIFF(YEAR,&apos;2002-05-01&apos;,&apos;2001-01-01&apos;);
+&gt; -1
+
+SELECT TIMESTAMPDIFF(MINUTE,&apos;2003-02-01&apos;,&apos;2003-05-01 12:05:55&apos;);
+&gt; 128885
+</code></pre><p>PERIOD_ADD()    Add a period to a year-month YYYYMM</p>
+<pre><code>SELECT PERIOD_ADD(200801,2);
+&gt; 200803
+</code></pre><p>PERIOD_DIFF()    Return the number of months between periods</p>
+<pre><code>SELECT PERIOD_DIFF(200802,200703);
+&gt; 11
+</code></pre><h2 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h2><p>DATE_FORMAT()    Format date as specified</p>
+<table>
+<thead>
+<tr>
+<th>Specifier</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%a</td>
+<td>Abbreviated weekday name (Sun..Sat)</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>Abbreviated month name (Jan..Dec)</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>Month, numeric (0..12)</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>Day of the month with English suffix (0th, 1st, 2nd, 3rd, …)</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>Day of the month, numeric (00..31)</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>Day of the month, numeric (0..31)</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>Microseconds (000000..999999)</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>Hour (00..23)</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>Hour (01..12)</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>Hour (01..12)</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>Minutes, numeric (00..59)</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>Day of year (001..366)</td>
+</tr>
+<tr>
+<td>%k</td>
+<td>Hour (0..23)</td>
+</tr>
+<tr>
+<td>%l</td>
+<td>Hour (1..12)</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>Month name (January..December)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>Month, numeric (00..12)</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>AM or PM</td>
+</tr>
+<tr>
+<td>%r</td>
+<td>Time, 12-hour (hh:mm:ss followed by AM or PM)</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>Seconds (00..59)</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>Seconds (00..59)</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>Time, 24-hour (hh:mm:ss)</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>Week (00..53), where Sunday is the first day of the week</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>Week (00..53), where Monday is the first day of the week</td>
+</tr>
+<tr>
+<td>%V</td>
+<td>Week (01..53), where Sunday is the first day of the week; used with %X</td>
+</tr>
+<tr>
+<td>%v</td>
+<td>Week (01..53), where Monday is the first day of the week; used with %x</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>Weekday name (Sunday..Saturday)</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>Day of the week (0=Sunday..6=Saturday)</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>Year for the week where Sunday is the first day of the week, numeric, four digits; used with %V</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>Year for the week, where Monday is the first day of the week, numeric, four digits; used with %v</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>Year, numeric, four digits</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>Year, numeric (two digits)</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>A literal “%” character</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>x, for any “x” not listed above</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT DATE_FORMAT(&apos;2009-10-04 22:23:00&apos;, &apos;%W %M %Y&apos;);
+&gt; Sunday October 2009
+
+SELECT DATE_FORMAT(&apos;2007-10-04 22:23:00&apos;, &apos;%H:%i:%s&apos;);
+&gt; 22:23:00
+
+SELECT DATE_FORMAT(&apos;1900-10-04 22:23:00&apos;, &apos;%D %y %a %d %m %b %j&apos;);
+&gt; 4th 00 Thu 04 10 Oct 277
+
+SELECT DATE_FORMAT(&apos;1997-10-04 22:23:00&apos;, &apos;%H %k %I %r %T %S %w&apos;);
+&gt; 22 22 10 10:23:00 PM 22:23:00 00 6
+
+SELECT DATE_FORMAT(&apos;1999-01-01&apos;, &apos;%X %V&apos;); 
+&gt; 1998 52
+
+SELECT DATE_FORMAT(&apos;2006-06-00&apos;, &apos;%d&apos;);
+&gt; 00
+</code></pre><p>GET_FORMAT()    Return a date format string</p>
+<table>
+<thead>
+<tr>
+<th>Function Call</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET_FORMAT(DATE,’USA’)</td>
+<td>‘%m.%d.%Y’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’JIS’)</td>
+<td>‘%Y-%m-%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’ISO’)</td>
+<td>‘%Y-%m-%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’EUR’)</td>
+<td>‘%d.%m.%Y’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’INTERNAL’)</td>
+<td>‘%Y%m%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’USA’)</td>
+<td>‘%Y-%m-%d %H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’JIS’)</td>
+<td>‘%Y-%m-%d %H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’ISO’)</td>
+<td>‘%Y-%m-%d %H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’EUR’)</td>
+<td>‘%Y-%m-%d %H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’INTERNAL’)</td>
+<td>‘%Y%m%d%H%i%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’USA’)</td>
+<td>‘%h:%i:%s %p’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’JIS’)</td>
+<td>‘%H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’ISO’)</td>
+<td>‘%H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’EUR’)</td>
+<td>‘%H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’INTERNAL’)</td>
+<td>‘%H%i%s’</td>
+</tr>
+</tbody>
+</table>
+<pre><code>select GET_FORMAT(DATETIME,&apos;ISO&apos;);
+&gt; %Y-%m-%d %H:%i:%s
+
+SELECT DATE_FORMAT(&apos;2003-10-03&apos;,GET_FORMAT(DATE,&apos;EUR&apos;));
+&gt; &apos;03.10.2003&apos;
+
+SELECT STR_TO_DATE(&apos;10.31.2003&apos;,GET_FORMAT(DATE,&apos;USA&apos;));
+&gt; &apos;2003-10-31&apos;
+</code></pre><h2 id="和字符串之间转换"><a href="#和字符串之间转换" class="headerlink" title="和字符串之间转换"></a>和字符串之间转换</h2><p>STR_TO_DATE()    Convert a string to a date</p>
+<pre><code>SELECT STR_TO_DATE(&apos;01,5,2013&apos;,&apos;%d,%m,%Y&apos;);
+&gt; 2013-05-01
+
+SELECT STR_TO_DATE(&apos;May 1, 2013&apos;,&apos;%M %d,%Y&apos;);
+&gt; &apos;2013-05-01&apos;
+
+SELECT STR_TO_DATE(&apos;a09:30:17&apos;,&apos;a%h:%i:%s&apos;);
+&gt; 09:30:17
+
+SELECT STR_TO_DATE(&apos;a09:30:17&apos;,&apos;%h:%i:%s&apos;);
+&gt; NULL
+
+SELECT STR_TO_DATE(&apos;09:30:17a&apos;,&apos;%h:%i:%s&apos;);
+&gt; 09:30:17
+
+SELECT STR_TO_DATE(&apos;abc&apos;,&apos;abc&apos;);
+&gt; 0000-00-00
+
+SELECT STR_TO_DATE(&apos;9&apos;,&apos;%m&apos;);
+&gt; 0000-09-00
+
+SELECT STR_TO_DATE(&apos;9&apos;,&apos;%s&apos;);
+&gt; 00:00:09
+
+SELECT STR_TO_DATE(&apos;00/00/0000&apos;, &apos;%m/%d/%Y&apos;);
+&gt; 0000-00-00
+
+SELECT STR_TO_DATE(&apos;04/31/2004&apos;, &apos;%m/%d/%Y&apos;);
+&gt; 2004-04-31
+
+SELECT STR_TO_DATE(&apos;200442 Monday&apos;, &apos;%X%V %W&apos;);
+&gt; 2004-10-18
+</code></pre><p>TIME_FORMAT()    Format as time</p>
+<pre><code>SELECT TIME_FORMAT(&apos;100:00:00&apos;, &apos;%H %k %h %I %l&apos;);
+&gt; 100 100 04 04 4
+</code></pre><p>TIME_TO_SEC()    Return the argument converted to seconds</p>
+<pre><code>SELECT TIME_TO_SEC(&apos;22:23:00&apos;);
+&gt; 80580
+
+SELECT TIME_TO_SEC(&apos;00:39:38&apos;);
+&gt; 2378
+</code></pre><p>TO_DAYS()    Return the date argument converted to days</p>
+<pre><code>SELECT TO_DAYS(950501);
+&gt; 728779
+
+SELECT TO_DAYS(&apos;2007-10-07&apos;);
+&gt; 733321
+
+SELECT TO_DAYS(&apos;2008-10-07&apos;), TO_DAYS(&apos;08-10-07&apos;);
+&gt; 733687    733687
+
+SELECT TO_DAYS(&apos;0000-00-00&apos;);
+
+SHOW WARNINGS;
+
+SELECT TO_DAYS(&apos;0000-01-01&apos;);
+&gt; 1
+</code></pre><p>TO_SECONDS()    Return the date or datetime argument converted to seconds since Year 0</p>
+<pre><code>SELECT TO_SECONDS(950501);
+&gt; 62966505600
+
+SELECT TO_SECONDS(&apos;2009-11-29&apos;);
+
+SELECT TO_SECONDS(&apos;2009-11-29 13:43:32&apos;);
+
+SELECT TO_SECONDS( NOW() );
+&gt; 63582872844
+</code></pre><p>SEC_TO_TIME()    Converts seconds to ‘HH:MM:SS’ format</p>
+<pre><code>SELECT SEC_TO_TIME(2378);
+&gt; 00:39:38
+
+SELECT SEC_TO_TIME(2378) + 0;
+&gt; 3938
+</code></pre><p>FROM_DAYS()    Convert a day number to a date</p>
+<pre><code>SELECT FROM_DAYS(730669)
+&gt; 2000-07-03
+</code></pre><p>FROM_UNIXTIME()    Format UNIX timestamp as a date</p>
+<pre><code>SELECT FROM_UNIXTIME(1196440219);
+&gt; 2007-12-01 00:30:19
+
+SELECT FROM_UNIXTIME(1196440219) + 0;
+&gt; 20071201003019
+
+SELECT FROM_UNIXTIME(UNIX_TIMESTAMP(), &apos;%Y %D %M %h:%i:%s %x&apos;);
+&gt; 2014 10th November 08:37:11 2014
+</code></pre><h2 id="时区操作"><a href="#时区操作" class="headerlink" title="时区操作"></a>时区操作</h2><pre><code>CONVERT_TZ()    Convert from one timezone to another
+SELECT @@global.time_zone, @@session.time_zone;
+
+SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;GMT&apos;,&apos;MET&apos;);
+
+SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:00&apos;);
+&gt; 2004-01-01 22:00:00
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/07/how-to-visit-google-in-china/" itemprop="url">
+                  国内如何访问Google
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-07T14:10:01+08:00" content="2014-11-07">
+              2014-11-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vpn/" itemprop="url" rel="index">
+                    <span itemprop="name">vpn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/07/how-to-visit-google-in-china/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/07/how-to-visit-google-in-china/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/07/how-to-visit-google-in-china/" class="leancloud_visitors" data-flag-title="国内如何访问Google">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>中国如何访问Google?试试下面几个吧</p>
+<p>随着时间推移，可能会有些不能用的，自己多试试</p>
+<h1 id="可以上网的地址"><a href="#可以上网的地址" class="headerlink" title="可以上网的地址"></a>可以上网的地址</h1><p><a href="http://gg.cellmean.com/" target="_blank" rel="external">http://gg.cellmean.com/</a></p>
+<p><a href="https://g.yh.gs/" target="_blank" rel="external">https://g.yh.gs/</a></p>
+<p>新增一个<a href="http://bar.freebuf.com/comment/3987" target="_blank" rel="external">http://bar.freebuf.com/comment/3987</a></p>
+<p>这个也很不错，都是好人<a href="http://googless.sinaapp.com/" target="_blank" rel="external">http://googless.sinaapp.com/</a></p>
+<p>比我收集的好</p>
+<p><a href="http://www.itechzero.com/google-mirror-sites-collect.html" target="_blank" rel="external">http://www.itechzero.com/google-mirror-sites-collect.html</a></p>
+<p>下面地址解救中国程序员，但是不保证完全能用哦</p>
+<p>最后更新时间 2015-01-29日</p>
+<p><a href="http://laoshandaoshi.so/?gws_rd=ssl" target="_blank" rel="external">http://laoshandaoshi.so/?gws_rd=ssl</a> 2015-01-29添加,感谢@Andrew 提供</p>
+<p><a href="http://www.886404.com" target="_blank" rel="external">http://www.886404.com</a> 2015-01-07 添加</p>
+<p><a href="http://64.233.182.102" target="_blank" rel="external">http://64.233.182.102</a> 2015-01-07 添加</p>
+<p><a href="http://www.glgoo.com/" target="_blank" rel="external">http://www.glgoo.com/</a></p>
+<p><a href="https://www.sssis.com/" target="_blank" rel="external">https://www.sssis.com/</a></p>
+<p><a href="http://www.xiexingwen.com/" target="_blank" rel="external">http://www.xiexingwen.com/</a></p>
+<p>host 更改的方法 <a href="http://serve.netsh.org/pub/gethosts.php" target="_blank" rel="external">http://serve.netsh.org/pub/gethosts.php</a></p>
+<p>vpn还是最好的，花钱买服务吧</p>
+<p>GAE，zf一开会就大姨妈</p>
+<p>哪个快，自己试试 ^.^</p>
+<hr>
+<p>已经不能访问如下</p>
+<p><a href="http://216.58.208.0/" target="_blank" rel="external">http://216.58.208.0/</a>   2015-01-07 添加,2015-01-29删除</p>
+<p><a href="http://guge.io" target="_blank" rel="external">http://guge.io</a>  2015-01-29删除</p>
+<p><a href="https://awk.so" target="_blank" rel="external">https://awk.so</a> 2015-01-29删除</p>
+<p><a href="http://wen.lu" target="_blank" rel="external">http://wen.lu</a> 2015-01-29删除</p>
+<p><a href="http://74.125.202.120/" target="_blank" rel="external">http://74.125.202.120/</a> 2015-01-29删除</p>
+<p><a href="https://edgecastcdn.net/00107ED/g/" target="_blank" rel="external">https://edgecastcdn.net/00107ED/g/</a> 2015-01-29删除</p>
+<p>如果大家发现哪个又可以了，欢迎留言</p>
 
           
         
@@ -719,8 +1431,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/08/30/eclipse-properties-file-edit/" itemprop="url">
-                  eclipse打开含中文properties文件乱码解决
+                <a class="post-title-link" href="/2014/10/30/mac-os-x-jdk6/" itemprop="url">
+                  Install Jdk6 on Mac OS X
                 </a>
               
             
@@ -733,8 +1445,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-30T13:20:25+08:00" content="2014-08-30">
-              2014-08-30
+            <time itemprop="dateCreated" datetime="2014-10-30T13:28:29+08:00" content="2014-10-30">
+              2014-10-30
             </time>
           </span>
 
@@ -747,8 +1459,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">eclipse</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -763,8 +1475,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/08/30/eclipse-properties-file-edit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/30/eclipse-properties-file-edit/" itemprop="commentsCount"></span>
+                <a href="/2014/10/30/mac-os-x-jdk6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/30/mac-os-x-jdk6/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -774,7 +1486,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/08/30/eclipse-properties-file-edit/" class="leancloud_visitors" data-flag-title="eclipse打开含中文properties文件乱码解决">
+             <span id="/2014/10/30/mac-os-x-jdk6/" class="leancloud_visitors" data-flag-title="Install Jdk6 on Mac OS X">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -798,15 +1510,9 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="eclipse打开含中文properties文件乱码解决"><a href="#eclipse打开含中文properties文件乱码解决" class="headerlink" title="eclipse打开含中文properties文件乱码解决"></a>eclipse打开含中文properties文件乱码解决</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>Java项目里面经常会使用properties文件，如果在里面添加中文注释，项目转移重新checkout后<br>如果使用Eclipse默认的properties编辑器就会乱码，解决方案就是安装第三方插件，替换自带的<br>properties编辑器</p>
-<h2 id="选择一-property-edit"><a href="#选择一-property-edit" class="headerlink" title="选择一 property edit "></a>选择一 property edit </h2><p>一个日本开源作者编写的插件，原声编辑器增强版，能够打开含有中文的文件不乱码<br>算是一个轻量级版本，如果不做大型的国际化功能，这个功能足够</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1i3Ibp7R" target="_blank" rel="external">http://pan.baidu.com/s/1i3Ibp7R</a></p>
-<h2 id="选择二-rbe"><a href="#选择二-rbe" class="headerlink" title="选择二 rbe "></a>选择二 rbe </h2><p>一个功能强大的资源文件编辑工具，支持对key排序和分组展示、直接新建对应国家资源文件等</p>
-<p>例如:</p>
-<p>user.name</p>
-<p>user.password</p>
-<p>在展示的时候会展示为user节点，然后下面有两个子节点，如果做大型的国际化网站，这个还是很不错的</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1hq89RG4" target="_blank" rel="external">http://pan.baidu.com/s/1hq89RG4</a></p>
+            <p>买得mac装得时10.9的系统，没有预装jdk，装了最新版jdk1.8，但是有时候<br>需要jdk1.6版本来编译一些java程序，oracle 官方发布的1.6都没有mac os 版本，<br>只有Linux版本，网上找半天才找到答案，记录备忘和分享给需要的人</p>
+<p>mac os x安装jdk1.6<br>苹果官方下载地址<a href="http://support.apple.com/kb/DL1572" target="_blank" rel="external">http://support.apple.com/kb/DL1572</a></p>
+<p>用到的地方<br>dbeaver 需要安装jre1.6<br>编译hadoop 2.0的时候需要jdk1.6</p>
 
           
         
@@ -856,8 +1562,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/08/30/eclipse-java-compiler-level-error/" itemprop="url">
-                  Java compiler level does not match the installed Java project facet
+                <a class="post-title-link" href="/2014/10/29/read-redis-design-and-implementation-1/" itemprop="url">
+                  《Redis设计与实现》- 数据结构与对象
                 </a>
               
             
@@ -870,8 +1576,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-30T12:05:26+08:00" content="2014-08-30">
-              2014-08-30
+            <time itemprop="dateCreated" datetime="2014-10-29T13:28:29+08:00" content="2014-10-29">
+              2014-10-29
             </time>
           </span>
 
@@ -884,8 +1590,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">eclipse</span>
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
                   </a>
                 </span>
 
@@ -900,8 +1606,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/08/30/eclipse-java-compiler-level-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/30/eclipse-java-compiler-level-error/" itemprop="commentsCount"></span>
+                <a href="/2014/10/29/read-redis-design-and-implementation-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/29/read-redis-design-and-implementation-1/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -911,7 +1617,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/08/30/eclipse-java-compiler-level-error/" class="leancloud_visitors" data-flag-title="Java compiler level does not match the installed Java project facet">
+             <span id="/2014/10/29/read-redis-design-and-implementation-1/" class="leancloud_visitors" data-flag-title="《Redis设计与实现》- 数据结构与对象">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -935,11 +1641,18 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="eclipse-报错-Java-compiler-level-does-not-match-the-version-of-the-installed-Java-project-facet"><a href="#eclipse-报错-Java-compiler-level-does-not-match-the-version-of-the-installed-Java-project-facet" class="headerlink" title="eclipse 报错 Java compiler level does not match the version of the installed Java project facet."></a>eclipse 报错 Java compiler level does not match the version of the installed Java project facet.</h1><h2 id="错误信息如下："><a href="#错误信息如下：" class="headerlink" title="错误信息如下："></a>错误信息如下：</h2><p>Description Resource<br>Path Location<br>Type<br>Java compiler level does not match the version of the installed Java project facet.<br>new-restDemo<br>Unknown Faceted Project Problem (Java Version Mismatch)</p>
-<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>在项目名上右键–&gt;选择属性–&gt;Project Facets –&gt;Java–&gt;Version 1.7</p>
-<p>我的问题是导入项目时出现该问题，开发jdk版本 1.7,</p>
-<p>报错是因为这里显示的是1.6，调整为1.7就可以</p>
-<p>根据自己情况选择合适的版本</p>
+            <h1 id="《Redis设计与实现》——读书笔记一"><a href="#《Redis设计与实现》——读书笔记一" class="headerlink" title="《Redis设计与实现》——读书笔记一"></a>《Redis设计与实现》——读书笔记一</h1><p>这本书从1.0开始一直关注，然后平时redis doc也是看的书的作者维护的网站，<br>可以预定后，立即预定，并成为第一批到手的读者，可惜中间由于各种原因一直<br>没有时间仔细研读，最近终于有时间可以来细细品读本书。</p>
+<p>在地铁上看了本书的第一二三章，了解到本书的目录安排为四部分，分别是</p>
+<ul>
+<li>数据结构与对象</li>
+<li>单机数据库实现</li>
+<li>多机数据库实现</li>
+<li>独立功能的实现</li>
+</ul>
+<h1 id="第二章-简单动态字符串"><a href="#第二章-简单动态字符串" class="headerlink" title="第二章 简单动态字符串"></a>第二章 简单动态字符串</h1><p>讲解了设计理念，通过通俗易懂的语言和实例，讲解了sds(simple dynamic string)与<br>c语言原声的字符串之间的联系和区别，讲解了sds的设计结构，以及结构的优点</p>
+<p>其中保存字符串len，该理念可以用到后台设计中，比如保存用户充值记录时候，会保存<br>每一次操作的单个记录，也会按照每个用户的操作计算，每个用户产生一条记录，比如充值<br>总额，第一次充值时间，最后一次充值时间，最后一次充值金额等元素</p>
+<p>或者比如设计到count计算的数据，不会到用到的时候才去计算，而是出现数据后，就回去计算，<br>用到的时候，直接读取值，但是对于修改频繁的操作，保存时候，需要慎重，例如淘宝上每个商品<br>的浏览量，数据修改过于频繁，如果保存数据库，数据库压力会太大，而这部分数据又<br>不要去过于精确和实时，需要在准确性、数据库压力上找到权衡点</p>
+<h1 id="第三章-链表"><a href="#第三章-链表" class="headerlink" title="第三章 链表"></a>第三章 链表</h1><p>初步讲解了链表在Redis里面的实现方案，listNode结构和list结构，以及多态性，可以用于多种<br>数据结构，链表和链表节点的api，可以带领读者快速理解实现方案方案和优点</p>
 
           
         
@@ -972,7 +1685,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1013,7 +1726,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1021,7 +1734,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1030,7 +1743,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

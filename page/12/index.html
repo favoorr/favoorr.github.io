@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/config-svn-server-on-mac-os-x/" itemprop="url">
-                  mac 配置svn服务器
+                <a class="post-title-link" href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="url">
+                  mac使用svn遇到的一些问题
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T16:22:01+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2014-12-04T09:38:14+08:00" content="2014-12-04">
+              2014-12-04
             </time>
           </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/config-svn-server-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/config-svn-server-on-mac-os-x/" itemprop="commentsCount"></span>
+                <a href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/11/22/config-svn-server-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac 配置svn服务器">
+             <span id="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" class="leancloud_visitors" data-flag-title="mac使用svn遇到的一些问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,65 +337,37 @@
       
         
           
-            <h1 id="mac上配置svn服务器的步骤"><a href="#mac上配置svn服务器的步骤" class="headerlink" title="mac上配置svn服务器的步骤"></a>mac上配置svn服务器的步骤</h1><p>mac上面初始已经安装了svn服务端</p>
-<p>1.建立目录</p>
-<pre><code>cd ~/Documents
-mkdir svn-repos
-</code></pre><p>2.创建仓库</p>
-<pre><code>svnadmin create svn-repos/account
-</code></pre><p>3.配置登录用户</p>
-<p>此时的仓库匿名是可以访问的，通常会配置用户后，在使用</p>
-<p>编辑密码配置文件 </p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/svnserve.conf
-</code></pre><p>以下内容取消注释</p>
-<pre><code>anon-access = read
-auth-access = write
-password-db = passwd
-authz-db = authz
-realm = local-svn-repo
-</code></pre><p>编辑权限配置文件</p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/authz
-</code></pre><p>配置示例</p>
-<p>新建组manage 和 组 user，新建用户favoorr test，对目录 <code>/</code> ，<code>manage</code>组可以读写</p>
-<pre><code>[groups]
-# harry_and_sally = harry,sally
-# harry_sally_and_joe = harry,sally,&amp;joe
-manage = favoorr
-user = test
+            <h1 id="mac使用svn遇到的一些问题"><a href="#mac使用svn遇到的一些问题" class="headerlink" title="mac使用svn遇到的一些问题"></a>mac使用svn遇到的一些问题</h1><p>1.在安装了最新的subversion 1.8.10 和 subeclipse1.10.6之后，<br>使用svn执行更新和其他操作会出现如下错误</p>
+<pre><code>org.apache.subversion.javahl.ClientException: Couldn&apos;t perform atomic initialization
+svn: Couldn&apos;t perform atomic initialization
+SQLite error
+svn: SQLite compiled for 3.8.6, but running with 3.8.5
+</code></pre><p>解决方法</p>
+<pre><code>brew uninstall sqlite
 
+brew uninstall subversion
 
-[/]
-# harry = rw
-# &amp;joe = r
-# * =
-@manage = rw
+brew edit sqlite
 
-[repository:/svnroot]
-# @harry_and_sally = rw
-# * = r
-manage = rw
-</code></pre><p>编辑设置密码文件</p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/passwd
-</code></pre><p>示例</p>
-<pre><code>[users]
-# harry = harryssecret
-# sally = sallyssecret
-favoorr = 000000
-</code></pre><p>4.后台启动svn服务</p>
-<pre><code>svnserve -d -r svn-repos --listen-host 0.0.0.0
-</code></pre><p>5.命令行导入文件</p>
-<p>下面命令会把当前目录下所有文件上传到svn 仓库中</p>
-<pre><code>提交到svn仓库
-svn import -m &quot;initial import&quot; . svn://127.0.0.1/account/trunk --username favoorr --password 000000
+ 3 class Sqlite &lt; Formula
+ 4   homepage &quot;http://sqlite.org/&quot;
+ 5   url &quot;https://www.sqlite.org/2014/sqlite-autoconf-3080500.tar.gz&quot;
+ 6   version &quot;3.8.5.0&quot;
+ 7   sha1 &quot;7f667e10ccebc26ab2086b8a30cb0a600ca0acae&quot;
 
-由于我们的仓库在本机，也可以使用以下命令提交到本机
-svn import -m &quot;initial import&quot; . file:////Users/User/Documents/svn-repos/account/trunk --username favoorr --password 000000
-</code></pre><p>6.命令行查看文件列表</p>
-<pre><code>svn list svn://127.0.0.1/account/trunk
+34   resource &quot;docs&quot; do
+35     url &quot;https://www.sqlite.org/2014/sqlite-doc-3080500.zip&quot;
+36     version &quot;3.8.5.0&quot;
+37     sha1 &quot;c5655a4004095c50dc8403661e0ed02fd4191d57&quot;
+38   end
 
-后台查看进程
-
-ps -ef |grep svnserve
+brew install --universal --java subversion
+</code></pre><p>参考链接<a href="http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5" target="_blank" rel="external">http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5</a></p>
+<p>2.本来在svn仓库中已经有项目A了，然后由于一些原因，本地也有项目A，并且<br>某些文件需要和svn仓库中合并，直接选择了<code>share project</code>之后，会出现如下错误</p>
+<pre><code>post commit FS processing had error
+Could&apos;t open rep-cache database
+</code></pre><p>解决方法</p>
+<pre><code>从workplace删除项目，然后在重新导入就ok了
 </code></pre>
           
         
@@ -445,8 +417,8 @@ ps -ef |grep svnserve
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="url">
-                  重启finder的方法
+                <a class="post-title-link" href="/2014/12/01/mac-os-x-apahe-server-tips/" itemprop="url">
+                  apache server在mac上的信息
                 </a>
               
             
@@ -459,8 +431,508 @@ ps -ef |grep svnserve
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T16:00:25+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2014-12-01T22:16:01+08:00" content="2014-12-01">
+              2014-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/apache/" itemprop="url" rel="index">
+                    <span itemprop="name">apache</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/01/mac-os-x-apahe-server-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-apahe-server-tips/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/01/mac-os-x-apahe-server-tips/" class="leancloud_visitors" data-flag-title="apache server在mac上的信息">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Apache-server在mac上的安装信息"><a href="#Apache-server在mac上的安装信息" class="headerlink" title="Apache server在mac上的安装信息"></a>Apache server在mac上的安装信息</h1><p>mac 使用的还不熟练，然后很多软件想用的时候有时候会不知道在哪里，<br>逮着一个就记下来，下次需要了，直接找</p>
+<h2 id="安装目录"><a href="#安装目录" class="headerlink" title="安装目录"></a>安装目录</h2><pre><code>/etc/apache2/
+</code></pre><h2 id="日志路径"><a href="#日志路径" class="headerlink" title="日志路径"></a>日志路径</h2><pre><code>/private/var/log/apache2
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/12/01/mac-os-x-javahl-error/" itemprop="url">
+                  mac上JavaHL报错解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-01T18:20:10+08:00" content="2014-12-01">
+              2014-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/01/mac-os-x-javahl-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-javahl-error/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/01/mac-os-x-javahl-error/" class="leancloud_visitors" data-flag-title="mac上JavaHL报错解决">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>升级svn到1.8.10后，打开Eclipse进入显示以下异常：</p>
+<pre><code>Failed to load JavaHL Library.
+These are the errors that were encountered:
+no libsvnjavahl-1 in java.library.path
+no svnjavahl-1 in java.library.path
+no svnjavahl in java.library.path
+java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:
+</code></pre><p>原因</p>
+<p>javaHL 版本和subversion版本和subeclipse版本是由对应关系的，详细参见连接<a href="http://subclipse.tigris.org/wiki/JavaHL" target="_blank" rel="external">http://subclipse.tigris.org/wiki/JavaHL</a><br>根据提示，执行如下操作</p>
+<pre><code>brew install --universal --java subversion
+</code></pre><p>出现错误</p>
+<pre><code>Warning: subversion-1.8.10_1 already installed
+</code></pre><p>然后先卸载subversion，</p>
+<pre><code>brew uninstall subversion
+</code></pre><p>重新安装</p>
+<pre><code>brew install --universal --java subversion
+</code></pre><p>同时下载1.10.6版本的subeclipse，地址：<a href="http://subclipse.tigris.org/archive/" target="_blank" rel="external">http://subclipse.tigris.org/archive/</a></p>
+<p>链接方式安装插件后，重启Eclipse，JavaHL没有报错</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="url">
+                  mac os x使用Apache与svn集成
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-01T14:17:09+08:00" content="2014-12-01">
+              2014-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac os x使用Apache与svn集成">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>mac os x使用<code>Apache server</code>与<code>svn</code>集成，提供<code>http</code>访问svn，下面是详细步骤，中间有遇到的各种问题<br>及解决方法.</p>
+<p>首先说既然要配置http方式访问svn，那我就默认大家已经配置了svn 本地仓库，<br>并且已经可以使用类似<code>svn://127.0.0.1/account/trunk</code>这种方式访问成功，还没有配置<br>的，可以参照<a href="/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/">这里</a></p>
+<p>以下为配置主要步骤：</p>
+<ol>
+<li><p>手工编译svn，获取依赖包mod_authz_svn.so、mod_dav_svn.so，Apache server需要的，但是<br>mac上通过homebrew安装的svn是没有这些包得，原生的Apache server也没有</p>
+</li>
+<li><p>修改Apache server配置文件/etc/apache2/httpd.conf，加载对应的module</p>
+</li>
+<li><p>建立svn.conf配置文件，添加Apache server解析svn配置</p>
+</li>
+<li><p>重启Apache server</p>
+</li>
+<li><p>使用浏览器访问，验证配置</p>
+</li>
+</ol>
+<p>下面为详细配置</p>
+<h2 id="下载，手工编译"><a href="#下载，手工编译" class="headerlink" title="下载，手工编译"></a>下载，手工编译</h2><p>svn的源码包下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
+<pre><code>编译安装
+./configure --with-apxs=/usr/sbin/apxs
+make
+
+注意这里不需要安装，如果仅仅这样安装了版本，是不支持http和https方式访问的
+
+浏览是否编译成功
+ll subversion/mod_authz_svn/.libs/mod_authz_svn.so
+ll subversion/mod_dav_svn/.libs/mod_dav_svn.so
+
+复制到Apache server的lib目录
+sudo cp subversion/mod_authz_svn/.libs/mod_authz_svn.so /usr/libexec/apache2/
+sudo cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/libexec/apache2
+
+检查
+ll /usr/libexec/apache2 | grep svn
+
+安装后，Apache server下应该有以下lib
+/usr/libexec/apache2|grep dav
+mod_dav.so
+mod_dav_fs.so
+mod_dav_lock.so
+mod_dav_svn.so
+</code></pre><h2 id="修改apache配置文件"><a href="#修改apache配置文件" class="headerlink" title="修改apache配置文件"></a>修改apache配置文件</h2><p>sudo vim /etc/apache2/httpd.conf </p>
+<pre><code>添加以下配置,左侧为行数
+152 LoadModule dav_module libexec/apache2/mod_dav.so
+153 LoadModule dav_fs_module libexec/apache2/mod_dav_fs.so
+154 LoadModule dav_svn_module libexec/apache2/mod_dav_svn.so
+155 LoadModule authz_svn_module libexec/apache2/mod_authz_svn.so
+</code></pre><h2 id="建立svn配置文件"><a href="#建立svn配置文件" class="headerlink" title="建立svn配置文件"></a>建立svn配置文件</h2><pre><code>&lt;Location /svn&gt;
+    DAV svn
+    SVNParentPath /Users/User/Documents/svn-repos
+    SVNListParentPath on
+    AuthType Basic
+    AuthName &quot;Subversion repositories&quot;
+    AuthUserFile /Users/User/Documents/svn-repos/account/conf/passwd
+    AuthzSVNAccessFile /Users/User/Documents/svn-repos/account/conf/authz
+    Require valid-user
+&lt;/Location&gt;
+</code></pre><p><code>SVNParentPath</code> 为svn仓库的根目录，参照<code>/Users/User/Documents/svn-repos/account/conf/passwd</code>,<br>看下自己该输入哪个路径</p>
+<p><code>AuthUserFile</code> 为svn密码管理的路径</p>
+<p><code>AuthzSVNAccessFile</code> 为权限配置的路径</p>
+<h2 id="添加svn用户"><a href="#添加svn用户" class="headerlink" title="添加svn用户"></a>添加svn用户</h2><pre><code>根据提示输入密码
+sudo htpasswd -c /Users/User/Documents/svn-repos/account/conf/passwd admin
+</code></pre><p>这里注意，这种添加的用户密码就不是明文了，和之前直接修改添加的不同</p>
+<h2 id="配置权限"><a href="#配置权限" class="headerlink" title="配置权限"></a>配置权限</h2><pre><code>vim /Users/User/Documents/svn-repos/account/conf/authz
+</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>打开浏览器访问地址
+http://localhost/svn
+
+如果配置正确，能够看到正确地svn项目列表
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我在安装的时候遇到了很多问题，我首先google的关键字是<code>mac Apache svn</code>，然后<br>发现配置需要的module没有，然后手工编译svn，</p>
+<p>编译svn的时候，我的是<code>1.8.*</code>版本，最后我用的是<code>1.8.10</code>，又下载了一系列的依赖包，而且<br><code>1.7.*</code> 和 <code>1.8.*</code> 提供http和https访问使用的还不同</p>
+<p>最后还是被我编译成功了，但是问题又出现了，在跟Apache server集成的时候，出现错误</p>
+<pre><code>httpd: Syntax error on line 120 of /etc/apache2/httpd.conf: 
+Cannot load /usr/libexec/apache2/mod_dav_svn.so into server: 
+dlopen(/usr/libexec/apache2/mod_dav_svn.so, 10): 
+Library not loaded: /usr/local/bin/apache2/lib/libaprutil-1.0.dylib\n  
+Referenced from: /usr/local/lib/libsvn_repos-1.0.dylib\n  
+Reason: Incompatible library version: libsvn_repos-1.0.dylib requires version 6.0.0 or later, 
+but libaprutil-1.0.dylib provides version 4.0.0
+</code></pre><p>最后解决的方法我在这篇文章中受到启发<a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
+<p>在解决的过程中，发现我之前自己编译安装的svn会给通过brew安装造成很多错误，<br>最好先清空下列文件夹中<code>svn</code>开头的内容</p>
+<pre><code>/usr/local/include
+/usr/local/lib
+/usr/local/share/man/man1/
+/usr/local/share/man/man5/
+/usr/local/share/man/man8/
+</code></pre><p>直到<code>brew install subversion</code>成功，</p>
+<p>启动Apache server后，又遇到错误</p>
+<p>apache 日志目录 <code>/private/var/log/apache2/</code></p>
+<pre><code>[Sat Nov 29 21:15:00.773969 2014] [auth_basic:error] [pid 45831] [client 127.0.0.1:54634] AH01617: 
+user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mismatch
+</code></pre><p>我的路径<code>/Users/User/Documents/svn-repos/account/</code> Documents,需要读写权限</p>
+<pre><code>chmod -R 755 /Users/User/Documents
+</code></pre><p>然后重启Apache server访问才成功.</p>
+<p>参考地址</p>
+<p><a href="https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0" target="_blank" rel="external">https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0</a></p>
+<p><a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="url">
+                  mac os 10.10.1下编译安装svn1.8.8
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-27T21:15:29+08:00" content="2014-11-27">
+              2014-11-27
             </time>
           </span>
 
@@ -489,8 +961,8 @@ ps -ef |grep svnserve
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="commentsCount"></span>
+                <a href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -500,7 +972,7 @@ ps -ef |grep svnserve
 
           
           
-             <span id="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" class="leancloud_visitors" data-flag-title="重启finder的方法">
+             <span id="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" class="leancloud_visitors" data-flag-title="mac os 10.10.1下编译安装svn1.8.8">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -524,461 +996,71 @@ ps -ef |grep svnserve
       
         
           
-            <h1 id="三种重启Finder的方法"><a href="#三种重启Finder的方法" class="headerlink" title="三种重启Finder的方法"></a>三种重启Finder的方法</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>1.今天在使用<code>Sublime text</code>的时候,经常使用的 <code>Reveal In Finder</code>的功能不能使用</p>
-<p>2.昨天在Finder中使用 Go2Shell 的时候，打开Iterm非常慢</p>
-<p>然后看了监视器，Finder占用350M多内存，本来想直接重启机器，突然想了下<br>应该是Finder有问题了，需要重启，就Google了下，总共收集3种快速重启方法</p>
-<h2 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h2><p>方法一</p>
-<p>摁 <code>option</code> 之后，右键点击dock上的Finder图标，会在最下面出现 <code>重新开启</code> 的菜单</p>
-<p>方法二</p>
-<p>在命令行终端执行 <code>killall Finder</code> </p>
-<p>方法三</p>
-<p><code>option + command + esc</code> ,调出小窗口，找到Finder，强制退出重启</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/22/run-java-code-in-sublime-text/" itemprop="url">
-                  run Java code in Sublime Text
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T15:11:53+08:00" content="2014-11-22">
-              2014-11-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/sublime/" itemprop="url" rel="index">
-                    <span itemprop="name">sublime</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/22/run-java-code-in-sublime-text/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/run-java-code-in-sublime-text/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/22/run-java-code-in-sublime-text/" class="leancloud_visitors" data-flag-title="run Java code in Sublime Text">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="在sublime中编写运行Java代码"><a href="#在sublime中编写运行Java代码" class="headerlink" title="在sublime中编写运行Java代码"></a>在sublime中编写运行Java代码</h1><p>1.安装Java编译器</p>
-<p>步骤一：菜单栏 Sublime Text –&gt; Preferences –&gt;Browse Packages 在finder中打开目录</p>
-<p>步骤二：新建<code>Java</code>文件夹,新建文件 <code>JavaC.sublime-build</code>,内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;cmd&quot;: [&quot;javac \&quot;$file_name\&quot; &amp;&amp; java \&quot;$file_base_name\&quot;&quot;],</div><div class="line">    &quot;shell&quot;: true,</div><div class="line">    &quot;file_regex&quot;: &quot;^(...*?):([0-9]*):?([0-9]*)&quot;,</div><div class="line">    &quot;selector&quot;: &quot;source.java&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.编写Java代码调试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Helloword&#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		System.out.println(&quot;Helloword World!&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>3.运行测试</p>
-<p>command + b,即可运行代码</p>
-<p>ctrl + ` ，可以显示控制台查看步骤</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/20/read-redis-design-and-implementation-2/" itemprop="url">
-                  Redis设计与实现读书笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-20T15:07:26+08:00" content="2014-11-20">
-              2014-11-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/20/read-redis-design-and-implementation-2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/20/read-redis-design-and-implementation-2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/20/read-redis-design-and-implementation-2/" class="leancloud_visitors" data-flag-title="Redis设计与实现读书笔记">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="《Redis设计与实现》——读书笔记终篇"><a href="#《Redis设计与实现》——读书笔记终篇" class="headerlink" title="《Redis设计与实现》——读书笔记终篇"></a>《Redis设计与实现》——读书笔记终篇</h1><p>截止前天，《Redis设计与实现》纸质书看完了第一遍，感觉本书<br>是一本好书，值得观看。通过本书了解了Redis的实现细节，然后最深的<br>感触是Redis的作者是一个数据结构和算法拿得出手的人，这点需要肯定，然后是本书<br>的作者也是一个思维细腻，描述一个东西的时候希望做到透彻、清晰的人。</p>
-<p>个人感觉特别适合对Redis有一些简单的了解，然后需要使用Redis来完成项目开发的<br>人员，读了这本书之后，虽然没有设计太多的最佳实践，但是你会对Redis的特性有一个整体的了解，<br>知道通过Redis可以很方便的实现什么功能？实现某一个特性需要哪些配置？不同的配置会有什么结果？<br>这些问题在通读本书后都会有相应的了解，而且本书也很适合放在手边做设计取舍时候做参考，<br>至少我是这么干得</p>
-<p>以下几点是个人感觉Redis里面比较值得去学习和掌握的</p>
-<ol>
-<li>5中数据类型的操作命令，这个在本书作者提供的免费网站上可以很方便的查阅，包括各种命令的介绍、<br>使用示例，以及版本差异都有清晰的介绍，连接地址 <a href="http://redisdoc.com" target="_blank" rel="external">http://redisdoc.com</a></li>
-<li>Redis关于过期时间的处理命令，和不同的设置方式</li>
-<li>Redis主从的使用</li>
-</ol>
-<h2 id="目前有使用Redis的地方"><a href="#目前有使用Redis的地方" class="headerlink" title="目前有使用Redis的地方"></a>目前有使用Redis的地方</h2><ol>
-<li>做数据缓存服务器，Redis中已经实现的时间过期功能，可以让我们很方便实现这个功能</li>
-<li>计数器，接口访问次数调用，如果直接在数据库里面做，数据库压力比较大，但是Redis就好多了</li>
-<li>好友关系存储和根据好友关系做可能认识的人推荐</li>
-<li>list来实现队列</li>
-<li>k v映射存储</li>
-<li>k set ，存储和某个用户有某种关系的uid集合</li>
-</ol>
-<h2 id="使用Redis的方式"><a href="#使用Redis的方式" class="headerlink" title="使用Redis的方式"></a>使用Redis的方式</h2><p>单机部署，做从备份，没有使用到其他的复杂功能</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="url">
-                  mac os x 设置 jenkins开机启动遇到的问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-19T17:29:26+08:00" content="2014-11-19">
-              2014-11-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">jenkins</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" class="leancloud_visitors" data-flag-title="mac os x 设置 jenkins开机启动遇到的问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mac-os-x-设置-jenkins开机启动遇到的问题"><a href="#mac-os-x-设置-jenkins开机启动遇到的问题" class="headerlink" title="mac os x 设置 jenkins开机启动遇到的问题"></a>mac os x 设置 jenkins开机启动遇到的问题</h1><p>设置命令</p>
-<p>取消开机启动</p>
-<pre><code>sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><p>设置开机启动</p>
-<pre><code>sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><h2 id="我的问题描述"><a href="#我的问题描述" class="headerlink" title="我的问题描述"></a>我的问题描述</h2><p>第一次安装jenkins之后，是可以开机启动的，但是由于开机占用400++M内存，就被禁掉了，<br>然后现在回头想恢复让其开机启动，死活不成功，折腾过程记录如下</p>
-<p>查看 plist 文件找出脚本，手工启动</p>
-<pre><code>zsh /Library/Application\ Support/Jenkins/jenkins-runner.sh
-</code></pre><p>会出现以下错误</p>
-<pre><code>十一月 19, 2014 4:13:10 下午 hudson.UDPBroadcastThread run
-警告: UDP handling problem
-java.net.SocketException: Can&apos;t assign requested address
-    at java.net.PlainDatagramSocketImpl.join(Native Method)
-    at java.net.AbstractPlainDatagramSocketImpl.join(AbstractPlainDatagramSocketImpl.java:178)
-    at java.net.MulticastSocket.joinGroup(MulticastSocket.java:319)
-    at hudson.UDPBroadcastThread.run(UDPBroadcastThread.java:76)
-</code></pre><p>这个错误不需要理会</p>
-<p>出现错误 </p>
-<pre><code>十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
-警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
-十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
-警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
-</code></pre><p>解决办法为，增加如下参数，升级1.634版，也没用这个问题</p>
-<pre><code>java -Dhudson.DNSMultiCast.disabled=true
-
-/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -jar /Applications/Jenkins/jenkins.war
-</code></pre><h2 id="恢复jenkins开机启动办法"><a href="#恢复jenkins开机启动办法" class="headerlink" title="恢复jenkins开机启动办法"></a>恢复jenkins开机启动办法</h2><p>1.删除文件</p>
-<pre><code>sudo rm /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><p>2.重新安装pkg安装包，</p>
-<p>mac版下载地址 <a href="http://jenkins-ci.org/content/thank-you-downloading-os-x-installer" target="_blank" rel="external">http://jenkins-ci.org/content/thank-you-downloading-os-x-installer</a></p>
-<p>通过以上步骤，我的问题解决，祝君好运</p>
-<p>3.以上两步是一种解决方法，或者通过 brew install jenkins 重新安装jenkins</p>
-<p>4.手工在mac上启动 jenkins</p>
-<pre><code>/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -XX:PermSize=256m -XX:MaxPermSize=512m -Xms256m -Xmx512m -Djava.io.tmpdir=/Users/Shared/Jenkins/tmp -jar /Applications/Jenkins/jenkins.war --httpPort=8080
-</code></pre><p>5.Jenkins 默认日志路径</p>
-<pre><code>tail -f /var/log/jenkins/jenkins.log
+            <h2 id="为何编译"><a href="#为何编译" class="headerlink" title="为何编译"></a>为何编译</h2><p>mac下Apache配置http方式访问svn，依赖的lib如下</p>
+<pre><code>➜  ~  ll /usr/libexec/apache2|grep dav
+-rwxr-xr-x  1 root  wheel   130K  9 10 06:11 mod_dav.so
+-rwxr-xr-x  1 root  wheel    69K  9 10 06:11 mod_dav_fs.so
+-rwxr-xr-x  1 root  wheel    29K  9 10 06:11 mod_dav_lock.so
+-rwxr-xr-x  1 root  wheel   188K 11 27 17:19 mod_dav_svn.so
+</code></pre><p>其中 <code>mod_dav_svn.so mod_authz_svn.so</code> 自带的Apache是没有的，需要编译svn之后才能生成</p>
+<p>svn1.7版本之前使用 <code>neon</code> 处理<code>http</code>和<code>https scheme</code> ,<br>但是从1.8版本开始，使用 serf 处理<code>http</code>和<code>https scheme</code> ,<br>输入 <code>svn --version</code>输出如下</p>
+<pre><code>➜  ~  svn --version
+svn, version 1.8.8 (r1568071)
+   compiled Nov 27 2014, 21:06:17 on x86_64-apple-darwin14.0.0
+
+Copyright (C) 2013 The Apache Software Foundation.
+This software consists of contributions made by many people;
+see the NOTICE file for more information.
+Subversion is open source software, see http://subversion.apache.org/
+
+The following repository access (RA) modules are available:
+
+* ra_svn : Module for accessing a repository using the svn network protocol.
+  - with Cyrus SASL authentication
+  - handles &apos;svn&apos; scheme
+* ra_local : Module for accessing a repository on local disk.
+  - handles &apos;file&apos; scheme
+* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
+  - using serf 1.3.3
+  - handles &apos;http&apos; scheme
+  - handles &apos;https&apos; scheme
+</code></pre><p>如下是在mac10.10.1 上编译 svn 1.8.8 的过程，详细如下</p>
+<h2 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h2><pre><code>apr-1.5.1.tar.gz
+apr-util-1.5.4.tar.gz
+scons-2.3.4.tar.gz
+serf-1.3.8.tar.bz2
+subversion-1.8.8.tar.gz
+(mac下会自动解压 *.zip 和 *.gz)
+</code></pre><h2 id="编译步骤"><a href="#编译步骤" class="headerlink" title="编译步骤"></a>编译步骤</h2><p>apr-1.5.1.tar.gz</p>
+<p>–prefix=/Users/User/soft/apr-1.5.1 表示安装到该目录</p>
+<pre><code>cd apr-1.5.1/
+./configure --prefix=/Users/User/soft/apr-1.5.1
+sudo make
+sudo make install
+</code></pre><p>apr-util-1.5.4.tar.gz</p>
+<p>下载地址 <a href="https://apr.apache.org/download.cgi" target="_blank" rel="external">https://apr.apache.org/download.cgi</a></p>
+<pre><code>cd ..
+cd ../apr-util-1.5.4
+./configure --prefix=/Users/User/soft/apr-util-1.5.4 --with-apr=/Users/User/soft/apr-1.5.1
+sudo make
+sudo make install
+</code></pre><p>scons-2.3.4.tar.gz</p>
+<p>下载地址 <a href="http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html" target="_blank" rel="external">http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html</a></p>
+<pre><code>cd ../scons-2.3.4
+sudo python setup.py install
+</code></pre><p>serf-1.3.8.tar.bz2 </p>
+<p>下载地址 <a href="http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2" target="_blank" rel="external">http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2</a></p>
+<pre><code>cd ../serf-1.3.3
+scons PREFIX=/Users/User/soft/serf-1.3.3 APR=/Users/User/soft/apr-1.5.1 APU=/Users/User/soft/apr-util-1.5.4 OPENSSL=/usr/bin
+scons install
+</code></pre><p>subversion-1.8.8.tar.gz</p>
+<p>下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
+<pre><code>cd /Users/User/soft/subversion-1.8.8
+./configure --prefix=/usr/local --with-apr=/Users/User/soft/apr-1.5.1 --with-apr-util=/Users/User/soft/apr-util-1.5.4 --with-openssl --with-serf=/Users/User/soft/serf-1.3.3
+sudo make
+sudo make install
+</code></pre><p>复制<code>mod_dav_svn.so mod_authz_svn.so</code>到<code>Apache</code>的<code>lib</code>目录</p>
+<pre><code>sudo cp /usr/local/libexec/mod_dav_svn.so mod_authz_svn.so /usr/libexec/apache2
 </code></pre>
           
         
@@ -1011,7 +1093,7 @@ java.net.SocketException: Can&apos;t assign requested address
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1052,7 +1134,7 @@ java.net.SocketException: Can&apos;t assign requested address
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1060,7 +1142,7 @@ java.net.SocketException: Can&apos;t assign requested address
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1069,7 +1151,7 @@ java.net.SocketException: Can&apos;t assign requested address
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/27/modify-yum-gems-source/" itemprop="url">
-                  修改 yum 和 gems 为国内源
+                <a class="post-title-link" href="/2015/07/21/use-kvim/" itemprop="url">
+                  Centos6.6安装使用k-vim
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T11:39:16+08:00" content="2015-05-27">
-              2015-05-27
+            <time itemprop="dateCreated" datetime="2015-07-21T18:43:32+08:00" content="2015-07-21">
+              2015-07-21
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/27/modify-yum-gems-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/modify-yum-gems-source/" itemprop="commentsCount"></span>
+                <a href="/2015/07/21/use-kvim/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/use-kvim/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/05/27/modify-yum-gems-source/" class="leancloud_visitors" data-flag-title="修改 yum 和 gems 为国内源">
+             <span id="/2015/07/21/use-kvim/" class="leancloud_visitors" data-flag-title="Centos6.6安装使用k-vim">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,24 +337,208 @@
       
         
           
-            <p>对国内网络环境恨到死，sb GFW，屏蔽你大爷</p>
-<h1 id="修改-yum-源"><a href="#修改-yum-源" class="headerlink" title="修改 yum 源"></a>修改 yum 源</h1><p>1，备份</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
-<p>2，下载阿里的yum源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div></pre></td></tr></table></figure>
-<p>3，更新玩yum源后，执行下边命令更新yum配置，使操作立即生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
-<ol>
-<li>其他 </li>
-</ol>
-<p>sohu的yum源</p>
-<p>wget <a href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo" target="_blank" rel="external">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a></p>
-<p>中科大的</p>
-<p>wget <a href="http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2" target="_blank" rel="external">http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2</a></p>
-<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo gem sources --remove https://rubygems.org/</div><div class="line">$ sudo gem sources -a https://ruby.taobao.org/</div><div class="line">$ sudo gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://ruby.taobao.org</div></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.oicto.com/centos-yum-163-sohu/" target="_blank" rel="external">centos6.5适用的国内yum源：网易、搜狐</a></p>
-<p><a href="http://ruby.taobao.org/" target="_blank" rel="external">RubyGems 镜像 - 淘宝网</a></p>
-<p><a href="http://mirrors.aliyun.com/help/centos" target="_blank" rel="external">阿里云centos镜像</a></p>
+            <p>环境 </p>
+<p>centos 6.6 64 位</p>
+<p>没敢在自己的 mac 上直接撸，怕把 mac 上的 vim 搞残了 …</p>
+<p>新手配置vim比较困难，先暂且使用别人的 vim </p>
+<p>曾经试着参考别人教程，搞一个属于自己的 vim，可惜 c c++ 基础太弱，一直没实现</p>
+<p>正文开始，参考 k-vim readme，和自己跳的坑</p>
+<p>1.从 github 克隆到本地</p>
+<pre><code>git clone https://github.com/wklken/k-vim.git
+</code></pre><p>2.安装依赖包</p>
+<pre><code># ctags, ag(the_silver_searcher)
+</code></pre><p>2.1 系统依赖</p>
+<pre><code>yum install python-devel.x86_64 or yum info python-devel.x86_64
+
+yum groupinstall &apos;Development Tools&apos;
+
+rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+
+yum install the_silver_searcher 如果是centos6，需要自己安装，会出现错误 错误：xz compression not available 
+
+需要执行 rm -rf /etc/yum.repos.d/epel* ，使 yum 恢复ok
+</code></pre><p>centos6.6 安装 the_silver_searcher 参考 ，我写的教程</p>
+<p>2.2 使用 python</p>
+<pre><code>pip install pyflakes
+pip install pylint
+pip install pep8
+</code></pre><p>要安装很多东西 pip ，参考 </p>
+<p>2.3 如果使用Javascript, 不需要的跳过</p>
+<pre><code># 安装jshint和jslint,用于javascript语法检查
+# 需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+
+# todo 没用 javascript 暂时跳过
+</code></pre><p>3 安装</p>
+<p>3.1 进入目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd k-vim/</div><div class="line"></div><div class="line">sh -x install.sh</div></pre></td></tr></table></figure>
+<p>一执行，就是好多个小时，至少5小时，具体我也不知道，还跟个人网速有关，我一整晚电脑放公司没关机 ….</p>
+<p>安装完成后，第二天来看到有错误，没理会，很想知道 k-vim 安装完成后是个什么样，vim 是残了还是变高大上了 </p>
+<p>于是执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
+<p>具体经历如下：</p>
+<p>错误一：一直提示 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div><div class="line"></div><div class="line">这个提示要去 编译 ycm ，好吧，本来以为3两下搞定，结果有此我漫长的编译之路，这个不简单，下面是我的苦逼经历</div><div class="line"></div><div class="line">后来才知道 ycm 依赖 clang，</div><div class="line">后来才知道 手贱选择了 clang 最新版 3.8.0</div><div class="line">后来才知道 clang 3.8.0 需要 gcc 4.7.0 以上</div><div class="line">后来才知道 centos 6.6 默认安装的 gcc 为 4.4.7</div><div class="line">后来才知道 自己需要编译 gcc，选择 v4.8.1</div><div class="line"></div><div class="line">困难在我这种人面前，并不可怕，结果是，我愣是把 ycm 撸出来了</div></pre></td></tr></table></figure>
+<p>成功编译 ycm 之后，上面提示从此不再出现</p>
+<p>错误二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/.vimrc:</div><div class="line">line  166:</div><div class="line">E518: Unknown option: foldenable</div><div class="line">line  174:</div><div class="line">E518: Unknown option: foldmethod=indent</div><div class="line">line  175:</div><div class="line">E518: Unknown option: foldlevel=99</div><div class="line">line  213:</div><div class="line">E518: Unknown option: relativenumber</div><div class="line">  number</div><div class="line">line  568:</div><div class="line">E185: Cannot find color scheme solarized</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
+<p>奇怪的是这个错误只出现一次，Press 任意键进入 vim 后，再也没有继续出现该错误</p>
+<p>然并卵</p>
+<p>我之前自己参考过 <a href="https://github.com/yangyangwithgnu/use_vim_as_ide" target="_blank" rel="external">https://github.com/yangyangwithgnu/use_vim_as_ide</a> 里面的 readme 撸过 vim，然后配置 <code>colorscheme solarized</code> 想自己搞个主题，</p>
+<p>但是哪，我按照教程没撸出来，也就暂时放弃了，于是很想看看作者是如何搞的，我是 vim 新手，就看过 陈浩 的教程，自己能活下来  …</p>
+<p>我是直接给root安装的vim，所以，我就去 /root/.vim/ 目录里面看了下，竟然没有 colors 目录，我于是自己新建目录，scp 上传了自己上次下载的 solarized.vim ，结果上面这个不在出现的错误竟然又开始出现了，并且，注意是并且它还带来了新错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/k-vim/colors/solarized.vim</div></pre></td></tr></table></figure>
+<p>和一堆自己上次搞 主题时候碰到的一样的错误 ，还有 k-vim 作者更新到了 9.0 ，安装好之后的目录下 vim ~/.vim/vimrc ，Version: 8.1 没有更新，赶紧删除 新建的 colors 目录，让世界恢复平静 </p>
+<p>有此看到，错误二 还是必须要解决，一个个开始 google </p>
+<p>查了资料，发现问题解决并没有那么容易，我得先分解下 k-vim 作者这 30++ 插件</p>
+<p>记一</p>
+<p>准备在 mac 上使用 k-vim 了，</p>
+<p>brew install vim ，brew 里面的版本已经 404 了，需要自己手工修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brew edit vim</div><div class="line"></div><div class="line">修改如下</div><div class="line">  url &apos;http://ftp.debian.org/debian/pool/main/v/vim/vim_7.4.712.orig.tar.gz&apos;</div><div class="line">  sha1 &apos;284940b08956e30ee73e4751543076dc6ade99c7&apos;</div></pre></td></tr></table></figure>
+<p>记二</p>
+<p>mac 自带了 vim，新安装了vim之后，没有必要必须删除老版本，在使用的 shell 里面设置即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div><div class="line"></div><div class="line">alias vim=&apos;/usr/local/Cellar/vim/7.4.712/bin/vim&apos;</div><div class="line"></div><div class="line">source ~/.zshrc</div><div class="line"></div><div class="line">再次 执行 vim 就可以看到 最新版</div></pre></td></tr></table></figure>
+<p>待续 …</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/20/getting-start-with-atlas/" itemprop="url">
+                  Mysql-分库分表-Atlas试用笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-20T15:24:41+08:00" content="2015-07-20">
+              2015-07-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/20/getting-start-with-atlas/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/getting-start-with-atlas/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/20/getting-start-with-atlas/" class="leancloud_visitors" data-flag-title="Mysql-分库分表-Atlas试用笔记">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里使用的是 sharding 版本，    </p>
+<p>操作 MySQL-proxy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql-proxy/bin/mysql-proxyd test stop|start|status</div></pre></td></tr></table></figure>
+<p>遇到错误，原因是配置端口的时候不能加注释，需要去掉 <code># master</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306 # master</div><div class="line"></div><div class="line">2015-07-15 01:45:46: (message) chassis-unix-daemon.c:138: [angel] we try to keep PID=31372 alive</div><div class="line">2015-07-15 01:45:46: (message) mysql-proxy 0.8.2 started - instance: test</div><div class="line">2015-07-15 01:45:46: (message) proxy listening on port 0.0.0.0:1234</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 127.0.0.1:3306</div><div class="line">2015-07-15 01:45:46: (critical) network-address.c:253: IP-address has to be in the form [&lt;ip&gt;][:&lt;port&gt;], is &apos;127.0.0.1:3306  # master&apos;. Failed to parse the port at &apos;  # master&apos;</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 192.168.56.112:3306</div><div class="line">2015-07-15 01:45:46: (critical) chassis-unix-daemon.c:210: [angel] PID=31372 died on signal=11 (it used 5 kBytes max) ... waiting 2sec before restart</div></pre></td></tr></table></figure>
+<p>最终配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[shardrule-0]</div><div class="line">table = test.sharding_test</div><div class="line">type = range</div><div class="line">shard-key = id</div><div class="line">groups = 0:0-999,1:1000-1999</div><div class="line"></div><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3308 # slave</div><div class="line"></div><div class="line">[group-1]</div><div class="line">proxy-backend-addresses=192.168.56.114:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3310</div></pre></td></tr></table></figure>
+<p>atlas 官方的测试语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS `sharding_test`;</div><div class="line">CREATE TABLE `sharding_test` (</div><div class="line">      `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">      `name` char(50) COLLATE utf8_bin NOT NULL,</div><div class="line">      `age` int(11) DEFAULT NULL,</div><div class="line">      `birthday` date DEFAULT NULL,</div><div class="line">      `nickname` char(50) COLLATE utf8_bin DEFAULT NULL,</div><div class="line">      PRIMARY KEY (`id`)</div><div class="line">);</div><div class="line"></div><div class="line">连接 proxy</div><div class="line"></div><div class="line">$ mysql -h127.0.0.1 -P1234 -uroot -proot -c</div><div class="line"></div><div class="line">初始化 dbgroup0 数据值</div><div class="line"></div><div class="line">mysql&gt; use test;</div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1, &apos;test&apos;, 0);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(50, &apos;test&apos;, 0), (999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div><div class="line"></div><div class="line">如果跨 shard , sql 会报错</div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(100, &apos;test&apos;, 0), (1500, &apos;test&apos;, 0);</div><div class="line">ERROR 1105 (HY000): Proxy Warning - write operation is only allow to one dbgroup!</div><div class="line"></div><div class="line">初始化 dbgroup1 数据值</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1000, &apos;test&apos;, 0), (1999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
+<p>参考地址</p>
+<p><a href="https://github.com/Qihoo360/Atlas/wiki/Atlas-Sharding" target="_blank" rel="external">Atlas Sharding</a></p>
+<p><a href="http://www.guokr.com/blog/475765/" target="_blank" rel="external">mysql中间件研究(Atlas，cobar，TDDL)</a></p>
+<p><a href="http://www.gpfeng.com/?p=657" target="_blank" rel="external">谈谈MySQL水平扩展</a></p>
 <p>-EOF-</p>
 
           
@@ -405,8 +589,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
-                  安装gitlab
+                <a class="post-title-link" href="/2015/07/19/install-vim-from-source/" itemprop="url">
+                  源码安装vim
                 </a>
               
             
@@ -419,8 +603,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-26T14:36:24+08:00" content="2015-05-26">
-              2015-05-26
+            <time itemprop="dateCreated" datetime="2015-07-19T11:46:45+08:00" content="2015-07-19">
+              2015-07-19
             </time>
           </span>
 
@@ -433,8 +617,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gitlab/" itemprop="url" rel="index">
-                    <span itemprop="name">gitlab</span>
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
                   </a>
                 </span>
 
@@ -449,8 +633,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/26/install-gitlab-through-rpm-package/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/install-gitlab-through-rpm-package/" itemprop="commentsCount"></span>
+                <a href="/2015/07/19/install-vim-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/install-vim-from-source/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -460,7 +644,7 @@
 
           
           
-             <span id="/2015/05/26/install-gitlab-through-rpm-package/" class="leancloud_visitors" data-flag-title="安装gitlab">
+             <span id="/2015/07/19/install-vim-from-source/" class="leancloud_visitors" data-flag-title="源码安装vim">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -484,28 +668,13 @@
       
         
           
-            <h1 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h1><p>安装官方给的 一键安装 shell 命令走，下面列出来所有走的坑</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">首先确认机器可以联网，设置了正确得域名解析地址</div><div class="line"></div><div class="line">vim /etc/resolv.conf</div><div class="line"></div><div class="line">nameserver 114.114.114.114</div></pre></td></tr></table></figure>
-<p>安装或更新依赖软件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo yum install curl openssh-server postfix cronie</div><div class="line">sudo service postfix start</div><div class="line">sudo chkconfig postfix on</div><div class="line"></div><div class="line">sudo lokkit -s http -s ssh</div><div class="line"></div><div class="line">这一步，如果 已经禁用防火墙，可忽略</div></pre></td></tr></table></figure>
-<p>下载一键执行脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</div><div class="line"></div><div class="line">上面是官方给的指令，但是 packages.gitlab.com 时断时连我没有运行成功一次过，只能先下载，在运行</div><div class="line"></div><div class="line">wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</div><div class="line"></div><div class="line">chmod +x script.rpm.sh</div><div class="line"></div><div class="line">sh script.rpm.sh 同样，执行的时候有时候会报下面的错误，能做的就是多执行几次</div></pre></td></tr></table></figure>
-<p>本来执行完 script.rpm.sh 之后会自动启动下载任务，但是经常会失败只能手工下载，而且手工下载还会失败，<br>就多执行几次，前提是域名解析 ok ，而且翻墙了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@sz-vm-test-246 git]# sudo yum install gitlab-ce</div><div class="line">Loaded plugins: fastestmirror</div><div class="line">Repository base is listed more than once in the configuration</div><div class="line">Repository updates is listed more than once in the configuration</div><div class="line">Repository extras is listed more than once in the configuration</div><div class="line">Repository centosplus is listed more than once in the configuration</div><div class="line">Repository contrib is listed more than once in the configuration</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line"> * base: mirrors.aliyun.com</div><div class="line"> * extras: mirrors.aliyun.com</div><div class="line"> * updates: mirrors.aliyun.com</div><div class="line">https://packages.gitlab.com/gitlab/gitlab-ce/el/6/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - &quot;Couldn&apos;t resolve host &apos;packages.gitlab.com&apos;&quot;</div><div class="line">Trying other mirror.</div><div class="line">Error: Cannot retrieve repository metadata (repomd.xml) for repository: gitlab_gitlab-ce. Please verify its path and try again</div></pre></td></tr></table></figure>
-<p>这里分享百度盘的 gitlab-ce-7.11.2~omnibus-1.x86_64.rpm下载地址 <a href="http://pan.baidu.com/s/1c0trcQk" target="_blank" rel="external">http://pan.baidu.com/s/1c0trcQk</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install gitlab-ce 执行完成过程中会出现网络断，断了就继续执行 、、、 </div><div class="line"></div><div class="line">sudo gitlab-ctl reconfigure 执行命令后，会看到好多内容出来，直到成功</div></pre></td></tr></table></figure>
-<p>如果能看到下面内容，说明成功。祝君好运</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Running handlers:</div><div class="line">Running handlers complete</div><div class="line">Chef Client finished, 167/189 resources updated in 110.951922392 seconds</div><div class="line">gitlab Reconfigured!</div></pre></td></tr></table></figure>
-<p>默认使用 Postgre 和 nginx，绑定 80 端口，如果想一次配置启动成功，其他程序就给他让步</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# netstat -nplut | grep 80</div><div class="line">tcp        0      0 :::80                       :::*                        LISTEN      1678/httpd</div><div class="line"></div><div class="line">service httpd stop</div></pre></td></tr></table></figure>
-<p>默认账号密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Username: root </div><div class="line">Password: 5iveL!fe</div></pre></td></tr></table></figure>
-<p>访问浏览器 </p>
-<p><a href="http://dev1" target="_blank" rel="external">http://dev1</a> 看到界面，表示成功，登录后台，修改密码</p>
-<p>1qaz2wsx</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://about.gitlab.com/downloads/" target="_blank" rel="external">官方说明</a></p>
-<p><a href="http://segmentfault.com/a/1190000002722631" target="_blank" rel="external">GitLab 安装配置笔记</a></p>
-<p><a href="http://www.pigo.idv.tw/archives/2779" target="_blank" rel="external">用 gitlab 自架一個像 github 的平台</a></p>
+            <p>环境 Centos 6.6 64位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">下载安装包</div><div class="line">wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2</div><div class="line"></div><div class="line">查找 centos 自带的 vim</div><div class="line">rpm -qa | grep vim</div><div class="line"></div><div class="line">删除自带的 vim</div><div class="line">yum remove vim-common-7.2.411-1.8.el6.x86_64 vim-enhanced-7.2.411-1.8.el6.x86_64 vim-minimal-7.2.411-1.8.el6.x86_64</div><div class="line"></div><div class="line">解压</div><div class="line">tar -jxv -f vim-7.4.tar.bz2</div><div class="line"></div><div class="line">cd ~/vim74/</div><div class="line"></div><div class="line">安装依赖</div><div class="line">yum install -y python-devel ruby-devel libX11-devel gtk2-devel ncurses-devel</div><div class="line"></div><div class="line">mkdir /usr/lib/python2.6/config/</div><div class="line"></div><div class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.6/config/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-luainterp</div><div class="line"></div><div class="line">make VIMRUNTIMEDIR=/usr/share/vim/vim74 &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>简单配置</p>
+<p>摁 i 后，进入 insert 模式，但是看不到 - insert - </p>
+<p>mac 下 delete 不能向前删除字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot; allow backspacing over everything in insert mode</div><div class="line">&quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</div><div class="line">&quot; 插入模式下，“←&quot;如何删除光标前的字符：行首空白、换行符、插入点之前的字符</div><div class="line">&quot; this option is default in neovim</div><div class="line">set backspace=indent,eol,start</div></pre></td></tr></table></figure>
+<p>参考 <a href="https://github.com/Treri/dotfile/blob/master/vim/vimrc" target="_blank" rel="external">适合自己使用的vimrc文件</a></p>
 <p>-EOF-</p>
 
           
@@ -556,8 +725,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/25/zabbix-custom-monitor-item/" itemprop="url">
-                  zabbix 自定义监控key
+                <a class="post-title-link" href="/2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="url">
+                  SSH认证-无密码配置问题总结
                 </a>
               
             
@@ -570,8 +739,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-25T15:10:04+08:00" content="2015-05-25">
-              2015-05-25
+            <time itemprop="dateCreated" datetime="2015-07-16T14:29:31+08:00" content="2015-07-16">
+              2015-07-16
             </time>
           </span>
 
@@ -584,8 +753,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zabbix/" itemprop="url" rel="index">
-                    <span itemprop="name">zabbix</span>
+                  <a href="/categories/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
                   </a>
                 </span>
 
@@ -600,8 +769,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/25/zabbix-custom-monitor-item/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/zabbix-custom-monitor-item/" itemprop="commentsCount"></span>
+                <a href="/2015/07/16/ssh-connection-debugging-issues-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -611,7 +780,7 @@
 
           
           
-             <span id="/2015/05/25/zabbix-custom-monitor-item/" class="leancloud_visitors" data-flag-title="zabbix 自定义监控key">
+             <span id="/2015/07/16/ssh-connection-debugging-issues-summary/" class="leancloud_visitors" data-flag-title="SSH认证-无密码配置问题总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -635,9 +804,38 @@
       
         
           
-            <h1 id="zabbix自定义监控key"><a href="#zabbix自定义监控key" class="headerlink" title="zabbix自定义监控key"></a>zabbix自定义监控key</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /etc/zabbix/zabbix_agentd.conf.d</div><div class="line">(Include=/etc/zabbix/zabbix_agentd.conf.d/ 这个设置要打开)</div><div class="line"></div><div class="line">vim count_line_passwd.conf</div><div class="line"></div><div class="line">输入</div><div class="line">UserParameter=count.line.passwd,wc -l /etc/passwd|awk &apos;&#123;print $1&#125;&apos;</div><div class="line"></div><div class="line"></div><div class="line">/usr/local/zabbix/bin/zabbix_get -s dev2 -k count.line.passwd</div><div class="line"></div><div class="line">能够显示30 （数字取决于当前系统用户数），说明自定义 成功</div></pre></td></tr></table></figure>
-<p>UserParameter 示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UserParameter=&lt;key&gt;,&lt;command&gt;</div><div class="line"></div><div class="line">UserParameter=get.os.type,head -1 /etc/issue</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k get.os.type</div><div class="line"></div><div class="line">UserParameter=wc[*],grep -c &quot;$2&quot; $1</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k wc[/etc/passwd,root]</div><div class="line"></div><div class="line">$1 为 root $2 为 /etc/passwd</div></pre></td></tr></table></figure>
+            <p>环境 </p>
+<p>服务端 Centos 6.6 64 位<br>客户端 Mac OS X 10.10.4</p>
+<p>常用调试方法</p>
+<p>1.查看客户端发送到服务器端的私钥信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ssh -v root@dev1</div><div class="line"></div><div class="line">ssh -vv root@dev1</div><div class="line"></div><div class="line">ssh -vvv root@dev1</div></pre></td></tr></table></figure>
+<p>2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_keys文件等信息，这些信息对调试很有帮助</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/sbin/sshd -p 2121 -D -d -e</div><div class="line"></div><div class="line">ssh -v root@dev1 -p 2121</div></pre></td></tr></table></figure>
+<p>3.查看服务器端日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tail -f /var/log/audit/audit.log (这个是重点)</div><div class="line"></div><div class="line">tail -f /var/log/secure (帮助不大)</div></pre></td></tr></table></figure>
+<p>遇到问题总结</p>
+<p>1./etc/ssh/sshd_config 文件 47-49行，不打开注释，也可以直接配置免密码登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RSAAuthentication yes</div><div class="line">PubkeyAuthentication yes</div><div class="line">AuthorizedKeysFile      authorized_keys</div></pre></td></tr></table></figure>
+<p>2.<code>.ssh</code> 目录不能手工创建，否则在 selinux 开启的情况下会因为文件和文件夹上下文问题无法访问文件 <code>authorized_keys</code>，这个问题很严重，今天上午找了半天，终于发现问题了，目录权限建议设置为 700，而且所属是当前用户，不能使root</p>
+<p>3.<code>authorized_keys</code>这个文件可以手工创建，也可以使用<code>ssh-copy-id</code>，文件权限建议设置为 600,所属是当前用户，不能使root</p>
+<p>4.Selinux 打开引起的因为上下文无法访问文件，造成 ssh 配置后，还是需要密码登录，/var/log/audit/audit.log 日志片段如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:890): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=6e:96:69:b9:69:45:93:0d:89:da:e0:9c:e4:bb:04:04 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:891): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=ae:5b:f9:c5:a2:08:c5:9a:15:a7:4c:ad:18:d8:44:a1 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:892): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-client cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:893): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-server cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.567:894): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:894): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246160 a1=800 a2=1 a3=4 items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line">siy</div><div class="line">type=AVC msg=audit(1437024048.567:895): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:895): arch=c000003e syscall=2 success=no exit=-13 a0=7f83732487a0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.567:896): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div><div class="line">type=AVC msg=audit(1437024048.569:897): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:897): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.569:898): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:898): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.569:899): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div></pre></td></tr></table></figure>
+<p>解决方法，可以使用<code>restorecon</code>还原上下文，或者关闭 selinux </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">restorecon authorized_keys</div><div class="line"></div><div class="line">临时关闭 selinux </div><div class="line">setenforce 0</div><div class="line"></div><div class="line">永久关闭 </div><div class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config</div></pre></td></tr></table></figure>
+<p>5.客户端生成多对 ssh 公钥私钥的时候，注意 ssh-add 添加，在 mac 上使用 ssh-add 的时候，又需要机器重启就失效问题</p>
+<p>6.可以提高速度</p>
+<pre><code>ssh -o GSSAPIAuthentication=no xxx@dev1 `-o GSSAPIAuthentication=no` 
+</code></pre><p>7.Authentication refused: bad ownership or modes for file /home/work/.ssh/authorized_keys</p>
+<pre><code>chmod 600 authorized_keys
+</code></pre><p>爬坑记录</p>
+<p>安装机器，手工创建 .ssh 目录 和 authorized_keys 文件，然后直接贴 客户端的公钥，以为可以正常访问了，结果各种坑，还是需要输入密码，<br>最后通过好几篇文章找到调试日志，是 selinux 造成的问题，文件和目录上下文不一致，造成不能正常访问，然后就 ssh 新技能get<br>自己玩的时候，就把 selinux 停了吧，或者通过 ssh-keygen 生成.ssh 目录，不要手工创建</p>
+<p>参考文章</p>
+<p><a href="/git-more-sshkeys-more-host/">git配置多个不同邮箱</a></p>
+<p><a href="/macosx-config-ssh-login-virtual-machine-without-password/">LInux实战–Mac配置ssh免密码登录到虚拟主机</a></p>
+<p><a href="http://phutchins.com/blog/2015/03/09/debug-ssh-connections/" target="_blank" rel="external">Debugging SSH Connection Issues</a></p>
+<p><a href="http://www.saltycrane.com/blog/2011/08/notes-debugging-ssh-connection-problems/" target="_blank" rel="external">Notes on debugging ssh connection problems</a></p>
+<p><a href="https://blog.tinned-software.net/ssh-key-authentication-is-not-working-selinux/" target="_blank" rel="external">SSH-Key authentication is not working – SELinux</a></p>
+<p><a href="http://doiido.blog.51cto.com/5503054/1554485" target="_blank" rel="external">linux/centos6 查看SELinux状态 关闭SELinux</a></p>
 
           
         
@@ -687,8 +885,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/18/install-zabbix-agentd/" itemprop="url">
-                  zabbix agentd 安装
+                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
+                  mysql replace 学习
                 </a>
               
             
@@ -701,8 +899,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-18T17:49:21+08:00" content="2015-05-18">
-              2015-05-18
+            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
+              2015-07-14
             </time>
           </span>
 
@@ -715,8 +913,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zabbix/" itemprop="url" rel="index">
-                    <span itemprop="name">zabbix</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -731,8 +929,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/18/install-zabbix-agentd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-agentd/" itemprop="commentsCount"></span>
+                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -742,7 +940,7 @@
 
           
           
-             <span id="/2015/05/18/install-zabbix-agentd/" class="leancloud_visitors" data-flag-title="zabbix agentd 安装">
+             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -766,170 +964,15 @@
       
         
           
-            <h1 id="agentd-install"><a href="#agentd-install" class="headerlink" title="agentd install"></a>agentd install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">groupadd zabbix -g 201</div><div class="line"></div><div class="line">useradd -g zabbix -u 201 -m zabbix</div><div class="line"></div><div class="line">tar -zxv -f zabbix-2.4.5.tar.gz</div><div class="line"></div><div class="line">cd zabbix-2.4.5</div><div class="line"></div><div class="line">yum -y install gcc gcc-c++ autoconf  mod_ssl mod_perl  net-snmp-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-agent</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; /etc/zabbix/zabbix_agentd.conf</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=192.168.56.110</div><div class="line">ServerActive=192.168.56.110</div><div class="line">Hostname=dev1</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/18/install-zabbix-server/" itemprop="url">
-                  zabbix server安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-18T17:46:09+08:00" content="2015-05-18">
-              2015-05-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zabbix/" itemprop="url" rel="index">
-                    <span itemprop="name">zabbix</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/18/install-zabbix-server/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-server/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/18/install-zabbix-server/" class="leancloud_visitors" data-flag-title="zabbix server安装">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="censos-6-6-安装zabbix"><a href="#censos-6-6-安装zabbix" class="headerlink" title="censos 6.6 安装zabbix"></a>censos 6.6 安装zabbix</h1><p>已经手工安装了mysql，安装其他依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc gcc-c++ autoconf httpd php php-mysql httpd-manual mod_ssl mod_perl mod_auth_mysql php-gd php-xml php-mbstring php-ldap php-pear php-xmlrpc php-bcmath libdbi-dbd-mysql net-snmp-devel curl-devel unixODBC-devel OpenIPMI-devel java-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-server --enable-agent --enable-proxy --with-mysql --with-net-snmp --with-libcurl</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div></pre></td></tr></table></figure>
-<p>修改 php 配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vim /etc/php.ini</div><div class="line"></div><div class="line">date.timezone = Asia/Shanghai</div><div class="line">max_execution_time = 300</div><div class="line">post_max_size = 32M</div><div class="line">max_input_time=300</div><div class="line">memory_limit = 128M</div><div class="line">mbstring.func_overload = 2</div><div class="line"></div><div class="line">修改php.ini 配置后，需要重启 service httpd restart</div></pre></td></tr></table></figure>
-<p>下载安装 zabbix，使用rpm</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget &quot;http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-2.4.5-1.el6.x86_64.rpm&quot;</div><div class="line"></div><div class="line">chmod +x zabbix-2.4.5-1.el6.x86_64.rpm</div><div class="line"></div><div class="line">rpm -ivh zabbix-2.4.5-1.el6.x86_64.rpm</div></pre></td></tr></table></figure>
-<p>启动mysql服务</p>
-<p>6.6服务名，由 mysqld 重命名为 mysql 了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service mysql status</div><div class="line"></div><div class="line">service mysql start</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chkconfig httpd on</div><div class="line"></div><div class="line">service httpd start</div></pre></td></tr></table></figure>
-<p>创建mysql数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div><div class="line"></div><div class="line">create database zabbix character set utf8;</div><div class="line"></div><div class="line">grant all privileges on zabbix.* to zabbix@localhost identified by &apos;zabbix&apos;;</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">测试</div><div class="line">mysql -uzabbix -pzabbix</div></pre></td></tr></table></figure>
-<p>执行初始化数据库脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/schema.sql</div><div class="line"></div><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/images.sql</div><div class="line"></div><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/data.sql</div></pre></td></tr></table></figure>
-<p>创建日志文件夹（如果是安装rpm，文件夹已经创建了，可跳过）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div></pre></td></tr></table></figure>
-<p>从源码目录复制 service 启动脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /root/zabbix-2.4.5</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_* /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_*</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_server</div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">BASEDIR=/usr 和 --prefix=/usr 保持一致</div></pre></td></tr></table></figure>
-<p>修改zabbix server配置文件 zabbix_server.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp conf/zabbix_server.conf /etc/zabbix/</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; zabbix_server.conf</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">线上环境参考配置</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_server.log</div><div class="line">DBHost=localhost</div><div class="line">DBName=zabbix</div><div class="line">DBUser=zabbix</div><div class="line">DBPassword=zabbix</div><div class="line">DBSocket=/var/lib/mysql/mysql.sock</div><div class="line">DBPort=3306</div><div class="line">StartPollers=160</div><div class="line">StartTrappers=20</div><div class="line">StartPingers=100</div><div class="line">StartDiscoverers=120</div><div class="line">MaxHousekeeperDelete=5000</div><div class="line">CacheSize=1024M</div><div class="line">StartDBSyncers=16</div><div class="line">HistoryCacheSize=1024M</div><div class="line">TrendCacheSize=1024M</div><div class="line">HistoryTextCacheSize=512M</div><div class="line">AlertScriptsPath=/etc/zabbix/alertscripts</div><div class="line">LogSlowQueries=1000</div></pre></td></tr></table></figure>
-<p>对本机进行监控，修改 zabbix_agentd.conf  配置文件</p>
-<p>Server=127.0.0.1 此处添加服务端的 ip,如服务器不为本机,则需要填写远端 zabbix_server 的ip地址<br>ServerActive=127.0.0.1 此处修改为服务端的 ip<br>UnsafeUserParameters=0 默认是不启用自定义脚本功能的,要自定义 key,需开启,设置为 1</p>
-<p>egrep -v “(#|^$)” /etc/zabbix/zabbix_agentd.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=127.0.0.1,192.168.1.89</div><div class="line">StartAgents=8</div><div class="line">ServerActive=192.168.1.89:10051</div><div class="line">Hostname=nat.kx1d.com</div><div class="line">Timeout=30</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
-<p>复制网页文件到 Apache 目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cp -r ./frontends/php/ /var/www/html/zabbix</div><div class="line">chown -R apache.apache /var/www/html/zabbix</div><div class="line"></div><div class="line">http://dev1/zabbix</div></pre></td></tr></table></figure>
-<p>Admin<br>zabbix</p>
-<p>排错使用命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看是否有zabbix进程在运行</div><div class="line">ps aux |grep zabbix</div><div class="line"></div><div class="line">10050 10051 端口是否在监听</div><div class="line">netstat -nplut |grep zabbix</div><div class="line"></div><div class="line">关闭 selinux ，我是运维菜鸟，唯一应付的办法，就是停用 iptables 停用 selinux</div><div class="line">setsebool -P httpd_can_network_connect on</div></pre></td></tr></table></figure>
-<p>参考</p>
-<p><a href="http://fengzhige.blog.51cto.com/3691377/1034485" target="_blank" rel="external">http://fengzhige.blog.51cto.com/3691377/1034485</a></p>
-<p><a href="http://54im.com/monitor/zabbix/zabbix%E7%9B%91%E6%8E%A7%E6%8A%A5%E9%94%99zabbix-server-is-not-running-the-information-displayed-may-not-be-current%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html" target="_blank" rel="external">http://54im.com/monitor/zabbix/zabbix%E7%9B%91%E6%8E%A7%E6%8A%A5%E9%94%99zabbix-server-is-not-running-the-information-displayed-may-not-be-current%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html</a></p>
-<p>我的问题时 selinux 没有关闭</p>
-
+            <p>mysql 基础修改数据语句</p>
+<p>select insert update delete ,今天学习了个新的 replace </p>
+<p>replace 根据主键或者唯一索引判断相同数据，</p>
+<p>如果数据相同，就的数据会先删除，在插入新数据</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
+<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>如果主键不同，数据不会覆盖测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
           
         
       
@@ -961,7 +1004,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1002,7 +1045,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1010,7 +1053,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1019,7 +1062,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

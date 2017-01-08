@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="url">
-                  SSH认证-无密码配置问题总结
+                <a class="post-title-link" href="/2015/07/22/build-clang-from-source/" itemprop="url">
+                  centos6.6 源码编译 clang
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-16T14:29:31+08:00" content="2015-07-16">
-              2015-07-16
+            <time itemprop="dateCreated" datetime="2015-07-22T14:23:39+08:00" content="2015-07-22">
+              2015-07-22
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">ssh</span>
+                  <a href="/categories/clang/" itemprop="url" rel="index">
+                    <span itemprop="name">clang</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/16/ssh-connection-debugging-issues-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="commentsCount"></span>
+                <a href="/2015/07/22/build-clang-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/build-clang-from-source/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,142 @@
 
           
           
-             <span id="/2015/07/16/ssh-connection-debugging-issues-summary/" class="leancloud_visitors" data-flag-title="SSH认证-无密码配置问题总结">
+             <span id="/2015/07/22/build-clang-from-source/" class="leancloud_visitors" data-flag-title="centos6.6 源码编译 clang">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>源码编译clang</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">1.新建文件夹</div><div class="line">mkdir /root/buildllvm #放置clang源码位置</div><div class="line">mkdir /root/buildllvm/build #放置clang编译文件位置</div><div class="line"></div><div class="line">2.svn 下载在新版 3.8.0 源代码</div><div class="line">cd /root/buildllvm</div><div class="line"></div><div class="line">svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm</div><div class="line"> </div><div class="line">cd llvm/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/cfe/trunk clang</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd llvm/tools/clang/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra</div><div class="line">cd ../../../..</div><div class="line"></div><div class="line">cd llvm/projects</div><div class="line">svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd /root/buildllvm/build</div><div class="line"></div><div class="line">3.安装文件放在 /usr/local/llvm 下；优化+只编译适应本机的代码</div><div class="line">../llvm/configure --prefix=/usr/local/llvm --enable-optimized --enable-targets=host-only</div><div class="line"> </div><div class="line">4.编译和安装，整个过程耗时 4小时 左右，在我的 mac 虚拟机上</div><div class="line">make   -j4  # 如果多核的话，可以 make -j4 (4个工作线程)</div><div class="line">make install    # 安装，如果有权限问题请 sudo make install</div><div class="line"></div><div class="line"></div><div class="line">都编译完成后</div><div class="line"></div><div class="line">vim .bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:/usr/local/llvm/bin:$PATH</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">整个安装过程结束</div></pre></td></tr></table></figure>
+<p>验证整个安装过程成功和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">clang --version</div><div class="line"></div><div class="line">clang version 3.8.0 (trunk 242872)</div><div class="line">Target: x86_64-unknown-linux-gnu</div><div class="line">Thread model: posix</div></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85llvmclang" target="_blank" rel="external">centos下安装llvm+clang</a></p>
+<p><a href="http://m.blog.csdn.net/blog/ccc64524422/46876499" target="_blank" rel="external">[转]CentOS 7+vim+ycm(clang)</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="url">
+                  centos6.6源码安装gcc4.8.1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T13:58:16+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gcc/" itemprop="url" rel="index">
+                    <span itemprop="name">gcc</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/centos6.6-build-gcc5.2-from-source/" class="leancloud_visitors" data-flag-title="centos6.6源码安装gcc4.8.1">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -338,482 +473,34 @@
         
           
             <p>环境 </p>
-<p>服务端 Centos 6.6 64 位<br>客户端 Mac OS X 10.10.4</p>
-<p>常用调试方法</p>
-<p>1.查看客户端发送到服务器端的私钥信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ssh -v root@dev1</div><div class="line"></div><div class="line">ssh -vv root@dev1</div><div class="line"></div><div class="line">ssh -vvv root@dev1</div></pre></td></tr></table></figure>
-<p>2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_keys文件等信息，这些信息对调试很有帮助</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/sbin/sshd -p 2121 -D -d -e</div><div class="line"></div><div class="line">ssh -v root@dev1 -p 2121</div></pre></td></tr></table></figure>
-<p>3.查看服务器端日志</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tail -f /var/log/audit/audit.log (这个是重点)</div><div class="line"></div><div class="line">tail -f /var/log/secure (帮助不大)</div></pre></td></tr></table></figure>
-<p>遇到问题总结</p>
-<p>1./etc/ssh/sshd_config 文件 47-49行，不打开注释，也可以直接配置免密码登录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RSAAuthentication yes</div><div class="line">PubkeyAuthentication yes</div><div class="line">AuthorizedKeysFile      authorized_keys</div></pre></td></tr></table></figure>
-<p>2.<code>.ssh</code> 目录不能手工创建，否则在 selinux 开启的情况下会因为文件和文件夹上下文问题无法访问文件 <code>authorized_keys</code>，这个问题很严重，今天上午找了半天，终于发现问题了，目录权限建议设置为 700，而且所属是当前用户，不能使root</p>
-<p>3.<code>authorized_keys</code>这个文件可以手工创建，也可以使用<code>ssh-copy-id</code>，文件权限建议设置为 600,所属是当前用户，不能使root</p>
-<p>4.Selinux 打开引起的因为上下文无法访问文件，造成 ssh 配置后，还是需要密码登录，/var/log/audit/audit.log 日志片段如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:890): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=6e:96:69:b9:69:45:93:0d:89:da:e0:9c:e4:bb:04:04 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:891): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=ae:5b:f9:c5:a2:08:c5:9a:15:a7:4c:ad:18:d8:44:a1 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:892): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-client cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:893): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-server cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.567:894): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:894): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246160 a1=800 a2=1 a3=4 items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line">siy</div><div class="line">type=AVC msg=audit(1437024048.567:895): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:895): arch=c000003e syscall=2 success=no exit=-13 a0=7f83732487a0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.567:896): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div><div class="line">type=AVC msg=audit(1437024048.569:897): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:897): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.569:898): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:898): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.569:899): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div></pre></td></tr></table></figure>
-<p>解决方法，可以使用<code>restorecon</code>还原上下文，或者关闭 selinux </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">restorecon authorized_keys</div><div class="line"></div><div class="line">临时关闭 selinux </div><div class="line">setenforce 0</div><div class="line"></div><div class="line">永久关闭 </div><div class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config</div></pre></td></tr></table></figure>
-<p>5.客户端生成多对 ssh 公钥私钥的时候，注意 ssh-add 添加，在 mac 上使用 ssh-add 的时候，又需要机器重启就失效问题</p>
-<p>6.可以提高速度</p>
-<pre><code>ssh -o GSSAPIAuthentication=no xxx@dev1 `-o GSSAPIAuthentication=no` 
-</code></pre><p>7.Authentication refused: bad ownership or modes for file /home/work/.ssh/authorized_keys</p>
-<pre><code>chmod 600 authorized_keys
-</code></pre><p>爬坑记录</p>
-<p>安装机器，手工创建 .ssh 目录 和 authorized_keys 文件，然后直接贴 客户端的公钥，以为可以正常访问了，结果各种坑，还是需要输入密码，<br>最后通过好几篇文章找到调试日志，是 selinux 造成的问题，文件和目录上下文不一致，造成不能正常访问，然后就 ssh 新技能get<br>自己玩的时候，就把 selinux 停了吧，或者通过 ssh-keygen 生成.ssh 目录，不要手工创建</p>
-<p>参考文章</p>
-<p><a href="/git-more-sshkeys-more-host/">git配置多个不同邮箱</a></p>
-<p><a href="/macosx-config-ssh-login-virtual-machine-without-password/">LInux实战–Mac配置ssh免密码登录到虚拟主机</a></p>
-<p><a href="http://phutchins.com/blog/2015/03/09/debug-ssh-connections/" target="_blank" rel="external">Debugging SSH Connection Issues</a></p>
-<p><a href="http://www.saltycrane.com/blog/2011/08/notes-debugging-ssh-connection-problems/" target="_blank" rel="external">Notes on debugging ssh connection problems</a></p>
-<p><a href="https://blog.tinned-software.net/ssh-key-authentication-is-not-working-selinux/" target="_blank" rel="external">SSH-Key authentication is not working – SELinux</a></p>
-<p><a href="http://doiido.blog.51cto.com/5503054/1554485" target="_blank" rel="external">linux/centos6 查看SELinux状态 关闭SELinux</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
-                  mysql replace 学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
-              2015-07-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>mysql 基础修改数据语句</p>
-<p>select insert update delete ,今天学习了个新的 replace </p>
-<p>replace 根据主键或者唯一索引判断相同数据，</p>
-<p>如果数据相同，就的数据会先删除，在插入新数据</p>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
-<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<p>如果主键不同，数据不会覆盖测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/18/play-with-python/" itemprop="url">
-                  使用Python开发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-18T23:41:22+08:00" content="2015-06-18">
-              2015-06-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/18/play-with-python/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/play-with-python/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/06/18/play-with-python/" class="leancloud_visitors" data-flag-title="使用Python开发">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="使用Python开发"><a href="#使用Python开发" class="headerlink" title="使用Python开发"></a>使用Python开发</h1><p>有时候需要使用 sudo </p>
-<p>如下错误,需要安装 mysql for python</p>
-<pre><code>No module named MySQLdb
-</code></pre><p>先安装 python 的 setuptools</p>
-<p>Setuptools网址是<a href="https://pypi.python.org/pypi/setuptools，" target="_blank" rel="external">https://pypi.python.org/pypi/setuptools，</a></p>
-<p>可以下载安装最新版本，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/ez_setup.py --no-check-certificate</div><div class="line"></div><div class="line">python ez_setup.py</div></pre></td></tr></table></figure>
-<p>mysql-python 下载地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http://sourceforge.net/projects/mysql-python/</div><div class="line"></div><div class="line">在解压目录里面执行</div><div class="line"></div><div class="line">python setup.py build</div><div class="line"></div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
-<p>mac 查看端口占用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof -i:5000</div></pre></td></tr></table></figure>
-<p>如果找不到，就用 sudo ，可能是 root用户启动了</p>
-<p>Centos 6.6 安装 pip，官方地址 <a href="https://pip.pypa.io/en/stable/installing.html" target="_blank" rel="external">https://pip.pypa.io/en/stable/installing.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/get-pip.py</div><div class="line"></div><div class="line">执行，如果没有安装 setuptools ，会先安装 setuptools</div><div class="line">python get-pip.py </div><div class="line"></div><div class="line">Collecting pip</div><div class="line">  Downloading pip-7.1.0-py2.py3-none-any.whl (1.1MB)</div><div class="line">    100% |████████████████████████████████| 1.1MB 11kB/s</div><div class="line">Collecting setuptools</div><div class="line">  Downloading setuptools-18.0.1-py2.py3-none-any.whl (461kB)</div><div class="line">    100% |████████████████████████████████| 462kB 9.2kB/s</div><div class="line">Collecting wheel</div><div class="line">  Downloading wheel-0.24.0-py2.py3-none-any.whl (63kB)</div><div class="line">    100% |████████████████████████████████| 65kB 14kB/s</div><div class="line">Installing collected packages: pip, setuptools, wheel</div><div class="line"></div><div class="line">安装成功</div></pre></td></tr></table></figure>
-<p>python 常用2种安装软件方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install -U Celery</div><div class="line"></div><div class="line">pip install -U Celery</div></pre></td></tr></table></figure>
-<p>查找应用，杀进程</p>
-<pre><code>ps aux|grep gunicorn | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/27/git-more-sshkeys-more-host/" itemprop="url">
-                  git配置多个不同邮箱
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T17:26:50+08:00" content="2015-05-27">
-              2015-05-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/27/git-more-sshkeys-more-host/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/git-more-sshkeys-more-host/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/27/git-more-sshkeys-more-host/" class="leancloud_visitors" data-flag-title="git配置多个不同邮箱">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git-账号配置多个不同邮箱"><a href="#git-账号配置多个不同邮箱" class="headerlink" title="git 账号配置多个不同邮箱"></a>git 账号配置多个不同邮箱</h1><p>之前使用git仅限于提交到 github ，其他平台如 gitlab bitbucket 目前没有使用，<br>现在公司私服 gitlab 需要添加独立的邮箱和用户名，要不然每次提交都是自己<br>Gmail的地址</p>
-<p>1.生成公司 gitlab 私服的 ssh key</p>
-<pre><code>ssh-keygen -t rsa -f ~/.ssh/id_rsa_yourdomain_gitlab -C &quot;qingyun@xxx.com&quot;
-</code></pre><p>2.ssh 服务默认制度去 id_rsa 默认的，现在需要添加让它认识 id_rsa_yourdomain_gitlab</p>
-<pre><code>ssh-add ~/.ssh/id_rsa_yourdomain_gitlab
-</code></pre><p>3.新建本地认证文件 ~/.ssh/config</p>
-<pre><code>vim ~/.ssh/config
-
-Host github.com
-    HostName github.com
-    User favoorr
-    IdentityFile ~/.ssh/id_rsa
-
-Host dev1
-    HostName dev1
-    User youname
-    IdentityFile ~/.ssh/id_rsa_yourdomain_gitlab
-</code></pre><p>4.取消全局配置</p>
-<pre><code>git config --global --unset user.name
-git config --global --unset user.email
-</code></pre><p>5.项目单独配置 name 和 email</p>
-<pre><code>git config user.name &quot;youname&quot;
-git config user.email &quot;qingyun@yourdomain.com&quot;
-</code></pre><p>如果不设置user.name 和 user.email 就不能使用，必须指定用户名和邮箱</p>
-<p>6.新问题，ssh-add 之后，每次重启mac，重现执行<code>ssh-add -l</code>都是 提示 <code>the agent has no identities</code> </p>
-<p>Google查资料后，找到这篇文章 <a href="http://segmentfault.com/q/1010000000835302" target="_blank" rel="external">是否必须每次添加ssh-add</a></p>
-<p>需要使用</p>
-<pre><code>ssh-add -K  ~/.ssh/id_rsa_yourdomain_gitlab 
-</code></pre><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://gist.github.com/suziewong/4378434" target="_blank" rel="external">Git的多账号如何处理？ 1.同一台电脑多个git（不同网站的）账号 2.同一台电脑多个git（同一个网站的比如github的）多个账号</a></p>
-<p><a href="http://blog.ixtr.me/2013/09/%E4%BD%BF%E7%94%A8SSHCONFIG%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAssh%E5%B8%90%E5%8F%B7/" target="_blank" rel="external">使用SSH CONFIG 管理多个ssh帐号</a></p>
-<p><a href="http://f10.moe/2014/10/16/git-ssh-%E5%A4%9A%E4%B8%AA%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">git ssh 多个账号管理配置</a></p>
-<p><a href="http://www.cnblogs.com/dubaokun/p/3550870.html" target="_blank" rel="external">ssh-key 与 git账户配置以及多账户配置</a></p>
-<p><a href="http://www.liaohuqiu.net/cn/posts/using-diffrent-user-config-for-different-repository/" target="_blank" rel="external">git: 提交前强制检查各个项目用户名邮箱设置</a></p>
-<p><a href="http://stormzhang.com/other/2013/10/16/github-multiply-ssh-key/" target="_blank" rel="external">多个github帐号的SSH key切换</a></p>
-<p><a href="http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/" target="_blank" rel="external">一个客户端设置多个github账号</a></p>
+<p>CentOS 6.6 64位<br>gcc 4.8.1</p>
+<p>为何要手工编译 gcc 4.8.1</p>
+<p>为了编译 ycm YouCompleteMe 一个vim自动补全插件，<br>我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0<br>自己动手 …</p>
+<p>YouCompleteMe –&gt; clang –&gt; gcc</p>
+<p>下载 gcc4.8.1 源码</p>
+<p>国内gcc下载地址 <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> 华科的下载略慢 、、、</p>
+<p>官方 ftp地址  <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> <a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看 CentOS 6.6 自带的 gcc 信息</div><div class="line">[root@dev1 build]# gcc -v</div><div class="line"></div><div class="line">使用内建 specs。</div><div class="line">目标：x86_64-redhat-linux</div><div class="line">配置为：../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</div><div class="line">线程模型：posix</div><div class="line">gcc 版本 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">执行安装命令</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++</div><div class="line"></div><div class="line">检查安装配置，报错如下</div><div class="line">configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.</div><div class="line">Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify</div><div class="line">their locations.  Source code for these libraries can be found at</div><div class="line">their respective hosting sites as well as at</div><div class="line">ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also</div><div class="line">http://gcc.gnu.org/install/prerequisites.html for additional info.  If</div><div class="line">you obtained GMP, MPFR and/or MPC from a vendor distribution package,</div><div class="line">make sure that you have installed both the libraries and the header</div><div class="line">files.  They may be located in separate packages.</div><div class="line"></div><div class="line">开始配置安装环境</div><div class="line"></div><div class="line">1.安装 GMP https://gmplib.org/</div><div class="line"></div><div class="line">wget http://mirrors.ustc.edu.cn/gnu/gmp/gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">cd gmp-6.0.0</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">2.安装 mpfr</div><div class="line"></div><div class="line">wget  http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">mkdir /usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">cd mpfr-3.1.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpfr-3.1.3 --with-gmp=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">3.安装 mpc</div><div class="line"></div><div class="line">wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">tar -zxv -f mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">cd mpc-1.0.3</div><div class="line"></div><div class="line">mkdir /usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpc-1.0.3 --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">4.设置环境变量 $LD_LIBRARY_PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.0.0/lib:/usr/local/mpfr-3.1.3/lib</div><div class="line"></div><div class="line">不然会碰到错误 configure: error: cannot compute suffix of object files: cannot compile</div><div class="line"></div><div class="line">5.需要安装 32 位的 glibc-devel</div><div class="line"></div><div class="line">yum list | grep glibc-devel</div><div class="line"></div><div class="line">yum install glibc-devel.i686</div><div class="line"></div><div class="line">不然会遇到错误 </div><div class="line"></div><div class="line">/usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: 没有那个文件或目录</div><div class="line"> # include &lt;gnu/stubs-32.h&gt; </div><div class="line"></div><div class="line">6.全部安装完之后，再次执行安装，执行 make 会耗时很长，需要耐心等待</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++ --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3 --with-mpc=/usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">执行命令</div><div class="line"></div><div class="line">ln -s /usr/local/gcc-4.8.1/include/c++/4.8.1 /usr/include/c++/4.8.1 # 在 include/c++ 文件夹下添加最新的 c++ 4.8.1 版本(这是个符号链接)；</div><div class="line"></div><div class="line">配置系统环境变量</div><div class="line">vim ~/.bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:$PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div><div class="line">export C_INCLUDE_PATH=/usr/include</div><div class="line">export CPLUS_INCLUDE_PATH=/usr/include/c++/4.8.1:/usr/include/c++/4.8.1/x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">至此，整个 gcc 4.8.1 源码编译安装完成</div></pre></td></tr></table></figure>
+<p>后续</p>
+<p>1.在使用 gcc 编译 clang 时，由于 LD_LIBRARY_PATH 配置错误，会碰到如下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/gcc/libexec/gcc/x86_64-unknown-linux-gnu/4.8.1/cc1plus: error while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>google 答案<a href="http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984" target="_blank" rel="external">http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div></pre></td></tr></table></figure>
+<p>一开始我写成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=/usr/local/lib</div></pre></td></tr></table></figure>
+<p>然后就跪的很彻底</p>
+<p>2.编译 clang 碰到错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/buildllvm/build/Release+Asserts/bin/llvm-tblgen: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15&apos; not found (required by /root/buildllvm/build/Release+Asserts/bin/llvm-tblgen)</div></pre></td></tr></table></figure></p>
+<p>google答案<a href="http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found" target="_blank" rel="external">http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found</a></p>
+<p>解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">替换 libstdc++.so.6 为最新编译的 libstdc++.so.6.0.18</div><div class="line">cp ~/buildgcc/x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.18 /usr/lib64/ # ~/buildgcc 为gcc 安装的路径</div><div class="line"></div><div class="line">rm /usr/lib64/libstdc++.so.6</div><div class="line"></div><div class="line">ln -s libstdc++.so.6.0.18 libstdc++.so.6</div></pre></td></tr></table></figure>
+<p>验证编译成功，和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# gcc --version</div><div class="line">gcc (GCC) 4.8.1</div><div class="line">Copyright © 2013 Free Software Foundation, Inc.</div><div class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</div><div class="line">包括没有适销性和某一专用目的下的适用性担保。</div></pre></td></tr></table></figure>
+<p>参考文档</p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/" target="_blank" rel="external">gcc官方文档</a></p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85gcc-481" target="_blank" rel="external">centos下安装gcc-4.8.1</a></p>
+<p><a href="http://www.cnblogs.com/peterpanzsy/archive/2013/04/10/3006838.html" target="_blank" rel="external">centos 6 升级gcc</a></p>
+<p><a href="http://robbiefeng.iteye.com/blog/2163305" target="_blank" rel="external">centos6.5上升级gcc到gcc4.9.2</a></p>
 <p>-EOF-</p>
 
           
@@ -864,8 +551,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
             
               
                 
-                <a class="post-title-link" href="/2015/05/27/gitlab-admin-best-practise/" itemprop="url">
-                  gitlab admin 使用实践
+                <a class="post-title-link" href="/2015/07/22/crontab-ntp-synchronized-date/" itemprop="url">
+                  cron表达式同步Linux服务器时间
                 </a>
               
             
@@ -878,8 +565,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T11:57:13+08:00" content="2015-05-27">
-              2015-05-27
+            <time itemprop="dateCreated" datetime="2015-07-22T09:54:42+08:00" content="2015-07-22">
+              2015-07-22
             </time>
           </span>
 
@@ -892,8 +579,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gitlab/" itemprop="url" rel="index">
-                    <span itemprop="name">gitlab</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -908,8 +595,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/27/gitlab-admin-best-practise/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/gitlab-admin-best-practise/" itemprop="commentsCount"></span>
+                <a href="/2015/07/22/crontab-ntp-synchronized-date/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/crontab-ntp-synchronized-date/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -919,7 +606,7 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
 
           
           
-             <span id="/2015/05/27/gitlab-admin-best-practise/" class="leancloud_visitors" data-flag-title="gitlab admin 使用实践">
+             <span id="/2015/07/22/crontab-ntp-synchronized-date/" class="leancloud_visitors" data-flag-title="cron表达式同步Linux服务器时间">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -943,84 +630,290 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
       
         
           
-            <p>修改 /etc/gitlab/gitlab.rb 后重新加载配置</p>
-<pre><code>gitlab-ctl reconfigure
+            <p>环境 centos 6.6 64位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">1.安装</div><div class="line">yum install ntp</div><div class="line"></div><div class="line">2.以 time.nist.gov 为基准同步时间</div><div class="line">ntpdate pool.ntp.org</div><div class="line"></div><div class="line">3.通过 crontab 定时同步时间</div><div class="line">crontab -e</div><div class="line"></div><div class="line">*/10 * * * * ntpdate pool.ntp.org</div><div class="line"></div><div class="line">这样写，会出现错误，root会收到错误邮件，内容包含 </div><div class="line"></div><div class="line">/bin/sh: ntpdate: command not found</div><div class="line"></div><div class="line">所以要使用 </div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org </div><div class="line"></div><div class="line">查看配置结果</div><div class="line">crontab -l</div><div class="line"></div><div class="line">4.可用的其他时间服务器</div><div class="line"></div><div class="line">pool.ntp.org</div><div class="line">time.nist.gov</div><div class="line">time.nuri.net</div><div class="line">0.asia.pool.ntp.org</div><div class="line">1.asia.pool.ntp.org</div><div class="line">2.asia.pool.ntp.org</div><div class="line">3.asia.pool.ntp.org</div><div class="line"></div><div class="line">自己选择，选择 ping 值最低的一个</div><div class="line"></div><div class="line">5.配置执行 crontab 命令，不给 root 用户发送邮件</div><div class="line"></div><div class="line">vim /etc/crontab </div><div class="line"></div><div class="line">SHELL=/bin/bash</div><div class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">MAILTO=&quot;&quot; # 这里设置为空</div><div class="line">HOME=/</div><div class="line"></div><div class="line">MAILTO 设置为空，不让每次执行命令都给 root 用户发送邮件，</div><div class="line">后来发现改 MAILTO=&quot;&quot; 没用，需要使用命令</div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org &gt;/dev/null 2&gt;&amp;1</div><div class="line"></div><div class="line">这样就不会每次执行，都给 root 用户发送邮件了</div></pre></td></tr></table></figure>
+<p>cron表达式 简单教程</p>
+<p>0 <em>/2 </em> <em> </em> /sbin/service httpd restart  # 每两个小时重启一次apache<br>50 7 <em> </em> <em> /sbin/service sshd start  # 每天7：50开启ssh服务<br>50 22 </em> <em> </em> /sbin/service sshd stop  # 每天22：50关闭ssh服务<br>0 0 1,15 <em> </em> fsck /home  # 每月1号和15号检查/home 磁盘<br>1 <em> </em> <em> </em> /home/bruce/backup  # 每小时的第一分执行 /home/bruce/backup这个文件<br>00 03 <em> </em> 1-5 find /home “<em>.xxx” -mtime +4 -exec rm {} /;  # 每周一至周五3点钟，在目录/home中，查找文件名为</em>.xxx的文件，并删除4天前的文件。<br>30 6 <em>/10 </em> <em> ls  # 每月的1、11、21、31日是的6：30执行一次ls命令    
+</em>:1 <em> </em> <em> </em> /usr/bin/php /data/api/setup_server.php  &gt;/dev/null  # 每隔一秒执行一次    这个待确认</p>
+<p>-EOF-</p>
 
-gitlab-ctl start|stop|restart
-</code></pre><p>调试常用配置</p>
-<h1 id="查看后台运行状态"><a href="#查看后台运行状态" class="headerlink" title="查看后台运行状态"></a>查看后台运行状态</h1><pre><code>sudo gitlab-ctl status
+          
+        
+      
+    </div>
 
-run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
-run: nginx: (pid 743) 197s; run: log: (pid 731) 197s
-run: postgresql: (pid 748) 197s; run: log: (pid 738) 197s
-run: redis: (pid 746) 197s; run: log: (pid 734) 197s
-run: sidekiq: (pid 747) 197s; run: log: (pid 736) 197s
-run: unicorn: (pid 745) 197s; run: log: (pid 735) 197s
+    <div>
+      
+    </div>
 
-追踪日志
-gitlab-ctl tail
+    <div>
+      
+    </div>
 
-单独查看 postgresql 日志
-gitlab-ctl tail postgresql
-</code></pre><p>查看系统发邮件</p>
-<pre><code>tail -f /var/log/maillog
-</code></pre><h1 id="配置邮件发送"><a href="#配置邮件发送" class="headerlink" title="配置邮件发送"></a>配置邮件发送</h1><pre><code>仅配置 postfix 发送邮件 
-gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@dev1.localdomain&apos;
-gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;gitlab_mail_display_name&apos;
+    <footer class="post-footer">
+      
 
-测试
-echo &quot;Test mail from postfix normal 22&quot; | mail -s &quot;Test Postfix normal22&quot; qingyun@yourdomain.com 
-会被腾讯识别为垃圾邮件，直接拒绝，然后需要添加白名单 
+      
 
-通过查看 root 邮箱可以看到回复 vim /var/mail/root
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
 
-http://service.mail.qq.com/cgi-bin/help?subtype=1&amp;&amp;no=113&amp;&amp;id=16
 
-配置 SMTP 发送邮件
+    
+      
 
-gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@yourdomain.com&apos;
-gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;yourdomain-gitlab&apos;
+  
+  
 
-gitlab_rails[&apos;smtp_enable&apos;] = true
-gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.exmail.qq.com&quot;
-gitlab_rails[&apos;smtp_port&apos;] = 465
-gitlab_rails[&apos;smtp_user_name&apos;] = &quot;gitlab@yourdomain.com&quot;
-gitlab_rails[&apos;smtp_password&apos;] = &quot;xxxxxxxx&quot;
-gitlab_rails[&apos;smtp_domain&apos;] = &quot;yourdomain.com&quot;
-gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;
-gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true
-gitlab_rails[&apos;smtp_tls&apos;] = true
+  
+  
+  
 
-新建账号
-添加 ssh key 都会触发给当前用户发送邮件
-</code></pre><h1 id="修改管理员邮箱"><a href="#修改管理员邮箱" class="headerlink" title="修改管理员邮箱"></a>修改管理员邮箱</h1><pre><code>root 用户登录 gitlab 后台，然后通过 profile 修改邮箱为 devops@yourdomain.com，保存后，会有下面这句话
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
-Please click the link in the confirmation email before continuing, it was sent to devops@yourdomain.com
+    
+      <header class="post-header">
 
-需要点击邮箱确认
-</code></pre><h1 id="修改图像上传功能"><a href="#修改图像上传功能" class="headerlink" title="修改图像上传功能"></a>修改图像上传功能</h1><pre><code>gitlab_rails[&apos;gravatar_plain_url&apos;] = &apos;http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&amp;d=identicon&apos;
-有一个 `gitlab_ci[&apos;gravatar_plain_url&apos;]` 
-不要配置错了，对的，我就是配置错了，然后老半天不知道，页面打开很慢，结果调试后，才知道这里改错位置了
-</code></pre><h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><p>gitlab omnibus 版本内置了一个nginx，可以通过 nginx[‘enable’] = true 启用禁用</p>
-<pre><code>external_url 这个链接的配置会影响内置 nginx 启动监听的端口
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/22/compile-youcompleteme/" itemprop="url">
+                  编译YouCompleteMe
+                </a>
+              
+            
+          </h1>
+        
 
-external_url &apos;http://192.168.143.129&apos;  默认监听 80 端口，直接输入ip就可以访问
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T09:39:42+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
 
-external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如果修改了端口，需要手工将之前的nginx进程干掉
-</code></pre><h1 id="安装路径"><a href="#安装路径" class="headerlink" title="安装路径"></a>安装路径</h1><p><code>/opt/gitlab</code> gitlab和依赖应用的代码<br><code>/var/opt/gitlab</code> <code>gitlab-ctl reconfigure</code>命令写入的地方，存放应用数据和配置文件<br><code>/etc/gitlab</code> omnibus 版本 gitlab的配置文件，平常只需要修改这个配置文件就够了<br><code>/var/log/gitlab</code> 包含 omnibus 版本 gitlab 所有组件的日志数据</p>
-<p><code>/var/opt/gitlab/nginx/conf</code> 找到nginx配置，然后找到源码位置，修改了对 /<code>/opt/gitlab/embedded/service/gitlab-rails/app/views/events/event</code> 去掉分享事件 Twitter widgets.js 的引用，直接删除第九行后面的代码</p>
-<h1 id="管理注册邮箱白名单"><a href="#管理注册邮箱白名单" class="headerlink" title="管理注册邮箱白名单"></a>管理注册邮箱白名单</h1><p>管理白名单，仅仅限制公司的邮箱注册 *.yourdomain.com</p>
-<p>操作方法：</p>
-<p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
-<h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
-<p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/gitlab.rb</div><div class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</div></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
-<p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
-<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
-<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings" target="_blank" rel="external">SMTP 发送邮件配置</a></p>
-<p><a href="https://www.owent.net/2015/01/gitlab%E8%85%BE%E8%AE%AF%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE.html" target="_blank" rel="external">gitlab腾讯企业邮箱配置</a></p>
-<p><a href="http://borghan.com/archives/some-problems-when-build-gitlab-on-aliyun.html" target="_blank" rel="external">阿里云安装 gitlab</a></p>
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/compile-youcompleteme/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/compile-youcompleteme/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/compile-youcompleteme/" class="leancloud_visitors" data-flag-title="编译YouCompleteMe">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>centos 6.6 下编译 YouCompleteMe</p>
+<p>vundle 管理插件下载的时候，可以直接从 github 下载后，移动到目录 <code>~/.vim/bundle/</code> 下，<br>vundle 安装看不到进度，真心痛苦，昨天夜里下载了至少 5 个多小时吧，一整晚没关机</p>
+<p>编译完 gcc  4.8.1 参考博客文章 &lt;&gt;</p>
+<p>编译完 clang 3.8.0 参考博客文章 &lt;&gt;</p>
+<p>开始编译 ycm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">cd ~/.vim/bundle/YouCompleteMe</div><div class="line"></div><div class="line">sh install.sh</div><div class="line"></div><div class="line">开始时大概是这样的</div><div class="line"></div><div class="line">[  0%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/errors.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/dict.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/slice.cpp.o</div><div class="line">[  3%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/tuple.cpp.o</div><div class="line">...</div><div class="line"></div><div class="line">90% 之后就报错了</div><div class="line"></div><div class="line">[ 90%] Building CXX object ycm/CMakeFiles/ycm_client_support.dir/versioning.cpp.o</div><div class="line">Linking CXX shared library /root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so</div><div class="line">/usr/bin/ld: /usr/local/lib/libpython2.7.a(abstract.o): relocation R_X86_64_32 against `.rodata.str1.8&apos; can not be used when making a shared object; recompile with -fPIC</div><div class="line">/usr/local/lib/libpython2.7.a: could not read symbols: Bad value</div><div class="line">collect2: 错误：ld 返回 1</div><div class="line">make[3]: *** [/root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so] 错误 1</div><div class="line">make[2]: *** [ycm/CMakeFiles/ycm_client_support.dir/all] 错误 2</div><div class="line">make[1]: *** [ycm/CMakeFiles/ycm_support_libs.dir/rule] 错误 2</div><div class="line">make: *** [ycm_support_libs] 错误 2</div><div class="line"></div><div class="line">作者给出的解答是 </div><div class="line"></div><div class="line">Your libpython2.7.a was not compiled with -fPIC so it can&apos;t be linked into ycm_core.so. Use the -DPYTHON_LIBRARY= cmake flag to point it to a .so version of libpython on your machine (for instance, -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so). Naturally, this means you&apos;ll have to go through the full installation guide by hand.</div><div class="line"></div><div class="line">我的做法是增加参数 --enable-shared 重新编译 python</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/python2.7 --with-threads --enable-shared</div><div class="line"></div><div class="line">编译完 Python 后，再次执行 sh install.sh</div></pre></td></tr></table></figure>
+<p>成功验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">最后看到 </div><div class="line"></div><div class="line">[100%] Built target ycm_client_support</div><div class="line">Scanning dependencies of target ycm_support_libs</div><div class="line">[100%] Built target ycm_support_libs</div><div class="line"></div><div class="line">说明编译成功了，再次 vim file ，不会看到错误</div><div class="line"></div><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="url">
+                  Cento6.6 编译安装 the_silver_searcher
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-21T19:03:16+08:00" content="2015-07-21">
+              2015-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" class="leancloud_visitors" data-flag-title="Cento6.6 编译安装 the_silver_searcher">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>the_silver_searcher 好像是个神奇，摸索vim时候一个依赖包，</p>
+<p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
+<p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
+<p>Centos7 下安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
+<p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
+<p>错误：xz compression not available，并且 yum 不能使用</p>
+<p>xz 版本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
+<p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
+<p>Centos6 下编译安装</p>
+<p>1.下载源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>执行成功，没有错误，则安装成功</p>
+<p>-EOF-</p>
 
           
         
@@ -1053,7 +946,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1094,7 +987,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1102,7 +995,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1111,7 +1004,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

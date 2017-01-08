@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
-                  git实战篇--将本地项目提交到github/gitlab中
+                <a class="post-title-link" href="/2015/01/27/thinking-about-it-learning/" itemprop="url">
+                  学习知识的心得
                 </a>
               
             
@@ -272,539 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
-              2015-01-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
-<p>在github/gitlab中新建项目zhunions</p>
-<p>1.在本地目录zhunions目录下初始化本地仓库</p>
-<pre><code>git init
-</code></pre><p>2.建立.gitignore README.md文件</p>
-<p>3.本地提交</p>
-<pre><code>git add . 提交当前目录
-git commit -m &quot;first commit&quot;
-</code></pre><p>4.添加远程关联</p>
-<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
-</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
-<pre><code>git push --set-upstream origin master
-</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
-<p>执行所有操作后，有如下结果：</p>
-<p>a.产生本地分支master</p>
-<p>b.与本地仓库关联的远程仓库origin</p>
-<p>c.与本地分支关联的远程分支master</p>
-<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
-                  git rebase命令学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-08T20:24:25+08:00" content="2015-01-08">
-              2015-01-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/08/git-rebase-command-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-rebase-command-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/08/git-rebase-command-summary/" class="leancloud_visitors" data-flag-title="git rebase命令学习">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git-rebase命令学习"><a href="#git-rebase命令学习" class="headerlink" title="git rebase命令学习"></a>git rebase命令学习</h1><p>阮老师对git rebase讲了一个点，可以和merge类似的操作，<br>最基本的时候，可以达到merge相同效果</p>
-<p>一个台湾同胞写的教程，非常详细</p>
-<p><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase</a></p>
-<p>这里也简单介绍到了</p>
-<p><a href="http://gitbook.liuhui998.com/4_3.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_3.html</a></p>
-<p>写下自己的理解：</p>
-<p><strong>假设</strong></p>
-<p>三个分支 master dev favoorr</p>
-<p><strong>场景一</strong></p>
-<p>favoorr衍生于 dev ，现在想修改到master，</p>
-<p>可以在favoorr分支执行 git rebase master ，切换参考基准</p>
-<p><strong>场景二</strong></p>
-<p>favoorr 分支,本来衍生自提交aaaaa，现在想修改，衍生自提交yyyyy</p>
-<p>在favoorr分支上上执行 git rebase –onto yyyyy aaaaa</p>
-<p>git rebase –onto <new base-commit=""> <current base-commit=""></current></new></p>
-<p>git rebase –continue 如果有冲突，处理完冲突后，继续</p>
-<p><strong>场景三</strong></p>
-<p>1.开发的时候，遇到很多提交，想合并连续两次的小提交</p>
-<p>2.或者之前的提交想改变顺序，提交zzz，应该放到提交xxx的前面</p>
-<p>3.或者之前的提交commit写的有错别字，那么可以用rebase修改</p>
-<p>git rebase -i xxxxx,你准备从这里开始整理提交，在提交一遍</p>
-<p>git rebase 都可以做到</p>
-<p>svn 里面没有搞过这种修改</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/08/git-remote-command-summary/" itemprop="url">
-                  git操作远程仓库
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-08T20:22:07+08:00" content="2015-01-08">
-              2015-01-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/08/git-remote-command-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-remote-command-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/08/git-remote-command-summary/" class="leancloud_visitors" data-flag-title="git操作远程仓库">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git操作远程仓库"><a href="#git操作远程仓库" class="headerlink" title="git操作远程仓库"></a>git操作远程仓库</h1><p>这里对fetch和rebase的用法存在疑惑，Google了下，找到阮老师的教程，<br>推荐看原版，下面内容加入了自己理解</p>
-<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><pre><code>git clone https://github.com/jquery/jquery.git 远程主机被默认命名为 origin（起源）
-git clone https://github.com/jquery/jquery.git myjquerycopy 创建自己的目录，一般不需要加目录
-</code></pre><p>支持的所有的协议</p>
-<pre><code>git clone http[s]://example.com/path/to/repo.git/
-git clone ssh://example.com/path/to/repo.git/
-git clone git://example.com/path/to/repo.git/
-git clone /opt/git/project.git 
-git clone file:///opt/git/project.git
-git clone ftp[s]://example.com/path/to/repo.git/
-git clone rsync://example.com/path/to/repo.git/
-</code></pre><h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><pre><code>git remote 查看所有的远程主机，只会显示列表
-git remote -v
-git clone -o jQuery https://github.com/jquery/jquery.git  将远程仓库命名为jQuery，即更改默认的origin
-git remote show 查看更加详细的信息
-git remote add origin https://github.com/jquery/jquery.git 添加远程仓库
-git remote rm origin 删除远程仓库
-git remote rename origin github 将远程仓库由默认的origin更改为github
-</code></pre><h2 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h2><p>这个命令是将远程仓库的更新拉到本地仓库，而不是本地工作区，但不会与当前分支合并</p>
-<pre><code>git fetch 拉取远程仓库所有分支的所有更新
-git fetch master 仅仅拉取master分支的更新
-git branch -r 查看远程的所有分支
-git branch -a 查看所有分支
-git checkout -b newBrach origin/master 取回远程分支的更新，并创建新分支
-git merge origin/master 将远程分支更新取回本地仓库，并与当前分支合并
-
-git rebase origin/master 
-等同于
-git merge origin/master
-</code></pre><h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>取回远程主机的某个分支与本地的某个分支合并</p>
-<pre><code>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;
-
-git pull origin next:master 取回远程主机的next分支与本地的master分支合并
-git pull origin next 取回远程主机的next分支，与当前默认分支合并，这里要注意了
-
-git pull origin next 
-等同于 
-git fetch origin
-git merge origin/next
-
-本地分支与远程同名分支默认会建立追踪关系，git clone 时，会将本地master和远程master建立关系
-
-git branch --set-upstream master origin/next 将本地的master和远程的next建立追踪关系
-
-如何查看本地分支是否与远程分支建立追踪关系？？？？
-
-git branch -r 可以列出远程有追踪关系的分支，但是不能针对分支查看，比如查看本地dev关联什么分支，可能习惯上，本地分支和远程分支名称都要一样，你可以不关联，但是不要搞本地 xx 分支 和远程yy分支关联
-
-如果当前分支有与之建立追踪关系的远程分支，git pull可以省略远程分支名
-
-git pull origin 本地分支自动拉取origin与之建立追踪关系的分支的更新并且合并
-
-git pull 如果只有一个远程主机，并建立一个追踪关系，可以省略全部参数
-
-git pull --rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; 如果需要采用rebase模式，何时采用哪？？？
-</code></pre><h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>将本地分支的更新推送到远程分支</p>
-<pre><code>git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
-
-git push origin master 如果已经建立追踪关系，可以省略远程分支，如果远程分支不存在，就会新建
-
-git push origin :master 省略本地分支，等于推送了空到远程分支，相当于删除所有内容
-等同于
-git push origin --delete master 删除origin主机的master分支
-
-git push origin 如果本地分支和远程分支有追踪关系，两个名词都可以省略
-
-git push 如果只有一个远程追踪，远程主机也可以省略
-
-git push -u origin master 如果存在多个远程主机关联，可以使用-u设置默认主机，设置后，可以使用 git push
-
-push.default 含义，2.0之前采用matching，之后改为simple
-
-git config --global push.default matching
-git config --global push.default simple
-
-simple 默认只推送当前分支
-matching 会推送所有有追踪关系的本地分支
-
-git push --all origin 不管是否有对应的远程分支，全部推送到远程主机
-
-git push --force origin 如果远程高于本地无法推送，可以强行推送，不建议使用
-
-git push origin --tags tag默认不会推送，必须加参数
-
-git push --set-upstream origin master  和远程master分支建立追踪关系，并push当前分支
-</code></pre><h2 id="新增远程仓库操作"><a href="#新增远程仓库操作" class="headerlink" title="新增远程仓库操作"></a>新增远程仓库操作</h2><pre><code>git clone -o booyah  命名初始远程仓库不叫 origin ，叫 booyah
-
-git fetch origin  更新本地分支与远程分支同步，拉取远程代码到本地
-
-git remote add github git@xxxx.xxx.xx:yy.git 添加新的远程仓库 github 
-
-git push origin serverfix:awesomebranch 将本地分支 serverfix 推送到远程仓库 origin 中 awesomebranch
-
-git merge origin/serverfix 将远程分支与自己当前分支合并
-
-git checkout -b serverfix origin/serverfix  新建分支，以 远程分支为基础
-
-git checkout -b sf origin/serverfix  远程分支和本地分支使用不同的名字
-
-git checkout --track origin/serverfix  跟踪分支，远程分支和本地分支操作简化命令
-
-git branch -u origin/serverfix 当前本地分支关联远程分支 --set-upstream-to 的简写 -u
-
-git merge @{u}  等于 git merge git merge origin/master  ,使用 @{u} @{upstream} 代替 origin/master
-
-git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远程分支情况
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/06/my-2014/" itemprop="url">
-                  写在2014，自己的路，一步，一步
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-06T12:14:50+08:00" content="2015-01-06">
-              2015-01-06
+            <time itemprop="dateCreated" datetime="2015-01-27T23:44:01+08:00" content="2015-01-27">
+              2015-01-27
             </time>
           </span>
 
@@ -833,8 +302,8 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/06/my-2014/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/06/my-2014/" itemprop="commentsCount"></span>
+                <a href="/2015/01/27/thinking-about-it-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/thinking-about-it-learning/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -844,7 +313,7 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
 
           
           
-             <span id="/2015/01/06/my-2014/" class="leancloud_visitors" data-flag-title="写在2014，自己的路，一步，一步">
+             <span id="/2015/01/27/thinking-about-it-learning/" class="leancloud_visitors" data-flag-title="学习知识的心得">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -868,39 +337,31 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
       
         
           
-            <h1 id="写在2014年末"><a href="#写在2014年末" class="headerlink" title="写在2014年末"></a>写在2014年末</h1><p>时光荏苒，岁月如梭，2014就这么没了，然后自己来地球上已经24个年头多了，今年是第一次<br>写自己的年终结，写写发生在自己身上的事情吧</p>
-<h1 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h1><p>工作还是在老公司，每天上班、下班，中间完成各种任务，提一些自己的看法，整体来说，做的<br>还不错，还拿了个优秀员工奖，研发部员工30+，一个名额，至少自己做到过</p>
-<p>然后是中旬负责有挑战性的工作，探索新技术+认证技术思路的正确性，先说探索这一步，自己做<br>到了，做了分享，然后由于公司部门拆分，调配到其他部门，公司培养做系统架构，换了职位，工<br>作内容暂时没太多改变，然后就是自己的适应和提高，让自己能够把新职位和新工作做好，承担责<br>任，实现自己的价值。</p>
-<p>时间已经到了下半年，公司业务的调整，然后随着业务部项目一直在调整，不停的调整，跟<br>着业务走，探索新的业务模式，感受到了互联网公司的飘，亲身经历，然后现在还没有终点，为公司<br>寻找新的业务模型</p>
-<h1 id="成长"><a href="#成长" class="headerlink" title="成长"></a>成长</h1><p>自己对计算机的兴趣是从初二开始的，农村孩子，初二才第一次接触计算机，开始背诵键盘分区，八个基本键<br>A S D F ,J K L ;，不知道现在谁还记得，不过当年这就是我接触计算机最开始的内容，然后现在想想，我们那时候<br>用的系统是win 95 的，微机课，一星期一节，而且还经常被其他老师占用，或者机器设备有问题在教室上，<br>那时候就玩打字游戏，唯一的，那个时候能看到的就是电视上的白领，整天搞计算机，多好，也走出大山了，<br>那就是我那个时候能看到的，能想到的最多了</p>
-<p>然后到对计算机的了解越来越多，学了Java语言，找工作，解决生存问题，在后来，学Oracle，学extjs，学<br>jquery，这些都是工作上用到，然后被动去学习的，Java也是肤浅了解，能写代码，从没想过要去全面深入<br>学习，而且重要的是那时候没有那个思维</p>
-<p>然后到了12年中，同学那里拿了鸟哥Linux私房菜，也是每看，落了很多灰，一直放角落，然后12 13年，淘宝的<br>双11搞的火热，突然在一个网站看到讨论淘宝的架构的，由于自己之前的不努力，自己也从来没想着进BAT这种<br>公司，或者说从来没有过这种想法，那种想法不应该是那个时候的自己敢想的，具体在哪个网站上看到的忘记了，<br>只记得分享的人叫赵超，微博@子流，当时顺势就加了微博，那个时候自己也很少玩微博，由此便开始了自己的成长<br>之路吧，从那以后，又两年的时间，接触了很多东西，很多人，或者说自己主动找了很多东西，发现了计算机行业<br>自己以前从来没有思考过的，自己以前从没认识到的</p>
-<p>另外一个伴随着的是我开始买书看，开始关注很多人的博客，开始看到这个行业还有更多更好地东西，然后<br>一直被他们吸引，并追赶着，到现在还是一直追赶着</p>
-<p>说说看书，看书，很多人刚开始是不愿意的，或者说是坚持不下来的，但是万事开头难，这句话是相信的，<br>如果你过了一个阶段，你会感觉看书很自然，而且能静下来看，而且会被看书能够全面了解更多知识而吸引，<br>有时候了解知识的深度也不是很深，这个还是要承认的，但是总是有收获的，因为书是作者思路的总结，总有<br>有价值的东西，花点钱，买作者那么多经验，其实很划得来，我们要感谢作者愿意分享</p>
-<p>再说追博客，追更好的东西，最开始我关注的是淘宝的赵超，@子流，后来慢慢读他得文章，买他得书，他文章<br>提到好多人，都是在淘宝团队中起很大作用的人，然后微博上继续关注他们，看他们动态，看他们的推荐，上infoq，<br>看qcon视频分享，看上面的文章分析stackoverflow、Facebook、Twitter、Google的架构，分享豆瓣的公司文化，<br>从赵超找到淘宝的一圈人，@Fenng @鬼脚七 @刺，对了，刚好那段时间，微信推出了公众号服务，又关注他们的<br>公众号，记得最初看鬼脚七的公众号和刺的公众号，还有Fenng的dba note，再后来看他们推荐的，他们觉得好的，<br>找到了@池建强 mactalk，infoq上看郑晔的分享，因为目前Java算做的比较多的，然后需要关注Java牛，一直看<br>文章，然后发现2012 13 14年看了不少文章</p>
-<p>然后再14年初买了mac，也买了mactalk，技术学习在继续，自己的效率和技术深度在提升，然后我发现<br>更加热爱自己的兴趣了，而且为自己的兴趣和职业是一条线感到幸运，这条路没有终点，一步一步向前，没有终点</p>
-<p>看到的东西越多，想法也越多</p>
-<p>看到了我党对人民的不公，拿我们交得税胡作非为，修路不好好修，豆腐渣工程，草泥马修好还收我们的钱，草泥马钱收够<br>了还不行，还要延长时间，草泥马gcd，拿纳税人的钱，养一群sb，干啥啥不行，搞研究，从没见过研究出来个啥，<br>最近哈尔滨火灾，可惜了那几个少年，2w抚恤金，可怜他们的父母</p>
-<p>可怜的中国程序员，被GFW搞的，只能翻过去，记得整个高中3年，翻墙4次，夜里出去通宵上网，尼玛现在工作了，还得翻墙</p>
-<p>看了很多移民的介绍，获得Google工作机会的介绍，对于现在的我，应该是只能想想，但是万一实现了哪</p>
-<p>对于英语，现在有点想苦笑，心中一直认为自己喜欢英语还是没变的，而且如果跟英语接触的机会，会觉得全身轻松，<br>12年的时候交了英孚37k，钱花了，时间不对，不过也还好，只是花了点钱而已，感觉做其他事情，比那37k更<br>加值得，然后说看英文资料，最近2年看了不少，也锻炼了不少，但是只能看，还需提高，目标是出国，出国只因为<br>想找个更好地生存的地方，朝鲜的人可以生存，中国地人也可以生存，美国的人还可以生存，只是想找个更好地地方生存下去</p>
-<p>然后分享自己觉得不错的东西</p>
-<h1 id="书"><a href="#书" class="headerlink" title="书"></a>书</h1><p>自己感觉几本值得推荐的书</p>
-<p><code>Mactalk  人生元编程</code>  ，一个技术从业者的思想总结</p>
-<p><code>Google软件测试之道</code>介绍Google软件测试文化，让你可以了解更好地东西是增么做的，有更好地，还有更好地</p>
-<p><code>Java中间件开发</code>以前大型互联网架构经验，这个词感觉好远，多看几本书，其实还是可以去想，去试的，淘宝的业务支持，如何做到交易300++亿一天</p>
-<p><code>Redis设计与实现</code>  作者讲得很细，可以从书中学到很多配置的优缺点，对Redis特性有个全面了解，调优，知道为什么这么做</p>
-<p><code>Java 加密与解密</code>  密码学入门，读完学了不少新知识，加密解密，对自己不再很陌生</p>
-<p><code>Java 核心编程</code> 卷一 全面了解Java需要去读读</p>
-<p><code>Java 核心编程</code> 卷二 全面了解Java需要去读读</p>
-<p><code>Linux私房菜 基础篇</code> 学Linux，建议读读</p>
-<p>当拿到一本书的时候，可能会感觉厚，可能第一个想法是自己没时间看，但是可以尝试开始第一步</p>
-<p>其他</p>
-<p><code>道德经</code>系列视频，曾仕强教授讲解，</p>
-<p><code>易经系</code>列视频，曾仕强教授讲解</p>
-<p>学自己能学到的东西，调整好自己的心态，随时最好准备，接受更好地，追求更好地</p>
-<p>建议技术从业者</p>
-<p><code>使用mac笔记本，搞自己博客，扩展自己雷达</code></p>
+            <h1 id="学习知识的体会心得"><a href="#学习知识的体会心得" class="headerlink" title="学习知识的体会心得"></a>学习知识的体会心得</h1><p>目前自己掌握了基础的学习新知识的能力，在不断的被吊打中磨练出来的</p>
+<p>知识，要积累，要多模仿，换成自己的，自己要有自己的知识体系和归档，方便用时候查阅</p>
+<p>能力，需要不断的锻炼，不断去读书，打好基础，计算机行业的话，操作系统和数据结构和算法，这个<br>一定要懂，不要求十分精通，但是一定要掌握，不然永远是飘着的，根儿没扎好</p>
+<p>学新东西，看官方，英文文档是很重要的，那么自然的，阅读英文的能力对于程序员来说是必备的，还不行的<br>话，就从现在开始，自己做项目的空闲时间，找自己当前项目用到的技术的官方reference或者document，提<br>高不是一蹴而就</p>
+<p>学英文，stackoverflow要上，Quora要上，上面找自己感兴趣的话题和标签，他们会给你推送很多东西，读<br>然后进步</p>
+<p>全面看一个东西的API很有用，比如学习Jquery，它的官方API如果你看过，而且看完了，肯定是会有收获的，</p>
+<p>看书学东西，是很推荐的，但是刚开始的时候总是那么难，当你拿到一个600页，700页的书的时候，总是那么害怕，<br>当打开书的时候，一看内容，有些会，但有些真的不会，适当跳过，敲源代码，慢慢在工作中领悟</p>
+<p>一本书都是作者智慧的结晶，写过博客的人才能体会到吧，不管人家写的多烂，或者是讲解API，毕竟肯定多多少少<br>加入了自己的思考和总结，总能学到自己不会得</p>
+<p>遇到问题的时候，不轻易放过，多想想为什么自己想错了，当年理解Jquery对象和javascript对象之后，豁然开朗，为什么<br>对javascript对象.val()不能获取到值，而且后来教给了好几个同事</p>
+<p>后台，分布式，多线程，tcp/ip很重要啊，工作5-6年如果感觉自己到瓶颈，那就是自己的问题了 ~~</p>
+<p>14年一边看，一边学了Linux应用，因为没做过运维或管理员，很顺利的忘记了那些 囧~，但是我现在回来重新用的时候，<br>可以通过记忆和笔记不用Google解决问题，然后再分享成博客归档，我想我说我掌握Linux使用比较合适吧，千万不能说<br>精通，然后再走向熟练，但是也比了解好太多，只能说掌握，嗯，掌握，很好地中性词</p>
+<p>靠搜索引擎才会的东西，不算掌握，只能说了解，而知识也都是自己亲身要用了，才会真正去学习，会有很多雷达，关注<br>很多东西，但是 没太走心 </p>
+<p>使用IDE的时候，把所有的提示都关闭了吧，然后API放手边，随时看，随时写，多写几遍，那些方法名就记下来了，然后<br>你会发现，自己在不断提高</p>
+<p>早点建立自己的博客吧，也可以是csdn或者cnblogs，任何博客平台都好，关键是你要写，</p>
+<p>14年，我在搜索引擎上发现可以用github写博客，当时很兴奋，但是一看早在2012年左右，人们已经用的如火如荼，好吧，又是别人已经不准备用的东西，我才知道，我才进来 在囧一次</p>
+<p>当时，只记得那个同学告诉我，重要是你要写，在哪写不重要，这句话，永远记得，</p>
+<p>最难的也就是，重要是你要做</p>
+<p>尽管有jekyll，有markdown，有ruby，在当时都是一窍不通，但是都走过来了，</p>
+<p>重要的是要做，步子迈起来是多么重要啊</p>
+<p>要学得还很多</p>
+<p>早点停止打游戏吧，庆幸11年下半年已经结束</p>
+<p>时间总是挤的，也总是不够用</p>
+<p>，嗯，早点睡吧，不早了 ~~~</p>
+<p>竟然写了这么多</p>
+<p>-EOF-</p>
 
           
         
@@ -950,8 +411,8 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
             
               
                 
-                <a class="post-title-link" href="/2014/12/29/git-learn-summary/" itemprop="url">
-                  git 入门学习笔记-备忘
+                <a class="post-title-link" href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="url">
+                  LInux实战--Mac配置ssh免密码登录到虚拟主机
                 </a>
               
             
@@ -964,8 +425,8 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-29T17:46:42+08:00" content="2014-12-29">
-              2014-12-29
+            <time itemprop="dateCreated" datetime="2015-01-27T23:04:02+08:00" content="2015-01-27">
+              2015-01-27
             </time>
           </span>
 
@@ -978,8 +439,8 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -994,8 +455,8 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/29/git-learn-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/29/git-learn-summary/" itemprop="commentsCount"></span>
+                <a href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1005,7 +466,7 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
 
           
           
-             <span id="/2014/12/29/git-learn-summary/" class="leancloud_visitors" data-flag-title="git 入门学习笔记-备忘">
+             <span id="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" class="leancloud_visitors" data-flag-title="LInux实战--Mac配置ssh免密码登录到虚拟主机">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1029,132 +490,515 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
       
         
           
-            <p>学习参照连接：</p>
-<p>廖雪峰老师的git教程</p>
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
-<h1 id="下面是学习笔记"><a href="#下面是学习笔记" class="headerlink" title="下面是学习笔记"></a>下面是学习笔记</h1><p>再次推荐程序员使用mac笔记本，不多说</p>
-<h2 id="单机功能"><a href="#单机功能" class="headerlink" title="单机功能"></a>单机功能</h2><pre><code>git init 初始化本地仓库
-git add filename ... 添加到暂存区 
+            <h1 id="LInux实战–Mac配置ssh免密码登录到虚拟主机"><a href="#LInux实战–Mac配置ssh免密码登录到虚拟主机" class="headerlink" title="LInux实战–Mac配置ssh免密码登录到虚拟主机"></a>LInux实战–Mac配置ssh免密码登录到虚拟主机</h1><h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
+<p>写在最前</p>
+<p>2014年3月份新购了Mac Book Pro 15，然后喜欢在上面使用VirtualBox安装虚拟机鼓捣东西,<br>最开始是鼓捣hadoop集群，由于13年花时间仔细阅读了Linux私房菜基础版，所以被轻轻虐待，<br>到最后能轻轻松给集群删除节点，配置新节点，当然，因为没有太多运维经验，所以是手工rsync+vim<br>虽然古老且笨拙，但是孰能生巧，中间好几个月搞其他东西，而且那时候也没有开始写博客，所以<br>东西都压在印象笔记里面，现在有新想法，搞gitlab + Java + Python + jenkins + test，而且<br>想玩自动化的，所以重新搞虚拟机，而且配置要求比较高点的。</p>
+<p>这次一步一步，把所做的，都记录下来，下面回到正文：</p>
+<h1 id="主机的配置"><a href="#主机的配置" class="headerlink" title="主机的配置"></a>主机的配置</h1><p>首先在Mac上使用virtualbox安装虚拟机，详细可以参照<a href="/mac-use-virtualbox/">博客文章</a></p>
+<pre><code>网络配置为：
 
-git commit -m &quot;a tip&quot; 添加到本地仓库 没有add的，不会 commit
-git commit readme.txt -m &quot;test1&quot;   会提交所有的改动，即使没有add，
+主机跟虚拟机之间建立独立的局域网，    
+主机ip 192.168.56.1     
+虚拟机ip192.168.56.110,     
+虚拟机hostname=centos65，    
+主机和虚拟机都添加host域名解析
 
-git status 查看本地工作区状态
-git log 查看本地提交日志
-git reflog 查看本地所有操作记录
-git reset --hard xxxxx 从本地仓库恢复到某个版本，改变head指针
-git reset --hard HEAD^  恢复上一个稳定版本
+sudo vim /etc/hosts
 
-log的几种用法 截取的zsh下的alias  ，alias | grep &apos;git log&apos;
-glg=&apos;git log --stat --max-count=10&apos;
-glgg=&apos;git log --graph --max-count=10&apos;
-glgga=&apos;git log --graph --decorate --all&apos;
-glo=&apos;git log --oneline --decorate --color&apos;
-glog=&apos;git log --oneline --decorate --color --graph&apos;
+新增
+192.168.56.110 centos65
 
-git log --pretty=oneline --abbrev-commit   简短显示提交内容
-git log -p -2 展示每次提交的差异,显示的是行层面的对比
-git log -U1 --word-diff  显示的是单词层面的对比
-git log --stat  显示增改行数统计
-git log --pretty=oneline 一行显示  glo ,会显示最后一次提交的
+主机和虚拟机执行
 
-gitk 一个查看git发布的工具，执行命令后，直接显示
-</code></pre><p>概念部分</p>
-<pre><code>工作区 新建文件，就在工作区
-暂存区 通过add 就添加到暂存区
-本地仓库 通过commit，就添加到本地仓库，进行版本管理
-</code></pre><p>git 管理的是提交，而不是文件，下面是示例</p>
-<p>git对同一个文件修改两次，但是只有一次会被提交到仓库</p>
-<p>第一次修改 – add – 第二次修改 – commit – 只有第一次add的被commit到本地库</p>
-<p>上面操作过后，第二次对文件的修改并没有被提交</p>
-<p>撤销修改</p>
-<pre><code>git checkout -- readme.txt  恢复一次修改
-</code></pre><p>一种可能是还没有add到暂存区，那么直接可以恢复到修改之前</p>
-<p>一种是add到暂存区，还没有到本地仓库,然后又修改了，这样子会回到上一次add的状态，没有add的会回退</p>
-<p>会回到上次 add 之前的状态</p>
-<pre><code>git reset HEAD  file 回到 add 前的状态，从暂存区拉倒工作区
+ping centos65 都没有错误
 
-git checkout -- file 从工作区拉倒修改前
-</code></pre><p>删除文件</p>
-<pre><code>git rm file  删除文件，否则不能提交
-</code></pre><p>分支</p>
-<pre><code>分支使用：创建分支--添加功能--分支提交--切换主分支--主分支合并--删除子分支
-git checkout -b dev  创建并切换
-git branch dev 创建dev分支
-git checkout dev  切换dev分支
-vim readme.txt
-git add readme.txt
-git commit -m &quot;branch test&quot;
-git checkout master
-git merge dev
-git branch -d dev
-</code></pre><p>当出现同时编辑一行的时候，会出现冲突，冲突后需要手工合并，在提交</p>
-<p>合并分支中，</p>
-<pre><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev
-</code></pre><p>通过参数，禁用fast-forward,产生合并记录</p>
-<pre><code>git log --graph --pretty=oneline --abbrev-commit  查看分支合并图
-</code></pre><p>分支使用场景：暂停手头工作–拉取分支–修改bug–提交–合并</p>
-<p>工作进行到一半，需要修改bug，</p>
-<pre><code>git stash 
+主机生成ssh公钥和私钥
 
-fix bug
+cd ~ &amp;&amp; ssh-keygen 
+然后一路回车
+</code></pre><h1 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h1><p>首先在虚拟机上生成ssh公钥和私钥</p>
+<pre><code>cd /root &amp;&amp; ssh-keygen
+</code></pre><p>编辑虚拟机ssh配置，开启ssh，此步骤不必须</p>
+<pre><code>vim /etc/ssh/sshd_config
+ 47 RSAAuthentication yes
+ 48 PubkeyAuthentication yes
+ 49 AuthorizedKeysFile      .ssh/authorized_keys
+</code></pre><p> 这三行取消注释<br> 编辑后，退出保存</p>
+<p> 重启ssh服务</p>
+<pre><code>service sshd restart
+</code></pre><p>验证ssh服务</p>
+<pre><code>netstat -tlnp | grep ssh
+</code></pre><p>新增ssh认证文件，保存其他主机的公钥</p>
+<pre><code>vim /root/.ssh/authorized_keys
+</code></pre><p>这时候，需要把mac上面的</p>
+<pre><code>cat ~/.ssh/id_rsa.pub 
+</code></pre><p>内容全部copy进来，不能有空格，保存退出</p>
+<p>验证配置正确性</p>
+<p>主机输入</p>
+<pre><code>ssh root@centos65
+</code></pre><p>可能遇到问题</p>
+<p>1.主机上~/.ssh/目录权限要是700<br>2.主机上~/.ssh/id_rsa权限要是600，并且属于当前用户    </p>
+<p>例如我的主机favoorr-mac,当前用户名User,</p>
+<pre><code>执行 ls -ld ~/.ssh/ ; ll ~/.ssh/ ，结果如下
 
-git merge
+favoorr-mac:~ User$ ls -ld ~/.ssh/ ; ll ~/.ssh/
+drwx------  5 User  staff  170  5 14 23:44 /Users/User/.ssh/
+total 24
+-rw-------  1 User  staff  1679  5 14 23:44 id_rsa
+-rw-r--r--  1 User  staff   398  5 14 23:44 id_rsa.pub
+</code></pre><p>3.虚拟机上新建目录~/.ssh权限为644，文件~/.ssh/authorized_keys权限为644<br>4.可以发送主机上的id_rsa.pub到虚拟机上，然后cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>5.如果手工复制 id_rsa.pub 里面的内容，注意选中之后不要修改，直接粘贴，修改就可能报错了，权限那些其实不容易出问题，默认即可，这里比较容易出错</p>
+<pre><code>ssh -v root@dev1  调试 ssh 信息，比如本地多个私钥，
+ssh -o GSSAPIAuthentication=no xxx@dev1
+</code></pre><p>6.几个月后，一次爬坑经历发现，/etc/ssh/sshd_config里面的内容，是可以不注释的</p>
+<p>-EOF-</p>
 
-git stash pop
+          
+        
+      
+    </div>
 
-git stash list
+    <div>
+      
+    </div>
 
-git stash apply 
+    <div>
+      
+    </div>
 
-对于没有合并的分支
+    <footer class="post-footer">
+      
 
-git branch -D branchName 强行删除
-</code></pre><p>标签tag</p>
-<pre><code>git tag v1.0  为当前提交打tag 1.0
-git tag 列出当前有的 tag
-git show v0.9 显示某个标签信息
-git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164  从以往的提交建立带说明的标签
-git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 私钥签名的标签
-git tag -d v0.1 删除本地标签
-git push origin v1.0  将本地标签推送远程
-git push origin --tags  一次性将本地未推送的标签全部推送
-如果标签已经推送远程仓库，删除需要两步
-git tag -d v0.9  删除本地
-git push origin :refs/tags/v0.9 删除远程标签
-</code></pre><h2 id="github作为远程仓库"><a href="#github作为远程仓库" class="headerlink" title="github作为远程仓库"></a>github作为远程仓库</h2><pre><code>加入ssh key方法
-https://help.github.com/articles/generating-ssh-keys/ 
+      
 
-ssh -T git@github.com
-Hi favoorr! You&apos;ve successfully authenticated, but GitHub does not provide shell access.
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
 
-git clone git@github.com:michaelliao/gitskills.git   克隆远程项目到本地
-git clone user@server:/path.git 协议规范
-git clone https://github.com/favoorr/gitdemo.git  使用https协议
 
-git remote add origin https://github.com/favoorr/gitdemo.git  关联远程仓库
+    
+      
 
-git push -u origin master 第一次关联后，推送本地仓库到远程仓库，需要输入账号和密码
+  
+  
 
-git push origin master 如果已经和远程仓库关联，将本地的内容推送到远程的master分支
+  
+  
+  
 
-git remote 显示远程仓库信息 
-git remote -v
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
-git pull 拉取最新修改 ，可能会失败，要先让本地分支和远程分支关联
+    
+      <header class="post-header">
 
-git checkout -b dev origin/dev  创建远程分支到本地
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/25/jdk-jre-old-version-download/" itemprop="url">
+                  老版本JDK JRE下载
+                </a>
+              
+            
+          </h1>
+        
 
-git push origin dev  将本地仓库内容推送到远程dev分支，如果远程分支版本高于自己，会失败，要先拉取，合并，在push
-</code></pre><h2 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h2><p>设置颜色</p>
-<pre><code>git config --global color.ui true
-</code></pre><p>忽略特殊文件，如果某些文件不想提交，可以写在这个文件里面</p>
-<pre><code>.gitignore
-</code></pre><p>手工别名</p>
-<pre><code>git config --global alias.st status
-</code></pre><p>配置文件</p>
-<pre><code>.git/config
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>以上为学习过程中的笔记，整体来说，学完这个简单的教程，会有一个整体的理解，<br>但是要在在工作中使用git，还需要多问Google</p>
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-25T12:56:42+08:00" content="2015-01-25">
+              2015-01-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/25/jdk-jre-old-version-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/jdk-jre-old-version-download/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/25/jdk-jre-old-version-download/" class="leancloud_visitors" data-flag-title="老版本JDK JRE下载">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>老版本jdk，jre下载</p>
+<p>oracle 提供的下载页只能下载最新的jdk或jre，</p>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>有时候做一些编译，需要用到老版本的jdk，程序对jdk版本做了限制，<br>例如编译hadoop2.0的文件时候，可以到下面地址下载</p>
+<p><a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/archive-139210.html</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/23/linux-edit-hostname/" itemprop="url">
+                  linux实战-修改主机名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T18:11:19+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/linux-edit-hostname/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/linux-edit-hostname/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="linux实战-修改主机名">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Linux实战-修改主机名"><a href="#Linux实战-修改主机名" class="headerlink" title="Linux实战-修改主机名"></a>Linux实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
+<p>需要root权限，修改主机名为master步骤如下</p>
+<pre><code>第一步
+vim /etc/sysconfig/network  实际修改主机名
+
+添加
+HOSTNAME=master
+
+第二布
+vim /etc/hosts  本地解析
+
+添加
+192.168.56.101 master
+
+第三步
+hostname 查看主机名
+
+第四步
+
+reboot 重启(注意先ping master 之后，在重启)
+</code></pre><p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/23/mac-use-virtualbox-config-network/" itemprop="url">
+                  mac上使用虚拟机网络配置总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T16:14:51+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/virtualbox/" itemprop="url" rel="index">
+                    <span itemprop="name">virtualbox</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/mac-use-virtualbox-config-network/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/mac-use-virtualbox-config-network/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/mac-use-virtualbox-config-network/" class="leancloud_visitors" data-flag-title="mac上使用虚拟机网络配置总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mac上使用虚拟机网络配置总结"><a href="#mac上使用虚拟机网络配置总结" class="headerlink" title="mac上使用虚拟机网络配置总结"></a>mac上使用虚拟机网络配置总结</h1><p>2014年初，公司让探索hadoop相关技术，一直以来有种习惯，不管什么技术，<br>必须自己玩下，然后感觉心里才有底，玩hadoop，单机是没啥意思的，分布式<br>就要多台机器，然后看了mactalk后，上面有段有了mac，不管你什么LVS、hadoop<br>想怎么玩就怎么玩，年初钱攒够就买了，之后就是mac新手，开始被吊打之路，研究hadoop，<br>过程是苦逼的，但是都走过来了，这会需要用虚拟机，想起来当时自己的苦逼，写出来<br>，记录下来。</p>
+<p>根据mactalk的提示，我选择的虚拟机软件是virtualbox,然后过程中遇到问题，应该就是网络吧，首先说我的需求，</p>
+<p>本机可以连接虚拟机<br>虚拟机可以连接本机<br>虚拟机可以上网<br>虚拟机之间可以ssh无密码登录<br>本机可以跟ssh无密码登录    </p>
+<p>看了不少文章，虚拟机网络NAT、桥接和Host only区别区别，个人理解如下</p>
+<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT "></a>NAT </h2><p>如果你的虚拟机eth0配置没有修改，即自动获取ip，那么虚拟机安装成功启动后，会自动获取的ip，而且获取的ip和宿主机是一个网段的，可以直接ping的通，而且可以联网,virtual box网络配置里面可以看到，<code>command + ,</code>在virtualbox网络那栏里面，可以看到10.0.2.0/24,然后虚拟机启动后，会自动生成ip 10.0.2.15</p>
+<h2 id="Host-Only"><a href="#Host-Only" class="headerlink" title="Host-Only "></a>Host-Only </h2><p>是在宿主机上新增一个网卡，然后在宿主机和虚拟机之间设置独立的局域网，然后宿主机和虚拟机沟通无障碍，<br>这里我遇到的问题是当时在虚拟机的网络配置页面，激活网卡二，选择了Host-Only后，下面的<code>界面名称</code>一直没办法选择，现在明白了也就是virtualbox 给主机要新增一个网卡，但当时不懂，愣是找了好久好久，自己都忘记了多久,同样command+` ，调出virtualbox网络设置页面，然后再virtualbox的网络配置页面新增网卡，然后再虚拟机的网络配置页面才有网卡可以选择，宿主机默认ip是192.168.56.1，最小ip是192.168.56.101，最大是192.168.56.254，什么东西都是会了不难，难了不会，添加网卡二之后，我的宿主机新增了个ip192.168.56.1，然后5台虚拟机ip是 192.168.56.101 ~ 192.168.56.105 ，一般同时启动3台虚拟机</p>
+<h2 id="桥接"><a href="#桥接" class="headerlink" title="桥接 "></a>桥接 </h2><p>会获取跟宿主机一个段的ip地址，比如宿主机ip 192.168.1.101 ,虚拟机会获取192.168.1.103的ip，但是公司的ip应该都是严格管理的，所以这种方法不好维护，如果主机所在局域网中得其他机器不需要使用虚拟机上的功能，最好使用Host-Only建立独立局域网</p>
+<p>我的方案是</p>
+<p>网卡一 NAT 方式和宿主机共享网络，虚拟机可以联网，方便下载安装各种软件<br>网卡二 与主机建立独立局域网，和路由上其他的机器分离，(现在看这种方式太对了，我后来把mac带到公司用了，因为要演示hadoop集群计算，而公司的ip是需要向网管申请的)<br>每一台虚拟机的ip固定，因为hadoop集群要设置master，ip要固定下来</p>
+<p>网卡一使用NAT共享主机网络配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth0
+
+DEVICE=eth0
+HWADDR=08:00:27:41:90:4D
+TYPE=Ethernet
+UUID=1c2f383c-8fdb-4aa0-9e5b-8fa2f60117f9
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp
+</code></pre><p>新增网卡二，使用Host-Only方式配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth1
+
+DEVICE=eth1
+HWADDR=08:00:27:93:D4:33
+TYPE=Ethernet
+UUID=8ac73766-a02b-4417-8f71-6762218b6bf8
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=192.168.56.101
+NETMASK=255.255.255.0
+
+/etc/init.d/network restart  重启网络配置
+ifup eth0 /ifdown eth0  启用/停用某个网卡
+</code></pre><p>难点总结</p>
+<p>理解virtualbox给本机添加网卡<br>ip获取手工指定，修改默认的自动获取    </p>
+<p>-EOF-</p>
 
           
         
@@ -1187,7 +1031,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1228,7 +1072,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1236,7 +1080,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1245,7 +1089,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
