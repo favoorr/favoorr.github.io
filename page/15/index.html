@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/10/browsers-security-ports/" itemprop="url">
-                  浏览器限制端口处理方法
+                <a class="post-title-link" href="/2014/11/11/new-snippet-in-sublime/" itemprop="url">
+                  在sublime 中新建snippet
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
-              2014-11-10
+            <time itemprop="dateCreated" datetime="2014-11-11T22:43:27+08:00" content="2014-11-11">
+              2014-11-11
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
+                  <a href="/categories/sublime/" itemprop="url" rel="index">
+                    <span itemprop="name">sublime</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/10/browsers-security-ports/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/browsers-security-ports/" itemprop="commentsCount"></span>
+                <a href="/2014/11/11/new-snippet-in-sublime/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/11/new-snippet-in-sublime/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/11/10/browsers-security-ports/" class="leancloud_visitors" data-flag-title="浏览器限制端口处理方法">
+             <span id="/2014/11/11/new-snippet-in-sublime/" class="leancloud_visitors" data-flag-title="在sublime 中新建snippet">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,19 +337,44 @@
       
         
           
-            <h1 id="浏览器限制端口处理方法"><a href="#浏览器限制端口处理方法" class="headerlink" title="浏览器限制端口处理方法"></a>浏览器限制端口处理方法</h1><h2 id="浏览器端口限制问题描述"><a href="#浏览器端口限制问题描述" class="headerlink" title="浏览器端口限制问题描述"></a>浏览器端口限制问题描述</h2><p>有时候本机调试服务端程序时会使用一些特殊的端口，例如6666，6000等，浏览器由于内部安全机制<br>会限制这类端口的访问，下面介绍Firefox浏览器和Google chrome浏览器遇到端口限制时的处理方法<br>记录备忘</p>
-<h2 id="chrome-处理方法"><a href="#chrome-处理方法" class="headerlink" title="chrome 处理方法"></a>chrome 处理方法</h2><p>Mac 下</p>
-<pre><code>open /Applications/Google\ Chrome.app --args --explicitly-allowed-ports=6000
-</code></pre><p>可以使用Automator</p>
-<p>windows下</p>
-<p>右键属性，选择启动exe路径，添加参数 </p>
-<pre><code>--args --explicitly-allowed-ports=6000
-</code></pre><p>参考文章 <a href="http://cubewot.de/node/266" target="_blank" rel="external">http://cubewot.de/node/266</a></p>
-<h2 id="FireFox-处理方法"><a href="#FireFox-处理方法" class="headerlink" title="FireFox 处理方法"></a>FireFox 处理方法</h2><p>1.地址栏输入</p>
-<pre><code>about:config
-</code></pre><p>2.添加以下内容</p>
-<pre><code>network.security.ports.banned.override 6000
-</code></pre>
+            <h1 id="在sublime-中新建snippet"><a href="#在sublime-中新建snippet" class="headerlink" title="在sublime 中新建snippet"></a>在sublime 中新建snippet</h1><p>在使用markdown编写博客之后，开头都要引入模板套用<br>这时候代码片段snippet就派上用场了，有Eclipse使用的<br>经验，然后我想这个工具肯定是有这个功能的，然后就直接扑上去找，</p>
+<h2 id="新建snippet"><a href="#新建snippet" class="headerlink" title="新建snippet"></a>新建snippet</h2><p>菜单栏 Tools –&gt; new Snippet 就是它了,点击之后会出现如下模板</p>
+<pre><code>&lt;snippet&gt;
+    &lt;content&gt;&lt;![CDATA[
+Hello, ${1:this} is a ${2:snippet}.
+]]&gt;&lt;/content&gt;
+    &lt;!-- Optional: Set a tabTrigger to define how to trigger the snippet --&gt;
+    &lt;!-- &lt;tabTrigger&gt;hello&lt;/tabTrigger&gt; --&gt;
+    &lt;!-- Optional: Set a scope to limit where the snippet will trigger --&gt;
+    &lt;!-- &lt;scope&gt;source.python&lt;/scope&gt; --&gt;
+&lt;/snippet&gt;
+</code></pre><h2 id="各个节点解释如下"><a href="#各个节点解释如下" class="headerlink" title="各个节点解释如下"></a>各个节点解释如下</h2><p>1.新建的模板必须包括在 &lt;![CDATA[ ]]&gt;中，即xml中得文本数据</p>
+<p>2.新建时，snippet里面的缩进会保留到引用的位置</p>
+<p>3.<tabtrigger>hello</tabtrigger>节点表示输入hello后，摁 Tab 键，会调用snippet</p>
+<p>4.<scope>source.python</scope> ，表示该snippet只能在python源码中引用，其他还有很多，<br>详细需要了解Sublime的scope，而且如果这里填写错误，snippet会调取失败</p>
+<p>5.${1:this} ${2:snippet}，表示调出snippet后，是否在指定位置填写默认值和光标的位置，<br>即会在位置1显示this位置二显示 snippet，而且在光标在位置一时，摁Tab会跳转到位置二</p>
+<p>6.<description>md-post</description> 表示在点击 Tools –&gt; snippet 后，显示的描述</p>
+<p>7.新建后会保存到 /Users/User/Library/Application Support/Sublime Text 3/Packages/User/ 路径<br>   文件命名示例：md-post.sublime-snippet</p>
+<h2 id="使用注意点"><a href="#使用注意点" class="headerlink" title="使用注意点"></a>使用注意点</h2><p>保存文件后，不需要重启Sublime 3 ，直接立马使用</p>
+<p>在第一次新建的时候，输入了错误的scope，一直不成功，详细scope要自行了解下</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><pre><code>&lt;snippet&gt;
+    &lt;content&gt;
+    &lt;![CDATA[
+---
+layout: post
+title:  &quot;${1}&quot;
+date:  ${2}
+categories:  
+tags: 
+---
+    ]]&gt;
+    &lt;/content&gt;
+    &lt;tabTrigger&gt;post&lt;/tabTrigger&gt;
+    &lt;description&gt;md-post&lt;/description&gt;
+&lt;/snippet&gt;
+</code></pre><p>保存文件为 /Users/User/Library/Application Support/Sublime Text 3/Packages/User/md-post.sublime-snippet</p>
+<p>编写博客时，输入post，然后Tab 就可以调用snippet</p>
+
           
         
       
@@ -1274,6 +1299,146 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
             
               
                 
+                <a class="post-title-link" href="/2014/11/10/browsers-security-ports/" itemprop="url">
+                  浏览器限制端口处理方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
+              2014-11-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mac/" itemprop="url" rel="index">
+                    <span itemprop="name">mac</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/10/browsers-security-ports/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/browsers-security-ports/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/10/browsers-security-ports/" class="leancloud_visitors" data-flag-title="浏览器限制端口处理方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="浏览器限制端口处理方法"><a href="#浏览器限制端口处理方法" class="headerlink" title="浏览器限制端口处理方法"></a>浏览器限制端口处理方法</h1><h2 id="浏览器端口限制问题描述"><a href="#浏览器端口限制问题描述" class="headerlink" title="浏览器端口限制问题描述"></a>浏览器端口限制问题描述</h2><p>有时候本机调试服务端程序时会使用一些特殊的端口，例如6666，6000等，浏览器由于内部安全机制<br>会限制这类端口的访问，下面介绍Firefox浏览器和Google chrome浏览器遇到端口限制时的处理方法<br>记录备忘</p>
+<h2 id="chrome-处理方法"><a href="#chrome-处理方法" class="headerlink" title="chrome 处理方法"></a>chrome 处理方法</h2><p>Mac 下</p>
+<pre><code>open /Applications/Google\ Chrome.app --args --explicitly-allowed-ports=6000
+</code></pre><p>可以使用Automator</p>
+<p>windows下</p>
+<p>右键属性，选择启动exe路径，添加参数 </p>
+<pre><code>--args --explicitly-allowed-ports=6000
+</code></pre><p>参考文章 <a href="http://cubewot.de/node/266" target="_blank" rel="external">http://cubewot.de/node/266</a></p>
+<h2 id="FireFox-处理方法"><a href="#FireFox-处理方法" class="headerlink" title="FireFox 处理方法"></a>FireFox 处理方法</h2><p>1.地址栏输入</p>
+<pre><code>about:config
+</code></pre><p>2.添加以下内容</p>
+<pre><code>network.security.ports.banned.override 6000
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/07/how-to-visit-google-in-china/" itemprop="url">
                   国内如何访问Google
                 </a>
@@ -1541,146 +1706,6 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/10/29/read-redis-design-and-implementation-1/" itemprop="url">
-                  《Redis设计与实现》- 数据结构与对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-10-29T13:28:29+08:00" content="2014-10-29">
-              2014-10-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/10/29/read-redis-design-and-implementation-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/29/read-redis-design-and-implementation-1/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/10/29/read-redis-design-and-implementation-1/" class="leancloud_visitors" data-flag-title="《Redis设计与实现》- 数据结构与对象">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="《Redis设计与实现》——读书笔记一"><a href="#《Redis设计与实现》——读书笔记一" class="headerlink" title="《Redis设计与实现》——读书笔记一"></a>《Redis设计与实现》——读书笔记一</h1><p>这本书从1.0开始一直关注，然后平时redis doc也是看的书的作者维护的网站，<br>可以预定后，立即预定，并成为第一批到手的读者，可惜中间由于各种原因一直<br>没有时间仔细研读，最近终于有时间可以来细细品读本书。</p>
-<p>在地铁上看了本书的第一二三章，了解到本书的目录安排为四部分，分别是</p>
-<ul>
-<li>数据结构与对象</li>
-<li>单机数据库实现</li>
-<li>多机数据库实现</li>
-<li>独立功能的实现</li>
-</ul>
-<h1 id="第二章-简单动态字符串"><a href="#第二章-简单动态字符串" class="headerlink" title="第二章 简单动态字符串"></a>第二章 简单动态字符串</h1><p>讲解了设计理念，通过通俗易懂的语言和实例，讲解了sds(simple dynamic string)与<br>c语言原声的字符串之间的联系和区别，讲解了sds的设计结构，以及结构的优点</p>
-<p>其中保存字符串len，该理念可以用到后台设计中，比如保存用户充值记录时候，会保存<br>每一次操作的单个记录，也会按照每个用户的操作计算，每个用户产生一条记录，比如充值<br>总额，第一次充值时间，最后一次充值时间，最后一次充值金额等元素</p>
-<p>或者比如设计到count计算的数据，不会到用到的时候才去计算，而是出现数据后，就回去计算，<br>用到的时候，直接读取值，但是对于修改频繁的操作，保存时候，需要慎重，例如淘宝上每个商品<br>的浏览量，数据修改过于频繁，如果保存数据库，数据库压力会太大，而这部分数据又<br>不要去过于精确和实时，需要在准确性、数据库压力上找到权衡点</p>
-<h1 id="第三章-链表"><a href="#第三章-链表" class="headerlink" title="第三章 链表"></a>第三章 链表</h1><p>初步讲解了链表在Redis里面的实现方案，listNode结构和list结构，以及多态性，可以用于多种<br>数据结构，链表和链表节点的api，可以带领读者快速理解实现方案方案和优点</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1726,7 +1751,7 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1734,7 +1759,7 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

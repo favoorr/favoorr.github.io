@@ -258,6 +258,157 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
+                  安装gitlab
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-26T14:36:24+08:00" content="2015-05-26">
+              2015-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">gitlab</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/26/install-gitlab-through-rpm-package/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/install-gitlab-through-rpm-package/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/26/install-gitlab-through-rpm-package/" class="leancloud_visitors" data-flag-title="安装gitlab">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h1><p>安装官方给的 一键安装 shell 命令走，下面列出来所有走的坑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">首先确认机器可以联网，设置了正确得域名解析地址</div><div class="line"></div><div class="line">vim /etc/resolv.conf</div><div class="line"></div><div class="line">nameserver 114.114.114.114</div></pre></td></tr></table></figure>
+<p>安装或更新依赖软件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo yum install curl openssh-server postfix cronie</div><div class="line">sudo service postfix start</div><div class="line">sudo chkconfig postfix on</div><div class="line"></div><div class="line">sudo lokkit -s http -s ssh</div><div class="line"></div><div class="line">这一步，如果 已经禁用防火墙，可忽略</div></pre></td></tr></table></figure>
+<p>下载一键执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</div><div class="line"></div><div class="line">上面是官方给的指令，但是 packages.gitlab.com 时断时连我没有运行成功一次过，只能先下载，在运行</div><div class="line"></div><div class="line">wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</div><div class="line"></div><div class="line">chmod +x script.rpm.sh</div><div class="line"></div><div class="line">sh script.rpm.sh 同样，执行的时候有时候会报下面的错误，能做的就是多执行几次</div></pre></td></tr></table></figure>
+<p>本来执行完 script.rpm.sh 之后会自动启动下载任务，但是经常会失败只能手工下载，而且手工下载还会失败，<br>就多执行几次，前提是域名解析 ok ，而且翻墙了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@sz-vm-test-246 git]# sudo yum install gitlab-ce</div><div class="line">Loaded plugins: fastestmirror</div><div class="line">Repository base is listed more than once in the configuration</div><div class="line">Repository updates is listed more than once in the configuration</div><div class="line">Repository extras is listed more than once in the configuration</div><div class="line">Repository centosplus is listed more than once in the configuration</div><div class="line">Repository contrib is listed more than once in the configuration</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line"> * base: mirrors.aliyun.com</div><div class="line"> * extras: mirrors.aliyun.com</div><div class="line"> * updates: mirrors.aliyun.com</div><div class="line">https://packages.gitlab.com/gitlab/gitlab-ce/el/6/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - &quot;Couldn&apos;t resolve host &apos;packages.gitlab.com&apos;&quot;</div><div class="line">Trying other mirror.</div><div class="line">Error: Cannot retrieve repository metadata (repomd.xml) for repository: gitlab_gitlab-ce. Please verify its path and try again</div></pre></td></tr></table></figure>
+<p>这里分享百度盘的 gitlab-ce-7.11.2~omnibus-1.x86_64.rpm下载地址 <a href="http://pan.baidu.com/s/1c0trcQk" target="_blank" rel="external">http://pan.baidu.com/s/1c0trcQk</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install gitlab-ce 执行完成过程中会出现网络断，断了就继续执行 、、、 </div><div class="line"></div><div class="line">sudo gitlab-ctl reconfigure 执行命令后，会看到好多内容出来，直到成功</div></pre></td></tr></table></figure>
+<p>如果能看到下面内容，说明成功。祝君好运</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Running handlers:</div><div class="line">Running handlers complete</div><div class="line">Chef Client finished, 167/189 resources updated in 110.951922392 seconds</div><div class="line">gitlab Reconfigured!</div></pre></td></tr></table></figure>
+<p>默认使用 Postgre 和 nginx，绑定 80 端口，如果想一次配置启动成功，其他程序就给他让步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# netstat -nplut | grep 80</div><div class="line">tcp        0      0 :::80                       :::*                        LISTEN      1678/httpd</div><div class="line"></div><div class="line">service httpd stop</div></pre></td></tr></table></figure>
+<p>默认账号密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Username: root </div><div class="line">Password: 5iveL!fe</div></pre></td></tr></table></figure>
+<p>访问浏览器 </p>
+<p><a href="http://dev1" target="_blank" rel="external">http://dev1</a> 看到界面，表示成功，登录后台，修改密码</p>
+<p>1qaz2wsx</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://about.gitlab.com/downloads/" target="_blank" rel="external">官方说明</a></p>
+<p><a href="http://segmentfault.com/a/1190000002722631" target="_blank" rel="external">GitLab 安装配置笔记</a></p>
+<p><a href="http://www.pigo.idv.tw/archives/2779" target="_blank" rel="external">用 gitlab 自架一個像 github 的平台</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/25/zabbix-custom-monitor-item/" itemprop="url">
                   zabbix 自定义监控key
                 </a>
@@ -794,150 +945,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/30/a-rental-experience/" itemprop="url">
-                  第一次租住小区房的教训
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-30T17:31:50+08:00" content="2015-04-30">
-              2015-04-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/heart/" itemprop="url" rel="index">
-                    <span itemprop="name">heart</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/30/a-rental-experience/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/30/a-rental-experience/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/30/a-rental-experience/" class="leancloud_visitors" data-flag-title="第一次租住小区房的教训">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="讲讲第一次租住小区房的故事"><a href="#讲讲第一次租住小区房的故事" class="headerlink" title="讲讲第一次租住小区房的故事"></a>讲讲第一次租住小区房的故事</h1><p>坐标：深圳 某地铁站旁</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>原来租住的单间，合同期14年4月到15年4月，结果14年10月，房东涨了120，跨入1500，房子贵得原因是有个大阳台，单间面积不足30，<br>再加上旁边工地太吵，实在是很吵，一直在施工，女朋友老妈要来深圳治病，房子就必须租2房了</p>
-<h2 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h2><p>找了中介，在2个地铁站看了房子，第一个地铁站，看了2套房子，没有心仪的，然后到后面一个地铁站，继续找中介只看了一套房，<br>就租了，签了合同，交了押金和首月房租，以及中介费。</p>
-<p>这个房子上一个租客比较复杂，不是其他的租客，是房东儿子，然后就得等他们搬走，速度也挺快，<br>但是卫生没搞，床垫也少了一个，问题就来了，这些在合同里面都没有写，还好房东还算人好，我说了之后，说卫生我找人搞，房东给100块<br>钱，床垫，房东买，我签收就好</p>
-<p>可是哪，我同学帮忙搬家时，看到小区外面有滚动字幕，房租价格比我租的价格要少1000，也就是，我tm被坑大法了，整个人都不好了，房子优点客厅、2室都带窗口，光线很不错，有阳台，虽然2室60平也是不大，但是自己看中的点，满足了后，整体感觉都还好，一次花费了1w4++，<br>不过房子算是搞定了，只不过是不是被坑还不知道、</p>
-<p>当时中介和房东的情形，没看出来是被坑，但是如果真高1000，感觉有些离谱了，中介和房东，完全在演戏，然后，我竟没看出来，难道平时看电视太少了吗</p>
-<p>先写到这，后续结果确定再说吧，我还是不相信，自己被坑这么狠 …</p>
-<p>把人想的太好了，平时买东西感觉别人花很多时间给自己讲解什么或展示，自己就感觉应该买下来或者付钱，这种心理以后不能有，他们以这个生存，达成这笔交易，这个是他们应该做的最基本的，没有什么其他的，自己有决定权，该不该要，不能被他们蒙蔽，要找不同的比较</p>
-<h2 id="教训"><a href="#教训" class="headerlink" title="教训"></a>教训</h2><ul>
-<li>做事情，不管多急，一定要比较，不要怕错过，错过了才是真的没缘分</li>
-<li>租房时，有个交房的过程，交房时，在给所有钱，签所有合同，别让自己被动，房子的卫生，很烦人的，比如厨房的卫生没给你搞</li>
-<li>租房时，里面的家具，要在租房时跟房东谈的时候定下来包含什么，不包含什么，免得到时候麻烦，比如少个床垫什么的</li>
-<li>看房时，找到自己最关心的，比如光线、阳台，然后房间小点别太小就没关系</li>
-<li>如果是压二付一，写押金条的时候，一个月是房租押金，一月是家具押金，要让房东分开写</li>
-<li>中介，是个很不同寻常的群体，跟他们打交道，多多小心</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -983,7 +990,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -991,7 +998,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

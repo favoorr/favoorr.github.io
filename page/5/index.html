@@ -258,6 +258,149 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="url">
+                  Cento6.6 编译安装 the_silver_searcher
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-21T19:03:16+08:00" content="2015-07-21">
+              2015-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" class="leancloud_visitors" data-flag-title="Cento6.6 编译安装 the_silver_searcher">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>the_silver_searcher 好像是个神奇，摸索vim时候一个依赖包，</p>
+<p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
+<p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
+<p>Centos7 下安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
+<p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
+<p>错误：xz compression not available，并且 yum 不能使用</p>
+<p>xz 版本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
+<p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
+<p>Centos6 下编译安装</p>
+<p>1.下载源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>执行成功，没有错误，则安装成功</p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/21/use-kvim/" itemprop="url">
                   Centos6.6安装使用k-vim
                 </a>
@@ -864,142 +1007,6 @@ pip install pep8
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
-                  mysql replace 学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
-              2015-07-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>mysql 基础修改数据语句</p>
-<p>select insert update delete ,今天学习了个新的 replace </p>
-<p>replace 根据主键或者唯一索引判断相同数据，</p>
-<p>如果数据相同，就的数据会先删除，在插入新数据</p>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
-<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<p>如果主键不同，数据不会覆盖测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1045,7 +1052,7 @@ pip install pep8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1053,7 +1060,7 @@ pip install pep8
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

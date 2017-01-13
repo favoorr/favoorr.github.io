@@ -258,6 +258,142 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
+                  mysql replace 学习
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
+              2015-07-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>mysql 基础修改数据语句</p>
+<p>select insert update delete ,今天学习了个新的 replace </p>
+<p>replace 根据主键或者唯一索引判断相同数据，</p>
+<p>如果数据相同，就的数据会先删除，在插入新数据</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
+<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>如果主键不同，数据不会覆盖测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/18/play-with-python/" itemprop="url">
                   使用Python开发
                 </a>
@@ -900,157 +1036,6 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
-                  安装gitlab
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-26T14:36:24+08:00" content="2015-05-26">
-              2015-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gitlab/" itemprop="url" rel="index">
-                    <span itemprop="name">gitlab</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/26/install-gitlab-through-rpm-package/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/install-gitlab-through-rpm-package/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/26/install-gitlab-through-rpm-package/" class="leancloud_visitors" data-flag-title="安装gitlab">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h1><p>安装官方给的 一键安装 shell 命令走，下面列出来所有走的坑</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">首先确认机器可以联网，设置了正确得域名解析地址</div><div class="line"></div><div class="line">vim /etc/resolv.conf</div><div class="line"></div><div class="line">nameserver 114.114.114.114</div></pre></td></tr></table></figure>
-<p>安装或更新依赖软件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo yum install curl openssh-server postfix cronie</div><div class="line">sudo service postfix start</div><div class="line">sudo chkconfig postfix on</div><div class="line"></div><div class="line">sudo lokkit -s http -s ssh</div><div class="line"></div><div class="line">这一步，如果 已经禁用防火墙，可忽略</div></pre></td></tr></table></figure>
-<p>下载一键执行脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</div><div class="line"></div><div class="line">上面是官方给的指令，但是 packages.gitlab.com 时断时连我没有运行成功一次过，只能先下载，在运行</div><div class="line"></div><div class="line">wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</div><div class="line"></div><div class="line">chmod +x script.rpm.sh</div><div class="line"></div><div class="line">sh script.rpm.sh 同样，执行的时候有时候会报下面的错误，能做的就是多执行几次</div></pre></td></tr></table></figure>
-<p>本来执行完 script.rpm.sh 之后会自动启动下载任务，但是经常会失败只能手工下载，而且手工下载还会失败，<br>就多执行几次，前提是域名解析 ok ，而且翻墙了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@sz-vm-test-246 git]# sudo yum install gitlab-ce</div><div class="line">Loaded plugins: fastestmirror</div><div class="line">Repository base is listed more than once in the configuration</div><div class="line">Repository updates is listed more than once in the configuration</div><div class="line">Repository extras is listed more than once in the configuration</div><div class="line">Repository centosplus is listed more than once in the configuration</div><div class="line">Repository contrib is listed more than once in the configuration</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line"> * base: mirrors.aliyun.com</div><div class="line"> * extras: mirrors.aliyun.com</div><div class="line"> * updates: mirrors.aliyun.com</div><div class="line">https://packages.gitlab.com/gitlab/gitlab-ce/el/6/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - &quot;Couldn&apos;t resolve host &apos;packages.gitlab.com&apos;&quot;</div><div class="line">Trying other mirror.</div><div class="line">Error: Cannot retrieve repository metadata (repomd.xml) for repository: gitlab_gitlab-ce. Please verify its path and try again</div></pre></td></tr></table></figure>
-<p>这里分享百度盘的 gitlab-ce-7.11.2~omnibus-1.x86_64.rpm下载地址 <a href="http://pan.baidu.com/s/1c0trcQk" target="_blank" rel="external">http://pan.baidu.com/s/1c0trcQk</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install gitlab-ce 执行完成过程中会出现网络断，断了就继续执行 、、、 </div><div class="line"></div><div class="line">sudo gitlab-ctl reconfigure 执行命令后，会看到好多内容出来，直到成功</div></pre></td></tr></table></figure>
-<p>如果能看到下面内容，说明成功。祝君好运</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Running handlers:</div><div class="line">Running handlers complete</div><div class="line">Chef Client finished, 167/189 resources updated in 110.951922392 seconds</div><div class="line">gitlab Reconfigured!</div></pre></td></tr></table></figure>
-<p>默认使用 Postgre 和 nginx，绑定 80 端口，如果想一次配置启动成功，其他程序就给他让步</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# netstat -nplut | grep 80</div><div class="line">tcp        0      0 :::80                       :::*                        LISTEN      1678/httpd</div><div class="line"></div><div class="line">service httpd stop</div></pre></td></tr></table></figure>
-<p>默认账号密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Username: root </div><div class="line">Password: 5iveL!fe</div></pre></td></tr></table></figure>
-<p>访问浏览器 </p>
-<p><a href="http://dev1" target="_blank" rel="external">http://dev1</a> 看到界面，表示成功，登录后台，修改密码</p>
-<p>1qaz2wsx</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://about.gitlab.com/downloads/" target="_blank" rel="external">官方说明</a></p>
-<p><a href="http://segmentfault.com/a/1190000002722631" target="_blank" rel="external">GitLab 安装配置笔记</a></p>
-<p><a href="http://www.pigo.idv.tw/archives/2779" target="_blank" rel="external">用 gitlab 自架一個像 github 的平台</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1096,7 +1081,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1104,7 +1089,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

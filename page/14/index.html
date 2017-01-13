@@ -258,6 +258,143 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/22/run-java-code-in-sublime-text/" itemprop="url">
+                  run Java code in Sublime Text
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-22T15:11:53+08:00" content="2014-11-22">
+              2014-11-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/sublime/" itemprop="url" rel="index">
+                    <span itemprop="name">sublime</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/22/run-java-code-in-sublime-text/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/run-java-code-in-sublime-text/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/22/run-java-code-in-sublime-text/" class="leancloud_visitors" data-flag-title="run Java code in Sublime Text">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="在sublime中编写运行Java代码"><a href="#在sublime中编写运行Java代码" class="headerlink" title="在sublime中编写运行Java代码"></a>在sublime中编写运行Java代码</h1><p>1.安装Java编译器</p>
+<p>步骤一：菜单栏 Sublime Text –&gt; Preferences –&gt;Browse Packages 在finder中打开目录</p>
+<p>步骤二：新建<code>Java</code>文件夹,新建文件 <code>JavaC.sublime-build</code>,内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;cmd&quot;: [&quot;javac \&quot;$file_name\&quot; &amp;&amp; java \&quot;$file_base_name\&quot;&quot;],</div><div class="line">    &quot;shell&quot;: true,</div><div class="line">    &quot;file_regex&quot;: &quot;^(...*?):([0-9]*):?([0-9]*)&quot;,</div><div class="line">    &quot;selector&quot;: &quot;source.java&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.编写Java代码调试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Helloword&#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		System.out.println(&quot;Helloword World!&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.运行测试</p>
+<p>command + b,即可运行代码</p>
+<p>ctrl + ` ，可以显示控制台查看步骤</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/20/read-redis-design-and-implementation-2/" itemprop="url">
                   Redis设计与实现读书笔记
                 </a>
@@ -898,171 +1035,6 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/11/new-snippet-in-sublime/" itemprop="url">
-                  在sublime 中新建snippet
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-11T22:43:27+08:00" content="2014-11-11">
-              2014-11-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/sublime/" itemprop="url" rel="index">
-                    <span itemprop="name">sublime</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/11/new-snippet-in-sublime/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/11/new-snippet-in-sublime/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/11/new-snippet-in-sublime/" class="leancloud_visitors" data-flag-title="在sublime 中新建snippet">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="在sublime-中新建snippet"><a href="#在sublime-中新建snippet" class="headerlink" title="在sublime 中新建snippet"></a>在sublime 中新建snippet</h1><p>在使用markdown编写博客之后，开头都要引入模板套用<br>这时候代码片段snippet就派上用场了，有Eclipse使用的<br>经验，然后我想这个工具肯定是有这个功能的，然后就直接扑上去找，</p>
-<h2 id="新建snippet"><a href="#新建snippet" class="headerlink" title="新建snippet"></a>新建snippet</h2><p>菜单栏 Tools –&gt; new Snippet 就是它了,点击之后会出现如下模板</p>
-<pre><code>&lt;snippet&gt;
-    &lt;content&gt;&lt;![CDATA[
-Hello, ${1:this} is a ${2:snippet}.
-]]&gt;&lt;/content&gt;
-    &lt;!-- Optional: Set a tabTrigger to define how to trigger the snippet --&gt;
-    &lt;!-- &lt;tabTrigger&gt;hello&lt;/tabTrigger&gt; --&gt;
-    &lt;!-- Optional: Set a scope to limit where the snippet will trigger --&gt;
-    &lt;!-- &lt;scope&gt;source.python&lt;/scope&gt; --&gt;
-&lt;/snippet&gt;
-</code></pre><h2 id="各个节点解释如下"><a href="#各个节点解释如下" class="headerlink" title="各个节点解释如下"></a>各个节点解释如下</h2><p>1.新建的模板必须包括在 &lt;![CDATA[ ]]&gt;中，即xml中得文本数据</p>
-<p>2.新建时，snippet里面的缩进会保留到引用的位置</p>
-<p>3.<tabtrigger>hello</tabtrigger>节点表示输入hello后，摁 Tab 键，会调用snippet</p>
-<p>4.<scope>source.python</scope> ，表示该snippet只能在python源码中引用，其他还有很多，<br>详细需要了解Sublime的scope，而且如果这里填写错误，snippet会调取失败</p>
-<p>5.${1:this} ${2:snippet}，表示调出snippet后，是否在指定位置填写默认值和光标的位置，<br>即会在位置1显示this位置二显示 snippet，而且在光标在位置一时，摁Tab会跳转到位置二</p>
-<p>6.<description>md-post</description> 表示在点击 Tools –&gt; snippet 后，显示的描述</p>
-<p>7.新建后会保存到 /Users/User/Library/Application Support/Sublime Text 3/Packages/User/ 路径<br>   文件命名示例：md-post.sublime-snippet</p>
-<h2 id="使用注意点"><a href="#使用注意点" class="headerlink" title="使用注意点"></a>使用注意点</h2><p>保存文件后，不需要重启Sublime 3 ，直接立马使用</p>
-<p>在第一次新建的时候，输入了错误的scope，一直不成功，详细scope要自行了解下</p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><pre><code>&lt;snippet&gt;
-    &lt;content&gt;
-    &lt;![CDATA[
----
-layout: post
-title:  &quot;${1}&quot;
-date:  ${2}
-categories:  
-tags: 
----
-    ]]&gt;
-    &lt;/content&gt;
-    &lt;tabTrigger&gt;post&lt;/tabTrigger&gt;
-    &lt;description&gt;md-post&lt;/description&gt;
-&lt;/snippet&gt;
-</code></pre><p>保存文件为 /Users/User/Library/Application Support/Sublime Text 3/Packages/User/md-post.sublime-snippet</p>
-<p>编写博客时，输入post，然后Tab 就可以调用snippet</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1108,7 +1080,7 @@ tags:
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1116,7 +1088,7 @@ tags:
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

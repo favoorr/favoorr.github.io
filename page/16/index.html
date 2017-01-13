@@ -258,6 +258,146 @@
             
               
                 
+                <a class="post-title-link" href="/2014/10/29/read-redis-design-and-implementation-1/" itemprop="url">
+                  《Redis设计与实现》- 数据结构与对象
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-29T13:28:29+08:00" content="2014-10-29">
+              2014-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/10/29/read-redis-design-and-implementation-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/29/read-redis-design-and-implementation-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/10/29/read-redis-design-and-implementation-1/" class="leancloud_visitors" data-flag-title="《Redis设计与实现》- 数据结构与对象">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="《Redis设计与实现》——读书笔记一"><a href="#《Redis设计与实现》——读书笔记一" class="headerlink" title="《Redis设计与实现》——读书笔记一"></a>《Redis设计与实现》——读书笔记一</h1><p>这本书从1.0开始一直关注，然后平时redis doc也是看的书的作者维护的网站，<br>可以预定后，立即预定，并成为第一批到手的读者，可惜中间由于各种原因一直<br>没有时间仔细研读，最近终于有时间可以来细细品读本书。</p>
+<p>在地铁上看了本书的第一二三章，了解到本书的目录安排为四部分，分别是</p>
+<ul>
+<li>数据结构与对象</li>
+<li>单机数据库实现</li>
+<li>多机数据库实现</li>
+<li>独立功能的实现</li>
+</ul>
+<h1 id="第二章-简单动态字符串"><a href="#第二章-简单动态字符串" class="headerlink" title="第二章 简单动态字符串"></a>第二章 简单动态字符串</h1><p>讲解了设计理念，通过通俗易懂的语言和实例，讲解了sds(simple dynamic string)与<br>c语言原声的字符串之间的联系和区别，讲解了sds的设计结构，以及结构的优点</p>
+<p>其中保存字符串len，该理念可以用到后台设计中，比如保存用户充值记录时候，会保存<br>每一次操作的单个记录，也会按照每个用户的操作计算，每个用户产生一条记录，比如充值<br>总额，第一次充值时间，最后一次充值时间，最后一次充值金额等元素</p>
+<p>或者比如设计到count计算的数据，不会到用到的时候才去计算，而是出现数据后，就回去计算，<br>用到的时候，直接读取值，但是对于修改频繁的操作，保存时候，需要慎重，例如淘宝上每个商品<br>的浏览量，数据修改过于频繁，如果保存数据库，数据库压力会太大，而这部分数据又<br>不要去过于精确和实时，需要在准确性、数据库压力上找到权衡点</p>
+<h1 id="第三章-链表"><a href="#第三章-链表" class="headerlink" title="第三章 链表"></a>第三章 链表</h1><p>初步讲解了链表在Redis里面的实现方案，listNode结构和list结构，以及多态性，可以用于多种<br>数据结构，链表和链表节点的api，可以带领读者快速理解实现方案方案和优点</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/10/17/learn-markdown-syntax/" itemprop="url">
                   Markdown 语法整理
                 </a>
@@ -349,7 +489,7 @@
 <p>haha</p>
 <p>haha</p>
 </blockquote>
-<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#102;&#97;&#x76;&#x6f;&#x6f;&#114;&#114;&#x40;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#102;&#97;&#x76;&#x6f;&#x6f;&#114;&#114;&#x40;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
+<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#102;&#x61;&#x76;&#x6f;&#x6f;&#114;&#x72;&#x40;&#103;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;">&#102;&#x61;&#x76;&#x6f;&#x6f;&#114;&#x72;&#x40;&#103;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
 <pre><code>方法一
 &lt;https://www.google.com&gt; 这种不能编写悬停文字
 
@@ -1077,149 +1217,6 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/01/install-homebrew-on-mac/" itemprop="url">
-                  Mac安装Homebrew
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T12:28:39+08:00" content="2014-09-01">
-              2014-09-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-homebrew-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-homebrew-on-mac/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/01/install-homebrew-on-mac/" class="leancloud_visitors" data-flag-title="Mac安装Homebrew">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac安装Homebrew"><a href="#Mac安装Homebrew" class="headerlink" title="Mac安装Homebrew"></a>Mac安装Homebrew</h1><h2 id="Homebrew介绍"><a href="#Homebrew介绍" class="headerlink" title="Homebrew介绍"></a>Homebrew介绍</h2><p>类似yum 和 apt，Homebrew是Mac下的软件包管理工具</p>
-<h2 id="官方说明文档"><a href="#官方说明文档" class="headerlink" title="官方说明文档"></a>官方说明文档</h2><p><a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">http://brew.sh/index_zh-cn.html</a></p>
-<h2 id="Mac下安装命令-完全复制"><a href="#Mac下安装命令-完全复制" class="headerlink" title="Mac下安装命令(完全复制)"></a>Mac下安装命令(完全复制)</h2><pre><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;  
-</code></pre><p>在命令行运行后，根据提示安装</p>
-<h2 id="基础命令介绍"><a href="#基础命令介绍" class="headerlink" title="基础命令介绍"></a>基础命令介绍</h2><p>brew doctor 列出系统的建议和警告信息</p>
-<p>brew -v 显示版本信息</p>
-<p>brew up/update 更新brew软件包，应该是更新自己吧</p>
-<p>brew home package 查看软件包首页</p>
-<p>brew info package 查看软件包信息</p>
-<p>brew deps package  查看依赖</p>
-<p>brew search package 查找</p>
-<p>brew option package  查看软件包安装选项</p>
-<p>brew install package 如果加 -v 参数，表示显示安装编译信息</p>
-<p>brew uninstall / remove package 卸载软件包</p>
-<p>brew upgrade package 更新某个软件包，如果不加package参数，表示更新所有软件包</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1265,7 +1262,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-count">87</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1273,7 +1270,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
