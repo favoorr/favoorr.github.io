@@ -84,7 +84,7 @@
 
 
 
-<meta name="description" content="Linux实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
+<meta name="description" content="Centos 6.5 实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
 需要root权限，修改主机名为master步骤如下
 第一步
 vim /etc/sysconfig/network  实际修改主机名
@@ -92,19 +92,16 @@ vim /etc/sysconfig/network  实际修改主机名
 添加
 HOSTNAME=master
 
-第二布
+第二步
 vim /etc/hosts  本地解析
 
-添加
-192.168.56.101 master
-
-第三步
-hostname 查看主机">
+添加本机 ip 和主机名映射
+192.168.56.101 master">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux实战-修改主机名">
+<meta property="og:title" content="centos6.5-linux实战-修改主机名">
 <meta property="og:url" content="https://favoorr.github.io/2015/01/23/linux-edit-hostname/index.html">
 <meta property="og:site_name" content="favoorr's blog">
-<meta property="og:description" content="Linux实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
+<meta property="og:description" content="Centos 6.5 实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
 需要root权限，修改主机名为master步骤如下
 第一步
 vim /etc/sysconfig/network  实际修改主机名
@@ -112,18 +109,15 @@ vim /etc/sysconfig/network  实际修改主机名
 添加
 HOSTNAME=master
 
-第二布
+第二步
 vim /etc/hosts  本地解析
 
-添加
-192.168.56.101 master
-
-第三步
-hostname 查看主机">
-<meta property="og:updated_time" content="2016-06-25T11:20:58.000Z">
+添加本机 ip 和主机名映射
+192.168.56.101 master">
+<meta property="og:updated_time" content="2017-01-18T02:19:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux实战-修改主机名">
-<meta name="twitter:description" content="Linux实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
+<meta name="twitter:title" content="centos6.5-linux实战-修改主机名">
+<meta name="twitter:description" content="Centos 6.5 实战-修改主机名配置hadoop集群时，修改主机名，便于标示和记忆，记录如下
 需要root权限，修改主机名为master步骤如下
 第一步
 vim /etc/sysconfig/network  实际修改主机名
@@ -131,14 +125,11 @@ vim /etc/sysconfig/network  实际修改主机名
 添加
 HOSTNAME=master
 
-第二布
+第二步
 vim /etc/hosts  本地解析
 
-添加
-192.168.56.101 master
-
-第三步
-hostname 查看主机">
+添加本机 ip 和主机名映射
+192.168.56.101 master">
 
 
 
@@ -161,7 +152,7 @@ hostname 查看主机">
 
   <link rel="canonical" href="https://favoorr.github.io/2015/01/23/linux-edit-hostname/"/>
 
-  <title> linux实战-修改主机名 | favoorr's blog </title>
+  <title> centos6.5-linux实战-修改主机名 | favoorr's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -301,7 +292,7 @@ hostname 查看主机">
             
             
               
-                linux实战-修改主机名
+                centos6.5-linux实战-修改主机名
               
             
           </h1>
@@ -354,7 +345,7 @@ hostname 查看主机">
 
           
           
-             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="linux实战-修改主机名">
+             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="centos6.5-linux实战-修改主机名">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,7 +367,7 @@ hostname 查看主机">
       
 
       
-        <h1 id="Linux实战-修改主机名"><a href="#Linux实战-修改主机名" class="headerlink" title="Linux实战-修改主机名"></a>Linux实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
+        <h1 id="Centos-6-5-实战-修改主机名"><a href="#Centos-6-5-实战-修改主机名" class="headerlink" title="Centos 6.5 实战-修改主机名"></a>Centos 6.5 实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
 <p>需要root权限，修改主机名为master步骤如下</p>
 <pre><code>第一步
 vim /etc/sysconfig/network  实际修改主机名
@@ -384,18 +375,20 @@ vim /etc/sysconfig/network  实际修改主机名
 添加
 HOSTNAME=master
 
-第二布
+第二步
 vim /etc/hosts  本地解析
 
-添加
+添加本机 ip 和主机名映射
 192.168.56.101 master
 
-第三步
-hostname 查看主机名
+第三步，防止 ip 配置错误
+ping master
 
 第四步
+reboot 重启
 
-reboot 重启(注意先ping master 之后，在重启)
+重启完成后，查看修改结果
+hostname 查看主机名
 </code></pre><p>-EOF-</p>
 
       
@@ -485,7 +478,7 @@ reboot 重启(注意先ping master 之后，在重启)
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/01/23/linux-edit-hostname/"
-           data-title="linux实战-修改主机名" data-url="https://favoorr.github.io/2015/01/23/linux-edit-hostname/">
+           data-title="centos6.5-linux实战-修改主机名" data-url="https://favoorr.github.io/2015/01/23/linux-edit-hostname/">
       </div>
     
   </div>
@@ -587,7 +580,7 @@ reboot 重启(注意先ping master 之后，在重启)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux实战-修改主机名"><span class="nav-number">1.</span> <span class="nav-text">Linux实战-修改主机名</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Centos-6-5-实战-修改主机名"><span class="nav-number">1.</span> <span class="nav-text">Centos 6.5 实战-修改主机名</span></a></li></ol></div>
             
           </div>
         </section>

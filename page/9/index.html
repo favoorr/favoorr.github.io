@@ -1067,7 +1067,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
               
                 
                 <a class="post-title-link" href="/2015/01/23/linux-edit-hostname/" itemprop="url">
-                  linux实战-修改主机名
+                  centos6.5-linux实战-修改主机名
                 </a>
               
             
@@ -1121,7 +1121,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
 
           
           
-             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="linux实战-修改主机名">
+             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="centos6.5-linux实战-修改主机名">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1145,7 +1145,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
       
         
           
-            <h1 id="Linux实战-修改主机名"><a href="#Linux实战-修改主机名" class="headerlink" title="Linux实战-修改主机名"></a>Linux实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
+            <h1 id="Centos-6-5-实战-修改主机名"><a href="#Centos-6-5-实战-修改主机名" class="headerlink" title="Centos 6.5 实战-修改主机名"></a>Centos 6.5 实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
 <p>需要root权限，修改主机名为master步骤如下</p>
 <pre><code>第一步
 vim /etc/sysconfig/network  实际修改主机名
@@ -1153,18 +1153,20 @@ vim /etc/sysconfig/network  实际修改主机名
 添加
 HOSTNAME=master
 
-第二布
+第二步
 vim /etc/hosts  本地解析
 
-添加
+添加本机 ip 和主机名映射
 192.168.56.101 master
 
-第三步
-hostname 查看主机名
+第三步，防止 ip 配置错误
+ping master
 
 第四步
+reboot 重启
 
-reboot 重启(注意先ping master 之后，在重启)
+重启完成后，查看修改结果
+hostname 查看主机名
 </code></pre><p>-EOF-</p>
 
           
