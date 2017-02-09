@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/10/29/read-redis-design-and-implementation-1/" itemprop="url">
-                  《Redis设计与实现》- 数据结构与对象
+                <a class="post-title-link" href="/2014/12/01/mac-os-x-apahe-server-tips/" itemprop="url">
+                  apache server在mac上的信息
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-10-29T13:28:29+08:00" content="2014-10-29">
-              2014-10-29
+            <time itemprop="dateCreated" datetime="2014-12-01T22:16:01+08:00" content="2014-12-01">
+              2014-12-01
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
+                  <a href="/categories/apache/" itemprop="url" rel="index">
+                    <span itemprop="name">apache</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/10/29/read-redis-design-and-implementation-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/29/read-redis-design-and-implementation-1/" itemprop="commentsCount"></span>
+                <a href="/2014/12/01/mac-os-x-apahe-server-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-apahe-server-tips/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/10/29/read-redis-design-and-implementation-1/" class="leancloud_visitors" data-flag-title="《Redis设计与实现》- 数据结构与对象">
+             <span id="/2014/12/01/mac-os-x-apahe-server-tips/" class="leancloud_visitors" data-flag-title="apache server在mac上的信息">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,393 +337,9 @@
       
         
           
-            <h1 id="《Redis设计与实现》——读书笔记一"><a href="#《Redis设计与实现》——读书笔记一" class="headerlink" title="《Redis设计与实现》——读书笔记一"></a>《Redis设计与实现》——读书笔记一</h1><p>这本书从1.0开始一直关注，然后平时redis doc也是看的书的作者维护的网站，<br>可以预定后，立即预定，并成为第一批到手的读者，可惜中间由于各种原因一直<br>没有时间仔细研读，最近终于有时间可以来细细品读本书。</p>
-<p>在地铁上看了本书的第一二三章，了解到本书的目录安排为四部分，分别是</p>
-<ul>
-<li>数据结构与对象</li>
-<li>单机数据库实现</li>
-<li>多机数据库实现</li>
-<li>独立功能的实现</li>
-</ul>
-<h1 id="第二章-简单动态字符串"><a href="#第二章-简单动态字符串" class="headerlink" title="第二章 简单动态字符串"></a>第二章 简单动态字符串</h1><p>讲解了设计理念，通过通俗易懂的语言和实例，讲解了sds(simple dynamic string)与<br>c语言原声的字符串之间的联系和区别，讲解了sds的设计结构，以及结构的优点</p>
-<p>其中保存字符串len，该理念可以用到后台设计中，比如保存用户充值记录时候，会保存<br>每一次操作的单个记录，也会按照每个用户的操作计算，每个用户产生一条记录，比如充值<br>总额，第一次充值时间，最后一次充值时间，最后一次充值金额等元素</p>
-<p>或者比如设计到count计算的数据，不会到用到的时候才去计算，而是出现数据后，就回去计算，<br>用到的时候，直接读取值，但是对于修改频繁的操作，保存时候，需要慎重，例如淘宝上每个商品<br>的浏览量，数据修改过于频繁，如果保存数据库，数据库压力会太大，而这部分数据又<br>不要去过于精确和实时，需要在准确性、数据库压力上找到权衡点</p>
-<h1 id="第三章-链表"><a href="#第三章-链表" class="headerlink" title="第三章 链表"></a>第三章 链表</h1><p>初步讲解了链表在Redis里面的实现方案，listNode结构和list结构，以及多态性，可以用于多种<br>数据结构，链表和链表节点的api，可以带领读者快速理解实现方案方案和优点</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/10/17/learn-markdown-syntax/" itemprop="url">
-                  Markdown 语法整理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-10-17T22:29:27+08:00" content="2014-10-17">
-              2014-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/markdown/" itemprop="url" rel="index">
-                    <span itemprop="name">markdown</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/10/17/learn-markdown-syntax/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/17/learn-markdown-syntax/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/10/17/learn-markdown-syntax/" class="leancloud_visitors" data-flag-title="Markdown 语法整理">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Markdown-语法速查表"><a href="#Markdown-语法速查表" class="headerlink" title="Markdown 语法速查表"></a>Markdown 语法速查表</h2><p>内容从Mou Help整理而来，Mou为mac操作系统上优秀的Markdown IDE</p>
-<h3 id="1-文字加粗、斜体、突出显示"><a href="#1-文字加粗、斜体、突出显示" class="headerlink" title="1.文字加粗、斜体、突出显示"></a>1.文字加粗、斜体、突出显示</h3><p>加粗  <strong>xxx</strong>    </p>
-<p>斜体  <em>google是一家伟大的公司</em> </p>
-<p>突出显示的文字 <code>微说网络电话</code> , 深圳市出众网络出品</p>
-<pre><code>加粗**xxx**
-斜体*微说网络电话*
-其中 * 可以使用 _ 代替，效果相同
-突出显示的文字 `微说网络电话` , 深圳市出众网络出品
-</code></pre><h2 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h2><blockquote>
-<p>haha</p>
-<p>haha</p>
-</blockquote>
-<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x66;&#x61;&#118;&#x6f;&#111;&#114;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x66;&#x61;&#118;&#x6f;&#111;&#114;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
-<pre><code>方法一
-&lt;https://www.google.com&gt; 这种不能编写悬停文字
-
-方法二
-[微说网络电话](http://www.weishuo.cn &quot;web官网地址&quot;)，好友间的网络电话
-
-方法三
-[微说网络电话][vs-index]，好友间的网络电话 
-
-[vs-index]: http://www.weishuo.cn &quot;官网地址&quot;
-</code></pre><h2 id="4-图片引用"><a href="#4-图片引用" class="headerlink" title="4.图片引用"></a>4.图片引用</h2><p><img src="http://25.io/smaller/favicon.ico" alt="small icon" title="收藏夹图片"></p>
-<p>另一种 <img src="http://25.io/smaller/favicon.ico" alt="small icon" title="另一种写法"> 写法</p>
-<pre><code>方法一
-![small icon](http://25.io/smaller/favicon.ico &quot;收藏夹图片&quot;)
-
-方法二
-另一种 ![small icon][2] 写法
-
-[2]: http://25.io/smaller/favicon.ico &quot;另一种写法&quot;
-</code></pre><h2 id="5-普通片段显示方式"><a href="#5-普通片段显示方式" class="headerlink" title="5.普通片段显示方式"></a>5.普通片段显示方式</h2><pre><code>Hello world!
-注释：写法上为开头一个tab，或者4个半角空格
-</code></pre><h2 id="6-无序列表"><a href="#6-无序列表" class="headerlink" title="6.无序列表"></a>6.无序列表</h2><ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-</ul>
-<p>end</p>
-<pre><code>* 列表项一
-* 列表项二
-* 列表项三
-其中 * 可以使用 - 代替,注意 * 号后面有至少一个空格
-</code></pre><h2 id="7-强制换行"><a href="#7-强制换行" class="headerlink" title="7.强制换行"></a>7.强制换行</h2><p>一句很长很长很长很长很长很长<br>很长的话</p>
-<pre><code>一句很长很长很长很长很长很长&lt;br /&gt;很长的话
-</code></pre><h2 id="8-水平横线"><a href="#8-水平横线" class="headerlink" title="8.水平横线"></a>8.水平横线</h2><pre><code>***
----
-
-* - 至少要三个
-</code></pre><h2 id="9-标题"><a href="#9-标题" class="headerlink" title="9.标题"></a>9.标题</h2><p>第一种写法</p>
-<pre><code>标题一
-===
-
-标题一
----
-
-= 和 - 至少三个
-</code></pre><p>第二种写法</p>
-<pre><code># 标题一
-## 标题二
-### 标题三
-#### 标题四
-##### 标题五
-###### 标题六
-</code></pre><h2 id="10-脚注"><a href="#10-脚注" class="headerlink" title="10.脚注"></a>10.脚注</h2><p>markdown语法简略指南参考连接.<a href="http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具">^1</a></p>
-<pre><code>markdown语法简略指南参考连接.[^1]
-
-[^1]: http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具
-</code></pre><h2 id="11-过期文字表示"><a href="#11-过期文字表示" class="headerlink" title="11.过期文字表示"></a>11.过期文字表示</h2><p><del>文字中间会有中划线，表示已经过期</del></p>
-<pre><code>~~文字中间会有中划线，表示已经过期~~
-</code></pre><h2 id="12-高亮文字块"><a href="#12-高亮文字块" class="headerlink" title="12.高亮文字块"></a>12.高亮文字块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line"></div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line"></div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
-</code></pre><h2 id="13-代码块"><a href="#13-代码块" class="headerlink" title="13.代码块"></a>13.代码块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def print_hi(name)</div><div class="line">  puts &quot;Hi, #&#123;name&#125;&quot;</div><div class="line">end</div><div class="line">print_hi(&apos;Tom&apos;)</div><div class="line">#=&gt; prints &apos;Hi, Tom&apos; to STDOUT.</div></pre></td></tr></table></figure>
-<p>Java(linenos)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> intNum = <span class="number">15</span>;</div><div class="line">		System.out.println(<span class="string">"Java Hello World!"</span>);</div><div class="line">		<span class="comment">//=&gt;will show Java Hello World in STDOUT.</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="14-表格构建"><a href="#14-表格构建" class="headerlink" title="14.表格构建"></a>14.表格构建</h2><p>二列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>三列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>四列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>五列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<pre><code>二列
-
-First Header | Second Header
------------- | -------------
-Content Cell | Content Cell
-Content Cell | Content Cell
-
-三列
-
-First Header | Second Header | Third Header
------------- | ------------- | ------------
-Content Cell | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell
-
-四列
-
-First Header | Second Header | Third Header | Third Header
------------- | ------------- | ------------ | ------------
-Content Cell | Content Cell  | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell  | Content Cell
-
-五列
-
-First Header | Second Header | Third Header | Third Header | Third Header
------------- | ------------- | ------------ | ------------ | ------------
-Content Cell | Content Cell  | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell  | Content Cell
-</code></pre><p>也可以这么写</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<pre><code>| First Header | Second Header | Third Header |
-| ------------ | ------------- | ------------ |
-| Content Cell | Content Cell  | Content Cell |
-| Content Cell | Content Cell  | Content Cell |
-</code></pre><p>如果想让列居中，还可以这么写，不过统一加了css也可以</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">First Header</th>
-<th style="text-align:center">Second Header</th>
-<th style="text-align:right">Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Left</td>
-<td style="text-align:center">Center</td>
-<td style="text-align:right">Right</td>
-</tr>
-<tr>
-<td style="text-align:left">Left</td>
-<td style="text-align:center">Center</td>
-<td style="text-align:right">Right</td>
-</tr>
-</tbody>
-</table>
-<pre><code>First Header | Second Header | Third Header
-:----------- | :-----------: | -----------:
-Left         | Center        | Right
-Left         | Center        | Right
+            <h1 id="Apache-server在mac上的安装信息"><a href="#Apache-server在mac上的安装信息" class="headerlink" title="Apache server在mac上的安装信息"></a>Apache server在mac上的安装信息</h1><p>mac 使用的还不熟练，然后很多软件想用的时候有时候会不知道在哪里，<br>逮着一个就记下来，下次需要了，直接找</p>
+<h2 id="安装目录"><a href="#安装目录" class="headerlink" title="安装目录"></a>安装目录</h2><pre><code>/etc/apache2/
+</code></pre><h2 id="日志路径"><a href="#日志路径" class="headerlink" title="日志路径"></a>日志路径</h2><pre><code>/private/var/log/apache2
 </code></pre>
           
         
@@ -773,8 +389,8 @@ Left         | Center        | Right
             
               
                 
-                <a class="post-title-link" href="/2014/09/16/start-writing-blog/" itemprop="url">
-                  我的博客系统发布了
+                <a class="post-title-link" href="/2014/12/01/mac-os-x-javahl-error/" itemprop="url">
+                  mac上JavaHL报错解决
                 </a>
               
             
@@ -787,8 +403,8 @@ Left         | Center        | Right
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-16T14:28:24+08:00" content="2014-09-16">
-              2014-09-16
+            <time itemprop="dateCreated" datetime="2014-12-01T18:20:10+08:00" content="2014-12-01">
+              2014-12-01
             </time>
           </span>
 
@@ -801,8 +417,8 @@ Left         | Center        | Right
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/heart/" itemprop="url" rel="index">
-                    <span itemprop="name">heart</span>
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
                   </a>
                 </span>
 
@@ -817,8 +433,8 @@ Left         | Center        | Right
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/16/start-writing-blog/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/16/start-writing-blog/" itemprop="commentsCount"></span>
+                <a href="/2014/12/01/mac-os-x-javahl-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-javahl-error/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -828,7 +444,7 @@ Left         | Center        | Right
 
           
           
-             <span id="/2014/09/16/start-writing-blog/" class="leancloud_visitors" data-flag-title="我的博客系统发布了">
+             <span id="/2014/12/01/mac-os-x-javahl-error/" class="leancloud_visitors" data-flag-title="mac上JavaHL报错解决">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -852,25 +468,247 @@ Left         | Center        | Right
       
         
           
-            <h2 id="博客发布，记录点滴"><a href="#博客发布，记录点滴" class="headerlink" title="博客发布，记录点滴"></a>博客发布，记录点滴</h2><p>今天开始尝试编写自己的博客</p>
-<p>—2015年01月09日添加</p>
-<p>今天有个同学问我我的博客是怎么弄的，他在我的“教导”下今天注册了github账号，在学git，<br>然后问我他为什么没有博客，然后我想补充下我的博客由来</p>
-<p>fork from <a href="https://github.com/89ao/89ao.github.io" target="_blank" rel="external">https://github.com/89ao/89ao.github.io</a>，真正苦逼的经历是这样子的</p>
-<p>在互联网上闲逛的时候看到一篇推荐文章 <a href="http://github.thinkingbar.com/redis-use-situation/" target="_blank" rel="external">http://github.thinkingbar.com/redis-use-situation/</a>,进来后<br>被页面的简单吸引，那时候我已经在csdn开始自己写简单博客，知道用csdn写是什么感觉，不过也就写了<br>6，7篇</p>
-<p>然后问题来了，我想自己也有一个这样的博客该多好啊，然后我当时和我同学一样子，不知道作者是怎么弄的，<br>然后当时都想联系作者问了，灵机一动，Google神器，关键字 “github 博客”，然后首页的文章就惊呆了，原来<br>这东西早就很流行了，只是自己不知道而已 ~囧，</p>
-<p>然后了解了下，啃了下英文资料，github为开发者提供的平台，github pages，可以来编写wiki等，而且对markdown已经支持完美，这里感谢github</p>
-<p>然后的事情就是我找一个自己喜欢的模板，前端设计，就算了，我不擅长</p>
-<p>然后继续万能的Google，找了找，找了找，感觉这个算简洁，</p>
-<p>就fork了，修改了下，</p>
-<p>原版的颜色有些受不了，太难看，整体设计不行，修改颜色还是没问题的</p>
-<p>—2015年01月09日 end</p>
-<h2 id="模板做了如下修改"><a href="#模板做了如下修改" class="headerlink" title="模板做了如下修改"></a>模板做了如下修改</h2><ol>
-<li>超链接颜色修改</li>
-<li>标签和类别的灰色修改为蓝色系，</li>
-<li>鼠标悬停样式修改，原有红色背景去掉，改为字体放大加粗</li>
-<li>增加表格样式</li>
-<li>修改了代码块样式</li>
+            <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>升级svn到1.8.10后，打开Eclipse进入显示以下异常：</p>
+<pre><code>Failed to load JavaHL Library.
+These are the errors that were encountered:
+no libsvnjavahl-1 in java.library.path
+no svnjavahl-1 in java.library.path
+no svnjavahl in java.library.path
+java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:
+</code></pre><p>原因</p>
+<p>javaHL 版本和subversion版本和subeclipse版本是由对应关系的，详细参见连接<a href="http://subclipse.tigris.org/wiki/JavaHL" target="_blank" rel="external">http://subclipse.tigris.org/wiki/JavaHL</a><br>根据提示，执行如下操作</p>
+<pre><code>brew install --universal --java subversion
+</code></pre><p>出现错误</p>
+<pre><code>Warning: subversion-1.8.10_1 already installed
+</code></pre><p>然后先卸载subversion，</p>
+<pre><code>brew uninstall subversion
+</code></pre><p>重新安装</p>
+<pre><code>brew install --universal --java subversion
+</code></pre><p>同时下载1.10.6版本的subeclipse，地址：<a href="http://subclipse.tigris.org/archive/" target="_blank" rel="external">http://subclipse.tigris.org/archive/</a></p>
+<p>链接方式安装插件后，重启Eclipse，JavaHL没有报错</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="url">
+                  mac os x使用Apache与svn集成
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-01T14:17:09+08:00" content="2014-12-01">
+              2014-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac os x使用Apache与svn集成">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>mac os x使用<code>Apache server</code>与<code>svn</code>集成，提供<code>http</code>访问svn，下面是详细步骤，中间有遇到的各种问题<br>及解决方法.</p>
+<p>首先说既然要配置http方式访问svn，那我就默认大家已经配置了svn 本地仓库，<br>并且已经可以使用类似<code>svn://127.0.0.1/account/trunk</code>这种方式访问成功，还没有配置<br>的，可以参照<a href="/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/">这里</a></p>
+<p>以下为配置主要步骤：</p>
+<ol>
+<li><p>手工编译svn，获取依赖包mod_authz_svn.so、mod_dav_svn.so，Apache server需要的，但是<br>mac上通过homebrew安装的svn是没有这些包得，原生的Apache server也没有</p>
+</li>
+<li><p>修改Apache server配置文件/etc/apache2/httpd.conf，加载对应的module</p>
+</li>
+<li><p>建立svn.conf配置文件，添加Apache server解析svn配置</p>
+</li>
+<li><p>重启Apache server</p>
+</li>
+<li><p>使用浏览器访问，验证配置</p>
+</li>
 </ol>
+<p>下面为详细配置</p>
+<h2 id="下载，手工编译"><a href="#下载，手工编译" class="headerlink" title="下载，手工编译"></a>下载，手工编译</h2><p>svn的源码包下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
+<pre><code>编译安装
+./configure --with-apxs=/usr/sbin/apxs
+make
+
+注意这里不需要安装，如果仅仅这样安装了版本，是不支持http和https方式访问的
+
+浏览是否编译成功
+ll subversion/mod_authz_svn/.libs/mod_authz_svn.so
+ll subversion/mod_dav_svn/.libs/mod_dav_svn.so
+
+复制到Apache server的lib目录
+sudo cp subversion/mod_authz_svn/.libs/mod_authz_svn.so /usr/libexec/apache2/
+sudo cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/libexec/apache2
+
+检查
+ll /usr/libexec/apache2 | grep svn
+
+安装后，Apache server下应该有以下lib
+/usr/libexec/apache2|grep dav
+mod_dav.so
+mod_dav_fs.so
+mod_dav_lock.so
+mod_dav_svn.so
+</code></pre><h2 id="修改apache配置文件"><a href="#修改apache配置文件" class="headerlink" title="修改apache配置文件"></a>修改apache配置文件</h2><p>sudo vim /etc/apache2/httpd.conf </p>
+<pre><code>添加以下配置,左侧为行数
+152 LoadModule dav_module libexec/apache2/mod_dav.so
+153 LoadModule dav_fs_module libexec/apache2/mod_dav_fs.so
+154 LoadModule dav_svn_module libexec/apache2/mod_dav_svn.so
+155 LoadModule authz_svn_module libexec/apache2/mod_authz_svn.so
+</code></pre><h2 id="建立svn配置文件"><a href="#建立svn配置文件" class="headerlink" title="建立svn配置文件"></a>建立svn配置文件</h2><pre><code>&lt;Location /svn&gt;
+    DAV svn
+    SVNParentPath /Users/User/Documents/svn-repos
+    SVNListParentPath on
+    AuthType Basic
+    AuthName &quot;Subversion repositories&quot;
+    AuthUserFile /Users/User/Documents/svn-repos/account/conf/passwd
+    AuthzSVNAccessFile /Users/User/Documents/svn-repos/account/conf/authz
+    Require valid-user
+&lt;/Location&gt;
+</code></pre><p><code>SVNParentPath</code> 为svn仓库的根目录，参照<code>/Users/User/Documents/svn-repos/account/conf/passwd</code>,<br>看下自己该输入哪个路径</p>
+<p><code>AuthUserFile</code> 为svn密码管理的路径</p>
+<p><code>AuthzSVNAccessFile</code> 为权限配置的路径</p>
+<h2 id="添加svn用户"><a href="#添加svn用户" class="headerlink" title="添加svn用户"></a>添加svn用户</h2><pre><code>根据提示输入密码
+sudo htpasswd -c /Users/User/Documents/svn-repos/account/conf/passwd admin
+</code></pre><p>这里注意，这种添加的用户密码就不是明文了，和之前直接修改添加的不同</p>
+<h2 id="配置权限"><a href="#配置权限" class="headerlink" title="配置权限"></a>配置权限</h2><pre><code>vim /Users/User/Documents/svn-repos/account/conf/authz
+</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>打开浏览器访问地址
+http://localhost/svn
+
+如果配置正确，能够看到正确地svn项目列表
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我在安装的时候遇到了很多问题，我首先google的关键字是<code>mac Apache svn</code>，然后<br>发现配置需要的module没有，然后手工编译svn，</p>
+<p>编译svn的时候，我的是<code>1.8.*</code>版本，最后我用的是<code>1.8.10</code>，又下载了一系列的依赖包，而且<br><code>1.7.*</code> 和 <code>1.8.*</code> 提供http和https访问使用的还不同</p>
+<p>最后还是被我编译成功了，但是问题又出现了，在跟Apache server集成的时候，出现错误</p>
+<pre><code>httpd: Syntax error on line 120 of /etc/apache2/httpd.conf: 
+Cannot load /usr/libexec/apache2/mod_dav_svn.so into server: 
+dlopen(/usr/libexec/apache2/mod_dav_svn.so, 10): 
+Library not loaded: /usr/local/bin/apache2/lib/libaprutil-1.0.dylib\n  
+Referenced from: /usr/local/lib/libsvn_repos-1.0.dylib\n  
+Reason: Incompatible library version: libsvn_repos-1.0.dylib requires version 6.0.0 or later, 
+but libaprutil-1.0.dylib provides version 4.0.0
+</code></pre><p>最后解决的方法我在这篇文章中受到启发<a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
+<p>在解决的过程中，发现我之前自己编译安装的svn会给通过brew安装造成很多错误，<br>最好先清空下列文件夹中<code>svn</code>开头的内容</p>
+<pre><code>/usr/local/include
+/usr/local/lib
+/usr/local/share/man/man1/
+/usr/local/share/man/man5/
+/usr/local/share/man/man8/
+</code></pre><p>直到<code>brew install subversion</code>成功，</p>
+<p>启动Apache server后，又遇到错误</p>
+<p>apache 日志目录 <code>/private/var/log/apache2/</code></p>
+<pre><code>[Sat Nov 29 21:15:00.773969 2014] [auth_basic:error] [pid 45831] [client 127.0.0.1:54634] AH01617: 
+user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mismatch
+</code></pre><p>我的路径<code>/Users/User/Documents/svn-repos/account/</code> Documents,需要读写权限</p>
+<pre><code>chmod -R 755 /Users/User/Documents
+</code></pre><p>然后重启Apache server访问才成功.</p>
+<p>参考地址</p>
+<p><a href="https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0" target="_blank" rel="external">https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0</a></p>
+<p><a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
 
           
         
@@ -920,8 +758,8 @@ Left         | Center        | Right
             
               
                 
-                <a class="post-title-link" href="/2014/09/02/config-nginx-fastcgi/" itemprop="url">
-                  Mac10.9.4配置Nginx解析php
+                <a class="post-title-link" href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="url">
+                  mac os 10.10.1下编译安装svn1.8.8
                 </a>
               
             
@@ -934,8 +772,8 @@ Left         | Center        | Right
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-02T16:48:02+08:00" content="2014-09-02">
-              2014-09-02
+            <time itemprop="dateCreated" datetime="2014-11-27T21:15:29+08:00" content="2014-11-27">
+              2014-11-27
             </time>
           </span>
 
@@ -948,8 +786,8 @@ Left         | Center        | Right
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
+                  <a href="/categories/mac/" itemprop="url" rel="index">
+                    <span itemprop="name">mac</span>
                   </a>
                 </span>
 
@@ -964,8 +802,8 @@ Left         | Center        | Right
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/02/config-nginx-fastcgi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/02/config-nginx-fastcgi/" itemprop="commentsCount"></span>
+                <a href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -975,7 +813,7 @@ Left         | Center        | Right
 
           
           
-             <span id="/2014/09/02/config-nginx-fastcgi/" class="leancloud_visitors" data-flag-title="Mac10.9.4配置Nginx解析php">
+             <span id="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" class="leancloud_visitors" data-flag-title="mac os 10.10.1下编译安装svn1.8.8">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -999,52 +837,72 @@ Left         | Center        | Right
       
         
           
-            <h1 id="Mac10-9-4配置Nginx解析php"><a href="#Mac10-9-4配置Nginx解析php" class="headerlink" title="Mac10.9.4配置Nginx解析php"></a>Mac10.9.4配置Nginx解析php</h1><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>参照文章 <a href="/install-nginx-on-mac/" title="Mac10.9.3仅安装Nginx">Mac10.9.3仅安装Nginx</a></p>
-<h2 id="配置php文件"><a href="#配置php文件" class="headerlink" title="配置php文件"></a>配置php文件</h2><p>10.9.4 默认安装了php，配置文件路径</p>
-<p>/private/etc/php-fpm.conf.default</p>
-<p>/private/etc/php.ini.default </p>
-<pre><code>cd /private/etc/  
-sudo cp php-fpm.conf.default php-fpm.conf  
-sudo cp php.ini.default php.ini  
+            <h2 id="为何编译"><a href="#为何编译" class="headerlink" title="为何编译"></a>为何编译</h2><p>mac下Apache配置http方式访问svn，依赖的lib如下</p>
+<pre><code>➜  ~  ll /usr/libexec/apache2|grep dav
+-rwxr-xr-x  1 root  wheel   130K  9 10 06:11 mod_dav.so
+-rwxr-xr-x  1 root  wheel    69K  9 10 06:11 mod_dav_fs.so
+-rwxr-xr-x  1 root  wheel    29K  9 10 06:11 mod_dav_lock.so
+-rwxr-xr-x  1 root  wheel   188K 11 27 17:19 mod_dav_svn.so
+</code></pre><p>其中 <code>mod_dav_svn.so mod_authz_svn.so</code> 自带的Apache是没有的，需要编译svn之后才能生成</p>
+<p>svn1.7版本之前使用 <code>neon</code> 处理<code>http</code>和<code>https scheme</code> ,<br>但是从1.8版本开始，使用 serf 处理<code>http</code>和<code>https scheme</code> ,<br>输入 <code>svn --version</code>输出如下</p>
+<pre><code>➜  ~  svn --version
+svn, version 1.8.8 (r1568071)
+   compiled Nov 27 2014, 21:06:17 on x86_64-apple-darwin14.0.0
 
-sudo vim php-fpm.conf  
-去掉注释的pid和log,&apos;;&apos;表示注释
-;pid = run/php-fpm.pid  
-;error_log = log/php-fpm.log  
+Copyright (C) 2013 The Apache Software Foundation.
+This software consists of contributions made by many people;
+see the NOTICE file for more information.
+Subversion is open source software, see http://subversion.apache.org/
 
-cp php-fpm.conf /usr/local/etc/php-fpm.conf  
-</code></pre><p>启动php-fpm</p>
-<pre><code>sudo php-fpm -c php.ini -y php-fpm.conf -p /usr/local/var  
-</code></pre><p>注意：该命令必须仍然在 /private/etc目录下执行，如果切换目录，需要制定ini文件和conf文件的路径</p>
-<h2 id="配置fastcgi"><a href="#配置fastcgi" class="headerlink" title="配置fastcgi"></a>配置fastcgi</h2><p>编辑nginx配置文件</p>
-<pre><code>vim /usr/local/etc/nginx/nginx.conf  
-</code></pre><p>增加server配置</p>
-<pre><code>server {  
-        listen       8082;  
-        server_name  localhost;  
-        root           /wwwroot/php1;  
-        error_page   500 502 503 504  /50x.html;  
+The following repository access (RA) modules are available:
 
-        location ~ \.php$ {  
-            fastcgi_pass   127.0.0.1:9000;  
-            fastcgi_index  index.php;  
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;  
-            include        fastcgi_params;  
-        }  
-}  
-
-说明：
-root           /wwwroot/php1; php程序的位置
-fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一定要加    $document_root不然会出现file not found的错误
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>新建测试文件</p>
-<p>/wwwroot/php1 下新建 index.php</p>
-<html><br><head><br>    <title>php hello world</title><br></head><br><body><br>    php测试<br><br>    &lt;?php phpinfo(); ?&gt;<br></body><br></html>  
-
-
-<http:localhost:8082 index.php="">
-
-<p>能够正确看到php配置说明文件</p>
-</http:localhost:8082>
+* ra_svn : Module for accessing a repository using the svn network protocol.
+  - with Cyrus SASL authentication
+  - handles &apos;svn&apos; scheme
+* ra_local : Module for accessing a repository on local disk.
+  - handles &apos;file&apos; scheme
+* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
+  - using serf 1.3.3
+  - handles &apos;http&apos; scheme
+  - handles &apos;https&apos; scheme
+</code></pre><p>如下是在mac10.10.1 上编译 svn 1.8.8 的过程，详细如下</p>
+<h2 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h2><pre><code>apr-1.5.1.tar.gz
+apr-util-1.5.4.tar.gz
+scons-2.3.4.tar.gz
+serf-1.3.8.tar.bz2
+subversion-1.8.8.tar.gz
+(mac下会自动解压 *.zip 和 *.gz)
+</code></pre><h2 id="编译步骤"><a href="#编译步骤" class="headerlink" title="编译步骤"></a>编译步骤</h2><p>apr-1.5.1.tar.gz</p>
+<p>–prefix=/Users/User/soft/apr-1.5.1 表示安装到该目录</p>
+<pre><code>cd apr-1.5.1/
+./configure --prefix=/Users/User/soft/apr-1.5.1
+sudo make
+sudo make install
+</code></pre><p>apr-util-1.5.4.tar.gz</p>
+<p>下载地址 <a href="https://apr.apache.org/download.cgi" target="_blank" rel="external">https://apr.apache.org/download.cgi</a></p>
+<pre><code>cd ..
+cd ../apr-util-1.5.4
+./configure --prefix=/Users/User/soft/apr-util-1.5.4 --with-apr=/Users/User/soft/apr-1.5.1
+sudo make
+sudo make install
+</code></pre><p>scons-2.3.4.tar.gz</p>
+<p>下载地址 <a href="http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html" target="_blank" rel="external">http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html</a></p>
+<pre><code>cd ../scons-2.3.4
+sudo python setup.py install
+</code></pre><p>serf-1.3.8.tar.bz2 </p>
+<p>下载地址 <a href="http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2" target="_blank" rel="external">http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2</a></p>
+<pre><code>cd ../serf-1.3.3
+scons PREFIX=/Users/User/soft/serf-1.3.3 APR=/Users/User/soft/apr-1.5.1 APU=/Users/User/soft/apr-util-1.5.4 OPENSSL=/usr/bin
+scons install
+</code></pre><p>subversion-1.8.8.tar.gz</p>
+<p>下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
+<pre><code>cd /Users/User/soft/subversion-1.8.8
+./configure --prefix=/usr/local --with-apr=/Users/User/soft/apr-1.5.1 --with-apr-util=/Users/User/soft/apr-util-1.5.4 --with-openssl --with-serf=/Users/User/soft/serf-1.3.3
+sudo make
+sudo make install
+</code></pre><p>复制<code>mod_dav_svn.so mod_authz_svn.so</code>到<code>Apache</code>的<code>lib</code>目录</p>
+<pre><code>sudo cp /usr/local/libexec/mod_dav_svn.so mod_authz_svn.so /usr/libexec/apache2
+</code></pre>
           
         
       
@@ -1093,8 +951,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
-                  Mac10.9.3仅安装Nginx
+                <a class="post-title-link" href="/2014/11/24/maven-repository-jenkins-errors/" itemprop="url">
+                  jenkins使用maven构建时遇到的repository的错误
                 </a>
               
             
@@ -1107,8 +965,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T13:18:29+08:00" content="2014-09-01">
-              2014-09-01
+            <time itemprop="dateCreated" datetime="2014-11-24T15:24:37+08:00" content="2014-11-24">
+              2014-11-24
             </time>
           </span>
 
@@ -1121,8 +979,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
                   </a>
                 </span>
 
@@ -1137,8 +995,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-nginx-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-nginx-on-mac/" itemprop="commentsCount"></span>
+                <a href="/2014/11/24/maven-repository-jenkins-errors/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/24/maven-repository-jenkins-errors/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1148,7 +1006,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/09/01/install-nginx-on-mac/" class="leancloud_visitors" data-flag-title="Mac10.9.3仅安装Nginx">
+             <span id="/2014/11/24/maven-repository-jenkins-errors/" class="leancloud_visitors" data-flag-title="jenkins使用maven构建时遇到的repository的错误">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1172,23 +1030,28 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="Mac10-9-3仅安装Nginx"><a href="#Mac10-9-3仅安装Nginx" class="headerlink" title="Mac10.9.3仅安装Nginx"></a>Mac10.9.3仅安装Nginx</h1><p>首先安装Homebrew</p>
-<p>参照文章 <a href="/install-homebrew-on-mac/" title="Mac安装Homebrew">Mac安装Homebrew</a></p>
-<h2 id="查看nginx信息"><a href="#查看nginx信息" class="headerlink" title="查看nginx信息"></a>查看nginx信息</h2><pre><code>brew info nginx  
-</code></pre><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>brew install nginx  </p>
-<h2 id="配置nginx开机启动"><a href="#配置nginx开机启动" class="headerlink" title="配置nginx开机启动"></a>配置nginx开机启动</h2><p>ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents  </p>
-<p>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist  </p>
-<h2 id="nginx配置文件路径"><a href="#nginx配置文件路径" class="headerlink" title="nginx配置文件路径"></a>nginx配置文件路径</h2><pre><code>/usr/local/etc/nginx/nginx.conf  
-</code></pre><h2 id="nginx常用操作"><a href="#nginx常用操作" class="headerlink" title="nginx常用操作"></a>nginx常用操作</h2><p>直接启动</p>
-<pre><code>nginx   
-</code></pre><p>修改配置后，验证配置文件语法</p>
-<pre><code>nginx -t  
-</code></pre><p>nginx运行时直接重启</p>
-<pre><code>nginx -s reload  
-</code></pre><h2 id="nginx-启动异常"><a href="#nginx-启动异常" class="headerlink" title="nginx 启动异常"></a>nginx 启动异常</h2><p>执行重启命令 nginx -s reload ,出现如下错误</p>
-<p>nginx: [error] open() “/usr/local/var/run/nginx.pid” failed (2: No such file or directory)<br>原因是当前nginx还未启动，先执行 nginx,之后可以执行重启命令</p>
-<h2 id="测试安装启动成功"><a href="#测试安装启动成功" class="headerlink" title="测试安装启动成功"></a>测试安装启动成功</h2><p>浏览器访问 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 可以看到nginx的欢迎页</p>
-<p>如果想让nginx监听 80 端口，启动时要加 sudo</p>
+            <h1 id="jenkins使用maven构建时遇到的repository的错误"><a href="#jenkins使用maven构建时遇到的repository的错误" class="headerlink" title="jenkins使用maven构建时遇到的repository的错误"></a>jenkins使用maven构建时遇到的repository的错误</h1><p>部署jenkins后，构建maven项目，在执行 -X mvn clean installl 时，报错内容如下</p>
+<pre><code>Started by user anonymous
+Building in workspace /Users/Shared/Jenkins/Home/jobs/account2/workspace
+Updating svn://127.0.0.1/account/trunk2 at revision &apos;2014-11-24T11:52:51.614 +0800&apos;
+At revision 26
+no change for svn://127.0.0.1/account/trunk2 since the previous build
+[workspace] $ /Users/User/soft/apache-maven-3.2.1/bin/mvn clean install
+[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LocalRepositoryNotAccessibleException
+Build step &apos;Invoke top-level Maven targets&apos; marked build as failure
+Finished: FAILURE
+</code></pre><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>重点看这句</p>
+<pre><code>[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
+</code></pre><p>配置maven时，使用了默认的配置，所以就是匿名用户去寻找，</p>
+<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><p>1.配置maven时，不能使用默认配置，指定 <code>setting.xml</code> 的位置</p>
+<p>2.<code>setting.xml</code> 配置中，尽量不使用 类似 <code>${user.home}/.m2/repository</code> 使用环境变量的路径，<br>如果当前用户改变，整个本地仓库路径就改变了，</p>
+<p>例如使用 <code>jenkins</code> 用户，路径就变为 <code>/Users/Shared/Jenkins/.m2/repository</code><br>尽量使用 <code>/Users/User/.m2/repository</code> 这种绝对路径</p>
 
           
         
@@ -1221,7 +1084,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1262,7 +1125,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1270,7 +1133,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1279,7 +1142,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

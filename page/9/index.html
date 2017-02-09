@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/31/install-mysql-on-centos6/" itemprop="url">
-                  Centos6.6安装mysql手记
+                <a class="post-title-link" href="/2015/07/20/getting-start-with-atlas/" itemprop="url">
+                  Mysql-分库分表-Atlas试用笔记
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-31T14:57:35+08:00" content="2015-01-31">
-              2015-01-31
+            <time itemprop="dateCreated" datetime="2015-07-20T15:24:41+08:00" content="2015-07-20">
+              2015-07-20
             </time>
           </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/31/install-mysql-on-centos6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/31/install-mysql-on-centos6/" itemprop="commentsCount"></span>
+                <a href="/2015/07/20/getting-start-with-atlas/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/getting-start-with-atlas/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/01/31/install-mysql-on-centos6/" class="leancloud_visitors" data-flag-title="Centos6.6安装mysql手记">
+             <span id="/2015/07/20/getting-start-with-atlas/" class="leancloud_visitors" data-flag-title="Mysql-分库分表-Atlas试用笔记">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,209 +337,19 @@
       
         
           
-            <h1 id="Centos6安装mysql手记"><a href="#Centos6安装mysql手记" class="headerlink" title="Centos6安装mysql手记"></a>Centos6安装mysql手记</h1><p>由于并非专业dba，这东西是用的时候才会去找，避免下次浪费同样时间，虽写本篇手记</p>
-<h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
-<p>大概过程如下：</p>
-<ol>
-<li>官方下载</li>
-<li>官方安装说明</li>
-<li>详细安装步骤，安装过程中遇到的问题</li>
-<li>安装成功</li>
-<li>测试运行</li>
-<li>总结</li>
-</ol>
-<p>选择安装版本</p>
-<p>我直接去mysql官网<a href="http://www.mysql.com/downloads/" target="_blank" rel="external">http://www.mysql.com/downloads/</a>下载的，英语阅读尚可，就可以直接去官网下<br>这里我选择的是Oracle发布版本，然后选择RPM安装包</p>
-<p>点击下载页的选项</p>
-<pre><code>Download from Oracle eDelivery »
-</code></pre><p>我选择的系统是RHEL6(Red Hat Enterprise Linux) ，64位版本</p>
-<pre><code>MySQL Database 5.6.22 TAR for Generic Linux (glibc2.5) x86 (64bit)
-
-MySQL Database 5.6.22 RPM for Oracle Linux / RHEL 7 x86 (64bit)
-
-MySQL Database 5.6.22 RPM for Oracle Linux / RHEL 6 x86 (64bit) ，这个是我要找的
-
-... ...
-</code></pre><p>安装说明</p>
-<p>官方安装说明<a href="http://dev.mysql.com/doc/refman/5.6/en/linux-installation-rpm.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/linux-installation-rpm.html</a><br>因为下载zip后，解压，你会看到很多个rpm，可以看官方说明，然后了解下包之间的关系</p>
-<p>安装</p>
-<p>虚拟机建立目录</p>
-<pre><code>[root@centos65 ~]# mkdir -p /data/soft
-
-[root@centos65 soft]# ll -d /data/soft/
-drwxr-xr-x. 2 root root 4096 1月  31 13:49 /data/soft/
-</code></pre><p>发送安装包到虚拟机，已经<a href="/macosx-config-ssh-login-virtual-machine-without-password/">配置了ssh免密码登录</a></p>
-<pre><code>scp V73603-01.zip root@centos65:/data/soft/
-</code></pre><p>查看centos6.6自带版本</p>
-<pre><code>[root@centos65 soft]# rpm -qa | grep mysql
-mysql-libs-5.1.73-3.el6_5.x86_64
-</code></pre><p>删除自带版本</p>
-<pre><code>[root@centos65 soft]# rpm -e mysql-libs-5.1.73-3.el6_5.x86_64
-</code></pre><p>依次安装如下rpm</p>
-<pre><code>rpm -ivh MySQL-devel-advanced-5.6.22-1.el6.x86_64.rpm
-rpm -ivh MySQL-shared-advanced-5.6.22-1.el6.x86_64.rpm
-rpm -ivh MySQL-shared-compat-advanced-5.6.22-1.el6.x86_64.rpm
-rpm -ivh MySQL-client-advanced-5.6.22-1.el6.x86_64.rpm
-rpm -ivh MySQL-test-advanced-5.6.22-1.el6.x86_64.rpm
-</code></pre><p>在安装embedded-advanced的时候，会因为缺少libaio而错误</p>
-<pre><code>[root@master mysql]# rpm -ivh MySQL-embedded-advanced-5.6.22-1.el6.x86_64.rpm
-error: Failed dependencies:
-    libaio.so.1()(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
-    libaio.so.1(LIBAIO_0.1)(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
-    libaio.so.1(LIBAIO_0.4)(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
-</code></pre><p>安装libaio</p>
-<pre><code>yum install libaio
-</code></pre><p>再次安装embedded-advanced,以及server-advanced</p>
-<pre><code>rpm -ivh MySQL-embedded-advanced-5.6.22-1.el6.x86_64.rpm
-rpm -ivh MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm
-</code></pre><p>安装MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm，成功后能看到如下信息，如果没有看到如下信息，就是安装的时候有问题了</p>
-<pre><code>[root@centos65 soft]# rpm -ivh MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm
-Preparing...                ########################################### [100%]
-   1:MySQL-server-advanced  ########################################### [100%]
-warning: user mysql does not exist - using root
-warning: group mysql does not exist - using root
-2015-01-31 14:30:05 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-2015-01-31 14:30:05 1971 [Note] InnoDB: Using atomics to ref count buffer pool pages
-2015-01-31 14:30:05 1971 [Note] InnoDB: The InnoDB memory heap is disabled
-2015-01-31 14:30:05 1971 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-2015-01-31 14:30:05 1971 [Note] InnoDB: Memory barrier is not used
-2015-01-31 14:30:05 1971 [Note] InnoDB: Compressed tables use zlib 1.2.3
-2015-01-31 14:30:05 1971 [Note] InnoDB: Using Linux native AIO
-2015-01-31 14:30:05 1971 [Note] InnoDB: Not using CPU crc32 instructions
-2015-01-31 14:30:05 1971 [Note] InnoDB: Initializing buffer pool, size = 128.0M
-2015-01-31 14:30:05 1971 [Note] InnoDB: Completed initialization of buffer pool
-2015-01-31 14:30:05 1971 [Note] InnoDB: The first specified data file ./ibdata1 did not exist: a new database to be created!
-2015-01-31 14:30:05 1971 [Note] InnoDB: Setting file ./ibdata1 size to 12 MB
-2015-01-31 14:30:05 1971 [Note] InnoDB: Database physically writes the file full: wait...
-2015-01-31 14:30:05 1971 [Note] InnoDB: Setting log file ./ib_logfile101 size to 48 MB
-2015-01-31 14:30:05 1971 [Note] InnoDB: Setting log file ./ib_logfile1 size to 48 MB
-2015-01-31 14:30:05 1971 [Note] InnoDB: Renaming log file ./ib_logfile101 to ./ib_logfile0
-2015-01-31 14:30:05 1971 [Warning] InnoDB: New log files created, LSN=45781
-2015-01-31 14:30:05 1971 [Note] InnoDB: Doublewrite buffer not found: creating new
-2015-01-31 14:30:05 1971 [Note] InnoDB: Doublewrite buffer created
-2015-01-31 14:30:05 1971 [Note] InnoDB: 128 rollback segment(s) are active.
-2015-01-31 14:30:05 1971 [Warning] InnoDB: Creating foreign key constraint system tables.
-2015-01-31 14:30:05 1971 [Note] InnoDB: Foreign key constraint system tables created
-2015-01-31 14:30:05 1971 [Note] InnoDB: Creating tablespace and datafile system tables.
-2015-01-31 14:30:05 1971 [Note] InnoDB: Tablespace and datafile system tables created.
-2015-01-31 14:30:05 1971 [Note] InnoDB: Waiting for purge to start
-2015-01-31 14:30:05 1971 [Note] InnoDB: 5.6.22 started; log sequence number 0
-2015-01-31 14:30:05 1971 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
-2015-01-31 14:30:05 1971 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
-A random root password has been set. You will find it in &apos;/root/.mysql_secret&apos;.
-2015-01-31 14:30:05 1971 [Note] Binlog end
-2015-01-31 14:30:05 1971 [Note] InnoDB: FTS optimize thread exiting.
-2015-01-31 14:30:05 1971 [Note] InnoDB: Starting shutdown...
-2015-01-31 14:30:07 1971 [Note] InnoDB: Shutdown completed; log sequence number 1625977
-
-
-2015-01-31 14:30:07 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-2015-01-31 14:30:07 1994 [Note] InnoDB: Using atomics to ref count buffer pool pages
-2015-01-31 14:30:07 1994 [Note] InnoDB: The InnoDB memory heap is disabled
-2015-01-31 14:30:07 1994 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-2015-01-31 14:30:07 1994 [Note] InnoDB: Memory barrier is not used
-2015-01-31 14:30:07 1994 [Note] InnoDB: Compressed tables use zlib 1.2.3
-2015-01-31 14:30:07 1994 [Note] InnoDB: Using Linux native AIO
-2015-01-31 14:30:07 1994 [Note] InnoDB: Not using CPU crc32 instructions
-2015-01-31 14:30:07 1994 [Note] InnoDB: Initializing buffer pool, size = 128.0M
-2015-01-31 14:30:07 1994 [Note] InnoDB: Completed initialization of buffer pool
-2015-01-31 14:30:07 1994 [Note] InnoDB: Highest supported file format is Barracuda.
-2015-01-31 14:30:07 1994 [Note] InnoDB: 128 rollback segment(s) are active.
-2015-01-31 14:30:07 1994 [Note] InnoDB: Waiting for purge to start
-2015-01-31 14:30:07 1994 [Note] InnoDB: 5.6.22 started; log sequence number 1625977
-2015-01-31 14:30:07 1994 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
-2015-01-31 14:30:07 1994 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
-2015-01-31 14:30:07 1994 [Note] Binlog end
-2015-01-31 14:30:07 1994 [Note] InnoDB: FTS optimize thread exiting.
-2015-01-31 14:30:07 1994 [Note] InnoDB: Starting shutdown...
-2015-01-31 14:30:09 1994 [Note] InnoDB: Shutdown completed; log sequence number 1625987
-
-
-
-
-A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !
-You will find that password in &apos;/root/.mysql_secret&apos;.
-
-You must change that password on your first connect,
-no other statement but &apos;SET PASSWORD&apos; will be accepted.
-See the manual for the semantics of the &apos;password expired&apos; flag.
-
-Also, the account for the anonymous user has been removed.
-
-In addition, you can run:
-
-  /usr/bin/mysql_secure_installation
-
-which will also give you the option of removing the test database.
-This is strongly recommended for production servers.
-
-See the manual for more instructions.
-
-Please report any problems at http://bugs.mysql.com/
-
-The latest information about MySQL is available on the web at
-
-  http://www.mysql.com
-
-Support MySQL by buying support/licenses at http://shop.mysql.com
-
-New default config file was created as /usr/my.cnf and
-will be used by default by the server when you start it.
-You may edit this file to change server settings
-</code></pre><p>上面有用的信息，</p>
-<ol>
-<li>已经生成了默认的密码，放在<code>/root/.mysql_secret</code>,</li>
-<li>在你执行任何操作之前，必须修改默认密码</li>
-<li>如果是生产库，建议运行<code>/usr/bin/mysql_secure_installation</code>按照提示，优化安装</li>
-</ol>
-<p>看到上面信息，说明整个安装已经成功了。</p>
-<p>测试运行</p>
-<pre><code>直接输入
-mysql
-
-错误信息
-
-ERROR 2002 (HY000): Can&apos;t connect to local MySQL server through socket &apos;/var/lib/mysql/mysql.sock&apos; (2)
-</code></pre><p>这个原因是没有启动mysql服务，5.6.22版本服务名称是<code>mysql</code>,之前是<code>mysqld</code>,可以通过 <code>ll /etc/init.d/ | grep mysql</code>查询</p>
-<pre><code>启动mysql服务
-service mysql start
-</code></pre><p>再次输入</p>
-<pre><code>mysql
-
-错误信息
-
-ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: NO)
-</code></pre><p>这是因为没有输入root的密码，mysql5.6.22为每个版本默认设置了密码，放在隐藏文件下</p>
-<pre><code>查看生成的默认root密码，每个人，应该都不相同
-[root@centos65 soft]# cat /root/.mysql_secret
-# The random password set for the root user at Sat Jan 31 14:30:05 2015 (local time): vc82GaO9xntAL9HK
-
-使用密码再次登录
-mysql -uroot -pvc82GaO9xntAL9HK
-
-执行简单命令
-mysql&gt; show databases;
-
-错误信息
-ERROR 1820 (HY000): You must SET PASSWORD before executing this statement
-
-必须重置默认密码
-
-SET PASSWORD = PASSWORD(&apos;000000&apos;);
-</code></pre><p>设置后，<code>\q</code>退出mysql命令行<code>ctrl + c</code>暴力退出</p>
-<p>再次登录</p>
-<pre><code>[root@centos65 soft]# mysql -uroot -p000000
-</code></pre><p>所有工作ok。</p>
-<p>我在有一台机器上遇到如下错误</p>
-<pre><code>service mysql start ，遇到下面错误
-Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql/master.pid).
-</code></pre><p>说明根本没有安装成功，可能是磁盘满了，那台机器硬盘空间较小，之前搞过hadoop集群测试，<br>不过这个问题，每个人情况可能都不一样</p>
-<p>总结</p>
-<ol>
-<li>mysql 5.6.22 和之前相比较，提升了很多新东西，建议升级</li>
-<li>Linux centos 6 上安装和mac区别太大，遇到问题，要能搞定</li>
-<li>学会看官方文档和Google</li>
-</ol>
+            <p>这里使用的是 sharding 版本，    </p>
+<p>操作 MySQL-proxy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql-proxy/bin/mysql-proxyd test stop|start|status</div></pre></td></tr></table></figure>
+<p>遇到错误，原因是配置端口的时候不能加注释，需要去掉 <code># master</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306 # master</div><div class="line"></div><div class="line">2015-07-15 01:45:46: (message) chassis-unix-daemon.c:138: [angel] we try to keep PID=31372 alive</div><div class="line">2015-07-15 01:45:46: (message) mysql-proxy 0.8.2 started - instance: test</div><div class="line">2015-07-15 01:45:46: (message) proxy listening on port 0.0.0.0:1234</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 127.0.0.1:3306</div><div class="line">2015-07-15 01:45:46: (critical) network-address.c:253: IP-address has to be in the form [&lt;ip&gt;][:&lt;port&gt;], is &apos;127.0.0.1:3306  # master&apos;. Failed to parse the port at &apos;  # master&apos;</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 192.168.56.112:3306</div><div class="line">2015-07-15 01:45:46: (critical) chassis-unix-daemon.c:210: [angel] PID=31372 died on signal=11 (it used 5 kBytes max) ... waiting 2sec before restart</div></pre></td></tr></table></figure>
+<p>最终配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[shardrule-0]</div><div class="line">table = test.sharding_test</div><div class="line">type = range</div><div class="line">shard-key = id</div><div class="line">groups = 0:0-999,1:1000-1999</div><div class="line"></div><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3308 # slave</div><div class="line"></div><div class="line">[group-1]</div><div class="line">proxy-backend-addresses=192.168.56.114:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3310</div></pre></td></tr></table></figure>
+<p>atlas 官方的测试语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS `sharding_test`;</div><div class="line">CREATE TABLE `sharding_test` (</div><div class="line">      `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">      `name` char(50) COLLATE utf8_bin NOT NULL,</div><div class="line">      `age` int(11) DEFAULT NULL,</div><div class="line">      `birthday` date DEFAULT NULL,</div><div class="line">      `nickname` char(50) COLLATE utf8_bin DEFAULT NULL,</div><div class="line">      PRIMARY KEY (`id`)</div><div class="line">);</div><div class="line"></div><div class="line">连接 proxy</div><div class="line"></div><div class="line">$ mysql -h127.0.0.1 -P1234 -uroot -proot -c</div><div class="line"></div><div class="line">初始化 dbgroup0 数据值</div><div class="line"></div><div class="line">mysql&gt; use test;</div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1, &apos;test&apos;, 0);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(50, &apos;test&apos;, 0), (999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div><div class="line"></div><div class="line">如果跨 shard , sql 会报错</div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(100, &apos;test&apos;, 0), (1500, &apos;test&apos;, 0);</div><div class="line">ERROR 1105 (HY000): Proxy Warning - write operation is only allow to one dbgroup!</div><div class="line"></div><div class="line">初始化 dbgroup1 数据值</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1000, &apos;test&apos;, 0), (1999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
+<p>参考地址</p>
+<p><a href="https://github.com/Qihoo360/Atlas/wiki/Atlas-Sharding" target="_blank" rel="external">Atlas Sharding</a></p>
+<p><a href="http://www.guokr.com/blog/475765/" target="_blank" rel="external">mysql中间件研究(Atlas，cobar，TDDL)</a></p>
+<p><a href="http://www.gpfeng.com/?p=657" target="_blank" rel="external">谈谈MySQL水平扩展</a></p>
 <p>-EOF-</p>
 
           
@@ -590,8 +400,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
             
               
                 
-                <a class="post-title-link" href="/2015/01/27/thinking-about-it-learning/" itemprop="url">
-                  学习知识的心得
+                <a class="post-title-link" href="/2015/07/19/install-vim-from-source/" itemprop="url">
+                  源码安装vim
                 </a>
               
             
@@ -604,8 +414,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-27T23:44:01+08:00" content="2015-01-27">
-              2015-01-27
+            <time itemprop="dateCreated" datetime="2015-07-19T11:46:45+08:00" content="2015-07-19">
+              2015-07-19
             </time>
           </span>
 
@@ -618,8 +428,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/heart/" itemprop="url" rel="index">
-                    <span itemprop="name">heart</span>
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
                   </a>
                 </span>
 
@@ -634,8 +444,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/27/thinking-about-it-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/thinking-about-it-learning/" itemprop="commentsCount"></span>
+                <a href="/2015/07/19/install-vim-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/install-vim-from-source/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -645,7 +455,7 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
 
           
           
-             <span id="/2015/01/27/thinking-about-it-learning/" class="leancloud_visitors" data-flag-title="学习知识的心得">
+             <span id="/2015/07/19/install-vim-from-source/" class="leancloud_visitors" data-flag-title="源码安装vim">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -669,30 +479,13 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
       
         
           
-            <h1 id="学习知识的体会心得"><a href="#学习知识的体会心得" class="headerlink" title="学习知识的体会心得"></a>学习知识的体会心得</h1><p>目前自己掌握了基础的学习新知识的能力，在不断的被吊打中磨练出来的</p>
-<p>知识，要积累，要多模仿，换成自己的，自己要有自己的知识体系和归档，方便用时候查阅</p>
-<p>能力，需要不断的锻炼，不断去读书，打好基础，计算机行业的话，操作系统和数据结构和算法，这个<br>一定要懂，不要求十分精通，但是一定要掌握，不然永远是飘着的，根儿没扎好</p>
-<p>学新东西，看官方，英文文档是很重要的，那么自然的，阅读英文的能力对于程序员来说是必备的，还不行的<br>话，就从现在开始，自己做项目的空闲时间，找自己当前项目用到的技术的官方reference或者document，提<br>高不是一蹴而就</p>
-<p>学英文，stackoverflow要上，Quora要上，上面找自己感兴趣的话题和标签，他们会给你推送很多东西，读<br>然后进步</p>
-<p>全面看一个东西的API很有用，比如学习Jquery，它的官方API如果你看过，而且看完了，肯定是会有收获的，</p>
-<p>看书学东西，是很推荐的，但是刚开始的时候总是那么难，当你拿到一个600页，700页的书的时候，总是那么害怕，<br>当打开书的时候，一看内容，有些会，但有些真的不会，适当跳过，敲源代码，慢慢在工作中领悟</p>
-<p>一本书都是作者智慧的结晶，写过博客的人才能体会到吧，不管人家写的多烂，或者是讲解API，毕竟肯定多多少少<br>加入了自己的思考和总结，总能学到自己不会得</p>
-<p>遇到问题的时候，不轻易放过，多想想为什么自己想错了，当年理解Jquery对象和javascript对象之后，豁然开朗，为什么<br>对javascript对象.val()不能获取到值，而且后来教给了好几个同事</p>
-<p>后台，分布式，多线程，tcp/ip很重要啊，工作5-6年如果感觉自己到瓶颈，那就是自己的问题了 ~~</p>
-<p>14年一边看，一边学了Linux应用，因为没做过运维或管理员，很顺利的忘记了那些 囧~，但是我现在回来重新用的时候，<br>可以通过记忆和笔记不用Google解决问题，然后再分享成博客归档，我想我说我掌握Linux使用比较合适吧，千万不能说<br>精通，然后再走向熟练，但是也比了解好太多，只能说掌握，嗯，掌握，很好地中性词</p>
-<p>靠搜索引擎才会的东西，不算掌握，只能说了解，而知识也都是自己亲身要用了，才会真正去学习，会有很多雷达，关注<br>很多东西，但是 没太走心 </p>
-<p>使用IDE的时候，把所有的提示都关闭了吧，然后API放手边，随时看，随时写，多写几遍，那些方法名就记下来了，然后<br>你会发现，自己在不断提高</p>
-<p>早点建立自己的博客吧，也可以是csdn或者cnblogs，任何博客平台都好，关键是你要写，</p>
-<p>14年，我在搜索引擎上发现可以用github写博客，当时很兴奋，但是一看早在2012年左右，人们已经用的如火如荼，好吧，又是别人已经不准备用的东西，我才知道，我才进来 在囧一次</p>
-<p>当时，只记得那个同学告诉我，重要是你要写，在哪写不重要，这句话，永远记得，</p>
-<p>最难的也就是，重要是你要做</p>
-<p>尽管有jekyll，有markdown，有ruby，在当时都是一窍不通，但是都走过来了，</p>
-<p>重要的是要做，步子迈起来是多么重要啊</p>
-<p>要学得还很多</p>
-<p>早点停止打游戏吧，庆幸11年下半年已经结束</p>
-<p>时间总是挤的，也总是不够用</p>
-<p>，嗯，早点睡吧，不早了 ~~~</p>
-<p>竟然写了这么多</p>
+            <p>环境 Centos 6.6 64位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">下载安装包</div><div class="line">wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2</div><div class="line"></div><div class="line">查找 centos 自带的 vim</div><div class="line">rpm -qa | grep vim</div><div class="line"></div><div class="line">删除自带的 vim</div><div class="line">yum remove vim-common-7.2.411-1.8.el6.x86_64 vim-enhanced-7.2.411-1.8.el6.x86_64 vim-minimal-7.2.411-1.8.el6.x86_64</div><div class="line"></div><div class="line">解压</div><div class="line">tar -jxv -f vim-7.4.tar.bz2</div><div class="line"></div><div class="line">cd ~/vim74/</div><div class="line"></div><div class="line">安装依赖</div><div class="line">yum install -y python-devel ruby-devel libX11-devel gtk2-devel ncurses-devel</div><div class="line"></div><div class="line">mkdir /usr/lib/python2.6/config/</div><div class="line"></div><div class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.6/config/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-luainterp</div><div class="line"></div><div class="line">make VIMRUNTIMEDIR=/usr/share/vim/vim74 &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>简单配置</p>
+<p>摁 i 后，进入 insert 模式，但是看不到 - insert - </p>
+<p>mac 下 delete 不能向前删除字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot; allow backspacing over everything in insert mode</div><div class="line">&quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</div><div class="line">&quot; 插入模式下，“←&quot;如何删除光标前的字符：行首空白、换行符、插入点之前的字符</div><div class="line">&quot; this option is default in neovim</div><div class="line">set backspace=indent,eol,start</div></pre></td></tr></table></figure>
+<p>参考 <a href="https://github.com/Treri/dotfile/blob/master/vim/vimrc" target="_blank" rel="external">适合自己使用的vimrc文件</a></p>
 <p>-EOF-</p>
 
           
@@ -743,8 +536,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
             
               
                 
-                <a class="post-title-link" href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="url">
-                  LInux实战--Mac配置ssh免密码登录到虚拟主机
+                <a class="post-title-link" href="/2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="url">
+                  SSH认证-无密码配置问题总结
                 </a>
               
             
@@ -757,8 +550,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-27T23:04:02+08:00" content="2015-01-27">
-              2015-01-27
+            <time itemprop="dateCreated" datetime="2015-07-16T14:29:31+08:00" content="2015-07-16">
+              2015-07-16
             </time>
           </span>
 
@@ -771,8 +564,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
                   </a>
                 </span>
 
@@ -787,8 +580,8 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="commentsCount"></span>
+                <a href="/2015/07/16/ssh-connection-debugging-issues-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -798,7 +591,7 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
 
           
           
-             <span id="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" class="leancloud_visitors" data-flag-title="LInux实战--Mac配置ssh免密码登录到虚拟主机">
+             <span id="/2015/07/16/ssh-connection-debugging-issues-summary/" class="leancloud_visitors" data-flag-title="SSH认证-无密码配置问题总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -822,67 +615,38 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
       
         
           
-            <h1 id="LInux实战–Mac配置ssh免密码登录到虚拟主机"><a href="#LInux实战–Mac配置ssh免密码登录到虚拟主机" class="headerlink" title="LInux实战–Mac配置ssh免密码登录到虚拟主机"></a>LInux实战–Mac配置ssh免密码登录到虚拟主机</h1><h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
-<p>写在最前</p>
-<p>2014年3月份新购了Mac Book Pro 15，然后喜欢在上面使用VirtualBox安装虚拟机鼓捣东西,<br>最开始是鼓捣hadoop集群，由于13年花时间仔细阅读了Linux私房菜基础版，所以被轻轻虐待，<br>到最后能轻轻松给集群删除节点，配置新节点，当然，因为没有太多运维经验，所以是手工rsync+vim<br>虽然古老且笨拙，但是孰能生巧，中间好几个月搞其他东西，而且那时候也没有开始写博客，所以<br>东西都压在印象笔记里面，现在有新想法，搞gitlab + Java + Python + jenkins + test，而且<br>想玩自动化的，所以重新搞虚拟机，而且配置要求比较高点的。</p>
-<p>这次一步一步，把所做的，都记录下来，下面回到正文：</p>
-<h1 id="主机的配置"><a href="#主机的配置" class="headerlink" title="主机的配置"></a>主机的配置</h1><p>首先在Mac上使用virtualbox安装虚拟机，详细可以参照<a href="/mac-use-virtualbox/">博客文章</a></p>
-<pre><code>网络配置为：
-
-主机跟虚拟机之间建立独立的局域网，    
-主机ip 192.168.56.1     
-虚拟机ip192.168.56.110,     
-虚拟机hostname=centos65，    
-主机和虚拟机都添加host域名解析
-
-sudo vim /etc/hosts
-
-新增
-192.168.56.110 centos65
-
-主机和虚拟机执行
-
-ping centos65 都没有错误
-
-主机生成ssh公钥和私钥
-
-cd ~ &amp;&amp; ssh-keygen 
-然后一路回车
-</code></pre><h1 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h1><p>首先在虚拟机上生成ssh公钥和私钥</p>
-<pre><code>cd /root &amp;&amp; ssh-keygen
-</code></pre><p>编辑虚拟机ssh配置，开启ssh，此步骤不必须</p>
-<pre><code>vim /etc/ssh/sshd_config
- 47 RSAAuthentication yes
- 48 PubkeyAuthentication yes
- 49 AuthorizedKeysFile      .ssh/authorized_keys
-</code></pre><p> 这三行取消注释<br> 编辑后，退出保存</p>
-<p> 重启ssh服务</p>
-<pre><code>service sshd restart
-</code></pre><p>验证ssh服务</p>
-<pre><code>netstat -tlnp | grep ssh
-</code></pre><p>新增ssh认证文件，保存其他主机的公钥</p>
-<pre><code>vim /root/.ssh/authorized_keys
-</code></pre><p>这时候，需要把mac上面的</p>
-<pre><code>cat ~/.ssh/id_rsa.pub 
-</code></pre><p>内容全部copy进来，不能有空格，保存退出</p>
-<p>验证配置正确性</p>
-<p>主机输入</p>
-<pre><code>ssh root@centos65
-</code></pre><p>可能遇到问题</p>
-<p>1.主机上~/.ssh/目录权限要是700<br>2.主机上~/.ssh/id_rsa权限要是600，并且属于当前用户    </p>
-<p>例如我的主机favoorr-mac,当前用户名User,</p>
-<pre><code>执行 ls -ld ~/.ssh/ ; ll ~/.ssh/ ，结果如下
-
-favoorr-mac:~ User$ ls -ld ~/.ssh/ ; ll ~/.ssh/
-drwx------  5 User  staff  170  5 14 23:44 /Users/User/.ssh/
-total 24
--rw-------  1 User  staff  1679  5 14 23:44 id_rsa
--rw-r--r--  1 User  staff   398  5 14 23:44 id_rsa.pub
-</code></pre><p>3.虚拟机上新建目录~/.ssh权限为644，文件~/.ssh/authorized_keys权限为644<br>4.可以发送主机上的id_rsa.pub到虚拟机上，然后cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>5.如果手工复制 id_rsa.pub 里面的内容，注意选中之后不要修改，直接粘贴，修改就可能报错了，权限那些其实不容易出问题，默认即可，这里比较容易出错</p>
-<pre><code>ssh -v root@dev1  调试 ssh 信息，比如本地多个私钥，
-ssh -o GSSAPIAuthentication=no xxx@dev1
-</code></pre><p>6.几个月后，一次爬坑经历发现，/etc/ssh/sshd_config里面的内容，是可以不注释的</p>
-<p>-EOF-</p>
+            <p>环境 </p>
+<p>服务端 Centos 6.6 64 位<br>客户端 Mac OS X 10.10.4</p>
+<p>常用调试方法</p>
+<p>1.查看客户端发送到服务器端的私钥信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ssh -v root@dev1</div><div class="line"></div><div class="line">ssh -vv root@dev1</div><div class="line"></div><div class="line">ssh -vvv root@dev1</div></pre></td></tr></table></figure>
+<p>2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_keys文件等信息，这些信息对调试很有帮助</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/sbin/sshd -p 2121 -D -d -e</div><div class="line"></div><div class="line">ssh -v root@dev1 -p 2121</div></pre></td></tr></table></figure>
+<p>3.查看服务器端日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tail -f /var/log/audit/audit.log (这个是重点)</div><div class="line"></div><div class="line">tail -f /var/log/secure (帮助不大)</div></pre></td></tr></table></figure>
+<p>遇到问题总结</p>
+<p>1./etc/ssh/sshd_config 文件 47-49行，不打开注释，也可以直接配置免密码登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RSAAuthentication yes</div><div class="line">PubkeyAuthentication yes</div><div class="line">AuthorizedKeysFile      authorized_keys</div></pre></td></tr></table></figure>
+<p>2.<code>.ssh</code> 目录不能手工创建，否则在 selinux 开启的情况下会因为文件和文件夹上下文问题无法访问文件 <code>authorized_keys</code>，这个问题很严重，今天上午找了半天，终于发现问题了，目录权限建议设置为 700，而且所属是当前用户，不能使root</p>
+<p>3.<code>authorized_keys</code>这个文件可以手工创建，也可以使用<code>ssh-copy-id</code>，文件权限建议设置为 600,所属是当前用户，不能使root</p>
+<p>4.Selinux 打开引起的因为上下文无法访问文件，造成 ssh 配置后，还是需要密码登录，/var/log/audit/audit.log 日志片段如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:890): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=6e:96:69:b9:69:45:93:0d:89:da:e0:9c:e4:bb:04:04 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:891): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=ae:5b:f9:c5:a2:08:c5:9a:15:a7:4c:ad:18:d8:44:a1 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:892): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-client cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:893): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-server cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.567:894): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:894): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246160 a1=800 a2=1 a3=4 items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line">siy</div><div class="line">type=AVC msg=audit(1437024048.567:895): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:895): arch=c000003e syscall=2 success=no exit=-13 a0=7f83732487a0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.567:896): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div><div class="line">type=AVC msg=audit(1437024048.569:897): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:897): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.569:898): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:898): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.569:899): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div></pre></td></tr></table></figure>
+<p>解决方法，可以使用<code>restorecon</code>还原上下文，或者关闭 selinux </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">restorecon authorized_keys</div><div class="line"></div><div class="line">临时关闭 selinux </div><div class="line">setenforce 0</div><div class="line"></div><div class="line">永久关闭 </div><div class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config</div></pre></td></tr></table></figure>
+<p>5.客户端生成多对 ssh 公钥私钥的时候，注意 ssh-add 添加，在 mac 上使用 ssh-add 的时候，又需要机器重启就失效问题</p>
+<p>6.可以提高速度</p>
+<pre><code>ssh -o GSSAPIAuthentication=no xxx@dev1 `-o GSSAPIAuthentication=no` 
+</code></pre><p>7.Authentication refused: bad ownership or modes for file /home/work/.ssh/authorized_keys</p>
+<pre><code>chmod 600 authorized_keys
+</code></pre><p>爬坑记录</p>
+<p>安装机器，手工创建 .ssh 目录 和 authorized_keys 文件，然后直接贴 客户端的公钥，以为可以正常访问了，结果各种坑，还是需要输入密码，<br>最后通过好几篇文章找到调试日志，是 selinux 造成的问题，文件和目录上下文不一致，造成不能正常访问，然后就 ssh 新技能get<br>自己玩的时候，就把 selinux 停了吧，或者通过 ssh-keygen 生成.ssh 目录，不要手工创建</p>
+<p>参考文章</p>
+<p><a href="/git-more-sshkeys-more-host/">git配置多个不同邮箱</a></p>
+<p><a href="/macosx-config-ssh-login-virtual-machine-without-password/">LInux实战–Mac配置ssh免密码登录到虚拟主机</a></p>
+<p><a href="http://phutchins.com/blog/2015/03/09/debug-ssh-connections/" target="_blank" rel="external">Debugging SSH Connection Issues</a></p>
+<p><a href="http://www.saltycrane.com/blog/2011/08/notes-debugging-ssh-connection-problems/" target="_blank" rel="external">Notes on debugging ssh connection problems</a></p>
+<p><a href="https://blog.tinned-software.net/ssh-key-authentication-is-not-working-selinux/" target="_blank" rel="external">SSH-Key authentication is not working – SELinux</a></p>
+<p><a href="http://doiido.blog.51cto.com/5503054/1554485" target="_blank" rel="external">linux/centos6 查看SELinux状态 关闭SELinux</a></p>
 
           
         
@@ -932,8 +696,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
             
               
                 
-                <a class="post-title-link" href="/2015/01/25/jdk-jre-old-version-download/" itemprop="url">
-                  老版本JDK JRE下载
+                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
+                  mysql replace 学习
                 </a>
               
             
@@ -946,8 +710,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T12:56:42+08:00" content="2015-01-25">
-              2015-01-25
+            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
+              2015-07-14
             </time>
           </span>
 
@@ -960,8 +724,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -976,8 +740,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/25/jdk-jre-old-version-download/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/jdk-jre-old-version-download/" itemprop="commentsCount"></span>
+                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -987,7 +751,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
 
           
           
-             <span id="/2015/01/25/jdk-jre-old-version-download/" class="leancloud_visitors" data-flag-title="老版本JDK JRE下载">
+             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1011,13 +775,15 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
       
         
           
-            <p>老版本jdk，jre下载</p>
-<p>oracle 提供的下载页只能下载最新的jdk或jre，</p>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
-<p>有时候做一些编译，需要用到老版本的jdk，程序对jdk版本做了限制，<br>例如编译hadoop2.0的文件时候，可以到下面地址下载</p>
-<p><a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/archive-139210.html</a></p>
-<p>-EOF-</p>
-
+            <p>mysql 基础修改数据语句</p>
+<p>select insert update delete ,今天学习了个新的 replace </p>
+<p>replace 根据主键或者唯一索引判断相同数据，</p>
+<p>如果数据相同，就的数据会先删除，在插入新数据</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
+<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>如果主键不同，数据不会覆盖测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
           
         
       
@@ -1066,8 +832,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
             
               
                 
-                <a class="post-title-link" href="/2015/01/23/linux-edit-hostname/" itemprop="url">
-                  centos6.5-linux实战-修改主机名
+                <a class="post-title-link" href="/2015/06/18/play-with-python/" itemprop="url">
+                  使用Python开发
                 </a>
               
             
@@ -1080,8 +846,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-23T18:11:19+08:00" content="2015-01-23">
-              2015-01-23
+            <time itemprop="dateCreated" datetime="2015-06-18T23:41:22+08:00" content="2015-06-18">
+              2015-06-18
             </time>
           </span>
 
@@ -1094,8 +860,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -1110,8 +876,8 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/23/linux-edit-hostname/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/linux-edit-hostname/" itemprop="commentsCount"></span>
+                <a href="/2015/06/18/play-with-python/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/play-with-python/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1121,7 +887,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
 
           
           
-             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="centos6.5-linux实战-修改主机名">
+             <span id="/2015/06/18/play-with-python/" class="leancloud_visitors" data-flag-title="使用Python开发">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1145,30 +911,25 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
       
         
           
-            <h1 id="Centos-6-5-实战-修改主机名"><a href="#Centos-6-5-实战-修改主机名" class="headerlink" title="Centos 6.5 实战-修改主机名"></a>Centos 6.5 实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
-<p>需要root权限，修改主机名为master步骤如下</p>
-<pre><code>第一步
-vim /etc/sysconfig/network  实际修改主机名
-
-添加
-HOSTNAME=master
-
-第二步
-vim /etc/hosts  本地解析
-
-添加本机 ip 和主机名映射
-192.168.56.101 master
-
-第三步，防止 ip 配置错误
-ping master
-
-第四步
-reboot 重启
-
-重启完成后，查看修改结果
-hostname 查看主机名
-</code></pre><p>-EOF-</p>
-
+            <h1 id="使用Python开发"><a href="#使用Python开发" class="headerlink" title="使用Python开发"></a>使用Python开发</h1><p>有时候需要使用 sudo </p>
+<p>如下错误,需要安装 mysql for python</p>
+<pre><code>No module named MySQLdb
+</code></pre><p>先安装 python 的 setuptools</p>
+<p>Setuptools网址是<a href="https://pypi.python.org/pypi/setuptools，" target="_blank" rel="external">https://pypi.python.org/pypi/setuptools，</a></p>
+<p>可以下载安装最新版本，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/ez_setup.py --no-check-certificate</div><div class="line"></div><div class="line">python ez_setup.py</div></pre></td></tr></table></figure>
+<p>mysql-python 下载地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http://sourceforge.net/projects/mysql-python/</div><div class="line"></div><div class="line">在解压目录里面执行</div><div class="line"></div><div class="line">python setup.py build</div><div class="line"></div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
+<p>mac 查看端口占用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof -i:5000</div></pre></td></tr></table></figure>
+<p>如果找不到，就用 sudo ，可能是 root用户启动了</p>
+<p>Centos 6.6 安装 pip，官方地址 <a href="https://pip.pypa.io/en/stable/installing.html" target="_blank" rel="external">https://pip.pypa.io/en/stable/installing.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/get-pip.py</div><div class="line"></div><div class="line">执行，如果没有安装 setuptools ，会先安装 setuptools</div><div class="line">python get-pip.py </div><div class="line"></div><div class="line">Collecting pip</div><div class="line">  Downloading pip-7.1.0-py2.py3-none-any.whl (1.1MB)</div><div class="line">    100% |████████████████████████████████| 1.1MB 11kB/s</div><div class="line">Collecting setuptools</div><div class="line">  Downloading setuptools-18.0.1-py2.py3-none-any.whl (461kB)</div><div class="line">    100% |████████████████████████████████| 462kB 9.2kB/s</div><div class="line">Collecting wheel</div><div class="line">  Downloading wheel-0.24.0-py2.py3-none-any.whl (63kB)</div><div class="line">    100% |████████████████████████████████| 65kB 14kB/s</div><div class="line">Installing collected packages: pip, setuptools, wheel</div><div class="line"></div><div class="line">安装成功</div></pre></td></tr></table></figure>
+<p>python 常用2种安装软件方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install -U Celery</div><div class="line"></div><div class="line">pip install -U Celery</div></pre></td></tr></table></figure>
+<p>查找应用，杀进程</p>
+<pre><code>ps aux|grep gunicorn | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
+</code></pre>
           
         
       
@@ -1200,7 +961,7 @@ hostname 查看主机名
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1241,7 +1002,7 @@ hostname 查看主机名
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1249,7 +1010,7 @@ hostname 查看主机名
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1258,7 +1019,7 @@ hostname 查看主机名
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

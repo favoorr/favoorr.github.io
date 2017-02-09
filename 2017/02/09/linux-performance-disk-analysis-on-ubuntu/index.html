@@ -1,0 +1,871 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ubuntu,performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+从系统级和进程级的统计信息开始，深入到事件跟踪和控制器统计信息
+iostat各种单个磁盘统计信息
+-c 显示 CPU 报告-d 显示磁盘报告-k 使用 KB 代替 512B 块数目-m 使用 MB 代替 512B 块数目-p 包括单个分区的统计信息-t 时间戳输出-x 扩展统计信息-z 不显示空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以 Ubuntu 为例列举 Disk 性能分析常用命令">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/09/linux-performance-disk-analysis-on-ubuntu/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+从系统级和进程级的统计信息开始，深入到事件跟踪和控制器统计信息
+iostat各种单个磁盘统计信息
+-c 显示 CPU 报告-d 显示磁盘报告-k 使用 KB 代替 512B 块数目-m 使用 MB 代替 512B 块数目-p 包括单个分区的统计信息-t 时间戳输出-x 扩展统计信息-z 不显示空">
+<meta property="og:updated_time" content="2017-02-09T06:32:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以 Ubuntu 为例列举 Disk 性能分析常用命令">
+<meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+从系统级和进程级的统计信息开始，深入到事件跟踪和控制器统计信息
+iostat各种单个磁盘统计信息
+-c 显示 CPU 报告-d 显示磁盘报告-k 使用 KB 代替 512B 块数目-m 使用 MB 代替 512B 块数目-p 包括单个分区的统计信息-t 时间戳输出-x 扩展统计信息-z 不显示空">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/09/linux-performance-disk-analysis-on-ubuntu/"/>
+
+  <title> 以 Ubuntu 为例列举 Disk 性能分析常用命令 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                以 Ubuntu 为例列举 Disk 性能分析常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T10:53:29+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-disk-analysis-on-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 Disk 性能分析常用命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>操作系统版本 Ubuntu 16.04.1</p>
+<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
+<p>从系统级和进程级的统计信息开始，深入到事件跟踪和控制器统计信息</p>
+<h1 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h1><p>各种单个磁盘统计信息</p>
+<p>-c 显示 CPU 报告<br>-d 显示磁盘报告<br>-k 使用 KB 代替 512B 块数目<br>-m 使用 MB 代替 512B 块数目<br>-p 包括单个分区的统计信息<br>-t 时间戳输出<br>-x 扩展统计信息<br>-z 不显示空活动汇总    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</div><div class="line">           0.09    0.03    0.08    0.02    0.00   99.79</div><div class="line"></div><div class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</div><div class="line">sda               2.92        16.30        49.71     445251    1357532</div><div class="line">sdb               0.01         0.05         0.00       1444          0</div></pre></td></tr></table></figure>
+<p>tps 每秒事务数 IOPS<br>kB_read/s kB_wrtn/s 每秒读取和写入 KB 数<br>kB_read    kB_wrtn 总共读取和写入 KB 数    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">iostat -zkdz 1</div><div class="line">-d 仅输出磁盘报告    </div><div class="line">-z 跳过全零的选项    </div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.52    0.91    1.97    16.10    49.10    45.28     0.00    0.79    0.61    0.87   0.21   0.06</div><div class="line">sdb               0.00     0.00    0.01    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
+<p>rrqm/s 每秒合并放入驱动请求队列的读请求数<br>wrqm/s 每秒合并放入驱动请求队列的写请求数<br>r/s 每秒发给磁盘设备的读请求数<br>w/s/ 每秒发给磁盘设备的写请求数<br>rKB/s 每秒从磁盘设备读取的 KB 数<br>wKB/s 每秒向磁盘设备写入的 KB 数    </p>
+<p>非零的 rrqm/s 和 wrqm/s 项说明为了提高性能，连续的请求在发往设备之前已经被合并了。这个指标也是工作负载为连续的标志。<br>r/s 和 w/s 列显示了实际发给设备的请求数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">iostat -xkdz 1</div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.26    0.82    1.77    14.46    47.97    48.18     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sdb               0.00     0.00    0.01    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
+<p>avgrq-sz 平均请求大小，单位为扇区 512B<br>avgqu-sz 在驱动请求队列和在设备中活跃的平均请求数<br>await 平均 I/O 响应时间，包括在驱动请求队列里等待和设备的 IO 响应时间 ms<br>r_await 和 await 一样，不过只针对读<br>w_await 和 await 一样，不过只针对写<br>svctm 推断磁盘设备的 IO 平均响应时间 ms<br>%util 设备忙处理 IO 请求的百分比(使用率)    </p>
+<p>avgrq-sz 是合并之后的数字，小尺寸（16个扇区或者更小）可以视作为无法合并的随机 IO 负载迹象。大尺寸有可能是大 IO，或者是合并的连续负载（前面的列里面有预示）</p>
+<p>输出性能里最重要的指标是 await。如果应用程序和文件系统使用了降低写延时（例如 写穿）的方法，w_await 可能不那么重要，而你可以主要关注 r_await</p>
+<p>对于资源使用和容量规划， %util 仍然很重要，不过记住这只是繁忙度的一个度量（非空闲时间），对于后面有多块磁盘支撑的虚拟设备意义不大。可以通过施加负载更好的了解这些设备 IOPS (r/s + w/s) 以及 吞吐量 (rKB/s + wKB/s)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">iostat -xkdzt -p ALL 1</div><div class="line"></div><div class="line">-t 引入了时间戳</div><div class="line">-p ALL 引入每个分区的统计信息</div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.21    0.80    1.73    14.14    46.90    48.18     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sda1              0.00     2.21    0.79    1.73    13.93    46.89    48.21     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sdb               0.00     0.00    0.00    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
+<p>当前 iostat 不包括磁盘错误</p>
+<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><p>磁盘历史统计信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sar -d 1</div><div class="line"></div><div class="line">-d 输出磁盘汇总</div><div class="line"></div><div class="line">10:21:08 AM       DEV       tps  rd_sec/s  wr_sec/s  avgrq-sz  avgqu-sz     await     svctm     %util</div><div class="line">10:21:09 AM    dev8-0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div><div class="line">10:21:09 AM   dev8-16      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>tps 设备每秒数据传输量<br>rd_sec/s wr_sec/s 每秒读取和写入扇区数(512B)</p>
+<h1 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h1><p>按进程列出磁盘 IO 使用情况</p>
+<p>pidstat 默认输出 CPU 使用情况，可以用 -d 选项输出磁盘 IO 统计信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pidstat -d 1</div><div class="line"></div><div class="line">10:23:51 AM   UID       PID   kB_rd/s   kB_wr/s kB_ccwr/s iodelay  Command</div><div class="line">10:23:51 AM   500       10512 3366.34   0.00    0.00               tar</div><div class="line">10:23:51 AM   500       10513 0.00      6051.49 13813.86           gzip</div></pre></td></tr></table></figure>
+<p>kB_rd/s 每秒读取 KB 数<br>kB_wr/s 每秒发出的写入 KB 数<br>kB_ccwr/s 每秒取消的写入 KB 数，例如 写回前的覆盖写</p>
+<p>只有超级用户 root 可以访问不属于自己的进程的磁盘统计信息。这些可以通过读取 /proc/PID/io 获得</p>
+<h1 id="blkstrace"><a href="#blkstrace" class="headerlink" title="blkstrace"></a>blkstrace</h1><p>磁盘 IO 时间跟踪</p>
+<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace "></a>DTrace </h1><p>自定义静态或动态跟踪</p>
+<h1 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h1><p>perf list | grep block:</p>
+<h1 id="iotop"><a href="#iotop" class="headerlink" title="iotop"></a>iotop</h1><p>需要内核 2.6.20 或者更新版本</p>
+<p>需要以下内核选项 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CONFIG_TASK_DELAY_ACCT</div><div class="line">CONFIG_TASK_IO_ACCOUNTING</div><div class="line">CONFIG_TASKSTATS</div><div class="line">CONFIG_VM_EVENT_COUNTERS</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install iotop</div></pre></td></tr></table></figure>
+<p>默认情况下，iotop 会清理屏幕并输出一秒内的汇总信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">iotop -bod5</div><div class="line"></div><div class="line">Total DISK READ :       0.00 B/s | Total DISK WRITE :       0.00 B/s</div><div class="line">Actual DISK READ:       0.00 B/s | Actual DISK WRITE:       0.00 B/s</div><div class="line">  TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND</div></pre></td></tr></table></figure>
+<p>-b 批量模式，可以滚动输出，不清理屏幕<br>-d5 每 5 s 输出一次<br>-a 输出累计 IO 而不是一段时间内的平均值<br>-o 仅显示那些正在执行磁盘 IO 的进程    </p>
+<h1 id="iosnoop"><a href="#iosnoop" class="headerlink" title="iosnoop"></a>iosnoop</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install perf-tools-unstable</div></pre></td></tr></table></figure>
+<p>通过块设备接口同事跟踪所有磁盘，并为每个磁盘 IO 打印一条输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo iosnoop</div><div class="line"></div><div class="line">COMM         PID    TYPE DEV      BLOCK        BYTES     LATms</div><div class="line">kworker/u4:1 8066   W    8,0      2662064      172032    10.15</div><div class="line">kworker/u4:1 8066   W    8,0      2662400      892928    11.08</div><div class="line">kworker/u4:1 8066   W    8,0      2664144      155648    13.26</div><div class="line">kworker/u4:1 8066   W    8,0      2664448      892928    14.08</div></pre></td></tr></table></figure>
+<p>PID 进程 ID<br>COMM 进程名<br>TYPE 方向 R=读，W=写<br>BLOCK 磁盘块地址(扇区)<br>BYTES IO 大小（字节）    </p>
+<h1 id="blktrace"><a href="#blktrace" class="headerlink" title="blktrace"></a>blktrace</h1><p>一个 Linux 上的块设备 IO 事件自定制跟踪工具，包括用来跟踪和缓冲数据的内核组件<br>后来被一到跟踪点，以及供用户态工具使用的控制和报告机制。<br>这些工具包括</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">blktrace</div><div class="line">blkparse</div><div class="line">btrace</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install blktrace</div></pre></td></tr></table></figure>
+<p>blktrace 启用内核块驱动跟踪机制获取跟踪裸数据<br>供 blkparse 处理以产生可读的输出<br>btrace 工具调用 blktrace 和 blkparse</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">btrace /dev/sdb 可以捕捉命令发起的单次读事件</div></pre></td></tr></table></figure>
+<p>只显示感兴趣的事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">btrace -a issue /dev/sdb</div><div class="line"></div><div class="line">-a read 仅跟踪读</div><div class="line">-a write 仅跟踪写</div><div class="line">-a sync 仅跟踪同步操作</div></pre></td></tr></table></figure>
+<p>MegaCli LSI 控制器统计信息</p>
+<p>smartctl 磁盘控制器统计信息</p>
+<p>磁盘有控制磁盘操作的逻辑，包括排队、缓存和错误处理。<br>与磁盘控制器类似，操作系统不能直接看到磁盘的内部行为，<br>这些信息是通过观察 IO 请求和延时来推断的</p>
+<p>sudo apt install smartmontools</p>
+<p>smartctl –all -d megaraid,0 /dev/sdb</p>
+<p>测试方法</p>
+<p>dd if=/dev/sda1 of=/dev/null bs=1024k count=1k</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-network-analysis-on-ubuntu/" rel="next" title="以 Ubuntu 为例列举 Network 性能分析常用命令">
+                <i class="fa fa-chevron-left"></i> 以 Ubuntu 为例列举 Network 性能分析常用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/" rel="prev" title="以 Ubuntu 为例列举 FileSystem 性能分析常用命令">
+                以 Ubuntu 为例列举 FileSystem 性能分析常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-disk-analysis-on-ubuntu/"
+           data-title="以 Ubuntu 为例列举 Disk 性能分析常用命令" data-url="https://favoorr.github.io/2017/02/09/linux-performance-disk-analysis-on-ubuntu/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iostat"><span class="nav-number">1.</span> <span class="nav-text">iostat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sar"><span class="nav-number">2.</span> <span class="nav-text">sar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pidstat"><span class="nav-number">3.</span> <span class="nav-text">pidstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#blkstrace"><span class="nav-number">4.</span> <span class="nav-text">blkstrace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DTrace"><span class="nav-number">5.</span> <span class="nav-text">DTrace </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#perf"><span class="nav-number">6.</span> <span class="nav-text">perf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iotop"><span class="nav-number">7.</span> <span class="nav-text">iotop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iosnoop"><span class="nav-number">8.</span> <span class="nav-text">iosnoop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#blktrace"><span class="nav-number">9.</span> <span class="nav-text">blktrace</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

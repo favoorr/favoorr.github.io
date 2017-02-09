@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/run-java-code-in-sublime-text/" itemprop="url">
-                  run Java code in Sublime Text
+                <a class="post-title-link" href="/2015/01/23/use-plantuml-install-graphviz/" itemprop="url">
+                  安装Graphviz记录
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T15:11:53+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2015-01-23T15:55:55+08:00" content="2015-01-23">
+              2015-01-23
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/sublime/" itemprop="url" rel="index">
-                    <span itemprop="name">sublime</span>
+                  <a href="/categories/plantuml/" itemprop="url" rel="index">
+                    <span itemprop="name">plantuml</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/run-java-code-in-sublime-text/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/run-java-code-in-sublime-text/" itemprop="commentsCount"></span>
+                <a href="/2015/01/23/use-plantuml-install-graphviz/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/use-plantuml-install-graphviz/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/11/22/run-java-code-in-sublime-text/" class="leancloud_visitors" data-flag-title="run Java code in Sublime Text">
+             <span id="/2015/01/23/use-plantuml-install-graphviz/" class="leancloud_visitors" data-flag-title="安装Graphviz记录">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,15 +337,51 @@
       
         
           
-            <h1 id="在sublime中编写运行Java代码"><a href="#在sublime中编写运行Java代码" class="headerlink" title="在sublime中编写运行Java代码"></a>在sublime中编写运行Java代码</h1><p>1.安装Java编译器</p>
-<p>步骤一：菜单栏 Sublime Text –&gt; Preferences –&gt;Browse Packages 在finder中打开目录</p>
-<p>步骤二：新建<code>Java</code>文件夹,新建文件 <code>JavaC.sublime-build</code>,内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;cmd&quot;: [&quot;javac \&quot;$file_name\&quot; &amp;&amp; java \&quot;$file_base_name\&quot;&quot;],</div><div class="line">    &quot;shell&quot;: true,</div><div class="line">    &quot;file_regex&quot;: &quot;^(...*?):([0-9]*):?([0-9]*)&quot;,</div><div class="line">    &quot;selector&quot;: &quot;source.java&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.编写Java代码调试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Helloword&#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		System.out.println(&quot;Helloword World!&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>3.运行测试</p>
-<p>command + b,即可运行代码</p>
-<p>ctrl + ` ，可以显示控制台查看步骤</p>
+            <h1 id="使用plantUML，安装Graphviz小记"><a href="#使用plantUML，安装Graphviz小记" class="headerlink" title="使用plantUML，安装Graphviz小记"></a>使用plantUML，安装Graphviz小记</h1><p>首先简单介绍</p>
+<p><a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a> 可以直接用文本画各种常用uml图，某些图的渲染依赖于graphviz<br><a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a> 一个可以用文字画图的工具，非常强大好用</p>
+<p>2014年前先后看了在markdown里面直接用文字写流程图和用js插件解析，用文字编写流程图，<br>在这之前都是用visio画图，然后再复制过来，有了之后，感觉节省了不少时间，每次打开visio修改<br>打开很慢</p>
+<p>后来看了 @江南白衣 推荐的<a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a>感觉彻底爱上了，然后一边也在推动公司引进gitlab，显示做了<br>git培训，然后再来个gitlab使用培训吧</p>
+<p>下面进入正文，想使用plantUML，需要安装<a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a>，来使用dot命令支持plantUML的所有特性，<br>详细见plantuml官网，这里记录mac ox x10.10 安装时候遇到的问题</p>
+<p>简单看了下官网，使用brew是可以直接安装的，但是过程中有些小问题，libpng的链接地址改变了，导致下载报错</p>
+<pre><code>brew install graphviz
+
+中间遇到错误，看了下libpng这个包路径已经改变，所以
+
+brew edit libpng
+
+将地址
+
+https://downloads.sf.net/project/libpng/libpng16/1.6.13/libpng-1.6.13.tar.xz
+
+修改地址，增加 older-releases ,应该是做过目录整理
+
+https://downloads.sf.net/project/libpng/libpng16/older-releases/1.6.13/libpng-1.6.13.tar.xz
+</code></pre><p>然后继续</p>
+<p>安装完成后</p>
+<p>按照<a href="http://www.plantuml.com/graphvizdot.html" target="_blank" rel="external">官方说明</a>进行测试</p>
+<pre><code>java -jar plantuml.jar -testdot
+
+The environment variable GRAPHVIZ_DOT has not been set
+Dot executable is /usr/local/bin/dot
+Dot version: dot - graphviz version 2.38.0 (20140413.2041)
+Installation seems OK. File generation OK
+
+vim ~/.zshrc
+
+在末尾加入
+
+export GRAPHVIZ_DOT=/usr/local/bin/dot
+source ~/.zshrc
+
+再次运行
+
+The environment variable GRAPHVIZ_DOT has been set to /usr/local/bin/dot
+Dot executable is /usr/local/bin/dot
+Dot version: dot - graphviz version 2.38.0 (20140413.2041)
+Installation seems OK. File generation OK
+</code></pre><p>目前的使用方式</p>
+<p>Eclipse里面集成了plantUML插件，然后编辑<br>编辑完成后，粘贴到gitlab里面</p>
+<p>-EOF-</p>
 
           
         
@@ -395,8 +431,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/20/read-redis-design-and-implementation-2/" itemprop="url">
-                  Redis设计与实现读书笔记
+                <a class="post-title-link" href="/2015/01/20/after-reading-and-about-learning/" itemprop="url">
+                  享受读书-写下心中所想
                 </a>
               
             
@@ -409,8 +445,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-20T15:07:26+08:00" content="2014-11-20">
-              2014-11-20
+            <time itemprop="dateCreated" datetime="2015-01-20T23:32:35+08:00" content="2015-01-20">
+              2015-01-20
             </time>
           </span>
 
@@ -423,8 +459,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
+                  <a href="/categories/heart/" itemprop="url" rel="index">
+                    <span itemprop="name">heart</span>
                   </a>
                 </span>
 
@@ -439,8 +475,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/20/read-redis-design-and-implementation-2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/20/read-redis-design-and-implementation-2/" itemprop="commentsCount"></span>
+                <a href="/2015/01/20/after-reading-and-about-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/20/after-reading-and-about-learning/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -450,7 +486,7 @@
 
           
           
-             <span id="/2014/11/20/read-redis-design-and-implementation-2/" class="leancloud_visitors" data-flag-title="Redis设计与实现读书笔记">
+             <span id="/2015/01/20/after-reading-and-about-learning/" class="leancloud_visitors" data-flag-title="享受读书-写下心中所想">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -474,23 +510,16 @@
       
         
           
-            <h1 id="《Redis设计与实现》——读书笔记终篇"><a href="#《Redis设计与实现》——读书笔记终篇" class="headerlink" title="《Redis设计与实现》——读书笔记终篇"></a>《Redis设计与实现》——读书笔记终篇</h1><p>截止前天，《Redis设计与实现》纸质书看完了第一遍，感觉本书<br>是一本好书，值得观看。通过本书了解了Redis的实现细节，然后最深的<br>感触是Redis的作者是一个数据结构和算法拿得出手的人，这点需要肯定，然后是本书<br>的作者也是一个思维细腻，描述一个东西的时候希望做到透彻、清晰的人。</p>
-<p>个人感觉特别适合对Redis有一些简单的了解，然后需要使用Redis来完成项目开发的<br>人员，读了这本书之后，虽然没有设计太多的最佳实践，但是你会对Redis的特性有一个整体的了解，<br>知道通过Redis可以很方便的实现什么功能？实现某一个特性需要哪些配置？不同的配置会有什么结果？<br>这些问题在通读本书后都会有相应的了解，而且本书也很适合放在手边做设计取舍时候做参考，<br>至少我是这么干得</p>
-<p>以下几点是个人感觉Redis里面比较值得去学习和掌握的</p>
-<ol>
-<li>5中数据类型的操作命令，这个在本书作者提供的免费网站上可以很方便的查阅，包括各种命令的介绍、<br>使用示例，以及版本差异都有清晰的介绍，连接地址 <a href="http://redisdoc.com" target="_blank" rel="external">http://redisdoc.com</a></li>
-<li>Redis关于过期时间的处理命令，和不同的设置方式</li>
-<li>Redis主从的使用</li>
-</ol>
-<h2 id="目前有使用Redis的地方"><a href="#目前有使用Redis的地方" class="headerlink" title="目前有使用Redis的地方"></a>目前有使用Redis的地方</h2><ol>
-<li>做数据缓存服务器，Redis中已经实现的时间过期功能，可以让我们很方便实现这个功能</li>
-<li>计数器，接口访问次数调用，如果直接在数据库里面做，数据库压力比较大，但是Redis就好多了</li>
-<li>好友关系存储和根据好友关系做可能认识的人推荐</li>
-<li>list来实现队列</li>
-<li>k v映射存储</li>
-<li>k set ，存储和某个用户有某种关系的uid集合</li>
-</ol>
-<h2 id="使用Redis的方式"><a href="#使用Redis的方式" class="headerlink" title="使用Redis的方式"></a>使用Redis的方式</h2><p>单机部署，做从备份，没有使用到其他的复杂功能</p>
+            <p>享受读书</p>
+<p>每当碰到好文的时候，心中美好，难以描述，像一块干瘪的海绵在吸水，一定要把自己洗得饱饱的<br>鬼脚七公众号，关于时间管理的文章，池建强老师关于程序员的思考，关于跳槽的论述，小道消息<br>中关于思考和积累的，刺的文章中提到的黑客，读文章也是一种享受</p>
+<p>学习知识更加全面</p>
+<p>使用Java已经有段时间，遇到问题只懂得找资料，或许是因为积累还不够，火候没达到，不懂得，也没有意识去<br>全面学习一个东西，知道开始看Java核心编程，终于了解，关于Java还有很多东西你根本就不知道，再到看了郑晔<br>和江南白衣的博客，才知道关于Java应用开发，你还有很多不知道，路还很长，积累和思考总结，凝结为自己的知识体系</p>
+<p>认识人，知道关于这个世界更多地东西</p>
+<p>因为一篇博客，找到赵超，@子流，然后看博客，关注微博，找到鬼脚七，关注微信号鬼脚七，然后关注小道消息，然后关注<br>刺，关注池老师，在关注很多很多人，了解到得不光光是那一点点了，工具，成长的思考，程序员的思考，人生的思考，太多 太多 。。。，优秀的人总是会关注比自己更优秀的人，圈子，总是关联的，自己可以了解更好地</p>
+<p>知道了自己的渺小，有很多事情，是自己不能及的</p>
+<p>从13年到14年，现在已经是15年，自己感觉自己成长了很多，昨天总结了下自己的书单，感觉到惭愧了，然后看看这些前辈们的<br>博客和总结，比你厉害的人，还比你更努力，你还有什么理由不努力，不自己去提高自己</p>
+<p>应该谦虚</p>
+<p>时刻不能太狂妄，能做的做好，不能做的有人教得虚心学习，没人教的，自己去学习，分享给大家，在自己自大的时候，在那些<br>比自己厉害的人眼中，自己该是个什么呢</p>
 
           
         
@@ -540,8 +569,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="url">
-                  mac os x 设置 jenkins开机启动遇到的问题
+                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
+                  git实战篇--将本地项目提交到github/gitlab中
                 </a>
               
             
@@ -554,8 +583,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-19T17:29:26+08:00" content="2014-11-19">
-              2014-11-19
+            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
+              2015-01-09
             </time>
           </span>
 
@@ -568,8 +597,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">jenkins</span>
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
                   </a>
                 </span>
 
@@ -584,8 +613,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="commentsCount"></span>
+                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -595,7 +624,7 @@
 
           
           
-             <span id="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" class="leancloud_visitors" data-flag-title="mac os x 设置 jenkins开机启动遇到的问题">
+             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -619,247 +648,24 @@
       
         
           
-            <h1 id="mac-os-x-设置-jenkins开机启动遇到的问题"><a href="#mac-os-x-设置-jenkins开机启动遇到的问题" class="headerlink" title="mac os x 设置 jenkins开机启动遇到的问题"></a>mac os x 设置 jenkins开机启动遇到的问题</h1><p>设置命令</p>
-<p>取消开机启动</p>
-<pre><code>sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><p>设置开机启动</p>
-<pre><code>sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><h2 id="我的问题描述"><a href="#我的问题描述" class="headerlink" title="我的问题描述"></a>我的问题描述</h2><p>第一次安装jenkins之后，是可以开机启动的，但是由于开机占用400++M内存，就被禁掉了，<br>然后现在回头想恢复让其开机启动，死活不成功，折腾过程记录如下</p>
-<p>查看 plist 文件找出脚本，手工启动</p>
-<pre><code>zsh /Library/Application\ Support/Jenkins/jenkins-runner.sh
-</code></pre><p>会出现以下错误</p>
-<pre><code>十一月 19, 2014 4:13:10 下午 hudson.UDPBroadcastThread run
-警告: UDP handling problem
-java.net.SocketException: Can&apos;t assign requested address
-    at java.net.PlainDatagramSocketImpl.join(Native Method)
-    at java.net.AbstractPlainDatagramSocketImpl.join(AbstractPlainDatagramSocketImpl.java:178)
-    at java.net.MulticastSocket.joinGroup(MulticastSocket.java:319)
-    at hudson.UDPBroadcastThread.run(UDPBroadcastThread.java:76)
-</code></pre><p>这个错误不需要理会</p>
-<p>出现错误 </p>
-<pre><code>十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
-警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
-十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
-警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
-</code></pre><p>解决办法为，增加如下参数，升级1.634版，也没用这个问题</p>
-<pre><code>java -Dhudson.DNSMultiCast.disabled=true
-
-/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -jar /Applications/Jenkins/jenkins.war
-</code></pre><h2 id="恢复jenkins开机启动办法"><a href="#恢复jenkins开机启动办法" class="headerlink" title="恢复jenkins开机启动办法"></a>恢复jenkins开机启动办法</h2><p>1.删除文件</p>
-<pre><code>sudo rm /Library/LaunchDaemons/org.jenkins-ci.plist
-</code></pre><p>2.重新安装pkg安装包，</p>
-<p>mac版下载地址 <a href="http://jenkins-ci.org/content/thank-you-downloading-os-x-installer" target="_blank" rel="external">http://jenkins-ci.org/content/thank-you-downloading-os-x-installer</a></p>
-<p>通过以上步骤，我的问题解决，祝君好运</p>
-<p>3.以上两步是一种解决方法，或者通过 brew install jenkins 重新安装jenkins</p>
-<p>4.手工在mac上启动 jenkins</p>
-<pre><code>/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -XX:PermSize=256m -XX:MaxPermSize=512m -Xms256m -Xmx512m -Djava.io.tmpdir=/Users/Shared/Jenkins/tmp -jar /Applications/Jenkins/jenkins.war --httpPort=8080
-</code></pre><p>5.Jenkins 默认日志路径</p>
-<pre><code>tail -f /var/log/jenkins/jenkins.log
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/18/mysql-integer-type/" itemprop="url">
-                  mysql 整数表示详细介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-18T19:27:51+08:00" content="2014-11-18">
-              2014-11-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/18/mysql-integer-type/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/18/mysql-integer-type/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/18/mysql-integer-type/" class="leancloud_visitors" data-flag-title="mysql 整数表示详细介绍">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mysql-整数表示详细介绍"><a href="#mysql-整数表示详细介绍" class="headerlink" title="mysql 整数表示详细介绍"></a>mysql 整数表示详细介绍</h1><h2 id="运行版本"><a href="#运行版本" class="headerlink" title="运行版本"></a>运行版本</h2><p>以下内容版本<br>mysql 5.6.20</p>
-<h2 id="类型和范围"><a href="#类型和范围" class="headerlink" title="类型和范围"></a>类型和范围</h2><p>整数类型占用字节大小和数值范围如下</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Storage(Bytes)</th>
-<th>Minimum Value(signed/Unsigned)</th>
-<th>Maximum Value(signed/Unsigned) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TINYINT</td>
-<td>1</td>
-<td>-128</td>
-<td>127</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>255</td>
-</tr>
-<tr>
-<td>SMALLINT</td>
-<td>2</td>
-<td>-32768</td>
-<td>32767</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>65535</td>
-</tr>
-<tr>
-<td>MEDIUMINT</td>
-<td>3</td>
-<td>-8388608</td>
-<td>8388607</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>16777215</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>4</td>
-<td>-2147483648</td>
-<td>2147483647</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>4294967295</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>8</td>
-<td>-9223372036854775808</td>
-<td>9223372036854775807</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>0</td>
-<td>18446744073709551615</td>
-</tr>
-</tbody>
-</table>
-<h2 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h2><p>1.使用整数时，写不写长度是没有区别的，Signed tinyint(1)  和 Signed tinyint(2) 是没有区别的，范围都只能存储到127</p>
-<p>2.Signed 和 Unsigned 区别还是很大的</p>
-<p>3.能用小点，就小点，占用空间尽量小</p>
+            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
+<p>在github/gitlab中新建项目zhunions</p>
+<p>1.在本地目录zhunions目录下初始化本地仓库</p>
+<pre><code>git init
+</code></pre><p>2.建立.gitignore README.md文件</p>
+<p>3.本地提交</p>
+<pre><code>git add . 提交当前目录
+git commit -m &quot;first commit&quot;
+</code></pre><p>4.添加远程关联</p>
+<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
+</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
+<pre><code>git push --set-upstream origin master
+</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
+<p>执行所有操作后，有如下结果：</p>
+<p>a.产生本地分支master</p>
+<p>b.与本地仓库关联的远程仓库origin</p>
+<p>c.与本地分支关联的远程分支master</p>
+<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
 
           
         
@@ -909,8 +715,8 @@ java.net.SocketException: Can&apos;t assign requested address
             
               
                 
-                <a class="post-title-link" href="/2014/11/12/mac-tips/" itemprop="url">
-                  mac 技巧积累
+                <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
+                  git rebase命令学习
                 </a>
               
             
@@ -923,8 +729,8 @@ java.net.SocketException: Can&apos;t assign requested address
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-12T10:18:05+08:00" content="2014-11-12">
-              2014-11-12
+            <time itemprop="dateCreated" datetime="2015-01-08T20:24:25+08:00" content="2015-01-08">
+              2015-01-08
             </time>
           </span>
 
@@ -937,8 +743,8 @@ java.net.SocketException: Can&apos;t assign requested address
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
                   </a>
                 </span>
 
@@ -953,8 +759,8 @@ java.net.SocketException: Can&apos;t assign requested address
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/12/mac-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/mac-tips/" itemprop="commentsCount"></span>
+                <a href="/2015/01/08/git-rebase-command-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-rebase-command-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -964,7 +770,7 @@ java.net.SocketException: Can&apos;t assign requested address
 
           
           
-             <span id="/2014/11/12/mac-tips/" class="leancloud_visitors" data-flag-title="mac 技巧积累">
+             <span id="/2015/01/08/git-rebase-command-summary/" class="leancloud_visitors" data-flag-title="git rebase命令学习">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -988,25 +794,263 @@ java.net.SocketException: Can&apos;t assign requested address
       
         
           
-            <h1 id="记录mac里面相关内容"><a href="#记录mac里面相关内容" class="headerlink" title="记录mac里面相关内容"></a>记录mac里面相关内容</h1><p>1.mac桌面背景图片路径</p>
-<p>/Library/Desktop Pictures，使用Spotlight打开即可</p>
-<p>2.打开Go2Shell更改设置，例如更改默认shell为iterm2</p>
-<pre><code>open -a Go2Shell --args config
-</code></pre><p>3.Finder中 command + shift + g ,前往文件夹</p>
-<p>4.去掉Finder中多余的现实，只显示到User</p>
-<pre><code>defaults write com.apple.finder PathBarRootAtHome -bool TRUE;killall Finder
+            <h1 id="git-rebase命令学习"><a href="#git-rebase命令学习" class="headerlink" title="git rebase命令学习"></a>git rebase命令学习</h1><p>阮老师对git rebase讲了一个点，可以和merge类似的操作，<br>最基本的时候，可以达到merge相同效果</p>
+<p>一个台湾同胞写的教程，非常详细</p>
+<p><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase</a></p>
+<p>这里也简单介绍到了</p>
+<p><a href="http://gitbook.liuhui998.com/4_3.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_3.html</a></p>
+<p>写下自己的理解：</p>
+<p><strong>假设</strong></p>
+<p>三个分支 master dev favoorr</p>
+<p><strong>场景一</strong></p>
+<p>favoorr衍生于 dev ，现在想修改到master，</p>
+<p>可以在favoorr分支执行 git rebase master ，切换参考基准</p>
+<p><strong>场景二</strong></p>
+<p>favoorr 分支,本来衍生自提交aaaaa，现在想修改，衍生自提交yyyyy</p>
+<p>在favoorr分支上上执行 git rebase –onto yyyyy aaaaa</p>
+<p>git rebase –onto <new base-commit=""> <current base-commit=""></current></new></p>
+<p>git rebase –continue 如果有冲突，处理完冲突后，继续</p>
+<p><strong>场景三</strong></p>
+<p>1.开发的时候，遇到很多提交，想合并连续两次的小提交</p>
+<p>2.或者之前的提交想改变顺序，提交zzz，应该放到提交xxx的前面</p>
+<p>3.或者之前的提交commit写的有错别字，那么可以用rebase修改</p>
+<p>git rebase -i xxxxx,你准备从这里开始整理提交，在提交一遍</p>
+<p>git rebase 都可以做到</p>
+<p>svn 里面没有搞过这种修改</p>
 
-恢复
+          
+        
+      
+    </div>
 
-defaults delete com.apple.finder PathBarRootAtHome;killall Finder
-</code></pre><p>5.在菜单栏显示和隐藏 XtraFinder </p>
-<pre><code>XtraFinder原生是默认显示的，但是为了顶部清洁，会隐藏起来
-隐藏后，可以在 Finder 下找到，方法如下：
+    <div>
+      
+    </div>
 
-打开Finder --&gt; 菜单栏 中点击Finder，最下面
-</code></pre><p>6.点击Finder显示白条，白条可以任意拖动和变长变宽</p>
-<p>如上所述，mac开机使用一段时间后，可能出现点击Finder就会出现白条，然后当鼠标有焦点的时候就会消失，<br>在群里和大家讨论之后，发现有不少人遇到同样的问题，然后大家交流了意见，最终结论如下：</p>
-<pre><code>白条是输入法失去焦点产生的，点击Finder后，白条出现，摁 `esc` 后，可以消失
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/08/git-remote-command-summary/" itemprop="url">
+                  git操作远程仓库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-08T20:22:07+08:00" content="2015-01-08">
+              2015-01-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/08/git-remote-command-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-remote-command-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/08/git-remote-command-summary/" class="leancloud_visitors" data-flag-title="git操作远程仓库">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git操作远程仓库"><a href="#git操作远程仓库" class="headerlink" title="git操作远程仓库"></a>git操作远程仓库</h1><p>这里对fetch和rebase的用法存在疑惑，Google了下，找到阮老师的教程，<br>推荐看原版，下面内容加入了自己理解</p>
+<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><pre><code>git clone https://github.com/jquery/jquery.git 远程主机被默认命名为 origin（起源）
+git clone https://github.com/jquery/jquery.git myjquerycopy 创建自己的目录，一般不需要加目录
+</code></pre><p>支持的所有的协议</p>
+<pre><code>git clone http[s]://example.com/path/to/repo.git/
+git clone ssh://example.com/path/to/repo.git/
+git clone git://example.com/path/to/repo.git/
+git clone /opt/git/project.git 
+git clone file:///opt/git/project.git
+git clone ftp[s]://example.com/path/to/repo.git/
+git clone rsync://example.com/path/to/repo.git/
+</code></pre><h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><pre><code>git remote 查看所有的远程主机，只会显示列表
+git remote -v
+git clone -o jQuery https://github.com/jquery/jquery.git  将远程仓库命名为jQuery，即更改默认的origin
+git remote show 查看更加详细的信息
+git remote add origin https://github.com/jquery/jquery.git 添加远程仓库
+git remote rm origin 删除远程仓库
+git remote rename origin github 将远程仓库由默认的origin更改为github
+</code></pre><h2 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h2><p>这个命令是将远程仓库的更新拉到本地仓库，而不是本地工作区，但不会与当前分支合并</p>
+<pre><code>git fetch 拉取远程仓库所有分支的所有更新
+git fetch master 仅仅拉取master分支的更新
+git branch -r 查看远程的所有分支
+git branch -a 查看所有分支
+git checkout -b newBrach origin/master 取回远程分支的更新，并创建新分支
+git merge origin/master 将远程分支更新取回本地仓库，并与当前分支合并
+
+git rebase origin/master 
+等同于
+git merge origin/master
+</code></pre><h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>取回远程主机的某个分支与本地的某个分支合并</p>
+<pre><code>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;
+
+git pull origin next:master 取回远程主机的next分支与本地的master分支合并
+git pull origin next 取回远程主机的next分支，与当前默认分支合并，这里要注意了
+
+git pull origin next 
+等同于 
+git fetch origin
+git merge origin/next
+
+本地分支与远程同名分支默认会建立追踪关系，git clone 时，会将本地master和远程master建立关系
+
+git branch --set-upstream master origin/next 将本地的master和远程的next建立追踪关系
+
+如何查看本地分支是否与远程分支建立追踪关系？？？？
+
+git branch -r 可以列出远程有追踪关系的分支，但是不能针对分支查看，比如查看本地dev关联什么分支，可能习惯上，本地分支和远程分支名称都要一样，你可以不关联，但是不要搞本地 xx 分支 和远程yy分支关联
+
+如果当前分支有与之建立追踪关系的远程分支，git pull可以省略远程分支名
+
+git pull origin 本地分支自动拉取origin与之建立追踪关系的分支的更新并且合并
+
+git pull 如果只有一个远程主机，并建立一个追踪关系，可以省略全部参数
+
+git pull --rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; 如果需要采用rebase模式，何时采用哪？？？
+</code></pre><h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>将本地分支的更新推送到远程分支</p>
+<pre><code>git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
+
+git push origin master 如果已经建立追踪关系，可以省略远程分支，如果远程分支不存在，就会新建
+
+git push origin :master 省略本地分支，等于推送了空到远程分支，相当于删除所有内容
+等同于
+git push origin --delete master 删除origin主机的master分支
+
+git push origin 如果本地分支和远程分支有追踪关系，两个名词都可以省略
+
+git push 如果只有一个远程追踪，远程主机也可以省略
+
+git push -u origin master 如果存在多个远程主机关联，可以使用-u设置默认主机，设置后，可以使用 git push
+
+push.default 含义，2.0之前采用matching，之后改为simple
+
+git config --global push.default matching
+git config --global push.default simple
+
+simple 默认只推送当前分支
+matching 会推送所有有追踪关系的本地分支
+
+git push --all origin 不管是否有对应的远程分支，全部推送到远程主机
+
+git push --force origin 如果远程高于本地无法推送，可以强行推送，不建议使用
+
+git push origin --tags tag默认不会推送，必须加参数
+
+git push --set-upstream origin master  和远程master分支建立追踪关系，并push当前分支
+</code></pre><h2 id="新增远程仓库操作"><a href="#新增远程仓库操作" class="headerlink" title="新增远程仓库操作"></a>新增远程仓库操作</h2><pre><code>git clone -o booyah  命名初始远程仓库不叫 origin ，叫 booyah
+
+git fetch origin  更新本地分支与远程分支同步，拉取远程代码到本地
+
+git remote add github git@xxxx.xxx.xx:yy.git 添加新的远程仓库 github 
+
+git push origin serverfix:awesomebranch 将本地分支 serverfix 推送到远程仓库 origin 中 awesomebranch
+
+git merge origin/serverfix 将远程分支与自己当前分支合并
+
+git checkout -b serverfix origin/serverfix  新建分支，以 远程分支为基础
+
+git checkout -b sf origin/serverfix  远程分支和本地分支使用不同的名字
+
+git checkout --track origin/serverfix  跟踪分支，远程分支和本地分支操作简化命令
+
+git branch -u origin/serverfix 当前本地分支关联远程分支 --set-upstream-to 的简写 -u
+
+git merge @{u}  等于 git merge git merge origin/master  ,使用 @{u} @{upstream} 代替 origin/master
+
+git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远程分支情况
 </code></pre>
           
         
@@ -1039,7 +1083,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1080,7 +1124,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1088,7 +1132,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1097,7 +1141,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

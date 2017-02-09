@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ubuntu,performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+文件系统-分析
+strace系统调用调试器
+详细测量文件系统演示的操作系统工具，包括了系统调用接口的调试器，这些调试器会影响性能，只能在性能开销可接受且无法使用其他延时分析工具的情况下使用
+123456789ubuntu@xenial64-155:~$ sudo strace -ttT -p 7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以 Ubuntu 为例列举 FileSystem 性能分析常用命令">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+文件系统-分析
+strace系统调用调试器
+详细测量文件系统演示的操作系统工具，包括了系统调用接口的调试器，这些调试器会影响性能，只能在性能开销可接受且无法使用其他延时分析工具的情况下使用
+123456789ubuntu@xenial64-155:~$ sudo strace -ttT -p 7">
+<meta property="og:updated_time" content="2017-02-09T06:31:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以 Ubuntu 为例列举 FileSystem 性能分析常用命令">
+<meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+文件系统-分析
+strace系统调用调试器
+详细测量文件系统演示的操作系统工具，包括了系统调用接口的调试器，这些调试器会影响性能，只能在性能开销可接受且无法使用其他延时分析工具的情况下使用
+123456789ubuntu@xenial64-155:~$ sudo strace -ttT -p 7">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/"/>
+
+  <title> 以 Ubuntu 为例列举 FileSystem 性能分析常用命令 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                以 Ubuntu 为例列举 FileSystem 性能分析常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T10:53:39+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 FileSystem 性能分析常用命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>操作系统版本 Ubuntu 16.04.1</p>
+<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
+<p>文件系统-分析</p>
+<h1 id="strace"><a href="#strace" class="headerlink" title="strace"></a>strace</h1><p>系统调用调试器</p>
+<p>详细测量文件系统演示的操作系统工具，包括了系统调用接口的调试器，这些调试器会影响性能，只能在性能开销可接受且无法使用其他延时分析工具的情况下使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ubuntu@xenial64-155:~$ sudo strace -ttT -p 7360</div><div class="line">strace: Process 7360 attached</div><div class="line">17:11:41.616337 poll([&#123;fd=3, events=POLLIN|POLLERR&#125;], 1, 18) = 0 (Timeout) &lt;0.018610&gt;</div><div class="line">17:11:41.635202 sendmsg(3, &#123;msg_name(16)=&#123;sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, msg_iov(1)=[&#123;&quot;\10\0/\201\34\300\0SM\217\231X\0\0\0\0\374\260\t\0\0\0\0\0\20\21\22\23\24\25\26\27&quot;..., 64&#125;], msg_controllen=0, msg_flags=0&#125;, MSG_CONFIRM) = 64 &lt;0.000137&gt;</div><div class="line">17:11:41.635504 recvmsg(3, &#123;msg_name(16)=&#123;sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, msg_iov(1)=[&#123;&quot;E\0\0T\t\20\0\0@\1s\227\177\0\0\1\177\0\0\1\0\0007\201\34\300\0SM\217\231X&quot;..., 192&#125;], msg_controllen=32, [&#123;cmsg_len=32, cmsg_level=SOL_SOCKET, cmsg_type=0x1d /* SCM_??? */&#125;], msg_flags=0&#125;, 0) = 84 &lt;0.000118&gt;</div><div class="line">17:11:41.635858 write(1, &quot;64 bytes from 127.0.0.1: icmp_se&quot;..., 58) = 58 &lt;0.000281&gt;</div><div class="line">17:11:41.636307 poll([&#123;fd=3, events=POLLIN|POLLERR&#125;], 1, 999) = 0 (Timeout) &lt;1.001417&gt;</div><div class="line">17:11:42.638019 sendmsg(3, &#123;msg_name(16)=&#123;sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, msg_iov(1)=[&#123;&quot;\10\0\\u\34\300\0TN\217\231X\0\0\0\0\316\273\t\0\0\0\0\0\20\21\22\23\24\25\26\27&quot;..., 64&#125;], msg_controllen=0, msg_flags=0&#125;, MSG_CONFIRM) = 64 &lt;0.000440&gt;</div><div class="line">17:11:42.638888 recvmsg(3, &#123;msg_name(16)=&#123;sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, msg_iov(1)=[&#123;&quot;E\0\0T\t\365\0\0@\1r\262\177\0\0\1\177\0\0\1\0\0du\34\300\0TN\217\231X&quot;..., 192&#125;], msg_controllen=32, [&#123;cmsg_len=32, cmsg_level=SOL_SOCKET, cmsg_type=0x1d /* SCM_??? */&#125;], msg_flags=0&#125;, 0) = 84 &lt;0.000153&gt;</div></pre></td></tr></table></figure>
+<p>测试命令 ping 127.0.0.1</p>
+<p>-tt 在左侧打印出相对时间戳<br>-T 在右侧打印出系统调用时间   </p>
+<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace"></a>DTrace</h1><p>动态跟踪文件系统操作和延时</p>
+<h1 id="free"><a href="#free" class="headerlink" title="free"></a>free</h1><p>缓存容量统计信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">              total        used        free      shared  buff/cache   available</div><div class="line">Mem:        1016032       54628      176552        5128      784852      748976</div><div class="line">Swap:             0           0           0</div></pre></td></tr></table></figure>
+<h1 id="top"><a href="#top" class="headerlink" title="top"></a>top</h1><p>包括内存使用概要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">KiB Mem :  1016032 total,   175940 free,    55216 used,   784876 buff/cache</div><div class="line">KiB Swap:        0 total,        0 free,        0 used.   748384 avail Mem</div></pre></td></tr></table></figure>
+<h1 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h1><p>虚拟内存统计信息</p>
+<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sar -v 1</div><div class="line"></div><div class="line">05:32:43 PM dentunusd   file-nr  inode-nr    pty-nr</div><div class="line">05:32:44 PM    103272       768     83402         2</div><div class="line">05:32:45 PM    103272       768     83402         2</div></pre></td></tr></table></figure>
+<p>dentunusd 目录项缓存未用计数（可用项）<br>file-nr 使用中的文件描述符个数<br>inode-nr 使用中的 inode 个数    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sar -v -r 1</div><div class="line"></div><div class="line">05:35:03 PM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty</div><div class="line">05:35:04 PM    175768    840264     82.70    117148    532524    253500     24.95    396716    283840         8</div><div class="line"></div><div class="line">05:35:03 PM dentunusd   file-nr  inode-nr    pty-nr</div><div class="line">05:35:04 PM    103272       736     83402         2</div></pre></td></tr></table></figure>
+<h1 id="slabtop"><a href="#slabtop" class="headerlink" title="slabtop"></a>slabtop</h1><p>内核 slab 分配器统计信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">sudo slabtop -o 不使用 -o 选项，会不断刷新屏幕</div><div class="line"></div><div class="line">Active / Total Objects (% used)    : 462765 / 475304 (97.4%)</div><div class="line"> Active / Total Slabs (% used)      : 17851 / 17851 (100.0%)</div><div class="line"> Active / Total Caches (% used)     : 71 / 126 (56.3%)</div><div class="line"> Active / Total Size (% used)       : 130947.48K / 133110.95K (98.4%)</div><div class="line"> Minimum / Average / Maximum Object : 0.01K / 0.28K / 8.00K</div><div class="line"></div><div class="line">  OBJS ACTIVE  USE OBJ SIZE  SLABS OBJ/SLAB CACHE SIZE NAME</div><div class="line">122871 122752  99%    0.19K   5851       21     23404K dentry</div><div class="line">112203 104175  92%    0.10K   2877       39     11508K buffer_head</div><div class="line"> 55425  55425 100%    1.05K   3695       15     59120K ext4_inode_cache</div><div class="line"> 36516  35812  98%    0.04K    358      102      1432K ext4_extent_status</div><div class="line"> 30260  30260 100%    0.05K    356       85      1424K ftrace_event_field</div><div class="line"> 23426  23426 100%    0.12K    689       34      2756K kernfs_node_cache</div><div class="line"> 18788  18471  98%    0.55K   1342       14     10736K inode_cache</div><div class="line"> 13440  12918  96%    0.03K    105      128       420K kmalloc-32</div><div class="line"> 10416  10283  98%    0.57K    744       14      5952K radix_tree_node</div><div class="line">  8512   7266  85%    0.06K    133       64       532K kmalloc-64</div><div class="line">  6090   6090 100%    0.75K    290       21      4640K fuse_inode</div><div class="line">  3840   3840 100%    0.02K     15      256        60K kmalloc-16</div><div class="line">  3120   3120 100%    0.20K    156       20       624K vm_area_struct</div><div class="line">  3072   3072 100%    0.01K      6      512        24K kmalloc-8</div><div class="line">  2899   2899 100%    0.61K    223       13      1784K proc_inode_cache</div><div class="line">  2016   2016 100%    0.09K     48       42       192K kmalloc-96</div><div class="line">  1952   1467  75%    0.25K    122       16       488K kmalloc-256</div><div class="line">  1938   1509  77%    0.08K     38       51       152K anon_vma</div><div class="line">  1869   1803  96%    0.19K     89       21       356K kmalloc-192</div><div class="line">  1736   1736 100%    0.07K     31       56       124K Acpi-Operand</div><div class="line">  1656   1656 100%    0.09K     36       46       144K trace_event_file</div><div class="line">  1488   1328  89%    1.00K     93       16      1488K kmalloc-1024</div><div class="line">  1344   1344 100%    0.12K     42       32       168K kmalloc-128</div><div class="line">  1068   1037  97%    0.64K     89       12       712K shmem_inode_cache</div><div class="line">  1056   1021  96%    0.50K     66       16       528K kmalloc-512</div><div class="line">   884    884 100%    0.12K     26       34       104K jbd2_journal_head</div><div class="line">   768    768 100%    0.03K      6      128        24K jbd2_revoke_record_s</div><div class="line">   504    504 100%    0.07K      9       56        36K ext4_io_end</div><div class="line">   448    347  77%    2.00K     28       16       896K kmalloc-2048</div><div class="line">   441    441 100%    0.38K     21       21       168K mnt_cache</div><div class="line">   408    408 100%    0.04K      4      102        16K Acpi-Namespace</div><div class="line">   352    352 100%    0.36K     16       22       128K blkdev_requests</div><div class="line">   330    330 100%    2.05K     22       15       704K idr_layer_cache</div><div class="line">   306    306 100%    0.08K      6       51        24K Acpi-State</div><div class="line">   304    240  78%    0.25K     19       16        76K dquot</div><div class="line">   272    242  88%    4.00K     34        8      1088K kmalloc-4096</div><div class="line">   256    256 100%    0.06K      4       64        16K ext4_free_data</div></pre></td></tr></table></figure>
+<p>dentry 目录项缓存<br>inode_cache inode 缓存<br>ext4_inode_cache ext4 的 inode 缓存</p>
+<p>slabtop 使用 /proc/slabinfo 在启用 CONFIG_SLAB 的情况下生成</p>
+<p>/proc/meminfo 内核内存使用情况分解<br>free 也读的这个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">MemTotal:        1016032 kB</div><div class="line">MemFree:          176380 kB</div><div class="line">MemAvailable:     748872 kB</div><div class="line">Buffers:          117156 kB</div><div class="line">Cached:           532524 kB</div></pre></td></tr></table></figure>
+<p>从整个系统和每个文件系统观察开始<br>然后是操作和延时分析<br>最后是缓存统计信息</p>
+<p>其他工具</p>
+<p>df 报告文件系统使用情况和容量统计信息<br>mount 显示文件系统挂载选项 静态调优<br>inotify Linux文件系统时间监控框架<br>zfs 文件系统有自己定制的工具    </p>
+<p>write<br>dd if=/dev/zero of=file1 bs=1024k count=10</p>
+<p>read<br>dd if=file1 of=/dev/null bs=1024k</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/" rel="next" title="以 Ubuntu 为例列举 Disk 性能分析常用命令">
+                <i class="fa fa-chevron-left"></i> 以 Ubuntu 为例列举 Disk 性能分析常用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-network-optimization-on-ubuntu/" rel="prev" title="以 Ubuntu 为例列举 Network 调优记录">
+                以 Ubuntu 为例列举 Network 调优记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/"
+           data-title="以 Ubuntu 为例列举 FileSystem 性能分析常用命令" data-url="https://favoorr.github.io/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strace"><span class="nav-number">1.</span> <span class="nav-text">strace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DTrace"><span class="nav-number">2.</span> <span class="nav-text">DTrace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#free"><span class="nav-number">3.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">4.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmstat"><span class="nav-number">5.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sar"><span class="nav-number">6.</span> <span class="nav-text">sar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#slabtop"><span class="nav-number">7.</span> <span class="nav-text">slabtop</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

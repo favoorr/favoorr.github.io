@@ -1,0 +1,914 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ubuntu,performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+网络-分析
+netstat多种网络栈和接口统计信息
+默认 列出连接的套接字-a 列出所有套接字的信息-s 网络栈统计信息-i 网络接口信息-r 列出路由表    
+其他选项能修改输出，例如
+-n 不解析 ip 地址为主机名-v 显示冗长的详细信息    
+12345678netstat -i接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以 Ubuntu 为例列举 Network 性能分析常用命令">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/09/linux-performance-network-analysis-on-ubuntu/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+网络-分析
+netstat多种网络栈和接口统计信息
+默认 列出连接的套接字-a 列出所有套接字的信息-s 网络栈统计信息-i 网络接口信息-r 列出路由表    
+其他选项能修改输出，例如
+-n 不解析 ip 地址为主机名-v 显示冗长的详细信息    
+12345678netstat -i接口">
+<meta property="og:updated_time" content="2017-02-09T06:32:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以 Ubuntu 为例列举 Network 性能分析常用命令">
+<meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+网络-分析
+netstat多种网络栈和接口统计信息
+默认 列出连接的套接字-a 列出所有套接字的信息-s 网络栈统计信息-i 网络接口信息-r 列出路由表    
+其他选项能修改输出，例如
+-n 不解析 ip 地址为主机名-v 显示冗长的详细信息    
+12345678netstat -i接口">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/09/linux-performance-network-analysis-on-ubuntu/"/>
+
+  <title> 以 Ubuntu 为例列举 Network 性能分析常用命令 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                以 Ubuntu 为例列举 Network 性能分析常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T10:53:19+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/linux-performance-network-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-network-analysis-on-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/linux-performance-network-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 Network 性能分析常用命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>操作系统版本 Ubuntu 16.04.1</p>
+<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
+<p>网络-分析</p>
+<h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><p>多种网络栈和接口统计信息</p>
+<p>默认 列出连接的套接字<br>-a 列出所有套接字的信息<br>-s 网络栈统计信息<br>-i 网络接口信息<br>-r 列出路由表    </p>
+<p>其他选项能修改输出，例如</p>
+<p>-n 不解析 ip 地址为主机名<br>-v 显示冗长的详细信息    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">netstat -i</div><div class="line">接口统计信息</div><div class="line"></div><div class="line">Kernel Interface table</div><div class="line">Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg</div><div class="line">enp0s3     1500 0    141487      0      0 0         79859      0      0      0 BMRU</div><div class="line">enp0s8     1500 0       681      0      0 0            15      0      0      0 BMRU</div><div class="line">lo        65536 0     28242      0      0 0         28242      0      0      0 LRU</div></pre></td></tr></table></figure>
+<p>Iface 网络接口<br>MTU 最大传输单元<br>RX 接收<br>TX 传输<br>OK 成功传输的数据包<br>ERR 错误数据包<br>DRP 丢包<br>OVR 超限    </p>
+<p>丢包和超限是网络接口饱和的指针</p>
+<p>-c 连续模式能与 -i 一并使用，每秒输出这些累积的计数器，它提供技术数据包速率的数据</p>
+<p>网络栈统计数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">netstat -s</div><div class="line"></div><div class="line">Ip:</div><div class="line">    150870 total packets received</div><div class="line">    2 with invalid addresses</div><div class="line">    0 forwarded</div><div class="line">    0 incoming packets discarded</div><div class="line">    150868 incoming packets delivered</div><div class="line">    108440 requests sent out</div><div class="line">Icmp:</div><div class="line">    28426 ICMP messages received</div><div class="line">    0 input ICMP message failed.</div><div class="line">    ICMP input histogram:</div><div class="line">        echo requests: 14213</div><div class="line">        echo replies: 14213</div><div class="line">    28427 ICMP messages sent</div><div class="line">    0 ICMP messages failed</div><div class="line">    ICMP output histogram:</div><div class="line">        destination unreachable: 1</div><div class="line">        echo request: 14213</div><div class="line">        echo replies: 14213</div><div class="line">IcmpMsg:</div><div class="line">        InType0: 14213</div><div class="line">        InType8: 14213</div><div class="line">        OutType0: 14213</div><div class="line">        OutType3: 1</div><div class="line">        OutType8: 14213</div><div class="line">Tcp:</div><div class="line">    36 active connections openings</div><div class="line">    7 passive connection openings</div><div class="line">    0 failed connection attempts</div><div class="line">    1 connection resets received</div><div class="line">    2 connections established</div><div class="line">    121699 segments received</div><div class="line">    79945 segments send out</div><div class="line">    7 segments retransmited</div><div class="line">    0 bad segments received.</div><div class="line">    5 resets sent</div><div class="line">Udp:</div><div class="line">    60 packets received</div><div class="line">    1 packets to unknown port received.</div><div class="line">    0 packet receive errors</div><div class="line">    61 packets sent</div><div class="line">    IgnoredMulti: 682</div><div class="line">UdpLite:</div><div class="line">TcpExt:</div><div class="line">    17 TCP sockets finished time wait in fast timer</div><div class="line">    1872 delayed acks sent</div><div class="line">    1 delayed acks further delayed because of locked socket</div><div class="line">    1 packets directly queued to recvmsg prequeue.</div><div class="line">    81278 packet headers predicted</div><div class="line">    48 acknowledgments not containing data payload received</div><div class="line">    27209 predicted acknowledgments</div><div class="line">    7 congestion windows recovered without slow start after partial ack</div><div class="line">    7 other TCP timeouts</div><div class="line">    1 connections reset due to early user close</div><div class="line">    TCPRcvCoalesce: 53160</div><div class="line">    TCPAutoCorking: 1784</div><div class="line">    TCPSynRetrans: 7</div><div class="line">    TCPOrigDataSent: 27251</div><div class="line">IpExt:</div><div class="line">    InBcastPkts: 682</div><div class="line">    InOctets: 152293063</div><div class="line">    OutOctets: 6790378</div><div class="line">    InBcastOctets: 85259</div><div class="line">    InNoECTPkts: 17079</div></pre></td></tr></table></figure>
+<p>输出列出了多项按协议分组的网络数据主要是来自 TCP 的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/proc/net/snmp    </div><div class="line">/proc/net/netstat</div><div class="line"></div><div class="line">grep ^Tcp /proc/net/snmp</div><div class="line"></div><div class="line">Tcp: RtoAlgorithm RtoMin RtoMax MaxConn ActiveOpens PassiveOpens AttemptFails EstabResets CurrEstab InSegs OutSegs RetransSegs InErrs OutRsts InCsumErrors</div><div class="line">Tcp: 1 200 120000 -1 36 7 0 1 2 121960 80203 7 0 5 0</div></pre></td></tr></table></figure>
+<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><p>统计信息历史</p>
+<p>可以观测当前活动病情能配置为保存和报告历史统计数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-n DEV 网络接口统计信息</div><div class="line"></div><div class="line">sudo sar  1 -n DEV</div><div class="line"></div><div class="line">11:43:51 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil</div><div class="line">11:43:52 AM    enp0s8      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div><div class="line">11:43:52 AM    enp0s3      3.00      3.00      0.18      0.32      0.00      0.00      0.00      0.00</div><div class="line">11:43:52 AM        lo      2.00      2.00      0.16      0.16      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>rxpck/s<br>txpck/s<br>rxkB/s<br>txkB/s    </p>
+<p>rxcmp/s</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-n EDEV 网络接口错误</div><div class="line"></div><div class="line">sudo sar  1 -n EDEV</div><div class="line"></div><div class="line">11:44:40 AM     IFACE   rxerr/s   txerr/s    coll/s  rxdrop/s  txdrop/s  txcarr/s  rxfram/s  rxfifo/s  txfifo/s</div><div class="line">11:44:41 AM    enp0s8      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div><div class="line">11:44:41 AM    enp0s3      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div><div class="line">11:44:41 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>rxerr/s 接收数据包错误<br>txerr/s 传输数据包错误<br>coll/s 碰撞<br>rxdrop/s 接收丢包 缓冲满<br>txdrop/s 传输数据包丢包 缓冲满<br>rxfifo/s 接收的数据包 FIFO 超限错误<br>txfifo/s 传输的数据包 FIFO 超限错误    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-n IP IP数据报统计信息</div><div class="line"></div><div class="line">sudo sar 1 -n IP</div><div class="line"></div><div class="line">11:55:47 AM    irec/s  fwddgm/s    idel/s     orq/s   asmrq/s   asmok/s  fragok/s fragcrt/s</div><div class="line">11:55:48 AM     12.00      0.00     12.00     12.00      0.00      0.00      0.00      0.00</div><div class="line">11:55:49 AM     17.00      0.00     17.00     17.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>irec/s<br>fwddgm/s<br>orq/s</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-n EIP IP错误统计信息</div><div class="line"></div><div class="line">sudo sar 1 -n EIP</div><div class="line"></div><div class="line">01:04:03 PM ihdrerr/s iadrerr/s iukwnpr/s   idisc/s   odisc/s   onort/s    asmf/s   fragf/s</div><div class="line">01:04:04 PM      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>idisc/s<br>odisc/s</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-n TCP TCP 统计信息</div><div class="line"></div><div class="line">sudo sar 1 -n TCP</div><div class="line"></div><div class="line">01:05:01 PM  active/s passive/s    iseg/s    oseg/s</div><div class="line">01:05:02 PM      0.00      0.00      2.00      2.00</div><div class="line">01:05:03 PM      0.00      0.00      2.00      2.00</div></pre></td></tr></table></figure>
+<p>active/s 新的主动 TCP 连接 connect()<br>passive/s 新的被动 TCP 连接 listen()<br>iseg/s 输入的段（接收）<br>oseg/s 输出的段 (传输)    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-n ETCP TCP 错误统计信息</div><div class="line"></div><div class="line">sudo sar 1 -n ETCP</div><div class="line"></div><div class="line">01:08:01 PM  atmptf/s  estres/s retrans/s isegerr/s   orsts/s</div><div class="line">01:08:02 PM      0.00      0.00      0.00      0.00      0.00</div><div class="line">01:08:03 PM      0.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
+<p>retrans/s TCP 段重传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-n SOCK 套接字使用</div><div class="line"></div><div class="line">sudo sar 1 -n SOCK</div><div class="line"></div><div class="line">01:09:14 PM    totsck    tcpsck    udpsck    rawsck   ip-frag    tcp-tw</div><div class="line">01:09:15 PM       118         3         1         1         0         0</div><div class="line">01:09:16 PM       118         3         1         1         0         0</div><div class="line">01:09:17 PM       118         3         1         1         0         0</div></pre></td></tr></table></figure>
+<p>totsck 使用中的总数据包 sockets<br>ip-frag 当前队列中的 IP 数据片 fragments<br>tcp-twTIME-WAIT 的 TCP 套接字 sockets    </p>
+<p>许多统计信息包括方向和统计单位</p>
+<p>rx  是接收<br>i 输入<br>seg 是段    </p>
+<p>还可以统计 ICMP UDP NFS 和 IPv6 在内的信息<br>IpInReceives = irec/s</p>
+<h1 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h1><p>接口配置</p>
+<p>列出所有接口当前的配置，与  netstat -i 一致<br>txqueuelen 是这个接口发送队列的长度 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">enp0s8    Link encap:Ethernet  HWaddr 08:00:27:09:42:be</div><div class="line">          inet addr:192.168.56.155  Bcast:192.168.56.255  Mask:255.255.255.0</div><div class="line">          inet6 addr: fe80::a00:27ff:fe09:42be/64 Scope:Link</div><div class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</div><div class="line">          RX packets:791 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">          TX packets:15 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">          collisions:0 txqueuelen:1000</div><div class="line">          RX bytes:110689 (110.6 KB)  TX bytes:1226 (1.2 KB)</div></pre></td></tr></table></figure>
+<p>linux 下的 ifconfig 命令逐渐被 ip 命令替代</p>
+<h1 id="ip"><a href="#ip" class="headerlink" title="ip "></a>ip </h1><p>网络接口统计信息</p>
+<p>能够配置网络接口和路由，并且观测他们的状态和统计信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">ip -s link</div><div class="line"></div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1</div><div class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</div><div class="line">    RX: bytes  packets  errors  dropped overrun mcast</div><div class="line">    3818304    45456    0       0       0       0</div><div class="line">    TX: bytes  packets  errors  dropped carrier collsns</div><div class="line">    3818304    45456    0       0       0       0</div><div class="line">2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</div><div class="line">    link/ether 02:f3:d6:4a:16:a4 brd ff:ff:ff:ff:ff:ff</div><div class="line">    RX: bytes  packets  errors  dropped overrun mcast</div><div class="line">    153171630  151055   0       0       0       0</div><div class="line">    TX: bytes  packets  errors  dropped carrier collsns</div><div class="line">    6676241    89117    0       0       0       0</div><div class="line">3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000</div><div class="line">    link/ether 08:00:27:09:42:be brd ff:ff:ff:ff:ff:ff</div><div class="line">    RX: bytes  packets  errors  dropped overrun mcast</div><div class="line">    110689     791      0       0       0       0</div><div class="line">    TX: bytes  packets  errors  dropped carrier collsns</div><div class="line">    1226       15       0       0       0       0</div></pre></td></tr></table></figure>
+<h1 id="nicstat"><a href="#nicstat" class="headerlink" title="nicstat"></a>nicstat</h1><p>网络接口吞吐量和使用率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line">sudo apt install nicstat</div><div class="line"></div><div class="line">nicstat -z 1</div><div class="line">    Time      Int   rKB/s   wKB/s   rPk/s   wPk/s    rAvs    wAvs %Util    Sat</div><div class="line">13:57:53   enp0s8    0.00    0.00    0.02    0.00   140.0   81.73  0.00   0.00</div><div class="line">13:57:53   enp0s3    3.32    0.15    3.36    1.99  1010.6   75.02  0.00   0.00</div><div class="line">13:57:53       lo    0.08    0.08    1.02    1.02   84.00   84.00  0.00   0.00</div><div class="line">    Time      Int   rKB/s   wKB/s   rPk/s   wPk/s    rAvs    wAvs %Util    Sat</div><div class="line">13:57:54   enp0s3    0.53    0.82    8.98    8.98   60.00   93.56  0.00   0.00</div><div class="line">13:57:54       lo    0.16    0.16    2.00    2.00   84.00   84.00  0.00   0.00</div></pre></td></tr></table></figure>
+<p>-z 用来忽略数值为 0 的接口<br>-t 显示 TCP 统计信息    </p>
+<p>最前面是系统启动以来的总结，紧接着是按时间间隔的总结</p>
+<p>Int 接口名称<br>%Util 最大使用率<br>Sat 反应接口饱和度的统计信息<br>r 读（接受）<br>w 写 （传输）    </p>
+<p>KB/s 千字节每秒<br>PK/s 数据包每秒<br>Avs/s 平均数据包每秒，以字节为单位    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nicstat -z -t 1</div><div class="line">14:03:00    InKB   OutKB   InSeg  OutSeg Reset  AttF %ReTX InConn OutCon Drops</div><div class="line">TCP         0.00    0.00    2.91    1.98  0.00  0.00 0.000   0.00   0.00  0.00</div><div class="line">14:03:01    InKB   OutKB   InSeg  OutSeg Reset  AttF %ReTX InConn OutCon Drops</div><div class="line">TCP         0.00    0.00    0.00    0.00  0.00  0.00 0.000   0.00   0.00  0.00</div><div class="line">14:03:02    InKB   OutKB   InSeg  OutSeg Reset  AttF %ReTX InConn OutCon Drops</div><div class="line">TCP         0.00    0.00    0.00    0.00  0.00  0.00 0.000   0.00   0.00  0.00</div></pre></td></tr></table></figure>
+<h1 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h1><p>测试网络连通性</p>
+<p>rtt 每个包的往返时间<br>由于 时间戳是 ping 命令自己计量的，其中包括获取时间戳到处理网络 IO 的整个 CPU 代码路径执行时间</p>
+<h1 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h1><p>测试网络路由</p>
+<p>发出一系列数据包实验性地探测到一个主机当前的路由<br>它的实现利用了递增每个数据包 IP 协议的生存时间 TTL，<br>从而导致网关顺序的发送 ICMP 超时响应报文，向主机揭示自己的存在（如果防火墙没有拦截他们）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line">sudo apt install traceroute</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">traceroute www.baidu.com</div><div class="line">traceroute to www.baidu.com (14.215.177.37), 30 hops max, 60 byte packets</div><div class="line"> 1  10.0.2.2 (10.0.2.2)  0.213 ms  0.099 ms  0.118 ms</div><div class="line"> 2  * * *</div><div class="line"> 3  192.168.136.1 (192.168.136.1)  2.124 ms  3.307 ms  1.598 ms</div><div class="line"> 4  218.17.161.1 (218.17.161.1)  6.528 ms  6.423 ms  6.744 ms</div><div class="line"> 5  10.1.100.73 (10.1.100.73)  2.432 ms  2.518 ms  2.519 ms</div><div class="line"> 6  58.60.235.21 (58.60.235.21)  1.418 ms  1.478 ms  1.425 ms</div><div class="line"> 7  69.107.38.59.broad.fs.gd.dynamic.163data.com.cn (59.38.107.69)  2.023 ms  3.500 ms  4.130 ms</div><div class="line"> 8  119.145.220.86 (119.145.220.86)  2.516 ms  3.419 ms  3.489 ms</div><div class="line"> 9  183.56.64.50 (183.56.64.50)  8.108 ms  8.149 ms  8.360 ms</div><div class="line">10  * * *</div><div class="line">11  14.29.117.246 (14.29.117.246)  7.306 ms 14.29.121.194 (14.29.121.194)  7.577 ms  7.100 ms</div></pre></td></tr></table></figure>
+<p>每一跳显示连续的三个 RTT，它们可用作网络延时统计信息的粗略数据源。<br>类似 ping 由于发送低优先级的数据包，它可能显示出比其他应用程序协议更高的延时</p>
+<p>也可以把显示的路径作为静态性能调优的研究对象。网络被设计为动态的并且能响应故障。路径的变化可能会降低性能。</p>
+<h1 id="pathchar"><a href="#pathchar" class="headerlink" title="pathchar"></a>pathchar</h1><p>确定网络路径特征</p>
+<p>pathchar 类似于 traceroute ，并且包括了每一跳间的贷款，它的实现是利用了多次重复发送一系列不同长度的网络数据包然后统计分析它们</p>
+<p>在 ubuntu 上，pathchar 叫 pchar</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line">sudo apt install pchar</div></pre></td></tr></table></figure>
+<p>依据跳跃数的不同，可能需要数分钟</p>
+<h1 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h1><p>网络数据包嗅探器</p>
+<p>可以捕捉并检查网络数据包。它输出网络包信息到 STDOUT，或者把数据包写入文件以供稍后的分析。后者通常更实用：过高的数据包速率导致了不能实时研究他们</p>
+<p>将 eth4 的数据写入 /tmp 下的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo tcpdump -i enp0s8 -w /tmp/out.tcpdump</div><div class="line"></div><div class="line">tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), capture size 262144 bytes</div><div class="line">^C3 packets captured</div><div class="line">3 packets received by filter</div><div class="line">0 packets dropped by kernel</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">查看</div><div class="line">tcpdump -nr /tmp/out.tcpdump</div><div class="line"></div><div class="line">reading from file /tmp/out.tcpdump, link-type EN10MB (Ethernet)</div><div class="line">14:41:27.959674 IP 192.168.56.1.5353 &gt; 224.0.0.251.5353: 0 PTR (QU)? _googlecast._tcp.local. (40)</div><div class="line">14:41:28.964658 IP 192.168.56.1.5353 &gt; 224.0.0.251.5353: 0 PTR (QM)? _googlecast._tcp.local. (40)</div><div class="line">14:41:32.004652 IP 192.168.56.1.5353 &gt; 224.0.0.251.5353: 0 PTR (QM)? _googlecast._tcp.local. (40)</div></pre></td></tr></table></figure>
+<p>每一行显示数据包时间（精度到毫秒），它的源和目标 IP 地址，以及 TCP 报头值。</p>
+<p>-n 禁用 IP 地址解析为主机名<br>-v 打印包冗长的细节<br>-e 链路层报头<br>-x -X 十六进制地址转储    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">tcpdump -enr /tmp/out.tcpdump -vvv -X</div><div class="line"></div><div class="line">reading from file /tmp/out.tcpdump, link-type EN10MB (Ethernet)</div><div class="line">14:41:27.959674 0a:00:27:00:00:00 &gt; 01:00:5e:00:00:fb, ethertype IPv4 (0x0800), length 82: (tos 0x0, ttl 255, id 60129, offset 0, flags [none], proto UDP (17), length 68)</div><div class="line">    192.168.56.1.5353 &gt; 224.0.0.251.5353: [udp sum ok] 0 PTR (QU)? _googlecast._tcp.local. (40)</div><div class="line">	0x0000:  4500 0044 eae1 0000 ff11 f721 c0a8 3801</div><div class="line">	0x0010:  e000 00fb 14e9 14e9 0030 31fe 0000 0000</div><div class="line">	0x0020:  0001 0000 0000 0000 0b5f 676f 6f67 6c65</div><div class="line">	0x0030:  6361 7374 045f 7463 7005 6c6f 6361 6c00</div><div class="line">	0x0040:  000c 8001</div><div class="line">14:41:28.964658 0a:00:27:00:00:00 &gt; 01:00:5e:00:00:fb, ethertype IPv4 (0x0800), length 82: (tos 0x0, ttl 255, id 56040, offset 0, flags [none], proto UDP (17), length 68)</div><div class="line">    192.168.56.1.5353 &gt; 224.0.0.251.5353: [udp sum ok] 0 PTR (QM)? _googlecast._tcp.local. (40)</div><div class="line">	0x0000:  4500 0044 dae8 0000 ff11 071b c0a8 3801</div><div class="line">	0x0010:  e000 00fb 14e9 14e9 0030 b1fe 0000 0000</div><div class="line">	0x0020:  0001 0000 0000 0000 0b5f 676f 6f67 6c65</div><div class="line">	0x0030:  6361 7374 045f 7463 7005 6c6f 6361 6c00</div><div class="line">	0x0040:  000c 0001</div><div class="line">14:41:32.004652 0a:00:27:00:00:00 &gt; 01:00:5e:00:00:fb, ethertype IPv4 (0x0800), length 82: (tos 0x0, ttl 255, id 21068, offset 0, flags [none], proto UDP (17), length 68)</div><div class="line">    192.168.56.1.5353 &gt; 224.0.0.251.5353: [udp sum ok] 0 PTR (QM)? _googlecast._tcp.local. (40)</div><div class="line">	0x0000:  4500 0044 524c 0000 ff11 8fb7 c0a8 3801</div><div class="line">	0x0010:  e000 00fb 14e9 14e9 0030 b1fe 0000 0000</div><div class="line">	0x0020:  0001 0000 0000 0000 0b5f 676f 6f67 6c65</div><div class="line">	0x0030:  6361 7374 045f 7463 7005 6c6f 6361 6c00</div><div class="line">	0x0040:  000c 0001</div></pre></td></tr></table></figure>
+<p>在性能分析过程中，把时间戳列改为显示数据包间的时间差 -ttt ，或者自第一个数据包以来的时间 -ttttt 会更有帮助</p>
+<p>就 CPU 成本和存储而言，捕捉数据包是昂贵的，在可能的情况下尽量短时间使用 tcpdump 以限制其对性能的影响</p>
+<h1 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a>wireshark</h1><p>图形化网络数据包检查器</p>
+<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace"></a>DTrace</h1><p>TCP/IP 栈跟踪，连接、数据包、丢包、延时</p>
+<h1 id="perf"><a href="#perf" class="headerlink" title="perf "></a>perf </h1><p>TCP/IP 栈跟踪，连接、数据包、丢包、延时</p>
+<p>其他工具</p>
+<p>strace 跟踪套接字相关的系统调用并检查其使用的选项，使用系统开销较高<br>lsof 按进程 id 列出包括套接字细节在内的打开的文件<br>ss 套接字统计信息<br>nfsstat nfs 服务器的和客户机统计信息<br>iftop 按主机嗅探总结网络接口吞吐量<br>/proc/net 包含许多网络统计信息文件    </p>
+<p>试验工具</p>
+<h1 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h1><p>iperf 是一款测试最大 tcp 和 udp 吞吐量的开源工具，必须同时在服务器和客户机上运行</p>
+<p>服务器运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">iperf -s -1 128k</div><div class="line"></div><div class="line">iperf: ignoring extra argument -- 128k</div><div class="line">------------------------------------------------------------</div><div class="line">Server listening on TCP port 5001</div><div class="line">TCP window size: 85.3 KByte (default)</div><div class="line">------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>将套接字缓冲长度由默认的 8KB 增加到 128KB (-1 128k)</p>
+<p>客户机运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">iperf -c 192.168.56.155 -1 128k -P 2 -i 1 -t 60</div><div class="line"></div><div class="line">iperf: ignoring extra argument -- 128k</div><div class="line">------------------------------------------------------------</div><div class="line">Client connecting to 192.168.56.155, TCP port 5001</div><div class="line">TCP window size: 85.0 KByte (default)</div><div class="line">------------------------------------------------------------</div><div class="line">[  3] local 192.168.56.135 port 55537 connected with 192.168.56.155 port 5001</div><div class="line">[  4] local 192.168.56.135 port 55538 connected with 192.168.56.155 port 5001</div><div class="line">[ ID] Interval       Transfer     Bandwidth</div><div class="line">[  3]  0.0- 1.0 sec   184 MBytes  1.54 Gbits/sec</div><div class="line">[  4]  0.0- 1.0 sec   190 MBytes  1.59 Gbits/sec</div><div class="line">[SUM]  0.0- 1.0 sec   374 MBytes  3.14 Gbits/sec</div><div class="line">[  3] 59.0-60.0 sec   234 MBytes  1.97 Gbits/sec</div><div class="line">[  3]  0.0-60.0 sec  9.87 GBytes  1.41 Gbits/sec</div><div class="line">[  4] 59.0-60.0 sec   156 MBytes  1.30 Gbits/sec</div><div class="line">[SUM] 59.0-60.0 sec   390 MBytes  3.27 Gbits/sec</div><div class="line">[  4]  0.0-60.0 sec  8.97 GBytes  1.28 Gbits/sec</div><div class="line">[SUM]  0.0-60.0 sec  18.8 GBytes  2.70 Gbits/sec</div></pre></td></tr></table></figure>
+<p>最后会给一个总的汇总</p>
+<p>-c host 连接到主机名或者 IP 地址<br>-1 128k 使用 128KB 套接字缓冲<br>-P 2 运行于两个客户机线程的并行模式<br>-i 1  每秒打印时间间隔总结<br>-t 60 总测试时间 60s    </p>
+<p>测试完成后，可以在 server 端看到结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">iperf: ignoring extra argument -- 128k</div><div class="line">------------------------------------------------------------</div><div class="line">Server listening on TCP port 5001</div><div class="line">TCP window size: 85.3 KByte (default)</div><div class="line">------------------------------------------------------------</div><div class="line">[  4] local 192.168.56.155 port 5001 connected with 192.168.56.135 port 55537</div><div class="line">[  5] local 192.168.56.155 port 5001 connected with 192.168.56.135 port 55538</div><div class="line">[ ID] Interval       Transfer     Bandwidth</div><div class="line">[  4]  0.0-60.0 sec  9.87 GBytes  1.41 Gbits/sec</div><div class="line">[  5]  0.0-60.0 sec  8.97 GBytes  1.28 Gbits/sec</div><div class="line">[SUM]  0.0-60.0 sec  18.8 GBytes  2.70 Gbits/sec</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-memory-analysis-on-ubuntu/" rel="next" title="以 Ubuntu 为例列举 Memory 性能分析常用命令">
+                <i class="fa fa-chevron-left"></i> 以 Ubuntu 为例列举 Memory 性能分析常用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/" rel="prev" title="以 Ubuntu 为例列举 Disk 性能分析常用命令">
+                以 Ubuntu 为例列举 Disk 性能分析常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-network-analysis-on-ubuntu/"
+           data-title="以 Ubuntu 为例列举 Network 性能分析常用命令" data-url="https://favoorr.github.io/2017/02/09/linux-performance-network-analysis-on-ubuntu/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sar"><span class="nav-number">2.</span> <span class="nav-text">sar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ifconfig"><span class="nav-number">3.</span> <span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ip"><span class="nav-number">4.</span> <span class="nav-text">ip </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nicstat"><span class="nav-number">5.</span> <span class="nav-text">nicstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ping"><span class="nav-number">6.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#traceroute"><span class="nav-number">7.</span> <span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pathchar"><span class="nav-number">8.</span> <span class="nav-text">pathchar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tcpdump"><span class="nav-number">9.</span> <span class="nav-text">tcpdump</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wireshark"><span class="nav-number">10.</span> <span class="nav-text">wireshark</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DTrace"><span class="nav-number">11.</span> <span class="nav-text">DTrace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#perf"><span class="nav-number">12.</span> <span class="nav-text">perf </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iperf"><span class="nav-number">13.</span> <span class="nav-text">iperf</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

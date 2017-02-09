@@ -1,0 +1,854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ubuntu,performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+这些调优知识还远远不够，一边学习，一边实战
+网络-调优
+可调参数可以使用 sysctl 命令查看和设置，并写入到 /etc/sysctl.conf。也能在 /proc 文件系统中读写，位于 /proc/sys/net 下
+1234567891011121314151617181920212223">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以 Ubuntu 为例列举 Network 调优记录">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/09/linux-performance-network-optimization-on-ubuntu/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+这些调优知识还远远不够，一边学习，一边实战
+网络-调优
+可调参数可以使用 sysctl 命令查看和设置，并写入到 /etc/sysctl.conf。也能在 /proc 文件系统中读写，位于 /proc/sys/net 下
+1234567891011121314151617181920212223">
+<meta property="og:updated_time" content="2017-02-09T06:32:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以 Ubuntu 为例列举 Network 调优记录">
+<meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+这些调优知识还远远不够，一边学习，一边实战
+网络-调优
+可调参数可以使用 sysctl 命令查看和设置，并写入到 /etc/sysctl.conf。也能在 /proc 文件系统中读写，位于 /proc/sys/net 下
+1234567891011121314151617181920212223">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/09/linux-performance-network-optimization-on-ubuntu/"/>
+
+  <title> 以 Ubuntu 为例列举 Network 调优记录 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                以 Ubuntu 为例列举 Network 调优记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T10:56:12+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/linux-performance-network-optimization-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-network-optimization-on-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/linux-performance-network-optimization-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 Network 调优记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>操作系统版本 Ubuntu 16.04.1</p>
+<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
+<p>这些调优知识还远远不够，一边学习，一边实战</p>
+<p>网络-调优</p>
+<p>可调参数可以使用 sysctl 命令查看和设置，并写入到 /etc/sysctl.conf。<br>也能在 /proc 文件系统中读写，位于 /proc/sys/net 下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">sysctl -a | grep tcp</div><div class="line"></div><div class="line">net.ipv4.tcp_abort_on_overflow = 0</div><div class="line">net.ipv4.tcp_adv_win_scale = 1</div><div class="line">net.ipv4.tcp_allowed_congestion_control = cubic reno</div><div class="line">net.ipv4.tcp_app_win = 31</div><div class="line">net.ipv4.tcp_autocorking = 1</div><div class="line">net.ipv4.tcp_available_congestion_control = cubic reno</div><div class="line">net.ipv4.tcp_base_mss = 1024</div><div class="line">net.ipv4.tcp_challenge_ack_limit = 1000</div><div class="line">net.ipv4.tcp_congestion_control = cubic</div><div class="line">net.ipv4.tcp_dsack = 1</div><div class="line">net.ipv4.tcp_early_retrans = 3</div><div class="line">net.ipv4.tcp_ecn = 2</div><div class="line">net.ipv4.tcp_ecn_fallback = 1</div><div class="line">net.ipv4.tcp_fack = 1</div><div class="line">net.ipv4.tcp_fastopen = 1</div><div class="line">net.ipv4.tcp_fastopen_key = 00000000-00000000-00000000-00000000</div><div class="line">net.ipv4.tcp_fin_timeout = 60</div><div class="line">net.ipv4.tcp_frto = 2</div><div class="line">net.ipv4.tcp_fwmark_accept = 0</div><div class="line">net.ipv4.tcp_invalid_ratelimit = 500</div><div class="line">net.ipv4.tcp_keepalive_intvl = 75</div><div class="line">net.ipv4.tcp_keepalive_probes = 9</div><div class="line">net.ipv4.tcp_keepalive_time = 7200</div><div class="line">net.ipv4.tcp_limit_output_bytes = 262144</div><div class="line">net.ipv4.tcp_low_latency = 0</div><div class="line">net.ipv4.tcp_max_orphans = 4096</div><div class="line">net.ipv4.tcp_max_reordering = 300</div><div class="line">net.ipv4.tcp_max_syn_backlog = 128</div><div class="line">net.ipv4.tcp_max_tw_buckets = 4096</div><div class="line">net.ipv4.tcp_mem = 10899	14535	21798</div><div class="line">net.ipv4.tcp_min_rtt_wlen = 300</div><div class="line">net.ipv4.tcp_min_tso_segs = 2</div><div class="line">net.ipv4.tcp_moderate_rcvbuf = 1</div><div class="line">net.ipv4.tcp_mtu_probing = 0</div><div class="line">net.ipv4.tcp_no_metrics_save = 0</div><div class="line">net.ipv4.tcp_notsent_lowat = -1</div><div class="line">net.ipv4.tcp_orphan_retries = 0</div><div class="line">net.ipv4.tcp_pacing_ca_ratio = 120</div><div class="line">net.ipv4.tcp_pacing_ss_ratio = 200</div><div class="line">net.ipv4.tcp_probe_interval = 600</div><div class="line">net.ipv4.tcp_probe_threshold = 8</div><div class="line">net.ipv4.tcp_recovery = 1</div><div class="line">net.ipv4.tcp_reordering = 3</div><div class="line">net.ipv4.tcp_retrans_collapse = 1</div><div class="line">net.ipv4.tcp_retries1 = 3</div><div class="line">net.ipv4.tcp_retries2 = 15</div><div class="line">net.ipv4.tcp_rfc1337 = 0</div><div class="line">net.ipv4.tcp_rmem = 4096	87380	6291456</div><div class="line">net.ipv4.tcp_sack = 1</div><div class="line">net.ipv4.tcp_slow_start_after_idle = 1</div><div class="line">net.ipv4.tcp_stdurg = 0</div><div class="line">net.ipv4.tcp_syn_retries = 6</div><div class="line">net.ipv4.tcp_synack_retries = 5</div><div class="line">net.ipv4.tcp_syncookies = 1</div><div class="line">net.ipv4.tcp_thin_dupack = 0</div><div class="line">net.ipv4.tcp_thin_linear_timeouts = 0</div><div class="line">net.ipv4.tcp_timestamps = 1</div><div class="line">net.ipv4.tcp_tso_win_divisor = 3</div><div class="line">net.ipv4.tcp_tw_recycle = 0</div><div class="line">net.ipv4.tcp_tw_reuse = 0</div><div class="line">net.ipv4.tcp_window_scaling = 1</div><div class="line">net.ipv4.tcp_wmem = 4096	16384	4194304</div><div class="line">net.ipv4.tcp_workaround_signed_windows = 0</div></pre></td></tr></table></figure>
+<p>查看某个配置项值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sysctl net.core.rmem_max</div><div class="line"></div><div class="line">net.core.rmem_max = 212992</div></pre></td></tr></table></figure>
+<p>以下部分有特定的调优示例</p>
+<h1 id="套接字和-TCP-缓冲"><a href="#套接字和-TCP-缓冲" class="headerlink" title="套接字和 TCP 缓冲"></a>套接字和 TCP 缓冲</h1><p>所有协议类型读 rmem_max 和 写 wmem_max 的最大套接字缓冲大小可以这样设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">net.core.rmem_max = 16777216</div><div class="line">net.core.wmem_max = 16777216</div><div class="line"></div><div class="line">默认值为</div><div class="line">net.core.rmem_max = 212992</div><div class="line">net.core.wmem_max = 212992</div></pre></td></tr></table></figure>
+<p>数值的单位是字节。为支持全速率的 10GbE 连接，这坑你需要设置到 16MB 或更高</p>
+<h1 id="启用-TCP-接收缓冲的自动调整"><a href="#启用-TCP-接收缓冲的自动调整" class="headerlink" title="启用 TCP 接收缓冲的自动调整"></a>启用 TCP 接收缓冲的自动调整</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tcp_moderate_rcvbuf = 1</div><div class="line">默认值为</div><div class="line">net.ipv4.tcp_moderate_rcvbuf = 1</div></pre></td></tr></table></figure>
+<h1 id="为-TCP-读和写缓冲设置自动调优参数"><a href="#为-TCP-读和写缓冲设置自动调优参数" class="headerlink" title="为 TCP 读和写缓冲设置自动调优参数"></a>为 TCP 读和写缓冲设置自动调优参数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_rmem = 4096 87380 16777216</div><div class="line">net.ipv4.tcp_wmem = 4096 65536 16777216</div><div class="line"></div><div class="line">默认值为</div><div class="line">net.ipv4.tcp_rmem = 4096	87380	6291456</div><div class="line">net.ipv4.tcp_wmem = 4096	16384	4194304</div></pre></td></tr></table></figure>
+<p>每个参数有三个数值：可使用的最小、默认和最大字节数，长度从默认值自动调整。要提高吞吐量，尝试增加最大值。增加最小值和默认值会使每个连接消耗更多不必要的内存。</p>
+<h1 id="TCP-积压队列"><a href="#TCP-积压队列" class="headerlink" title="TCP 积压队列"></a>TCP 积压队列</h1><p>首个积压队列，半开连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tcp_max_syn_backlog = 4096</div><div class="line"></div><div class="line">默认值为</div><div class="line">net.ipv4.tcp_max_syn_backlog = 128</div></pre></td></tr></table></figure>
+<p>第二个积压队列，传递连接给 accept() 的监听积压队列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">net.core.somaxconn = 1024</div><div class="line">默认值为</div><div class="line">net.core.somaxconn = 128</div></pre></td></tr></table></figure>
+<p>以上两者或许都需要由默认值调高，例如调至 4096 或 1024 或者更高，以便更好的处理突发的负载</p>
+<h1 id="设备积压队列"><a href="#设备积压队列" class="headerlink" title="设备积压队列"></a>设备积压队列</h1><p>增加每 CPU 的网络设备积压队列长度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">net.core.netdev_max_backlog = 10000</div><div class="line">默认值为</div><div class="line">net.core.netdev_max_backlog = 1000</div></pre></td></tr></table></figure>
+<p>为了 10GbE 的 NIC，这可能增加到 10 000</p>
+<h1 id="TCP-拥塞控制"><a href="#TCP-拥塞控制" class="headerlink" title="TCP 拥塞控制"></a>TCP 拥塞控制</h1><p>Linux 支持可插入的阻塞控制算法。列出当前可用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sysctl net.ipv4.tcp_available_congestion_control</div><div class="line"></div><div class="line">net.ipv4.tcp_available_congestion_control = cubic reno</div><div class="line"></div><div class="line">一些可能支持但未加载，例如添加 htcp</div><div class="line">sudo modprobe tcp_htcp</div><div class="line"></div><div class="line">net.ipv4.tcp_available_congestion_control = cubic reno htcp</div><div class="line"></div><div class="line">选择当前的算法</div><div class="line">net.ipv4.tcp_congestion_control = cubic</div></pre></td></tr></table></figure>
+<h1 id="TCP-选项"><a href="#TCP-选项" class="headerlink" title="TCP 选项"></a>TCP 选项</h1><p>其他可设置的 TCP 参数包括 SACK FACK 扩展，他们能以一定 CPU 为代价在高延时的网络中提高吞吐性能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_sack = 1</div><div class="line">net.ipv4.tcp_fack = 1</div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line">net.ipv4.tcp_tw_recycle = 0</div><div class="line"></div><div class="line">默认</div><div class="line">net.ipv4.tcp_sack = 1</div><div class="line">net.ipv4.tcp_fack = 1</div><div class="line">net.ipv4.tcp_tw_reuse = 0</div><div class="line">net.ipv4.tcp_tw_recycle = 0</div></pre></td></tr></table></figure>
+<p>安全时 tcp_tw_reuse 可调参数能重利用一个 TIME-WAIT 会话<br>这使得两个主机间有更高的连接率，例如 Web 服务器和数据库服务器之间<br>而且不会达到 16b 的 TIME-WAIT 会话时端口极限。</p>
+<p>tcp_tw_recycle 是另外一个重利用 TIME-WAIT 会话的方法，尽管没有 tcp_tw_reuse 安全</p>
+<h1 id="网络接口"><a href="#网络接口" class="headerlink" title="网络接口"></a>网络接口</h1><p>TX 队列长度可以用 ifconfig 增加，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ifconfig eth0 txqueuelen 10000</div><div class="line">默认 txqueuelen:1000</div></pre></td></tr></table></figure>
+<p>对于 10GbE NIC 这可能是必须的，该设置可以添加到 /etc/rc.local 以便在启动时应用</p>
+<h1 id="资源控制"><a href="#资源控制" class="headerlink" title="资源控制"></a>资源控制</h1><p>控制组 cgroups 的网络优先级 net_prio 子系统能对进程或者进程组出站网络通信应用优先级，相对于低优先级的网络通信，例如备份或者监视，这能照顾高优先级的网络通信，例如生产负载</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-filesystem-analysis-on-ubuntu/" rel="next" title="以 Ubuntu 为例列举 FileSystem 性能分析常用命令">
+                <i class="fa fa-chevron-left"></i> 以 Ubuntu 为例列举 FileSystem 性能分析常用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/09/using-vagrant-alpine-docker/" rel="prev" title="使用 Vagrant-alpine-Docker 搭建学习环境">
+                使用 Vagrant-alpine-Docker 搭建学习环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-network-optimization-on-ubuntu/"
+           data-title="以 Ubuntu 为例列举 Network 调优记录" data-url="https://favoorr.github.io/2017/02/09/linux-performance-network-optimization-on-ubuntu/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字和-TCP-缓冲"><span class="nav-number">1.</span> <span class="nav-text">套接字和 TCP 缓冲</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启用-TCP-接收缓冲的自动调整"><span class="nav-number">2.</span> <span class="nav-text">启用 TCP 接收缓冲的自动调整</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为-TCP-读和写缓冲设置自动调优参数"><span class="nav-number">3.</span> <span class="nav-text">为 TCP 读和写缓冲设置自动调优参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-积压队列"><span class="nav-number">4.</span> <span class="nav-text">TCP 积压队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设备积压队列"><span class="nav-number">5.</span> <span class="nav-text">设备积压队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-拥塞控制"><span class="nav-number">6.</span> <span class="nav-text">TCP 拥塞控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-选项"><span class="nav-number">7.</span> <span class="nav-text">TCP 选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络接口"><span class="nav-number">8.</span> <span class="nav-text">网络接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源控制"><span class="nav-number">9.</span> <span class="nav-text">资源控制</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/14/mysql-replace/" itemprop="url">
-                  mysql replace 学习
+                <a class="post-title-link" href="/2017/01/05/programming-road-environment/" itemprop="url">
+                  一路编程，一路环境折腾
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-14T14:13:25+08:00" content="2015-07-14">
-              2015-07-14
+            <time itemprop="dateCreated" datetime="2017-01-05T17:02:09+08:00" content="2017-01-05">
+              2017-01-05
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/14/mysql-replace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/14/mysql-replace/" itemprop="commentsCount"></span>
+                <a href="/2017/01/05/programming-road-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/07/14/mysql-replace/" class="leancloud_visitors" data-flag-title="mysql replace 学习">
+             <span id="/2017/01/05/programming-road-environment/" class="leancloud_visitors" data-flag-title="一路编程，一路环境折腾">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,15 +337,15 @@
       
         
           
-            <p>mysql 基础修改数据语句</p>
-<p>select insert update delete ,今天学习了个新的 replace </p>
-<p>replace 根据主键或者唯一索引判断相同数据，</p>
-<p>如果数据相同，就的数据会先删除，在插入新数据</p>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="external">官方文档</a></p>
-<p>如果主键相同，会先删除原数据，在插入新数据示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 2 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<p>如果主键不同，数据不会覆盖测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE test2 (</div><div class="line">  id INT UNSIGNED NOT NULL AUTO_INCREMENT,</div><div class="line">  data VARCHAR(64) DEFAULT NULL,</div><div class="line">  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (id, ts)</div><div class="line">);</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;Old&apos;, &apos;2014-08-20 18:47:00&apos;);</div><div class="line">Query OK, 1 row affected (0.05 sec)</div><div class="line"></div><div class="line">mysql&gt; REPLACE INTO test2 VALUES (1, &apos;New&apos;, &apos;2014-08-20 18:47:42&apos;);</div><div class="line">Query OK, 1 row affected (0.06 sec)</div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM test2;</div><div class="line">+----+------+---------------------+</div><div class="line">| id | data | ts                  |</div><div class="line">+----+------+---------------------+</div><div class="line">|  1 | Old  | 2014-08-20 18:47:00 |</div><div class="line">|  1 | New  | 2014-08-20 18:47:42 |</div><div class="line">+----+------+---------------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+            <h1 id="折腾之路"><a href="#折腾之路" class="headerlink" title="折腾之路"></a>折腾之路</h1><p>编程之路，踉踉跄跄就进来了，干了 2 年后，越发感觉有 N 多东西自己不知道，<br>有一个居安思危的心，有一颗对未知知识探索的心，一步，一步，自己去探索，<br>从未停止过。</p>
+<p>现在回头看，路走的很艰难，目前还在路上，庆幸自己有一颗百折不挠的心，虐<br>我千百遍，我待你如初恋 😂 </p>
+<p>细细想，折腾的入门是环境，但是环境往往是最难的，所以很多人第一步没迈进<br>来，这里记录我在自己的测试环境的探索之路，希望并介绍自己使用的系列工具，<br>前路漫漫，希望能帮一些人节省时间，毕竟时间很珍贵。</p>
+<h2 id="曾经的双系统"><a href="#曾经的双系统" class="headerlink" title="曾经的双系统"></a>曾经的双系统</h2><p>首先定位是后台开发，给自己选 os，是 Linux 系，比如 Ubuntu，centos，最开始<br>我尝试的是一台电脑装两个系统，最早是联想 Y460，安装了 Ubuntu-12.04 之后，<br>运行双系统，结果就是电脑已经使用了4， 5 年了，有些卡，好惨也没钱，这样<br>照着 Linux 书开始学命令，记笔记，想想都是泪</p>
+<h2 id="宿主机上建立虚拟机"><a href="#宿主机上建立虚拟机" class="headerlink" title="宿主机上建立虚拟机"></a>宿主机上建立虚拟机</h2><p>第二个是自己终于攒够钱买了 Mac Pro，当年最大的动力就是公司让研究 hadoop，<br>结果测试机最好是 3 台起步，然后脑海里就一直在想，什么时候我才能有自己 3 台<br>机器，任意完，买了 Mac 后终于实现了，Mac Book Pro 15 + VirtualBox ，最多时<br>开了5 台，一点不卡，照样该干啥干啥，网络配置是当时比较难的，文章记录在这里，<br><a href="https://favoorr.github.io/2015/01/23/mac-use-virtualbox-config-network/">mac上使用虚拟机网络配置总结</a></p>
+<h2 id="Vagrant-时代"><a href="#Vagrant-时代" class="headerlink" title="Vagrant 时代"></a>Vagrant 时代</h2><p>后来很长一段时间都是 Mac Book Pro + VirtualBox，直到后来知道了 Vagrant，以及新生<br>的 docker，进化了几代后，目前这个暂时是最终代，下面是我的使用场景：</p>
+<p>1.想玩一个新的 Linux，那么就用 vagrant 管理虚拟机，后续会有博客详细介绍<br>2.想玩 docker，一般不再宿主机上直接玩，某台 Linux 虚拟机，然后安装其他 docker 镜像<br>3.alpine 超小的 Linux 镜像，然后在安装自己想要的软件，比如 bash 也是手工安装</p>
+<p>后续会介绍在 vagrant 以及 docker 方面的使用实践，偏向于小折腾，不具备生产条件</p>
+
           
         
       
@@ -394,8 +394,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/06/18/play-with-python/" itemprop="url">
-                  使用Python开发
+                <a class="post-title-link" href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="url">
+                  升级 python 后，原有依赖老版本 python 问题解决
                 </a>
               
             
@@ -408,8 +408,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-18T23:41:22+08:00" content="2015-06-18">
-              2015-06-18
+            <time itemprop="dateCreated" datetime="2017-01-05T16:19:51+08:00" content="2017-01-05">
+              2017-01-05
             </time>
           </span>
 
@@ -438,8 +438,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/06/18/play-with-python/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/play-with-python/" itemprop="commentsCount"></span>
+                <a href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -449,7 +449,7 @@
 
           
           
-             <span id="/2015/06/18/play-with-python/" class="leancloud_visitors" data-flag-title="使用Python开发">
+             <span id="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" class="leancloud_visitors" data-flag-title="升级 python 后，原有依赖老版本 python 问题解决">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -473,188 +473,12 @@
       
         
           
-            <h1 id="使用Python开发"><a href="#使用Python开发" class="headerlink" title="使用Python开发"></a>使用Python开发</h1><p>有时候需要使用 sudo </p>
-<p>如下错误,需要安装 mysql for python</p>
-<pre><code>No module named MySQLdb
-</code></pre><p>先安装 python 的 setuptools</p>
-<p>Setuptools网址是<a href="https://pypi.python.org/pypi/setuptools，" target="_blank" rel="external">https://pypi.python.org/pypi/setuptools，</a></p>
-<p>可以下载安装最新版本，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/ez_setup.py --no-check-certificate</div><div class="line"></div><div class="line">python ez_setup.py</div></pre></td></tr></table></figure>
-<p>mysql-python 下载地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http://sourceforge.net/projects/mysql-python/</div><div class="line"></div><div class="line">在解压目录里面执行</div><div class="line"></div><div class="line">python setup.py build</div><div class="line"></div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
-<p>mac 查看端口占用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof -i:5000</div></pre></td></tr></table></figure>
-<p>如果找不到，就用 sudo ，可能是 root用户启动了</p>
-<p>Centos 6.6 安装 pip，官方地址 <a href="https://pip.pypa.io/en/stable/installing.html" target="_blank" rel="external">https://pip.pypa.io/en/stable/installing.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">wget https://bootstrap.pypa.io/get-pip.py</div><div class="line"></div><div class="line">执行，如果没有安装 setuptools ，会先安装 setuptools</div><div class="line">python get-pip.py </div><div class="line"></div><div class="line">Collecting pip</div><div class="line">  Downloading pip-7.1.0-py2.py3-none-any.whl (1.1MB)</div><div class="line">    100% |████████████████████████████████| 1.1MB 11kB/s</div><div class="line">Collecting setuptools</div><div class="line">  Downloading setuptools-18.0.1-py2.py3-none-any.whl (461kB)</div><div class="line">    100% |████████████████████████████████| 462kB 9.2kB/s</div><div class="line">Collecting wheel</div><div class="line">  Downloading wheel-0.24.0-py2.py3-none-any.whl (63kB)</div><div class="line">    100% |████████████████████████████████| 65kB 14kB/s</div><div class="line">Installing collected packages: pip, setuptools, wheel</div><div class="line"></div><div class="line">安装成功</div></pre></td></tr></table></figure>
-<p>python 常用2种安装软件方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pip install -U Celery</div><div class="line"></div><div class="line">pip install -U Celery</div></pre></td></tr></table></figure>
-<p>查找应用，杀进程</p>
-<pre><code>ps aux|grep gunicorn | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/27/git-more-sshkeys-more-host/" itemprop="url">
-                  git配置多个不同邮箱
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T17:26:50+08:00" content="2015-05-27">
-              2015-05-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/27/git-more-sshkeys-more-host/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/git-more-sshkeys-more-host/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/27/git-more-sshkeys-more-host/" class="leancloud_visitors" data-flag-title="git配置多个不同邮箱">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git-账号配置多个不同邮箱"><a href="#git-账号配置多个不同邮箱" class="headerlink" title="git 账号配置多个不同邮箱"></a>git 账号配置多个不同邮箱</h1><p>之前使用git仅限于提交到 github ，其他平台如 gitlab bitbucket 目前没有使用，<br>现在公司私服 gitlab 需要添加独立的邮箱和用户名，要不然每次提交都是自己<br>Gmail的地址</p>
-<p>1.生成公司 gitlab 私服的 ssh key</p>
-<pre><code>ssh-keygen -t rsa -f ~/.ssh/id_rsa_yourdomain_gitlab -C &quot;qingyun@xxx.com&quot;
-</code></pre><p>2.ssh 服务默认制度去 id_rsa 默认的，现在需要添加让它认识 id_rsa_yourdomain_gitlab</p>
-<pre><code>ssh-add ~/.ssh/id_rsa_yourdomain_gitlab
-</code></pre><p>3.新建本地认证文件 ~/.ssh/config</p>
-<pre><code>vim ~/.ssh/config
-
-Host github.com
-    HostName github.com
-    User favoorr
-    IdentityFile ~/.ssh/id_rsa
-
-Host dev1
-    HostName dev1
-    User youname
-    IdentityFile ~/.ssh/id_rsa_yourdomain_gitlab
-</code></pre><p>4.取消全局配置</p>
-<pre><code>git config --global --unset user.name
-git config --global --unset user.email
-</code></pre><p>5.项目单独配置 name 和 email</p>
-<pre><code>git config user.name &quot;youname&quot;
-git config user.email &quot;qingyun@yourdomain.com&quot;
-</code></pre><p>如果不设置user.name 和 user.email 就不能使用，必须指定用户名和邮箱</p>
-<p>6.新问题，ssh-add 之后，每次重启mac，重现执行<code>ssh-add -l</code>都是 提示 <code>the agent has no identities</code> </p>
-<p>Google查资料后，找到这篇文章 <a href="http://segmentfault.com/q/1010000000835302" target="_blank" rel="external">是否必须每次添加ssh-add</a></p>
-<p>需要使用</p>
-<pre><code>ssh-add -K  ~/.ssh/id_rsa_yourdomain_gitlab 
-</code></pre><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://gist.github.com/suziewong/4378434" target="_blank" rel="external">Git的多账号如何处理？ 1.同一台电脑多个git（不同网站的）账号 2.同一台电脑多个git（同一个网站的比如github的）多个账号</a></p>
-<p><a href="http://blog.ixtr.me/2013/09/%E4%BD%BF%E7%94%A8SSHCONFIG%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAssh%E5%B8%90%E5%8F%B7/" target="_blank" rel="external">使用SSH CONFIG 管理多个ssh帐号</a></p>
-<p><a href="http://f10.moe/2014/10/16/git-ssh-%E5%A4%9A%E4%B8%AA%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">git ssh 多个账号管理配置</a></p>
-<p><a href="http://www.cnblogs.com/dubaokun/p/3550870.html" target="_blank" rel="external">ssh-key 与 git账户配置以及多账户配置</a></p>
-<p><a href="http://www.liaohuqiu.net/cn/posts/using-diffrent-user-config-for-different-repository/" target="_blank" rel="external">git: 提交前强制检查各个项目用户名邮箱设置</a></p>
-<p><a href="http://stormzhang.com/other/2013/10/16/github-multiply-ssh-key/" target="_blank" rel="external">多个github帐号的SSH key切换</a></p>
-<p><a href="http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/" target="_blank" rel="external">一个客户端设置多个github账号</a></p>
-<p>-EOF-</p>
+            <p>python3.5.2 安装的 virtualenvwrapper 环境，更新到  3.6.0 之后，手残直接把 3.5.2 删除了</p>
+<p>原来环境就挂了，错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">User@favoorr-mac: ~/Documents/github/favoorr-programming-road/Python/python-lesson master!</div><div class="line"> $ ipython                                                                     [14:28:16]</div><div class="line">dyld: Library not loaded: @executable_path/../.Python</div><div class="line">  Referenced from: /Users/User/zl/python/project/venv/python-lesson/bin/python3.5</div><div class="line">  Reason: image not found</div><div class="line">[1]    43935 abort      ipython</div><div class="line">(python-lesson) FAIL</div></pre></td></tr></table></figure>
+<p>解决方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">断开工作台</div><div class="line">deactivate</div><div class="line"></div><div class="line">删除原来的虚拟环境，这里删除虚拟环境，原来的项目其实不会删除</div><div class="line">rmvirtualenv python-lesson</div><div class="line"></div><div class="line">重新创建虚拟环境</div><div class="line">mkvirtualenv python-lesson</div><div class="line"></div><div class="line">再次激活虚拟环境</div><div class="line">workon python-lesson</div><div class="line"></div><div class="line">跳转到原来的项目目录</div><div class="line">cd ~/Documents/github/favoorr-programming-road/Python/python-lesson</div><div class="line"></div><div class="line">原来的项目重新关联虚拟环境</div><div class="line">setvirtualenvproject</div><div class="line"></div><div class="line">重新安装需要的类库</div><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div></pre></td></tr></table></figure>
+<p>记录,备忘</p>
 
           
         
@@ -704,8 +528,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
             
               
                 
-                <a class="post-title-link" href="/2015/05/27/gitlab-admin-best-practise/" itemprop="url">
-                  gitlab admin 使用实践
+                <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
+                  python 升级到 3.6 virtualenvwrapper 报错问题
                 </a>
               
             
@@ -718,8 +542,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T11:57:13+08:00" content="2015-05-27">
-              2015-05-27
+            <time itemprop="dateCreated" datetime="2017-01-03T10:48:35+08:00" content="2017-01-03">
+              2017-01-03
             </time>
           </span>
 
@@ -732,8 +556,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gitlab/" itemprop="url" rel="index">
-                    <span itemprop="name">gitlab</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -748,8 +572,8 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/27/gitlab-admin-best-practise/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/gitlab-admin-best-practise/" itemprop="commentsCount"></span>
+                <a href="/2017/01/03/python3-6-virtualenvwrapper-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -759,7 +583,7 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
 
           
           
-             <span id="/2015/05/27/gitlab-admin-best-practise/" class="leancloud_visitors" data-flag-title="gitlab admin 使用实践">
+             <span id="/2017/01/03/python3-6-virtualenvwrapper-problem/" class="leancloud_visitors" data-flag-title="python 升级到 3.6 virtualenvwrapper 报错问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -783,85 +607,19 @@ git config user.email &quot;qingyun@yourdomain.com&quot;
       
         
           
-            <p>修改 /etc/gitlab/gitlab.rb 后重新加载配置</p>
-<pre><code>gitlab-ctl reconfigure
-
-gitlab-ctl start|stop|restart
-</code></pre><p>调试常用配置</p>
-<h1 id="查看后台运行状态"><a href="#查看后台运行状态" class="headerlink" title="查看后台运行状态"></a>查看后台运行状态</h1><pre><code>sudo gitlab-ctl status
-
-run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
-run: nginx: (pid 743) 197s; run: log: (pid 731) 197s
-run: postgresql: (pid 748) 197s; run: log: (pid 738) 197s
-run: redis: (pid 746) 197s; run: log: (pid 734) 197s
-run: sidekiq: (pid 747) 197s; run: log: (pid 736) 197s
-run: unicorn: (pid 745) 197s; run: log: (pid 735) 197s
-
-追踪日志
-gitlab-ctl tail
-
-单独查看 postgresql 日志
-gitlab-ctl tail postgresql
-</code></pre><p>查看系统发邮件</p>
-<pre><code>tail -f /var/log/maillog
-</code></pre><h1 id="配置邮件发送"><a href="#配置邮件发送" class="headerlink" title="配置邮件发送"></a>配置邮件发送</h1><pre><code>仅配置 postfix 发送邮件 
-gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@dev1.localdomain&apos;
-gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;gitlab_mail_display_name&apos;
-
-测试
-echo &quot;Test mail from postfix normal 22&quot; | mail -s &quot;Test Postfix normal22&quot; qingyun@yourdomain.com 
-会被腾讯识别为垃圾邮件，直接拒绝，然后需要添加白名单 
-
-通过查看 root 邮箱可以看到回复 vim /var/mail/root
-
-http://service.mail.qq.com/cgi-bin/help?subtype=1&amp;&amp;no=113&amp;&amp;id=16
-
-配置 SMTP 发送邮件
-
-gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@yourdomain.com&apos;
-gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;yourdomain-gitlab&apos;
-
-gitlab_rails[&apos;smtp_enable&apos;] = true
-gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.exmail.qq.com&quot;
-gitlab_rails[&apos;smtp_port&apos;] = 465
-gitlab_rails[&apos;smtp_user_name&apos;] = &quot;gitlab@yourdomain.com&quot;
-gitlab_rails[&apos;smtp_password&apos;] = &quot;xxxxxxxx&quot;
-gitlab_rails[&apos;smtp_domain&apos;] = &quot;yourdomain.com&quot;
-gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;
-gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true
-gitlab_rails[&apos;smtp_tls&apos;] = true
-
-新建账号
-添加 ssh key 都会触发给当前用户发送邮件
-</code></pre><h1 id="修改管理员邮箱"><a href="#修改管理员邮箱" class="headerlink" title="修改管理员邮箱"></a>修改管理员邮箱</h1><pre><code>root 用户登录 gitlab 后台，然后通过 profile 修改邮箱为 devops@yourdomain.com，保存后，会有下面这句话
-
-Please click the link in the confirmation email before continuing, it was sent to devops@yourdomain.com
-
-需要点击邮箱确认
-</code></pre><h1 id="修改图像上传功能"><a href="#修改图像上传功能" class="headerlink" title="修改图像上传功能"></a>修改图像上传功能</h1><pre><code>gitlab_rails[&apos;gravatar_plain_url&apos;] = &apos;http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&amp;d=identicon&apos;
-有一个 `gitlab_ci[&apos;gravatar_plain_url&apos;]` 
-不要配置错了，对的，我就是配置错了，然后老半天不知道，页面打开很慢，结果调试后，才知道这里改错位置了
-</code></pre><h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><p>gitlab omnibus 版本内置了一个nginx，可以通过 nginx[‘enable’] = true 启用禁用</p>
-<pre><code>external_url 这个链接的配置会影响内置 nginx 启动监听的端口
-
-external_url &apos;http://192.168.143.129&apos;  默认监听 80 端口，直接输入ip就可以访问
-
-external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如果修改了端口，需要手工将之前的nginx进程干掉
-</code></pre><h1 id="安装路径"><a href="#安装路径" class="headerlink" title="安装路径"></a>安装路径</h1><p><code>/opt/gitlab</code> gitlab和依赖应用的代码<br><code>/var/opt/gitlab</code> <code>gitlab-ctl reconfigure</code>命令写入的地方，存放应用数据和配置文件<br><code>/etc/gitlab</code> omnibus 版本 gitlab的配置文件，平常只需要修改这个配置文件就够了<br><code>/var/log/gitlab</code> 包含 omnibus 版本 gitlab 所有组件的日志数据</p>
-<p><code>/var/opt/gitlab/nginx/conf</code> 找到nginx配置，然后找到源码位置，修改了对 /<code>/opt/gitlab/embedded/service/gitlab-rails/app/views/events/event</code> 去掉分享事件 Twitter widgets.js 的引用，直接删除第九行后面的代码</p>
-<h1 id="管理注册邮箱白名单"><a href="#管理注册邮箱白名单" class="headerlink" title="管理注册邮箱白名单"></a>管理注册邮箱白名单</h1><p>管理白名单，仅仅限制公司的邮箱注册 *.yourdomain.com</p>
-<p>操作方法：</p>
-<p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
-<h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
-<p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/gitlab.rb</div><div class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</div></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
-<p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
-<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
-<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings" target="_blank" rel="external">SMTP 发送邮件配置</a></p>
-<p><a href="https://www.owent.net/2015/01/gitlab%E8%85%BE%E8%AE%AF%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE.html" target="_blank" rel="external">gitlab腾讯企业邮箱配置</a></p>
-<p><a href="http://borghan.com/archives/some-problems-when-build-gitlab-on-aliyun.html" target="_blank" rel="external">阿里云安装 gitlab</a></p>
-
+            <p>Yesterday, I install the <code>you-get</code>, and Python upgrade to newest version 3.6 by this<br>install, Then the <code>virtualenvwrapper</code> could’t work well any more.</p>
+<p>I got the error as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Last login: Tue Jan  3 09:38:53 on ttys002</div><div class="line">/usr/local/opt/python3/bin/python3.6: Error while finding module specification for &apos;virtualenvwrapper.hook_loader&apos; (ModuleNotFoundError: No module named &apos;virtualenvwrapper&apos;)</div><div class="line">virtualenvwrapper.sh: There was a problem running the initialization hooks.</div><div class="line"></div><div class="line">If Python could not import the module virtualenvwrapper.hook_loader,</div><div class="line">check that virtualenvwrapper has been installed for</div><div class="line">VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 and that PATH is</div><div class="line">set properly.</div></pre></td></tr></table></figure>
+<p>And in my ~/.zshrc file, I already config as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=/Users/User/zl/python/project/venv</div><div class="line">export PROJECT_HOME=/Users/User/zl/python/project</div><div class="line">export VIRTUALENVWRAPPER_PYTHON=`which python3`</div><div class="line">source /usr/local/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
+<p>Do the follow tips may solve the problem:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">First: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U pip</div><div class="line"></div><div class="line">Second: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U virtualenvwrapper</div></pre></td></tr></table></figure>
+<p>One more thing:</p>
+<p>macOS will install the python2.7.10 by default,</p>
+<p>I use brew to install python instead of the macOS default.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">/usr/bin/python</div><div class="line"></div><div class="line">rm the default python</div><div class="line"></div><div class="line">sudo rm /usr/bin/python</div></pre></td></tr></table></figure>
+<p>If need python2, the newest version of python2 is python-2.7.13</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python</div></pre></td></tr></table></figure>
           
         
       
@@ -910,8 +668,8 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
             
               
                 
-                <a class="post-title-link" href="/2015/05/27/modify-yum-gems-source/" itemprop="url">
-                  修改 yum 和 gems 为国内源
+                <a class="post-title-link" href="/2016/11/28/macos-python3/" itemprop="url">
+                  macOS 安装使用 python 记录
                 </a>
               
             
@@ -924,8 +682,8 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T11:39:16+08:00" content="2015-05-27">
-              2015-05-27
+            <time itemprop="dateCreated" datetime="2016-11-28T21:33:22+08:00" content="2016-11-28">
+              2016-11-28
             </time>
           </span>
 
@@ -938,8 +696,8 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -954,8 +712,8 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/27/modify-yum-gems-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/modify-yum-gems-source/" itemprop="commentsCount"></span>
+                <a href="/2016/11/28/macos-python3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/macos-python3/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -965,7 +723,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 
           
           
-             <span id="/2015/05/27/modify-yum-gems-source/" class="leancloud_visitors" data-flag-title="修改 yum 和 gems 为国内源">
+             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macOS 安装使用 python 记录">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -989,25 +747,158 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
       
         
           
-            <p>对国内网络环境恨到死，sb GFW，屏蔽你大爷</p>
-<h1 id="修改-yum-源"><a href="#修改-yum-源" class="headerlink" title="修改 yum 源"></a>修改 yum 源</h1><p>1，备份</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
-<p>2，下载阿里的yum源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div></pre></td></tr></table></figure>
-<p>3，更新玩yum源后，执行下边命令更新yum配置，使操作立即生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
-<ol>
-<li>其他 </li>
-</ol>
-<p>sohu的yum源</p>
-<p>wget <a href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo" target="_blank" rel="external">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a></p>
-<p>中科大的</p>
-<p>wget <a href="http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2" target="_blank" rel="external">http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2</a></p>
-<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo gem sources --remove https://rubygems.org/</div><div class="line">$ sudo gem sources -a https://ruby.taobao.org/</div><div class="line">$ sudo gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://ruby.taobao.org</div></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.oicto.com/centos-yum-163-sohu/" target="_blank" rel="external">centos6.5适用的国内yum源：网易、搜狐</a></p>
-<p><a href="http://ruby.taobao.org/" target="_blank" rel="external">RubyGems 镜像 - 淘宝网</a></p>
-<p><a href="http://mirrors.aliyun.com/help/centos" target="_blank" rel="external">阿里云centos镜像</a></p>
-<p>-EOF-</p>
+            <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions/3.5</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
+<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
+<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
+<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
+<p>国内其他可选镜像如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/31/zsh-summary/" itemprop="url">
+                  ZSH 使用总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-31T11:20:40+08:00" content="2015-08-31">
+              2015-08-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/zsh/" itemprop="url" rel="index">
+                    <span itemprop="name">zsh</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/31/zsh-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/31/zsh-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/08/31/zsh-summary/" class="leancloud_visitors" data-flag-title="ZSH 使用总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mac 下好用软件很多，多使用，多总结</p>
+<p>1.插件</p>
+<p>plugins=(git sudo extract cp)</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">插件列表</a></p>
+<p>2.autojump 工具</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">官方地址</a></p>
+<p>3.d </p>
+<p>显示历史进入的目录，输入数字进入历史目录，0是当前目录，其他依次记录</p>
+<p>4.清屏，输入 ls</p>
+<p>ctrl + l,我用的 command + r</p>
+<p>5.zsh_stats 可以统计使用最多的前20命令</p>
+<p>6.zsh-autosuggestions 就更好用的自动补全</p>
+<p>7.<a href="http://zshthem.es/" target="_blank" rel="external">http://zshthem.es/</a> 这里挑选喜欢的 theme</p>
+<p>… 待续</p>
+<p>参考</p>
+<p><a href="http://www.jiang-di.org/tools/2015/04/08/i-hope-know-when-first-use-zsh.html" target="_blank" rel="external">那些我希望在一开始使用 Zsh(oh-my-zsh) 时就知道的</a></p>
 
           
         
@@ -1040,7 +931,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1081,7 +972,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1089,7 +980,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1098,7 +989,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

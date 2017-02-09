@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/23/mac-use-virtualbox-config-network/" itemprop="url">
-                  mac上使用虚拟机网络配置总结
+                <a class="post-title-link" href="/2015/05/27/git-more-sshkeys-more-host/" itemprop="url">
+                  git配置多个不同邮箱
                 </a>
               
             
@@ -272,173 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-23T16:14:51+08:00" content="2015-01-23">
-              2015-01-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/virtualbox/" itemprop="url" rel="index">
-                    <span itemprop="name">virtualbox</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/23/mac-use-virtualbox-config-network/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/mac-use-virtualbox-config-network/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/23/mac-use-virtualbox-config-network/" class="leancloud_visitors" data-flag-title="mac上使用虚拟机网络配置总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mac上使用虚拟机网络配置总结"><a href="#mac上使用虚拟机网络配置总结" class="headerlink" title="mac上使用虚拟机网络配置总结"></a>mac上使用虚拟机网络配置总结</h1><p>2014年初，公司让探索hadoop相关技术，一直以来有种习惯，不管什么技术，<br>必须自己玩下，然后感觉心里才有底，玩hadoop，单机是没啥意思的，分布式<br>就要多台机器，然后看了mactalk后，上面有段有了mac，不管你什么LVS、hadoop<br>想怎么玩就怎么玩，年初钱攒够就买了，之后就是mac新手，开始被吊打之路，研究hadoop，<br>过程是苦逼的，但是都走过来了，这会需要用虚拟机，想起来当时自己的苦逼，写出来<br>，记录下来。</p>
-<p>根据mactalk的提示，我选择的虚拟机软件是virtualbox,然后过程中遇到问题，应该就是网络吧，首先说我的需求，</p>
-<p>本机可以连接虚拟机<br>虚拟机可以连接本机<br>虚拟机可以上网<br>虚拟机之间可以ssh无密码登录<br>本机可以跟ssh无密码登录    </p>
-<p>看了不少文章，虚拟机网络NAT、桥接和Host only区别区别，个人理解如下</p>
-<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT "></a>NAT </h2><p>如果你的虚拟机eth0配置没有修改，即自动获取ip，那么虚拟机安装成功启动后，会自动获取的ip，而且获取的ip和宿主机是一个网段的，可以直接ping的通，而且可以联网,virtual box网络配置里面可以看到，<code>command + ,</code>在virtualbox网络那栏里面，可以看到10.0.2.0/24,然后虚拟机启动后，会自动生成ip 10.0.2.15</p>
-<h2 id="Host-Only"><a href="#Host-Only" class="headerlink" title="Host-Only "></a>Host-Only </h2><p>是在宿主机上新增一个网卡，然后在宿主机和虚拟机之间设置独立的局域网，然后宿主机和虚拟机沟通无障碍，<br>这里我遇到的问题是当时在虚拟机的网络配置页面，激活网卡二，选择了Host-Only后，下面的<code>界面名称</code>一直没办法选择，现在明白了也就是virtualbox 给主机要新增一个网卡，但当时不懂，愣是找了好久好久，自己都忘记了多久,同样command+` ，调出virtualbox网络设置页面，然后再virtualbox的网络配置页面新增网卡，然后再虚拟机的网络配置页面才有网卡可以选择，宿主机默认ip是192.168.56.1，最小ip是192.168.56.101，最大是192.168.56.254，什么东西都是会了不难，难了不会，添加网卡二之后，我的宿主机新增了个ip192.168.56.1，然后5台虚拟机ip是 192.168.56.101 ~ 192.168.56.105 ，一般同时启动3台虚拟机</p>
-<h2 id="桥接"><a href="#桥接" class="headerlink" title="桥接 "></a>桥接 </h2><p>会获取跟宿主机一个段的ip地址，比如宿主机ip 192.168.1.101 ,虚拟机会获取192.168.1.103的ip，但是公司的ip应该都是严格管理的，所以这种方法不好维护，如果主机所在局域网中得其他机器不需要使用虚拟机上的功能，最好使用Host-Only建立独立局域网</p>
-<p>我的方案是</p>
-<p>网卡一 NAT 方式和宿主机共享网络，虚拟机可以联网，方便下载安装各种软件<br>网卡二 与主机建立独立局域网，和路由上其他的机器分离，(现在看这种方式太对了，我后来把mac带到公司用了，因为要演示hadoop集群计算，而公司的ip是需要向网管申请的)<br>每一台虚拟机的ip固定，因为hadoop集群要设置master，ip要固定下来</p>
-<p>网卡一使用NAT共享主机网络配置如下</p>
-<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth0
-
-DEVICE=eth0
-HWADDR=08:00:27:41:90:4D
-TYPE=Ethernet
-UUID=1c2f383c-8fdb-4aa0-9e5b-8fa2f60117f9
-ONBOOT=yes
-NM_CONTROLLED=yes
-BOOTPROTO=dhcp
-</code></pre><p>新增网卡二，使用Host-Only方式配置如下</p>
-<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth1
-
-DEVICE=eth1
-HWADDR=08:00:27:93:D4:33
-TYPE=Ethernet
-UUID=8ac73766-a02b-4417-8f71-6762218b6bf8
-ONBOOT=yes
-NM_CONTROLLED=yes
-BOOTPROTO=none
-IPADDR=192.168.56.101
-NETMASK=255.255.255.0
-
-/etc/init.d/network restart  重启网络配置
-ifup eth0 /ifdown eth0  启用/停用某个网卡
-</code></pre><p>难点总结</p>
-<p>理解virtualbox给本机添加网卡<br>ip获取手工指定，修改默认的自动获取    </p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/23/git-reset-remote-url/" itemprop="url">
-                  Git实战-修改远程仓库地址
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-23T16:08:16+08:00" content="2015-01-23">
-              2015-01-23
+            <time itemprop="dateCreated" datetime="2015-05-27T17:26:50+08:00" content="2015-05-27">
+              2015-05-27
             </time>
           </span>
 
@@ -467,8 +302,8 @@ ifup eth0 /ifdown eth0  启用/停用某个网卡
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/23/git-reset-remote-url/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/git-reset-remote-url/" itemprop="commentsCount"></span>
+                <a href="/2015/05/27/git-more-sshkeys-more-host/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/git-more-sshkeys-more-host/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -478,7 +313,7 @@ ifup eth0 /ifdown eth0  启用/停用某个网卡
 
           
           
-             <span id="/2015/01/23/git-reset-remote-url/" class="leancloud_visitors" data-flag-title="Git实战-修改远程仓库地址">
+             <span id="/2015/05/27/git-more-sshkeys-more-host/" class="leancloud_visitors" data-flag-title="git配置多个不同邮箱">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -502,21 +337,41 @@ ifup eth0 /ifdown eth0  启用/停用某个网卡
       
         
           
-            <h1 id="Git-修改远程仓库"><a href="#Git-修改远程仓库" class="headerlink" title="Git 修改远程仓库"></a>Git 修改远程仓库</h1><p>之前方法太笨，最新方法如下，直接替换即可</p>
-<pre><code>git remote set-url origin git@172.16.10.9:ott/blog.git
-</code></pre><hr>
-<p>Git的远程仓库可以关联多个，而且可能遇到地址修改的需求，<br>例如前几天遇到需要将项目从自己目录，转移到小组目录里面</p>
-<pre><code>git remote --help 之后，看到了个newurl oldurl 的命令,想想应该就是它了
-</code></pre><p>于是执行</p>
-<pre><code>git remote set-url origin git@172.16.10.9:ott/blog.git git@172.16.10.9:youname/blog.git
-</code></pre><p>另外一种笨方法，删除之后，和新地址关联</p>
-<pre><code>git remote remove origin
+            <h1 id="git-账号配置多个不同邮箱"><a href="#git-账号配置多个不同邮箱" class="headerlink" title="git 账号配置多个不同邮箱"></a>git 账号配置多个不同邮箱</h1><p>之前使用git仅限于提交到 github ，其他平台如 gitlab bitbucket 目前没有使用，<br>现在公司私服 gitlab 需要添加独立的邮箱和用户名，要不然每次提交都是自己<br>Gmail的地址</p>
+<p>1.生成公司 gitlab 私服的 ssh key</p>
+<pre><code>ssh-keygen -t rsa -f ~/.ssh/id_rsa_yourdomain_gitlab -C &quot;qingyun@xxx.com&quot;
+</code></pre><p>2.ssh 服务默认制度去 id_rsa 默认的，现在需要添加让它认识 id_rsa_yourdomain_gitlab</p>
+<pre><code>ssh-add ~/.ssh/id_rsa_yourdomain_gitlab
+</code></pre><p>3.新建本地认证文件 ~/.ssh/config</p>
+<pre><code>vim ~/.ssh/config
 
-git remote add origin git@172.16.10.9:ott/blog.git
+Host github.com
+    HostName github.com
+    User favoorr
+    IdentityFile ~/.ssh/id_rsa
 
-git push --set-upstream origin master
-</code></pre><p>Git水很深，高级用法很多，一点一滴积累</p>
-<p>Git和Github、Gitlab很好用，没用的公司，赶紧用起来</p>
+Host dev1
+    HostName dev1
+    User youname
+    IdentityFile ~/.ssh/id_rsa_yourdomain_gitlab
+</code></pre><p>4.取消全局配置</p>
+<pre><code>git config --global --unset user.name
+git config --global --unset user.email
+</code></pre><p>5.项目单独配置 name 和 email</p>
+<pre><code>git config user.name &quot;youname&quot;
+git config user.email &quot;qingyun@yourdomain.com&quot;
+</code></pre><p>如果不设置user.name 和 user.email 就不能使用，必须指定用户名和邮箱</p>
+<p>6.新问题，ssh-add 之后，每次重启mac，重现执行<code>ssh-add -l</code>都是 提示 <code>the agent has no identities</code> </p>
+<p>Google查资料后，找到这篇文章 <a href="http://segmentfault.com/q/1010000000835302" target="_blank" rel="external">是否必须每次添加ssh-add</a></p>
+<p>需要使用</p>
+<pre><code>ssh-add -K  ~/.ssh/id_rsa_yourdomain_gitlab 
+</code></pre><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://gist.github.com/suziewong/4378434" target="_blank" rel="external">Git的多账号如何处理？ 1.同一台电脑多个git（不同网站的）账号 2.同一台电脑多个git（同一个网站的比如github的）多个账号</a></p>
+<p><a href="http://blog.ixtr.me/2013/09/%E4%BD%BF%E7%94%A8SSHCONFIG%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAssh%E5%B8%90%E5%8F%B7/" target="_blank" rel="external">使用SSH CONFIG 管理多个ssh帐号</a></p>
+<p><a href="http://f10.moe/2014/10/16/git-ssh-%E5%A4%9A%E4%B8%AA%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">git ssh 多个账号管理配置</a></p>
+<p><a href="http://www.cnblogs.com/dubaokun/p/3550870.html" target="_blank" rel="external">ssh-key 与 git账户配置以及多账户配置</a></p>
+<p><a href="http://www.liaohuqiu.net/cn/posts/using-diffrent-user-config-for-different-repository/" target="_blank" rel="external">git: 提交前强制检查各个项目用户名邮箱设置</a></p>
+<p><a href="http://stormzhang.com/other/2013/10/16/github-multiply-ssh-key/" target="_blank" rel="external">多个github帐号的SSH key切换</a></p>
+<p><a href="http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/" target="_blank" rel="external">一个客户端设置多个github账号</a></p>
 <p>-EOF-</p>
 
           
@@ -567,8 +422,8 @@ git push --set-upstream origin master
             
               
                 
-                <a class="post-title-link" href="/2015/01/23/use-plantuml-install-graphviz/" itemprop="url">
-                  安装Graphviz记录
+                <a class="post-title-link" href="/2015/05/27/gitlab-admin-best-practise/" itemprop="url">
+                  gitlab admin 使用实践
                 </a>
               
             
@@ -581,8 +436,8 @@ git push --set-upstream origin master
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-23T15:55:55+08:00" content="2015-01-23">
-              2015-01-23
+            <time itemprop="dateCreated" datetime="2015-05-27T11:57:13+08:00" content="2015-05-27">
+              2015-05-27
             </time>
           </span>
 
@@ -595,8 +450,8 @@ git push --set-upstream origin master
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/plantuml/" itemprop="url" rel="index">
-                    <span itemprop="name">plantuml</span>
+                  <a href="/categories/gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">gitlab</span>
                   </a>
                 </span>
 
@@ -611,8 +466,8 @@ git push --set-upstream origin master
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/23/use-plantuml-install-graphviz/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/use-plantuml-install-graphviz/" itemprop="commentsCount"></span>
+                <a href="/2015/05/27/gitlab-admin-best-practise/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/gitlab-admin-best-practise/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -622,7 +477,7 @@ git push --set-upstream origin master
 
           
           
-             <span id="/2015/01/23/use-plantuml-install-graphviz/" class="leancloud_visitors" data-flag-title="安装Graphviz记录">
+             <span id="/2015/05/27/gitlab-admin-best-practise/" class="leancloud_visitors" data-flag-title="gitlab admin 使用实践">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -646,50 +501,230 @@ git push --set-upstream origin master
       
         
           
-            <h1 id="使用plantUML，安装Graphviz小记"><a href="#使用plantUML，安装Graphviz小记" class="headerlink" title="使用plantUML，安装Graphviz小记"></a>使用plantUML，安装Graphviz小记</h1><p>首先简单介绍</p>
-<p><a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a> 可以直接用文本画各种常用uml图，某些图的渲染依赖于graphviz<br><a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a> 一个可以用文字画图的工具，非常强大好用</p>
-<p>2014年前先后看了在markdown里面直接用文字写流程图和用js插件解析，用文字编写流程图，<br>在这之前都是用visio画图，然后再复制过来，有了之后，感觉节省了不少时间，每次打开visio修改<br>打开很慢</p>
-<p>后来看了 @江南白衣 推荐的<a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a>感觉彻底爱上了，然后一边也在推动公司引进gitlab，显示做了<br>git培训，然后再来个gitlab使用培训吧</p>
-<p>下面进入正文，想使用plantUML，需要安装<a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a>，来使用dot命令支持plantUML的所有特性，<br>详细见plantuml官网，这里记录mac ox x10.10 安装时候遇到的问题</p>
-<p>简单看了下官网，使用brew是可以直接安装的，但是过程中有些小问题，libpng的链接地址改变了，导致下载报错</p>
-<pre><code>brew install graphviz
+            <p>修改 /etc/gitlab/gitlab.rb 后重新加载配置</p>
+<pre><code>gitlab-ctl reconfigure
 
-中间遇到错误，看了下libpng这个包路径已经改变，所以
+gitlab-ctl start|stop|restart
+</code></pre><p>调试常用配置</p>
+<h1 id="查看后台运行状态"><a href="#查看后台运行状态" class="headerlink" title="查看后台运行状态"></a>查看后台运行状态</h1><pre><code>sudo gitlab-ctl status
 
-brew edit libpng
+run: logrotate: (pid 744) 197s; run: log: (pid 737) 197s
+run: nginx: (pid 743) 197s; run: log: (pid 731) 197s
+run: postgresql: (pid 748) 197s; run: log: (pid 738) 197s
+run: redis: (pid 746) 197s; run: log: (pid 734) 197s
+run: sidekiq: (pid 747) 197s; run: log: (pid 736) 197s
+run: unicorn: (pid 745) 197s; run: log: (pid 735) 197s
 
-将地址
+追踪日志
+gitlab-ctl tail
 
-https://downloads.sf.net/project/libpng/libpng16/1.6.13/libpng-1.6.13.tar.xz
+单独查看 postgresql 日志
+gitlab-ctl tail postgresql
+</code></pre><p>查看系统发邮件</p>
+<pre><code>tail -f /var/log/maillog
+</code></pre><h1 id="配置邮件发送"><a href="#配置邮件发送" class="headerlink" title="配置邮件发送"></a>配置邮件发送</h1><pre><code>仅配置 postfix 发送邮件 
+gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@dev1.localdomain&apos;
+gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;gitlab_mail_display_name&apos;
 
-修改地址，增加 older-releases ,应该是做过目录整理
+测试
+echo &quot;Test mail from postfix normal 22&quot; | mail -s &quot;Test Postfix normal22&quot; qingyun@yourdomain.com 
+会被腾讯识别为垃圾邮件，直接拒绝，然后需要添加白名单 
 
-https://downloads.sf.net/project/libpng/libpng16/older-releases/1.6.13/libpng-1.6.13.tar.xz
-</code></pre><p>然后继续</p>
-<p>安装完成后</p>
-<p>按照<a href="http://www.plantuml.com/graphvizdot.html" target="_blank" rel="external">官方说明</a>进行测试</p>
-<pre><code>java -jar plantuml.jar -testdot
+通过查看 root 邮箱可以看到回复 vim /var/mail/root
 
-The environment variable GRAPHVIZ_DOT has not been set
-Dot executable is /usr/local/bin/dot
-Dot version: dot - graphviz version 2.38.0 (20140413.2041)
-Installation seems OK. File generation OK
+http://service.mail.qq.com/cgi-bin/help?subtype=1&amp;&amp;no=113&amp;&amp;id=16
 
-vim ~/.zshrc
+配置 SMTP 发送邮件
 
-在末尾加入
+gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@yourdomain.com&apos;
+gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;yourdomain-gitlab&apos;
 
-export GRAPHVIZ_DOT=/usr/local/bin/dot
-source ~/.zshrc
+gitlab_rails[&apos;smtp_enable&apos;] = true
+gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.exmail.qq.com&quot;
+gitlab_rails[&apos;smtp_port&apos;] = 465
+gitlab_rails[&apos;smtp_user_name&apos;] = &quot;gitlab@yourdomain.com&quot;
+gitlab_rails[&apos;smtp_password&apos;] = &quot;xxxxxxxx&quot;
+gitlab_rails[&apos;smtp_domain&apos;] = &quot;yourdomain.com&quot;
+gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;
+gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true
+gitlab_rails[&apos;smtp_tls&apos;] = true
 
-再次运行
+新建账号
+添加 ssh key 都会触发给当前用户发送邮件
+</code></pre><h1 id="修改管理员邮箱"><a href="#修改管理员邮箱" class="headerlink" title="修改管理员邮箱"></a>修改管理员邮箱</h1><pre><code>root 用户登录 gitlab 后台，然后通过 profile 修改邮箱为 devops@yourdomain.com，保存后，会有下面这句话
 
-The environment variable GRAPHVIZ_DOT has been set to /usr/local/bin/dot
-Dot executable is /usr/local/bin/dot
-Dot version: dot - graphviz version 2.38.0 (20140413.2041)
-Installation seems OK. File generation OK
-</code></pre><p>目前的使用方式</p>
-<p>Eclipse里面集成了plantUML插件，然后编辑<br>编辑完成后，粘贴到gitlab里面</p>
+Please click the link in the confirmation email before continuing, it was sent to devops@yourdomain.com
+
+需要点击邮箱确认
+</code></pre><h1 id="修改图像上传功能"><a href="#修改图像上传功能" class="headerlink" title="修改图像上传功能"></a>修改图像上传功能</h1><pre><code>gitlab_rails[&apos;gravatar_plain_url&apos;] = &apos;http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&amp;d=identicon&apos;
+有一个 `gitlab_ci[&apos;gravatar_plain_url&apos;]` 
+不要配置错了，对的，我就是配置错了，然后老半天不知道，页面打开很慢，结果调试后，才知道这里改错位置了
+</code></pre><h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><p>gitlab omnibus 版本内置了一个nginx，可以通过 nginx[‘enable’] = true 启用禁用</p>
+<pre><code>external_url 这个链接的配置会影响内置 nginx 启动监听的端口
+
+external_url &apos;http://192.168.143.129&apos;  默认监听 80 端口，直接输入ip就可以访问
+
+external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如果修改了端口，需要手工将之前的nginx进程干掉
+</code></pre><h1 id="安装路径"><a href="#安装路径" class="headerlink" title="安装路径"></a>安装路径</h1><p><code>/opt/gitlab</code> gitlab和依赖应用的代码<br><code>/var/opt/gitlab</code> <code>gitlab-ctl reconfigure</code>命令写入的地方，存放应用数据和配置文件<br><code>/etc/gitlab</code> omnibus 版本 gitlab的配置文件，平常只需要修改这个配置文件就够了<br><code>/var/log/gitlab</code> 包含 omnibus 版本 gitlab 所有组件的日志数据</p>
+<p><code>/var/opt/gitlab/nginx/conf</code> 找到nginx配置，然后找到源码位置，修改了对 /<code>/opt/gitlab/embedded/service/gitlab-rails/app/views/events/event</code> 去掉分享事件 Twitter widgets.js 的引用，直接删除第九行后面的代码</p>
+<h1 id="管理注册邮箱白名单"><a href="#管理注册邮箱白名单" class="headerlink" title="管理注册邮箱白名单"></a>管理注册邮箱白名单</h1><p>管理白名单，仅仅限制公司的邮箱注册 *.yourdomain.com</p>
+<p>操作方法：</p>
+<p>管理员登录 &gt; setting &gt; Restricted domains for sign-ups (页面最下面)</p>
+<h1 id="设置新建用户不能建组"><a href="#设置新建用户不能建组" class="headerlink" title="设置新建用户不能建组"></a>设置新建用户不能建组</h1><p>一开始不知道这个配置，后来搞的有些乱，就查了下，官方是有这个配置的，不过默认是 允许建组</p>
+<p>官方地址 <a href="http://doc.gitlab.com/ee/workflow/groups.html" target="_blank" rel="external">http://doc.gitlab.com/ee/workflow/groups.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/gitlab.rb</div><div class="line">gitlab_rails[&apos;gitlab_default_can_create_group&apos;] = false</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://54im.com/git/centos6-install-gitlab-ldap%E8%AE%A4%E8%AF%81.html" target="_blank" rel="external">Centos6安装gitlab+ldap认证</a></p>
+<p><a href="http://doc.gitlab.com/ee/integration/ldap.html" target="_blank" rel="external">GitLab LDAP integration</a></p>
+<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="external">官方 README</a></p>
+<p><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings" target="_blank" rel="external">SMTP 发送邮件配置</a></p>
+<p><a href="https://www.owent.net/2015/01/gitlab%E8%85%BE%E8%AE%AF%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE.html" target="_blank" rel="external">gitlab腾讯企业邮箱配置</a></p>
+<p><a href="http://borghan.com/archives/some-problems-when-build-gitlab-on-aliyun.html" target="_blank" rel="external">阿里云安装 gitlab</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/27/modify-yum-gems-source/" itemprop="url">
+                  修改 yum 和 gems 为国内源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-27T11:39:16+08:00" content="2015-05-27">
+              2015-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/27/modify-yum-gems-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/modify-yum-gems-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/27/modify-yum-gems-source/" class="leancloud_visitors" data-flag-title="修改 yum 和 gems 为国内源">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对国内网络环境恨到死，sb GFW，屏蔽你大爷</p>
+<h1 id="修改-yum-源"><a href="#修改-yum-源" class="headerlink" title="修改 yum 源"></a>修改 yum 源</h1><p>1，备份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
+<p>2，下载阿里的yum源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div></pre></td></tr></table></figure>
+<p>3，更新玩yum源后，执行下边命令更新yum配置，使操作立即生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+<ol>
+<li>其他 </li>
+</ol>
+<p>sohu的yum源</p>
+<p>wget <a href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo" target="_blank" rel="external">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a></p>
+<p>中科大的</p>
+<p>wget <a href="http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2" target="_blank" rel="external">http://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2</a></p>
+<h1 id="修改-ruby-源"><a href="#修改-ruby-源" class="headerlink" title="修改 ruby 源"></a>修改 ruby 源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo gem sources --remove https://rubygems.org/</div><div class="line">$ sudo gem sources -a https://ruby.taobao.org/</div><div class="line">$ sudo gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://ruby.taobao.org</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.oicto.com/centos-yum-163-sohu/" target="_blank" rel="external">centos6.5适用的国内yum源：网易、搜狐</a></p>
+<p><a href="http://ruby.taobao.org/" target="_blank" rel="external">RubyGems 镜像 - 淘宝网</a></p>
+<p><a href="http://mirrors.aliyun.com/help/centos" target="_blank" rel="external">阿里云centos镜像</a></p>
 <p>-EOF-</p>
 
           
@@ -740,8 +775,8 @@ Installation seems OK. File generation OK
             
               
                 
-                <a class="post-title-link" href="/2015/01/20/after-reading-and-about-learning/" itemprop="url">
-                  享受读书-写下心中所想
+                <a class="post-title-link" href="/2015/05/26/install-gitlab-through-rpm-package/" itemprop="url">
+                  安装gitlab
                 </a>
               
             
@@ -754,8 +789,8 @@ Installation seems OK. File generation OK
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-20T23:32:35+08:00" content="2015-01-20">
-              2015-01-20
+            <time itemprop="dateCreated" datetime="2015-05-26T14:36:24+08:00" content="2015-05-26">
+              2015-05-26
             </time>
           </span>
 
@@ -768,8 +803,8 @@ Installation seems OK. File generation OK
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/heart/" itemprop="url" rel="index">
-                    <span itemprop="name">heart</span>
+                  <a href="/categories/gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">gitlab</span>
                   </a>
                 </span>
 
@@ -784,8 +819,8 @@ Installation seems OK. File generation OK
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/20/after-reading-and-about-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/20/after-reading-and-about-learning/" itemprop="commentsCount"></span>
+                <a href="/2015/05/26/install-gitlab-through-rpm-package/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/install-gitlab-through-rpm-package/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -795,7 +830,7 @@ Installation seems OK. File generation OK
 
           
           
-             <span id="/2015/01/20/after-reading-and-about-learning/" class="leancloud_visitors" data-flag-title="享受读书-写下心中所想">
+             <span id="/2015/05/26/install-gitlab-through-rpm-package/" class="leancloud_visitors" data-flag-title="安装gitlab">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -819,16 +854,29 @@ Installation seems OK. File generation OK
       
         
           
-            <p>享受读书</p>
-<p>每当碰到好文的时候，心中美好，难以描述，像一块干瘪的海绵在吸水，一定要把自己洗得饱饱的<br>鬼脚七公众号，关于时间管理的文章，池建强老师关于程序员的思考，关于跳槽的论述，小道消息<br>中关于思考和积累的，刺的文章中提到的黑客，读文章也是一种享受</p>
-<p>学习知识更加全面</p>
-<p>使用Java已经有段时间，遇到问题只懂得找资料，或许是因为积累还不够，火候没达到，不懂得，也没有意识去<br>全面学习一个东西，知道开始看Java核心编程，终于了解，关于Java还有很多东西你根本就不知道，再到看了郑晔<br>和江南白衣的博客，才知道关于Java应用开发，你还有很多不知道，路还很长，积累和思考总结，凝结为自己的知识体系</p>
-<p>认识人，知道关于这个世界更多地东西</p>
-<p>因为一篇博客，找到赵超，@子流，然后看博客，关注微博，找到鬼脚七，关注微信号鬼脚七，然后关注小道消息，然后关注<br>刺，关注池老师，在关注很多很多人，了解到得不光光是那一点点了，工具，成长的思考，程序员的思考，人生的思考，太多 太多 。。。，优秀的人总是会关注比自己更优秀的人，圈子，总是关联的，自己可以了解更好地</p>
-<p>知道了自己的渺小，有很多事情，是自己不能及的</p>
-<p>从13年到14年，现在已经是15年，自己感觉自己成长了很多，昨天总结了下自己的书单，感觉到惭愧了，然后看看这些前辈们的<br>博客和总结，比你厉害的人，还比你更努力，你还有什么理由不努力，不自己去提高自己</p>
-<p>应该谦虚</p>
-<p>时刻不能太狂妄，能做的做好，不能做的有人教得虚心学习，没人教的，自己去学习，分享给大家，在自己自大的时候，在那些<br>比自己厉害的人眼中，自己该是个什么呢</p>
+            <h1 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h1><p>安装官方给的 一键安装 shell 命令走，下面列出来所有走的坑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">首先确认机器可以联网，设置了正确得域名解析地址</div><div class="line"></div><div class="line">vim /etc/resolv.conf</div><div class="line"></div><div class="line">nameserver 114.114.114.114</div></pre></td></tr></table></figure>
+<p>安装或更新依赖软件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo yum install curl openssh-server postfix cronie</div><div class="line">sudo service postfix start</div><div class="line">sudo chkconfig postfix on</div><div class="line"></div><div class="line">sudo lokkit -s http -s ssh</div><div class="line"></div><div class="line">这一步，如果 已经禁用防火墙，可忽略</div></pre></td></tr></table></figure>
+<p>下载一键执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</div><div class="line"></div><div class="line">上面是官方给的指令，但是 packages.gitlab.com 时断时连我没有运行成功一次过，只能先下载，在运行</div><div class="line"></div><div class="line">wget https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</div><div class="line"></div><div class="line">chmod +x script.rpm.sh</div><div class="line"></div><div class="line">sh script.rpm.sh 同样，执行的时候有时候会报下面的错误，能做的就是多执行几次</div></pre></td></tr></table></figure>
+<p>本来执行完 script.rpm.sh 之后会自动启动下载任务，但是经常会失败只能手工下载，而且手工下载还会失败，<br>就多执行几次，前提是域名解析 ok ，而且翻墙了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@sz-vm-test-246 git]# sudo yum install gitlab-ce</div><div class="line">Loaded plugins: fastestmirror</div><div class="line">Repository base is listed more than once in the configuration</div><div class="line">Repository updates is listed more than once in the configuration</div><div class="line">Repository extras is listed more than once in the configuration</div><div class="line">Repository centosplus is listed more than once in the configuration</div><div class="line">Repository contrib is listed more than once in the configuration</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line"> * base: mirrors.aliyun.com</div><div class="line"> * extras: mirrors.aliyun.com</div><div class="line"> * updates: mirrors.aliyun.com</div><div class="line">https://packages.gitlab.com/gitlab/gitlab-ce/el/6/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - &quot;Couldn&apos;t resolve host &apos;packages.gitlab.com&apos;&quot;</div><div class="line">Trying other mirror.</div><div class="line">Error: Cannot retrieve repository metadata (repomd.xml) for repository: gitlab_gitlab-ce. Please verify its path and try again</div></pre></td></tr></table></figure>
+<p>这里分享百度盘的 gitlab-ce-7.11.2~omnibus-1.x86_64.rpm下载地址 <a href="http://pan.baidu.com/s/1c0trcQk" target="_blank" rel="external">http://pan.baidu.com/s/1c0trcQk</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install gitlab-ce 执行完成过程中会出现网络断，断了就继续执行 、、、 </div><div class="line"></div><div class="line">sudo gitlab-ctl reconfigure 执行命令后，会看到好多内容出来，直到成功</div></pre></td></tr></table></figure>
+<p>如果能看到下面内容，说明成功。祝君好运</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Running handlers:</div><div class="line">Running handlers complete</div><div class="line">Chef Client finished, 167/189 resources updated in 110.951922392 seconds</div><div class="line">gitlab Reconfigured!</div></pre></td></tr></table></figure>
+<p>默认使用 Postgre 和 nginx，绑定 80 端口，如果想一次配置启动成功，其他程序就给他让步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# netstat -nplut | grep 80</div><div class="line">tcp        0      0 :::80                       :::*                        LISTEN      1678/httpd</div><div class="line"></div><div class="line">service httpd stop</div></pre></td></tr></table></figure>
+<p>默认账号密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Username: root </div><div class="line">Password: 5iveL!fe</div></pre></td></tr></table></figure>
+<p>访问浏览器 </p>
+<p><a href="http://dev1" target="_blank" rel="external">http://dev1</a> 看到界面，表示成功，登录后台，修改密码</p>
+<p>1qaz2wsx</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://about.gitlab.com/downloads/" target="_blank" rel="external">官方说明</a></p>
+<p><a href="http://segmentfault.com/a/1190000002722631" target="_blank" rel="external">GitLab 安装配置笔记</a></p>
+<p><a href="http://www.pigo.idv.tw/archives/2779" target="_blank" rel="external">用 gitlab 自架一個像 github 的平台</a></p>
+<p>-EOF-</p>
 
           
         
@@ -878,8 +926,8 @@ Installation seems OK. File generation OK
             
               
                 
-                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
-                  git实战篇--将本地项目提交到github/gitlab中
+                <a class="post-title-link" href="/2015/05/25/zabbix-custom-monitor-item/" itemprop="url">
+                  zabbix 自定义监控key
                 </a>
               
             
@@ -892,8 +940,8 @@ Installation seems OK. File generation OK
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
-              2015-01-09
+            <time itemprop="dateCreated" datetime="2015-05-25T15:10:04+08:00" content="2015-05-25">
+              2015-05-25
             </time>
           </span>
 
@@ -906,8 +954,8 @@ Installation seems OK. File generation OK
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
                   </a>
                 </span>
 
@@ -922,8 +970,8 @@ Installation seems OK. File generation OK
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
+                <a href="/2015/05/25/zabbix-custom-monitor-item/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/zabbix-custom-monitor-item/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -933,7 +981,7 @@ Installation seems OK. File generation OK
 
           
           
-             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
+             <span id="/2015/05/25/zabbix-custom-monitor-item/" class="leancloud_visitors" data-flag-title="zabbix 自定义监控key">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -957,24 +1005,9 @@ Installation seems OK. File generation OK
       
         
           
-            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
-<p>在github/gitlab中新建项目zhunions</p>
-<p>1.在本地目录zhunions目录下初始化本地仓库</p>
-<pre><code>git init
-</code></pre><p>2.建立.gitignore README.md文件</p>
-<p>3.本地提交</p>
-<pre><code>git add . 提交当前目录
-git commit -m &quot;first commit&quot;
-</code></pre><p>4.添加远程关联</p>
-<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
-</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
-<pre><code>git push --set-upstream origin master
-</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
-<p>执行所有操作后，有如下结果：</p>
-<p>a.产生本地分支master</p>
-<p>b.与本地仓库关联的远程仓库origin</p>
-<p>c.与本地分支关联的远程分支master</p>
-<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
+            <h1 id="zabbix自定义监控key"><a href="#zabbix自定义监控key" class="headerlink" title="zabbix自定义监控key"></a>zabbix自定义监控key</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /etc/zabbix/zabbix_agentd.conf.d</div><div class="line">(Include=/etc/zabbix/zabbix_agentd.conf.d/ 这个设置要打开)</div><div class="line"></div><div class="line">vim count_line_passwd.conf</div><div class="line"></div><div class="line">输入</div><div class="line">UserParameter=count.line.passwd,wc -l /etc/passwd|awk &apos;&#123;print $1&#125;&apos;</div><div class="line"></div><div class="line"></div><div class="line">/usr/local/zabbix/bin/zabbix_get -s dev2 -k count.line.passwd</div><div class="line"></div><div class="line">能够显示30 （数字取决于当前系统用户数），说明自定义 成功</div></pre></td></tr></table></figure>
+<p>UserParameter 示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UserParameter=&lt;key&gt;,&lt;command&gt;</div><div class="line"></div><div class="line">UserParameter=get.os.type,head -1 /etc/issue</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k get.os.type</div><div class="line"></div><div class="line">UserParameter=wc[*],grep -c &quot;$2&quot; $1</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k wc[/etc/passwd,root]</div><div class="line"></div><div class="line">$1 为 root $2 为 /etc/passwd</div></pre></td></tr></table></figure>
 
           
         
@@ -1007,7 +1040,7 @@ git commit -m &quot;first commit&quot;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1048,7 +1081,7 @@ git commit -m &quot;first commit&quot;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1056,7 +1089,7 @@ git commit -m &quot;first commit&quot;
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1065,7 +1098,7 @@ git commit -m &quot;first commit&quot;
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

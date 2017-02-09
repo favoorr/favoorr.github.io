@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ubuntu,performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+uptime查看平均负载
+1234uptime09:42:17 up 22 min,  1 user,  load average: 0.00, 0.04, 0.051 5 15 分钟内的评价负载，可以看到负载是在上升、下降、还是平稳
+vmstat包括系统范围的平均负载
+12345vmstatp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以 Ubuntu 为例列举 CPU 性能分析常用命令">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+uptime查看平均负载
+1234uptime09:42:17 up 22 min,  1 user,  load average: 0.00, 0.04, 0.051 5 15 分钟内的评价负载，可以看到负载是在上升、下降、还是平稳
+vmstat包括系统范围的平均负载
+12345vmstatp">
+<meta property="og:updated_time" content="2017-02-09T06:32:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以 Ubuntu 为例列举 CPU 性能分析常用命令">
+<meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
+手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步
+uptime查看平均负载
+1234uptime09:42:17 up 22 min,  1 user,  load average: 0.00, 0.04, 0.051 5 15 分钟内的评价负载，可以看到负载是在上升、下降、还是平稳
+vmstat包括系统范围的平均负载
+12345vmstatp">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/"/>
+
+  <title> 以 Ubuntu 为例列举 CPU 性能分析常用命令 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                以 Ubuntu 为例列举 CPU 性能分析常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T10:52:51+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-cpu-analysis-on-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 CPU 性能分析常用命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>操作系统版本 Ubuntu 16.04.1</p>
+<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
+<h1 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h1><p>查看平均负载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">uptime</div><div class="line"></div><div class="line">09:42:17 up 22 min,  1 user,  load average: 0.00, 0.04, 0.05</div><div class="line">1 5 15 分钟内的评价负载，可以看到负载是在上升、下降、还是平稳</div></pre></td></tr></table></figure>
+<h1 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h1><p>包括系统范围的平均负载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">vmstat</div><div class="line"></div><div class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</div><div class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</div><div class="line"> 1  0      0 290696  55308 630512    0    0    70   154   63   92  1  1 99  0  0</div></pre></td></tr></table></figure>
+<p>虚拟内存统计信息命令，vmstat(8)，在最后几列打印了系统全局范围的 CPU 评价负载，另外在第一列还有可运行线程数</p>
+<p>输出的第一行是系统启动以来的总结信息，r 列除外，这个是显示当前值的</p>
+<p>r 运行队列长度 – 可运行线程的总数<br>us 用户态时间<br>sy 系统态时间<br>id 空闲<br>wa 等待IO，即线程被阻塞等待磁盘 IO 时的 CPU 空闲时间<br>st 偷取（未在输出里显示），CPU 在虚拟化环境下载其他租户上的开销    </p>
+<h1 id="mpstat"><a href="#mpstat" class="headerlink" title="mpstat"></a>mpstat</h1><p>单个 CPU 统计信息</p>
+<p>多处理器统计信息工具，能够报告每个 CPU 的统计信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mpstat -P ALL</div><div class="line"></div><div class="line">11:15:56 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</div><div class="line">11:15:57 AM  all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</div><div class="line">11:15:57 AM    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</div><div class="line">11:15:57 AM    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</div></pre></td></tr></table></figure>
+<p>-P ALL 用来打印每个 CPU 的报告，默认只打印系统级别的总结信息</p>
+<p>CPU 逻辑 CPU ID，或者 all 表示总结信息<br>%usr 用户态时间<br>%nice 以 nice 优先级运行的进程用户态时间<br>%sys 系统态时间（内核）<br>%iowait IO 等待<br>%irq 硬件中断 CPU 用量<br>%soft 软件中断 CPU 用量<br>%steal 耗费在服务其他租户的时间<br>%guest 花在访客虚拟机的时间<br>%idle 空闲</p>
+<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><p>历史统计信息</p>
+<p>-P ALL 与 mpstat 的 -P ALL 选项相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sar -P ALL</div><div class="line"></div><div class="line">12:37:21 PM     CPU     %user     %nice   %system   %iowait    %steal     %idle</div><div class="line">12:37:23 PM     all      0.00      0.00      0.00      0.00      0.00    100.00</div><div class="line">12:37:23 PM       0      0.00      0.00      0.00      0.00      0.00    100.00</div><div class="line">12:37:23 PM       1      0.00      0.00      0.00      0.00      0.00    100.00</div></pre></td></tr></table></figure>
+<p>-u 与 mpstat(1) 默认输出相同，仅包括系统范围的平均值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sar -u</div><div class="line"></div><div class="line">Average:        CPU     %user     %nice   %system   %iowait    %steal     %idle</div><div class="line">Average:        all      0.00      0.00      0.00      0.00      0.00    100.00</div><div class="line">Average:          0      0.00      0.00      0.00      0.00      0.00    100.00</div><div class="line">Average:          1      0.00      0.00      0.00      0.00      0.00    100.00</div></pre></td></tr></table></figure>
+<p>-q 包括运行队列长度列 runq-sz 等待数加上运行数，与 vmstat 的 r 列相同和平均负载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sar -q</div><div class="line"></div><div class="line">12:37:40 PM   runq-sz  plist-sz   ldavg-1   ldavg-5  ldavg-15   blocked</div><div class="line">12:37:42 PM         0       144      0.00      0.00      0.00         0</div><div class="line">12:37:44 PM         0       144      0.00      0.00      0.00         0</div><div class="line">12:37:46 PM         0       144      0.00      0.00      0.00         0</div></pre></td></tr></table></figure>
+<h1 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h1><p>进程状态<br>进程状态信息，ps(1) 列出所有进程的细节信息，包括 CPU 用量统计信息</p>
+<p>BSD 风格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ps aux</div><div class="line"></div><div class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root         1  0.3  0.6 119924  6204 ?        Ss   10:19   0:25 /sbin/init</div><div class="line">root         2  0.0  0.0      0     0 ?        S    10:19   0:00 [kthreadd]</div><div class="line">root         3  0.0  0.0      0     0 ?        S    10:19   0:00 [ksoftirqd/0]</div><div class="line">root         5  0.0  0.0      0     0 ?        S&lt;   10:19   0:00 [kworker/0:0H]</div></pre></td></tr></table></figure>
+<p>a 列出所有用户<br>u 面向用户的扩展信息<br>x 没有终端的进程 终端在 tty 一列显示    </p>
+<p>SVR4 风格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ps -ef</div><div class="line"></div><div class="line">UID        PID  PPID  C STIME TTY          TIME CMD</div><div class="line">root         1     0  0 10:19 ?        00:00:25 /sbin/init</div><div class="line">root         2     0  0 10:19 ?        00:00:00 [kthreadd]</div><div class="line">root         3     2  0 10:19 ?        00:00:00 [ksoftirqd/0]</div><div class="line">root         5     2  0 10:19 ?        00:00:00 [kworker/0:0H]</div></pre></td></tr></table></figure>
+<p>-e 列出所有进程<br>-f 列出进程的详细信息</p>
+<p>CPU 用量的主要列信息是 TIME 和 %CPU<br>TIME 列显示了进程自从创建开始消耗的 CPU 总时间（用户态+系统态），格式为 “小时:分钟:秒”<br>在 Linux 上, %CPU 列显示了在前一秒内所有 CPU 上的 CPU 用量之和。一个单线程的 CPU 进程会报告 100%。而一个双线程的 CPU 型进程会报告 200%</p>
+<h1 id="top"><a href="#top" class="headerlink" title="top"></a>top</h1><p>监控每个进程/线程 CPU 用量</p>
+<p>顶部是系统范围的统计信息，而下面是进程/任务的列表，默认按照 CPU 用量排序。系统范围的总结信息包括平均负载和 CPU 状态 %us %sy %ni %id %wa %hi %si %st 这些状态和 mpstat 相同，而与前面描述的一样，是所有 CPU 的平均值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">top</div><div class="line"></div><div class="line">top - 12:48:23 up  2:28,  1 user,  load average: 0.00, 0.00, 0.00</div><div class="line">Tasks: 121 total,   1 running, 120 sleeping,   0 stopped,   0 zombie</div><div class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</div><div class="line">KiB Mem :  1016032 total,   284204 free,    40548 used,   691280 buff/cache</div><div class="line">KiB Swap:        0 total,        0 free,        0 used.   786128 avail Mem</div><div class="line"></div><div class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</div><div class="line">    1 root      20   0  119924   6204   4116 S   0.0  0.6   0:25.74 systemd</div><div class="line">    2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd</div><div class="line">    3 root      20   0       0      0      0 S   0.0  0.0   0:00.06 ksoftirqd/0</div><div class="line">    5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H</div></pre></td></tr></table></figure>
+<p>CPU 用量通过 TIME 和 %CPU 列显示，与前面介绍的 ps(1) 里面相同</p>
+<p>这个例子显示了名为 TIME+ 的列，和上面显示的一样，不过精度达到了百分之一秒。例如 “1:36.53” 代表在 CPU 上的时间总计为为 1 分 36.53 秒。有些版本的 top(1) 提供一个可选的 累计时间 模式，包括了已退出子进程的时间。</p>
+<p>top 对 /proc 拍快照，会错过一些寿命较短的进程，这些进程在拍照之前已经退出。这在软件构建时经常出现，此时 CPU 被许多构建过程中短寿命的工具牢牢占据。Linux 上有一个 top 的变种 atop，可以捕捉短寿命进程。</p>
+<h1 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h1><p>每个进程/线程 CPU 用量分解</p>
+<p>按进程或线程打印 CPU 用量，包括用户态和系统态时间的分解。默认情况下，仅循环输出活动进程的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pidstat</div><div class="line"></div><div class="line">01:56:54 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command</div><div class="line">01:56:54 PM    500      7814  0.00  1.98          0.00         1.98        3      tar</div><div class="line">01:56:54 PM    500      7815  97.03 2.97         0.00         100.00    11    gzip</div></pre></td></tr></table></figure>
+<p>上述例子捕获到了系统备份，包括了 tar 命令，从文件系统读取文件，以及 gzip 命令进行压缩。<br>gzip 的用户态时间较高，符合预期，其压缩代码为 CPU 密集型。<br>tar 命令从文件系统里读取，在内核中消耗更多时间</p>
+<p>-p ALL 可以用来打印所有进程，包括空闲进程<br>-t 打印每个线程的统计信息    </p>
+<h1 id="time"><a href="#time" class="headerlink" title="time"></a>time</h1><p>给一个命令计时，带 CPU 用例分解</p>
+<p>使用 cksum 计算较大文件的校验码   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">time cksum Fedora-16.iso</div><div class="line"></div><div class="line">real	0m5.105s</div><div class="line">user	0m2.810s</div><div class="line">sys	0m0.300s</div><div class="line"></div><div class="line">time cksum Fedora-16.iso</div><div class="line"></div><div class="line">real	0m2.474s</div><div class="line">user	0m2.340s</div><div class="line">sys	0m0.130s</div></pre></td></tr></table></figure>
+<p>第一次运行花了 5.1s，其中 2.8s 花在用户态 – 计算校验码，以及 0.3s 是系统时间<br>用来读取文件的系统调用。还有 2.0s 不见了 (5.1-2.8-0.3) ，很可能是花在等待磁盘 IO 读上，因为这个文件只有部分被缓存。</p>
+<p>第二次运行完成得快很多，2.5s，几乎没被阻塞在 IO 上，这符合预期，因为文件可能在第二次运行时被完全缓存起来了</p>
+<p>Linux 上，/usr/bin/time 版本支持下面的详细信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">/usr/bin/time -v cp .bash_history aaa</div><div class="line">	Command being timed: &quot;cp .bash_history aaa&quot;</div><div class="line">	User time (seconds): 0.00</div><div class="line">	System time (seconds): 0.00</div><div class="line">	Percent of CPU this job got: 0%</div><div class="line">	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.00</div><div class="line">	Average shared text size (kbytes): 0</div><div class="line">	Average unshared data size (kbytes): 0</div><div class="line">	Average stack size (kbytes): 0</div><div class="line">	Average total size (kbytes): 0</div><div class="line">	Maximum resident set size (kbytes): 2832</div><div class="line">	Average resident set size (kbytes): 0</div><div class="line">	Major (requiring I/O) page faults: 0</div><div class="line">	Minor (reclaiming a frame) page faults: 117</div><div class="line">	Voluntary context switches: 1</div><div class="line">	Involuntary context switches: 1</div><div class="line">	Swaps: 0</div><div class="line">	File system inputs: 0</div><div class="line">	File system outputs: 8</div><div class="line">	Socket messages sent: 0</div><div class="line">	Socket messages received: 0</div><div class="line">	Signals delivered: 0</div><div class="line">	Page size (bytes): 4096</div><div class="line">	Exit status: 0</div></pre></td></tr></table></figure>
+<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace"></a>DTrace</h1><p>强大的动态追踪工具，可以和 SystemTap 之间相互转化，支持 SmartOS 及 FreeBSD 系列，这里省略</p>
+<h1 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h1><p>CPU 性能计数器分析</p>
+<p>ubuntu 16.04.1 安装 perf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install linux-tools-4.4.0-57-generic</div><div class="line">sudo apt install linux-cloud-tools-4.4.0-57-generic</div></pre></td></tr></table></figure>
+<p>perf 子命令</p>
+<p>annotate 读取 per.data (由perf record 创建) 并显示注释过的代码<br>diff 读取两份 perf.data 文件，并显示两份剖析文件之间的差异<br>evlist 列出一个 per.data 文件中事件名称<br>inject 过滤加强事件流，在其中加入额外的信息<br>kmem 跟踪/测量 内核内存 slab 属性的工具<br>kvm 跟踪/测量 kvm 客户机操作系统的工具<br>list 列出所有的符号事件类型<br>lock 分析锁事件<br>probe 定义新的动态跟踪点<br>record 运行一个命令，并把剖析信息记录在 perf.data 中<br>report 读取 perf.data 并显示跟踪输出<br>stat 运行一个命令并收集性能计数器统计信息<br>timechart 可视化某一个负载期间系统总体性能的工具<br>top 系统剖析工具    </p>
+<p>系统剖析</p>
+<p>perf 可以用来剖析 CPU 调用路径，对 CPU 时间如何消耗在内核和用户空间进行概括总结。这项工作又 record 命令完成，该命令以一定间隔进行取样，并导出到一个 perf.data 文件，然后使用 report 命令查看文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perf record -a -g -F 997 sleep10</div><div class="line">[ perf record: Woken up 7 times to write data ]</div><div class="line">[ perf record: Captured and wrote 2.049 MB perf.data (16491 samples) ]</div></pre></td></tr></table></figure>
+<p>-a 采样所有 CPU<br>-F 997 以 997HZ 频率<br>-g 采样调用栈<br>sleep 10 采样持续 10s    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">查看 perf.data 文件</div><div class="line"></div><div class="line">sudo perf report --stdio</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">对单个进程进行剖析</div><div class="line"></div><div class="line">perf record -g ls 会显示整个 ls 命令的调用栈</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">调度器延时统计信息</div><div class="line"></div><div class="line">perf sched record sleep 10</div></pre></td></tr></table></figure>
+<p>stat</p>
+<p>stat 命令基于 CPC 为 CPU 周期行为提供了一个概要总结。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">perf stat gzip file1</div><div class="line"></div><div class="line"></div><div class="line"> Performance counter stats for &apos;gzip perf.data&apos;:</div><div class="line"></div><div class="line">          6.035009      task-clock (msec)         #    0.933 CPUs utilized</div><div class="line">                 0      context-switches          #    0.000 K/sec</div><div class="line">                 0      cpu-migrations            #    0.000 K/sec</div><div class="line">               117      page-faults               #    0.019 M/sec</div><div class="line">   &lt;not supported&gt;      cycles</div><div class="line">   &lt;not supported&gt;      stalled-cycles-frontend</div><div class="line">   &lt;not supported&gt;      stalled-cycles-backend</div><div class="line">   &lt;not supported&gt;      instructions</div><div class="line">   &lt;not supported&gt;      branches</div><div class="line">   &lt;not supported&gt;      branch-misses</div><div class="line"></div><div class="line">       0.006469387 seconds time elapsed</div></pre></td></tr></table></figure>
+<p>其它一些 Linux CPU 性能工具</p>
+<p>htop 包括了 CPU 用量的 ASCII 柱状图，比最初的 top 更强的交互模式<br>atop 包括了更多的系统级统计信息，使用进程核算统计捕捉短命进程的存在<br>/proc/cpuinfo 可以获得处理器详细信息，包括时钟频率和特性标志位<br>valgrind 一个内存调试和剖析工具组，包括了 callgrind ，一个跟踪函数调用并生成调用图的工具，并可以通过 kcachegrind 可视化; cachegrind 可以用来分析一个给定程序的硬件缓存用量</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/13/macos-python2-make-vim-crash/" rel="next" title="macos-python2-make-vim-crash">
+                <i class="fa fa-chevron-left"></i> macos-python2-make-vim-crash
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/09/linux-performance-memory-analysis-on-ubuntu/" rel="prev" title="以 Ubuntu 为例列举 Memory 性能分析常用命令">
+                以 Ubuntu 为例列举 Memory 性能分析常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-cpu-analysis-on-ubuntu/"
+           data-title="以 Ubuntu 为例列举 CPU 性能分析常用命令" data-url="https://favoorr.github.io/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#uptime"><span class="nav-number">1.</span> <span class="nav-text">uptime</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmstat"><span class="nav-number">2.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mpstat"><span class="nav-number">3.</span> <span class="nav-text">mpstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sar"><span class="nav-number">4.</span> <span class="nav-text">sar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ps"><span class="nav-number">5.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">6.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pidstat"><span class="nav-number">7.</span> <span class="nav-text">pidstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#time"><span class="nav-number">8.</span> <span class="nav-text">time</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DTrace"><span class="nav-number">9.</span> <span class="nav-text">DTrace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#perf"><span class="nav-number">10.</span> <span class="nav-text">perf</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -89,7 +89,8 @@ vagrant 命令用来管理虚拟机vagrant box 命令用来管理 box 镜像文�
 两个查找镜像的地址
 https://atlas.hashicorp.com/boxes/search
 http://www.vagrantbox.es/
-1234567891011121314查看官方帮助文档vagrant box --help查看">
+查看官方帮助文档
+1234567891011121314vagrant box --helpU">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用的 vagrant box 管理命令">
 <meta property="og:url" content="https://favoorr.github.io/2017/01/06/vagrant-box-management-best-practices/index.html">
@@ -99,8 +100,9 @@ vagrant 命令用来管理虚拟机vagrant box 命令用来管理 box 镜像文�
 两个查找镜像的地址
 https://atlas.hashicorp.com/boxes/search
 http://www.vagrantbox.es/
-1234567891011121314查看官方帮助文档vagrant box --help查看">
-<meta property="og:updated_time" content="2017-01-08T02:37:12.000Z">
+查看官方帮助文档
+1234567891011121314vagrant box --helpU">
+<meta property="og:updated_time" content="2017-02-09T06:17:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用的 vagrant box 管理命令">
 <meta name="twitter:description" content="favoorr 经常使用的 vagrant box 管理命令
@@ -108,7 +110,8 @@ vagrant 命令用来管理虚拟机vagrant box 命令用来管理 box 镜像文�
 两个查找镜像的地址
 https://atlas.hashicorp.com/boxes/search
 http://www.vagrantbox.es/
-1234567891011121314查看官方帮助文档vagrant box --help查看">
+查看官方帮助文档
+1234567891011121314vagrant box --helpU">
 
 
 
@@ -351,7 +354,18 @@ http://www.vagrantbox.es/
 <p>两个查找镜像的地址</p>
 <p><a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a></p>
 <p><a href="http://www.vagrantbox.es/" target="_blank" rel="external">http://www.vagrantbox.es/</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">查看官方帮助文档</div><div class="line">vagrant box --help</div><div class="line"></div><div class="line">查看本地已经下载的所有镜像</div><div class="line">vagrant box list</div><div class="line"></div><div class="line">如果自动下载失败，通过手工添加的方法，文章参考 </div><div class="line">vagrant box add metadata.json</div><div class="line"></div><div class="line">更新某一个镜像</div><div class="line">vagrant box update ubuntu/xenial64</div><div class="line"></div><div class="line">根据版本号，删除一个镜像</div><div class="line">vagrant box remove ailispaw/barge --box-version 2.1.3</div></pre></td></tr></table></figure>
+<p>查看官方帮助文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">vagrant box --help</div><div class="line"></div><div class="line">Usage: vagrant box &lt;subcommand&gt; [&lt;args&gt;]</div><div class="line"></div><div class="line">Available subcommands:</div><div class="line">     add</div><div class="line">     list</div><div class="line">     outdated</div><div class="line">     prune</div><div class="line">     remove</div><div class="line">     repackage</div><div class="line">     update</div><div class="line"></div><div class="line">For help on any individual subcommand run `vagrant box &lt;subcommand&gt; -h`</div></pre></td></tr></table></figure>
+<p>查看本地已经下载的所有镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vagrant box list</div><div class="line"></div><div class="line">ailispaw/barge            (virtualbox, 2.3.1)</div><div class="line">bento/centos-6.7          (virtualbox, 2.2.7)</div><div class="line">bento/centos-7.2          (virtualbox, 2.2.7)</div><div class="line">bento/centos-7.2          (virtualbox, 2.3.1)</div><div class="line">centos/7                  (virtualbox, 1605.01)</div><div class="line">drscream/smartos-pkgbuild (virtualbox, 16.1.0)</div><div class="line">ubuntu/trusty64           (virtualbox, 20161207.0.0)</div><div class="line">ubuntu/xenial64           (virtualbox, 20161209.0.0)</div></pre></td></tr></table></figure>
+<p>如果自动下载失败，通过手工添加的方法，文章参考 <a href="https://favoorr.github.io/2017/01/06/import-vagrant-box-manually/">https://favoorr.github.io/2017/01/06/import-vagrant-box-manually/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box add metadata.json</div></pre></td></tr></table></figure>
+<p>更新某一个镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box update ubuntu/xenial64</div></pre></td></tr></table></figure>
+<p>根据版本号，删除一个镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box remove ailispaw/barge --box-version 2.1.3</div></pre></td></tr></table></figure>
+<p>其中省略了 发布共享 box 给其他人<br>```</p>
+
       
     </div>
 
@@ -484,7 +498,7 @@ http://www.vagrantbox.es/
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -492,7 +506,7 @@ http://www.vagrantbox.es/
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -501,7 +515,7 @@ http://www.vagrantbox.es/
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

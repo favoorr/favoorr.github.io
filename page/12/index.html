@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/12/04/maven-tips/" itemprop="url">
-                  maven使用总结
+                <a class="post-title-link" href="/2015/04/20/config-non-password-login-for-ubuntu/" itemprop="url">
+                  ubuntu-配置无密码登录
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-04T10:13:44+08:00" content="2014-12-04">
-              2014-12-04
+            <time itemprop="dateCreated" datetime="2015-04-20T11:31:14+08:00" content="2015-04-20">
+              2015-04-20
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/maven/" itemprop="url" rel="index">
-                    <span itemprop="name">maven</span>
+                  <a href="/categories/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/04/maven-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/maven-tips/" itemprop="commentsCount"></span>
+                <a href="/2015/04/20/config-non-password-login-for-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/20/config-non-password-login-for-ubuntu/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/12/04/maven-tips/" class="leancloud_visitors" data-flag-title="maven使用总结">
+             <span id="/2015/04/20/config-non-password-login-for-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu-配置无密码登录">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,60 +337,30 @@
       
         
           
-            <h1 id="maven使用总结"><a href="#maven使用总结" class="headerlink" title="maven使用总结"></a>maven使用总结</h1><p>1.本地无法更新jar包了</p>
-<p>有时候我们用私服，然后发现本地无法更新了，不会自动去下载jar，</p>
-<p>先检查maven配置是否正确，<br>包括pom文件中Repository的配置和setting中mirror的配置，</p>
-<p>然后如果无误，看私服服务器是否能连接外网</p>
-<p>然后都检查过了，还是不行，就去把maven本地仓库中该jar的目录先删除，在下载，</p>
-<p>还是不行就手工下载jar，放到目录下</p>
-<p>2.m2e 有个offline ，有次无意间点到，彻底完蛋，麻痹的，不去访问私服，不能发布</p>
-<p>3.用户目录下的 setting.xml 文件，如果本地仓库地址修改了，更改没问题，默认的应该是<code>${user.home}/.m2/repository</code><br>  自己曾经在mac上又一次把目录写为 <code>~/.m2/repository</code>，原本以为能够自己解析，后来发现，我想错了，事情不是那样子<br>  项目每次简单的构建都会下载全部的jar，浪费了很多时间，但是自己却不知道问题出在哪里,而且还不知道怎么去问别人<br>  直到我看到每次构建都会在当前目录下新增 ~ 目录，而且新增jar包，我才意识到，本地仓库目录搞错了，我恍然大悟，<br>  oh my gold ！</p>
-<p>4.聚合和继承，是可以通过一个parent搞定，所有子模块依赖于 parent，然后可以选择性的快速构建</p>
-<p>5.maven项目从 svn 或者 git check out 下来后，如果无法按照自己想要的目录结构呈现，可以从 Eclipse 里面删除项目，然后在重新选择导入<br><code>Exsting maven project</code>可以搞定，或者点击项目名–&gt;鼠标右键Configure–&gt;选择<code>convert to maven project</code>，Convert稍微好用点</p>
-<p>6.在使用maven-release-plugin执行release:prepare的时候，出现如下错误</p>
-<pre><code>/bin/sh: svn: command not found
-</code></pre><p>解决方法</p>
-<pre><code>sudo ln -s /usr/local/bin/svn /bin/svn
-</code></pre><p>7.maven 单独使用clean compile的时候不会报错，maven-release-plugin执行release:prepare的时候<br>出现如下错误，</p>
-<pre><code>无效的目标版本： 1.7
+            <h1 id="ubuntu-配置无密码登录"><a href="#ubuntu-配置无密码登录" class="headerlink" title="ubuntu-配置无密码登录"></a>ubuntu-配置无密码登录</h1><p>给Ubuntu设置无密码登录，必须做的工作，有时会耗费时间，积累，下次节约时间</p>
+<p>需求</p>
+<p>主机免密码登录 elk1 和 elk2</p>
+<p>第一步，主机添加host解析</p>
+<pre><code>192.168.137.251 elk1
+192.168.137.252 elk2
+</code></pre><p>第二步，elk1生成.ssh目录</p>
+<pre><code>ssh-keygen ,一路回车，执行后，生成本机的.ssh目录
+</code></pre><p>第三步，打开elk1的ssh公钥保存文件，第一次配置需要打开，后续不需要</p>
+<pre><code>sudo vi /etc/ssh/sshd_config
 
-或者
+AuthorizedKeysFile      %h/.ssh/authorized_keys 这一行，取消注释
+</code></pre><p>第四步，elk1加入主机的公钥</p>
+<pre><code>cd ~/.ssh
 
-无效的目标版本： 1.8
+vim authorized_keys 把主机的公钥粘贴进来，ok
+</code></pre><p>第五步，重启 elk1 的 ssh 服务</p>
+<pre><code>/etc/init.d/ssh stop
+/etc/init.d/ssh start
+</code></pre><p>第六步，验证</p>
+<pre><code>主机输入
 
-或者英文是
-
-invalid target release: 1.7
-
-invalid target release: 1.8
-</code></pre><p>环境上我的mac上安装了 1.6 1.7 1.8 三个版本的jdk，JAVA_HOME设置如下：</p>
-<pre><code>export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-</code></pre><p>Google之后，在stackoverflow找到的答案原因是你在maven配置的某个地方配置了固定版本的jdk，<br>但是你的maven-compile-plugin配置使用的是如下配置</p>
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.1&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;source&gt;1.6&lt;/source&gt;
-        &lt;target&gt;1.6&lt;/target&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-
-或许里面的1.6一开始写成了1.7或者1.8，然后就会报上面那个错误
-</code></pre><p>解决的方法就是换不同的版本试试，1.6，1.7或者1.8，maven执行一些shell命令的时候，走得是 /bin/sh,<br>但是我默认的shell是zsh，这里不知道怎么设置，比如在使用maven-release-plugin时候，执行的内嵌shell<br>都是用 /bin/sh 执行的通过debug日志，可以很清楚看到</p>
-<p>8.eclipse console中文乱码</p>
-<p>解决方法是<code>Run Configurations</code>,找到对应的项目，在<code>Common</code>面板中，<code>Encoding</code>修改为<code>GBK</code>就ok了<br>可能是内置了GBK编码，但是默认mac上是 UTF-8</p>
-<p>9.Maven 项目不显示 Maven Dependencies</p>
-<p>在使用Eclipse开发maven项目时，有时候会碰到依赖jar没办法显示的问题，</p>
-<pre><code>选择项目右键  --&gt; maven --&gt; disable maven nature,可以手工重现
-</code></pre><p>修复方法</p>
-<pre><code>选择项目右键 --&gt; Configure  --&gt; Convert to maven project
-</code></pre><p>9.当两个项目引用的 jar 包 artifactId  和 version 相同，遇到的诡异问题</p>
-<p>今天业务开发同学来找到我说 guava-18.0.jar 这个包有问题，说是在本地打的包没错，<br>到测试环境上这个包总是错的，坐标如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;18.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>然后自己本地 md5 hash 947641f6bb535b1d942d1bc387c45290 ,跟 nexus 是一样的，<br>但是到测试上的包就有问题，告诉我是 jenkins 上的 guava 包有问题，后来我下载 jenkins 上<br>打的包，果然 md5 值不是 nexus 上的值，公司的 jenkins 是我维护的，我到 guava 目录看了下包<br>hash 是没错的，最后发现是某个组件依赖了一个其他的 guava，group id 不同，但是 artifactId  和 version<br>都是相同的，结果就会出现这种问题，jenkins 上有一段提示信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div><div class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</div><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div></pre></td></tr></table></figure>
-<p>可以看到在打包的时候，这个包被跳过了，这里就是问题所在，而且这种问题相当难发现</p>
+ssh elk1@elk1 成功无密码登录，ok
+</code></pre><p>以上描述的是第一次添加，如果不是第一次添加，只需要第四步，就ok</p>
 
           
         
@@ -440,8 +410,8 @@ invalid target release: 1.8
             
               
                 
-                <a class="post-title-link" href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="url">
-                  mac使用svn遇到的一些问题
+                <a class="post-title-link" href="/2015/04/05/install-start-zookeeper/" itemprop="url">
+                  zookeeper入门-安装和启动-关闭服务
                 </a>
               
             
@@ -454,8 +424,8 @@ invalid target release: 1.8
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-04T09:38:14+08:00" content="2014-12-04">
-              2014-12-04
+            <time itemprop="dateCreated" datetime="2015-04-05T10:29:59+08:00" content="2015-04-05">
+              2015-04-05
             </time>
           </span>
 
@@ -468,8 +438,8 @@ invalid target release: 1.8
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
+                  <a href="/categories/zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">zookeeper</span>
                   </a>
                 </span>
 
@@ -484,8 +454,8 @@ invalid target release: 1.8
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
+                <a href="/2015/04/05/install-start-zookeeper/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/install-start-zookeeper/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -495,7 +465,7 @@ invalid target release: 1.8
 
           
           
-             <span id="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" class="leancloud_visitors" data-flag-title="mac使用svn遇到的一些问题">
+             <span id="/2015/04/05/install-start-zookeeper/" class="leancloud_visitors" data-flag-title="zookeeper入门-安装和启动-关闭服务">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -519,314 +489,32 @@ invalid target release: 1.8
       
         
           
-            <h1 id="mac使用svn遇到的一些问题"><a href="#mac使用svn遇到的一些问题" class="headerlink" title="mac使用svn遇到的一些问题"></a>mac使用svn遇到的一些问题</h1><p>1.在安装了最新的subversion 1.8.10 和 subeclipse1.10.6之后，<br>使用svn执行更新和其他操作会出现如下错误</p>
-<pre><code>org.apache.subversion.javahl.ClientException: Couldn&apos;t perform atomic initialization
-svn: Couldn&apos;t perform atomic initialization
-SQLite error
-svn: SQLite compiled for 3.8.6, but running with 3.8.5
-</code></pre><p>解决方法</p>
-<pre><code>brew uninstall sqlite
+            <p>从 Paxos 到 ZooKeeper ，分步实一致性原理到实践 读书笔记</p>
+<p>zk配置</p>
+<pre><code>tickTime=2000
+dataDir=/tmp/zookeeper
+clientPort=2181
+initLimit=10
+syncLimit=5
+server.1=IP1:2888:3888
+server.2=IP2:2888:3888
+server.3=IP3:2888:3888
+</code></pre><p>server.id 每一行，代表一台机器<br>需要在数据目录 dataDir 创建myid文件，里面写机器编号<br>集群中 zoo.cfg 应该使用 svn 或者 git 管理，确保每台机器上的文件都能够一致<br>id 的范围是 1 ~ 255     </p>
+<p>启动服务</p>
+<pre><code>使用自带的shell启动
+sh zkServer.sh start
 
-brew uninstall subversion
+使用原始Java方式启动
+java -cp zookeeper-3.4.6.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.16.jar:conf org.apache.zookeeper.server.quorum.QuorumPeerMain conf/zoo.cfg
+</code></pre><p>验证服务</p>
+<pre><code>telnet 127.0.0.1 2181
 
-brew edit sqlite
-
- 3 class Sqlite &lt; Formula
- 4   homepage &quot;http://sqlite.org/&quot;
- 5   url &quot;https://www.sqlite.org/2014/sqlite-autoconf-3080500.tar.gz&quot;
- 6   version &quot;3.8.5.0&quot;
- 7   sha1 &quot;7f667e10ccebc26ab2086b8a30cb0a600ca0acae&quot;
-
-34   resource &quot;docs&quot; do
-35     url &quot;https://www.sqlite.org/2014/sqlite-doc-3080500.zip&quot;
-36     version &quot;3.8.5.0&quot;
-37     sha1 &quot;c5655a4004095c50dc8403661e0ed02fd4191d57&quot;
-38   end
-
-brew install --universal --java subversion
-</code></pre><p>参考链接<a href="http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5" target="_blank" rel="external">http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5</a></p>
-<p>2.本来在svn仓库中已经有项目A了，然后由于一些原因，本地也有项目A，并且<br>某些文件需要和svn仓库中合并，直接选择了<code>share project</code>之后，会出现如下错误</p>
-<pre><code>post commit FS processing had error
-Could&apos;t open rep-cache database
-</code></pre><p>解决方法</p>
-<pre><code>从workplace删除项目，然后在重新导入就ok了
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/01/mac-os-x-apahe-server-tips/" itemprop="url">
-                  apache server在mac上的信息
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-01T22:16:01+08:00" content="2014-12-01">
-              2014-12-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/apache/" itemprop="url" rel="index">
-                    <span itemprop="name">apache</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/01/mac-os-x-apahe-server-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-apahe-server-tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/01/mac-os-x-apahe-server-tips/" class="leancloud_visitors" data-flag-title="apache server在mac上的信息">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Apache-server在mac上的安装信息"><a href="#Apache-server在mac上的安装信息" class="headerlink" title="Apache server在mac上的安装信息"></a>Apache server在mac上的安装信息</h1><p>mac 使用的还不熟练，然后很多软件想用的时候有时候会不知道在哪里，<br>逮着一个就记下来，下次需要了，直接找</p>
-<h2 id="安装目录"><a href="#安装目录" class="headerlink" title="安装目录"></a>安装目录</h2><pre><code>/etc/apache2/
-</code></pre><h2 id="日志路径"><a href="#日志路径" class="headerlink" title="日志路径"></a>日志路径</h2><pre><code>/private/var/log/apache2
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/01/mac-os-x-javahl-error/" itemprop="url">
-                  mac上JavaHL报错解决
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-01T18:20:10+08:00" content="2014-12-01">
-              2014-12-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/01/mac-os-x-javahl-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/mac-os-x-javahl-error/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/01/mac-os-x-javahl-error/" class="leancloud_visitors" data-flag-title="mac上JavaHL报错解决">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>升级svn到1.8.10后，打开Eclipse进入显示以下异常：</p>
-<pre><code>Failed to load JavaHL Library.
-These are the errors that were encountered:
-no libsvnjavahl-1 in java.library.path
-no svnjavahl-1 in java.library.path
-no svnjavahl in java.library.path
-java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:
-</code></pre><p>原因</p>
-<p>javaHL 版本和subversion版本和subeclipse版本是由对应关系的，详细参见连接<a href="http://subclipse.tigris.org/wiki/JavaHL" target="_blank" rel="external">http://subclipse.tigris.org/wiki/JavaHL</a><br>根据提示，执行如下操作</p>
-<pre><code>brew install --universal --java subversion
-</code></pre><p>出现错误</p>
-<pre><code>Warning: subversion-1.8.10_1 already installed
-</code></pre><p>然后先卸载subversion，</p>
-<pre><code>brew uninstall subversion
-</code></pre><p>重新安装</p>
-<pre><code>brew install --universal --java subversion
-</code></pre><p>同时下载1.10.6版本的subeclipse，地址：<a href="http://subclipse.tigris.org/archive/" target="_blank" rel="external">http://subclipse.tigris.org/archive/</a></p>
-<p>链接方式安装插件后，重启Eclipse，JavaHL没有报错</p>
+stat
+</code></pre><p>停止服务</p>
+<pre><code>sh zkServer.sh stop
+</code></pre><p>zk可执行脚本</p>
+<p>zkCleanup.sh 清理 zookeeper 的历史数据，包括事务日志文件和快照数据文件<br>zkCli.sh ZooKeeper 的简易客户端<br>zkEnv.sh 设置 ZooKeeper 的环境变量<br>zkServer.sh ZooKeeper服务的启动、停止、重启脚本    </p>
+<p>-EOF-</p>
 
           
         
@@ -876,8 +564,8 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
             
               
                 
-                <a class="post-title-link" href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="url">
-                  mac os x使用Apache与svn集成
+                <a class="post-title-link" href="/2015/02/06/up-yourself/" itemprop="url">
+                  身边没有牛人，如何进步
                 </a>
               
             
@@ -890,8 +578,8 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-01T14:17:09+08:00" content="2014-12-01">
-              2014-12-01
+            <time itemprop="dateCreated" datetime="2015-02-06T15:56:11+08:00" content="2015-02-06">
+              2015-02-06
             </time>
           </span>
 
@@ -904,8 +592,8 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
+                  <a href="/categories/heart/" itemprop="url" rel="index">
+                    <span itemprop="name">heart</span>
                   </a>
                 </span>
 
@@ -920,8 +608,8 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" itemprop="commentsCount"></span>
+                <a href="/2015/02/06/up-yourself/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/06/up-yourself/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -931,7 +619,7 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
 
           
           
-             <span id="/2014/12/01/apache-server-intergration-with-svn-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac os x使用Apache与svn集成">
+             <span id="/2015/02/06/up-yourself/" class="leancloud_visitors" data-flag-title="身边没有牛人，如何进步">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -955,101 +643,516 @@ java.library.path = /Users/User/Library/Java/Extensions:/Library/Java/Extensions
       
         
           
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>mac os x使用<code>Apache server</code>与<code>svn</code>集成，提供<code>http</code>访问svn，下面是详细步骤，中间有遇到的各种问题<br>及解决方法.</p>
-<p>首先说既然要配置http方式访问svn，那我就默认大家已经配置了svn 本地仓库，<br>并且已经可以使用类似<code>svn://127.0.0.1/account/trunk</code>这种方式访问成功，还没有配置<br>的，可以参照<a href="/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/">这里</a></p>
-<p>以下为配置主要步骤：</p>
+            <h1 id="不在牛人成堆的环境中，你的进步，靠什么加持？"><a href="#不在牛人成堆的环境中，你的进步，靠什么加持？" class="headerlink" title="不在牛人成堆的环境中，你的进步，靠什么加持？"></a>不在牛人成堆的环境中，你的进步，靠什么加持？</h1><p>我自己微博上的回答：</p>
+<p>成为牛人的心，安排时间看书，实践</p>
+<p>还有很重要的忘记说了，分享自己积累的，博客和公司内部培训，要敢于分享，也算是对自己学习的一个验证，不沉淀下来，到头来，还是null</p>
+<p><strong>本文只讲了自己的体会，没有具体例子，会补充</strong></p>
+<p>看到这个问题就随手评论了，因为自己就在经历，也就早做 :)</p>
+<p>我没有牛人师父，我自己去发掘了很多可以向他们学习的人，自己觉得优秀的人，通过互联网单向跟着他们学习，完善自己，总结，沉淀，形成自己的方法论</p>
+<p>每个人都有一些自己的经历，我说说自己的：</p>
+<p>“牛”的定义，自己脑海中要先有牛的定义，先要知道自己还有很多东西不知道，很多东西自己做不到，自己有很多方面可以去提高，去完善，当然这里不能去追求极致去为难自己，心要会想</p>
+<p>我大概在08年的时候，玩一个“流星蝴蝶剑”的游戏，是一个纯竞技的游戏，完全靠自己，这个游戏，新手在1年内，成长起来的话，算是快的，而且想成长必须跟玩家对打，结果就是被各种吊打，过程中我结识了小七、飘儿，小七的单武器在平台上数一数二，飘儿的澄海3C是战队的代表，而且比赛都有公开媒体报道。从他们那里，我第一次有了一种可以做的更优秀的心，中间被吊打的好几年，那个过程很重要，是一种经历，还有一首诗，我收藏到现在</p>
+<pre><code>技出群雄而谦虚不骄者为强 
+技术中等而学上导下者为强 
+技不如人而恭心求进者为强 
+技出群雄而自高自满者为弱 
+技术中等而惧上鄙下者为弱 
+技不如人而自暴自弃者为弱
+</code></pre><p>当然，这个很容易形成争强好胜之心，而且只在刹那间。</p>
+<p>我是个幸运的人，第一次初识计算机，是在初中二年级，当时有种相见恨晚的感觉，也就在一瞬间，我知道了这辈子我要玩这个玩上一辈子，事实上，我也一直这么做的。再说学习计算机很重要的一个，英语，对英语没有天生的恐惧感和厌恶感，反而很喜欢，在讲英语的时候，整个人的感觉都特别好，对英文资料也没有排斥的感觉，这点上，我感觉自己已经是非常幸运了</p>
+<p>然后说身处在当前这个互联网时代是幸运的，虽然我大天朝屏蔽了国外的世界，但是国内也很精彩，身边没有牛人怎么办，到互联网上去找，微博、知乎、豆瓣、infoq上能找的很多，到那些平台上后，就有一种感觉，自己知道得太少了，自己出生的太晚了，但是我身边确实有人不玩这些的，时间总在走，不花费在这里总要干点别得事情，到哪找到优秀的人都可以，找到自己的同类人，然后取长补短，IT界有个特点，很多牛人他们乐于分享，享受分享，就怕你一直停留在自己的小世界</p>
+<p>读书，上学的时候，对读书的意义，没有过多的思考，只知道我过段时间要考试，“书是智慧的结晶，是人类进步的阶梯”，多么优美得文字，上学的时候只知道它是段文字而已，可能更多是因为上学的时候一直没开窍，也怪自从有英语课程之后，英语的分数一直考得比语文好的不是一点，读书，我的受益真的很大，但是我知道，开始这个过程有多难，拿起书就犯困，拿起书就走神，人总要对自己狠一回，如果你还没有养成读书的习惯，我希望你对自己狠的第一件事就是开始让自己读书。我现在发现一个问题，牛人们看书更多，我追得好几个博客，他们都有分享自己看书的故事，感慨自己觉悟太晚</p>
+<p>读书，在选择读什么书的时候，我建议是找到自己领域优秀的人，他们总会给你建议，然后就是寻找优秀信息的能力，优秀是会传染的，优秀人得圈子，也有很多好东西等着你去发掘。书的内容，总是作者智慧和经验的总结，走着别人踩过坑的路，能节省多少时间，这个已经无法衡量。</p>
+<p>认识到时间的珍贵，在你不断发掘牛人，学习优秀技术或工具的时候，总会感觉时间不够用，越发能体会到时间的珍贵，这些道理，别人讲再多也都是徒劳，必须有自己体会才可以，才会懂得让自己更加高效，比如会使用付费VPN去翻墙，不再等待免费得各种卡顿，会为看优酷视频区付费，不想等待广告，会换个Mac笔记本，不用去等待开机，不用去等待 。。。，更多是自己不想等待，想快起来。</p>
+<p>知识，好坏与多少，没有精确的度，我的想法是学习除了在工作上解决问题之外去分享，而且很多工作用不到的东西，也需要去学习，分享对自己思路的整理，对自己成果的肯定，维护一个自己的blog，开始分享吧 :)</p>
+<p>做，牛人找了再多，看了再多，听了再多，开始对自己所处领域有了更多了解，了解仅仅是了解，自己想成为牛人，光了解是远远不够的，不求精通，但是熟悉是必须的，熟悉就至少去实践，对就是实践，很多人往往会想好自己要干什么，干什么，但是想了很久，发现自己还是仅仅想好了。我要感谢一位同学当时说的“写博客，不管是csdn还是github都行，关键是写”，就因为这句话，我去开始写了，然后还一直持续着，开始行动后，更加想着进步。</p>
+<p>牛人，也都是普通人成长、积累、沉淀的结果，如果回顾牛人走过的路，他们也都曾经苦逼过，现在沿着他们给的捷径，没有理由不去奔跑</p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/31/install-mysql-on-centos6/" itemprop="url">
+                  Centos6.6安装mysql手记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-31T14:57:35+08:00" content="2015-01-31">
+              2015-01-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/31/install-mysql-on-centos6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/31/install-mysql-on-centos6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/31/install-mysql-on-centos6/" class="leancloud_visitors" data-flag-title="Centos6.6安装mysql手记">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Centos6安装mysql手记"><a href="#Centos6安装mysql手记" class="headerlink" title="Centos6安装mysql手记"></a>Centos6安装mysql手记</h1><p>由于并非专业dba，这东西是用的时候才会去找，避免下次浪费同样时间，虽写本篇手记</p>
+<h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
+<p>大概过程如下：</p>
 <ol>
-<li><p>手工编译svn，获取依赖包mod_authz_svn.so、mod_dav_svn.so，Apache server需要的，但是<br>mac上通过homebrew安装的svn是没有这些包得，原生的Apache server也没有</p>
-</li>
-<li><p>修改Apache server配置文件/etc/apache2/httpd.conf，加载对应的module</p>
-</li>
-<li><p>建立svn.conf配置文件，添加Apache server解析svn配置</p>
-</li>
-<li><p>重启Apache server</p>
-</li>
-<li><p>使用浏览器访问，验证配置</p>
-</li>
+<li>官方下载</li>
+<li>官方安装说明</li>
+<li>详细安装步骤，安装过程中遇到的问题</li>
+<li>安装成功</li>
+<li>测试运行</li>
+<li>总结</li>
 </ol>
-<p>下面为详细配置</p>
-<h2 id="下载，手工编译"><a href="#下载，手工编译" class="headerlink" title="下载，手工编译"></a>下载，手工编译</h2><p>svn的源码包下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
-<pre><code>编译安装
-./configure --with-apxs=/usr/sbin/apxs
-make
+<p>选择安装版本</p>
+<p>我直接去mysql官网<a href="http://www.mysql.com/downloads/" target="_blank" rel="external">http://www.mysql.com/downloads/</a>下载的，英语阅读尚可，就可以直接去官网下<br>这里我选择的是Oracle发布版本，然后选择RPM安装包</p>
+<p>点击下载页的选项</p>
+<pre><code>Download from Oracle eDelivery »
+</code></pre><p>我选择的系统是RHEL6(Red Hat Enterprise Linux) ，64位版本</p>
+<pre><code>MySQL Database 5.6.22 TAR for Generic Linux (glibc2.5) x86 (64bit)
 
-注意这里不需要安装，如果仅仅这样安装了版本，是不支持http和https方式访问的
+MySQL Database 5.6.22 RPM for Oracle Linux / RHEL 7 x86 (64bit)
 
-浏览是否编译成功
-ll subversion/mod_authz_svn/.libs/mod_authz_svn.so
-ll subversion/mod_dav_svn/.libs/mod_dav_svn.so
+MySQL Database 5.6.22 RPM for Oracle Linux / RHEL 6 x86 (64bit) ，这个是我要找的
 
-复制到Apache server的lib目录
-sudo cp subversion/mod_authz_svn/.libs/mod_authz_svn.so /usr/libexec/apache2/
-sudo cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/libexec/apache2
+... ...
+</code></pre><p>安装说明</p>
+<p>官方安装说明<a href="http://dev.mysql.com/doc/refman/5.6/en/linux-installation-rpm.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/linux-installation-rpm.html</a><br>因为下载zip后，解压，你会看到很多个rpm，可以看官方说明，然后了解下包之间的关系</p>
+<p>安装</p>
+<p>虚拟机建立目录</p>
+<pre><code>[root@centos65 ~]# mkdir -p /data/soft
 
-检查
-ll /usr/libexec/apache2 | grep svn
+[root@centos65 soft]# ll -d /data/soft/
+drwxr-xr-x. 2 root root 4096 1月  31 13:49 /data/soft/
+</code></pre><p>发送安装包到虚拟机，已经<a href="/macosx-config-ssh-login-virtual-machine-without-password/">配置了ssh免密码登录</a></p>
+<pre><code>scp V73603-01.zip root@centos65:/data/soft/
+</code></pre><p>查看centos6.6自带版本</p>
+<pre><code>[root@centos65 soft]# rpm -qa | grep mysql
+mysql-libs-5.1.73-3.el6_5.x86_64
+</code></pre><p>删除自带版本</p>
+<pre><code>[root@centos65 soft]# rpm -e mysql-libs-5.1.73-3.el6_5.x86_64
+</code></pre><p>依次安装如下rpm</p>
+<pre><code>rpm -ivh MySQL-devel-advanced-5.6.22-1.el6.x86_64.rpm
+rpm -ivh MySQL-shared-advanced-5.6.22-1.el6.x86_64.rpm
+rpm -ivh MySQL-shared-compat-advanced-5.6.22-1.el6.x86_64.rpm
+rpm -ivh MySQL-client-advanced-5.6.22-1.el6.x86_64.rpm
+rpm -ivh MySQL-test-advanced-5.6.22-1.el6.x86_64.rpm
+</code></pre><p>在安装embedded-advanced的时候，会因为缺少libaio而错误</p>
+<pre><code>[root@master mysql]# rpm -ivh MySQL-embedded-advanced-5.6.22-1.el6.x86_64.rpm
+error: Failed dependencies:
+    libaio.so.1()(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
+    libaio.so.1(LIBAIO_0.1)(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
+    libaio.so.1(LIBAIO_0.4)(64bit) is needed by MySQL-embedded-advanced-5.6.22-1.el6.x86_64
+</code></pre><p>安装libaio</p>
+<pre><code>yum install libaio
+</code></pre><p>再次安装embedded-advanced,以及server-advanced</p>
+<pre><code>rpm -ivh MySQL-embedded-advanced-5.6.22-1.el6.x86_64.rpm
+rpm -ivh MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm
+</code></pre><p>安装MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm，成功后能看到如下信息，如果没有看到如下信息，就是安装的时候有问题了</p>
+<pre><code>[root@centos65 soft]# rpm -ivh MySQL-server-advanced-5.6.22-1.el6.x86_64.rpm
+Preparing...                ########################################### [100%]
+   1:MySQL-server-advanced  ########################################### [100%]
+warning: user mysql does not exist - using root
+warning: group mysql does not exist - using root
+2015-01-31 14:30:05 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2015-01-31 14:30:05 1971 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2015-01-31 14:30:05 1971 [Note] InnoDB: The InnoDB memory heap is disabled
+2015-01-31 14:30:05 1971 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2015-01-31 14:30:05 1971 [Note] InnoDB: Memory barrier is not used
+2015-01-31 14:30:05 1971 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2015-01-31 14:30:05 1971 [Note] InnoDB: Using Linux native AIO
+2015-01-31 14:30:05 1971 [Note] InnoDB: Not using CPU crc32 instructions
+2015-01-31 14:30:05 1971 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2015-01-31 14:30:05 1971 [Note] InnoDB: Completed initialization of buffer pool
+2015-01-31 14:30:05 1971 [Note] InnoDB: The first specified data file ./ibdata1 did not exist: a new database to be created!
+2015-01-31 14:30:05 1971 [Note] InnoDB: Setting file ./ibdata1 size to 12 MB
+2015-01-31 14:30:05 1971 [Note] InnoDB: Database physically writes the file full: wait...
+2015-01-31 14:30:05 1971 [Note] InnoDB: Setting log file ./ib_logfile101 size to 48 MB
+2015-01-31 14:30:05 1971 [Note] InnoDB: Setting log file ./ib_logfile1 size to 48 MB
+2015-01-31 14:30:05 1971 [Note] InnoDB: Renaming log file ./ib_logfile101 to ./ib_logfile0
+2015-01-31 14:30:05 1971 [Warning] InnoDB: New log files created, LSN=45781
+2015-01-31 14:30:05 1971 [Note] InnoDB: Doublewrite buffer not found: creating new
+2015-01-31 14:30:05 1971 [Note] InnoDB: Doublewrite buffer created
+2015-01-31 14:30:05 1971 [Note] InnoDB: 128 rollback segment(s) are active.
+2015-01-31 14:30:05 1971 [Warning] InnoDB: Creating foreign key constraint system tables.
+2015-01-31 14:30:05 1971 [Note] InnoDB: Foreign key constraint system tables created
+2015-01-31 14:30:05 1971 [Note] InnoDB: Creating tablespace and datafile system tables.
+2015-01-31 14:30:05 1971 [Note] InnoDB: Tablespace and datafile system tables created.
+2015-01-31 14:30:05 1971 [Note] InnoDB: Waiting for purge to start
+2015-01-31 14:30:05 1971 [Note] InnoDB: 5.6.22 started; log sequence number 0
+2015-01-31 14:30:05 1971 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2015-01-31 14:30:05 1971 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+A random root password has been set. You will find it in &apos;/root/.mysql_secret&apos;.
+2015-01-31 14:30:05 1971 [Note] Binlog end
+2015-01-31 14:30:05 1971 [Note] InnoDB: FTS optimize thread exiting.
+2015-01-31 14:30:05 1971 [Note] InnoDB: Starting shutdown...
+2015-01-31 14:30:07 1971 [Note] InnoDB: Shutdown completed; log sequence number 1625977
 
-安装后，Apache server下应该有以下lib
-/usr/libexec/apache2|grep dav
-mod_dav.so
-mod_dav_fs.so
-mod_dav_lock.so
-mod_dav_svn.so
-</code></pre><h2 id="修改apache配置文件"><a href="#修改apache配置文件" class="headerlink" title="修改apache配置文件"></a>修改apache配置文件</h2><p>sudo vim /etc/apache2/httpd.conf </p>
-<pre><code>添加以下配置,左侧为行数
-152 LoadModule dav_module libexec/apache2/mod_dav.so
-153 LoadModule dav_fs_module libexec/apache2/mod_dav_fs.so
-154 LoadModule dav_svn_module libexec/apache2/mod_dav_svn.so
-155 LoadModule authz_svn_module libexec/apache2/mod_authz_svn.so
-</code></pre><h2 id="建立svn配置文件"><a href="#建立svn配置文件" class="headerlink" title="建立svn配置文件"></a>建立svn配置文件</h2><pre><code>&lt;Location /svn&gt;
-    DAV svn
-    SVNParentPath /Users/User/Documents/svn-repos
-    SVNListParentPath on
-    AuthType Basic
-    AuthName &quot;Subversion repositories&quot;
-    AuthUserFile /Users/User/Documents/svn-repos/account/conf/passwd
-    AuthzSVNAccessFile /Users/User/Documents/svn-repos/account/conf/authz
-    Require valid-user
-&lt;/Location&gt;
-</code></pre><p><code>SVNParentPath</code> 为svn仓库的根目录，参照<code>/Users/User/Documents/svn-repos/account/conf/passwd</code>,<br>看下自己该输入哪个路径</p>
-<p><code>AuthUserFile</code> 为svn密码管理的路径</p>
-<p><code>AuthzSVNAccessFile</code> 为权限配置的路径</p>
-<h2 id="添加svn用户"><a href="#添加svn用户" class="headerlink" title="添加svn用户"></a>添加svn用户</h2><pre><code>根据提示输入密码
-sudo htpasswd -c /Users/User/Documents/svn-repos/account/conf/passwd admin
-</code></pre><p>这里注意，这种添加的用户密码就不是明文了，和之前直接修改添加的不同</p>
-<h2 id="配置权限"><a href="#配置权限" class="headerlink" title="配置权限"></a>配置权限</h2><pre><code>vim /Users/User/Documents/svn-repos/account/conf/authz
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>打开浏览器访问地址
-http://localhost/svn
 
-如果配置正确，能够看到正确地svn项目列表
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我在安装的时候遇到了很多问题，我首先google的关键字是<code>mac Apache svn</code>，然后<br>发现配置需要的module没有，然后手工编译svn，</p>
-<p>编译svn的时候，我的是<code>1.8.*</code>版本，最后我用的是<code>1.8.10</code>，又下载了一系列的依赖包，而且<br><code>1.7.*</code> 和 <code>1.8.*</code> 提供http和https访问使用的还不同</p>
-<p>最后还是被我编译成功了，但是问题又出现了，在跟Apache server集成的时候，出现错误</p>
-<pre><code>httpd: Syntax error on line 120 of /etc/apache2/httpd.conf: 
-Cannot load /usr/libexec/apache2/mod_dav_svn.so into server: 
-dlopen(/usr/libexec/apache2/mod_dav_svn.so, 10): 
-Library not loaded: /usr/local/bin/apache2/lib/libaprutil-1.0.dylib\n  
-Referenced from: /usr/local/lib/libsvn_repos-1.0.dylib\n  
-Reason: Incompatible library version: libsvn_repos-1.0.dylib requires version 6.0.0 or later, 
-but libaprutil-1.0.dylib provides version 4.0.0
-</code></pre><p>最后解决的方法我在这篇文章中受到启发<a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
-<p>在解决的过程中，发现我之前自己编译安装的svn会给通过brew安装造成很多错误，<br>最好先清空下列文件夹中<code>svn</code>开头的内容</p>
-<pre><code>/usr/local/include
-/usr/local/lib
-/usr/local/share/man/man1/
-/usr/local/share/man/man5/
-/usr/local/share/man/man8/
-</code></pre><p>直到<code>brew install subversion</code>成功，</p>
-<p>启动Apache server后，又遇到错误</p>
-<p>apache 日志目录 <code>/private/var/log/apache2/</code></p>
-<pre><code>[Sat Nov 29 21:15:00.773969 2014] [auth_basic:error] [pid 45831] [client 127.0.0.1:54634] AH01617: 
-user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mismatch
-</code></pre><p>我的路径<code>/Users/User/Documents/svn-repos/account/</code> Documents,需要读写权限</p>
-<pre><code>chmod -R 755 /Users/User/Documents
-</code></pre><p>然后重启Apache server访问才成功.</p>
-<p>参考地址</p>
-<p><a href="https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0" target="_blank" rel="external">https://discussions.apple.com/thread/5657293?start=15&amp;tstart=0</a></p>
-<p><a href="http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/" target="_blank" rel="external">http://www.dssw.co.uk/blog/2014-01-07-serving-svn-with-httpd-on-os-x-10-9/</a></p>
+2015-01-31 14:30:07 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2015-01-31 14:30:07 1994 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2015-01-31 14:30:07 1994 [Note] InnoDB: The InnoDB memory heap is disabled
+2015-01-31 14:30:07 1994 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2015-01-31 14:30:07 1994 [Note] InnoDB: Memory barrier is not used
+2015-01-31 14:30:07 1994 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2015-01-31 14:30:07 1994 [Note] InnoDB: Using Linux native AIO
+2015-01-31 14:30:07 1994 [Note] InnoDB: Not using CPU crc32 instructions
+2015-01-31 14:30:07 1994 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2015-01-31 14:30:07 1994 [Note] InnoDB: Completed initialization of buffer pool
+2015-01-31 14:30:07 1994 [Note] InnoDB: Highest supported file format is Barracuda.
+2015-01-31 14:30:07 1994 [Note] InnoDB: 128 rollback segment(s) are active.
+2015-01-31 14:30:07 1994 [Note] InnoDB: Waiting for purge to start
+2015-01-31 14:30:07 1994 [Note] InnoDB: 5.6.22 started; log sequence number 1625977
+2015-01-31 14:30:07 1994 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2015-01-31 14:30:07 1994 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+2015-01-31 14:30:07 1994 [Note] Binlog end
+2015-01-31 14:30:07 1994 [Note] InnoDB: FTS optimize thread exiting.
+2015-01-31 14:30:07 1994 [Note] InnoDB: Starting shutdown...
+2015-01-31 14:30:09 1994 [Note] InnoDB: Shutdown completed; log sequence number 1625987
+
+
+
+
+A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !
+You will find that password in &apos;/root/.mysql_secret&apos;.
+
+You must change that password on your first connect,
+no other statement but &apos;SET PASSWORD&apos; will be accepted.
+See the manual for the semantics of the &apos;password expired&apos; flag.
+
+Also, the account for the anonymous user has been removed.
+
+In addition, you can run:
+
+  /usr/bin/mysql_secure_installation
+
+which will also give you the option of removing the test database.
+This is strongly recommended for production servers.
+
+See the manual for more instructions.
+
+Please report any problems at http://bugs.mysql.com/
+
+The latest information about MySQL is available on the web at
+
+  http://www.mysql.com
+
+Support MySQL by buying support/licenses at http://shop.mysql.com
+
+New default config file was created as /usr/my.cnf and
+will be used by default by the server when you start it.
+You may edit this file to change server settings
+</code></pre><p>上面有用的信息，</p>
+<ol>
+<li>已经生成了默认的密码，放在<code>/root/.mysql_secret</code>,</li>
+<li>在你执行任何操作之前，必须修改默认密码</li>
+<li>如果是生产库，建议运行<code>/usr/bin/mysql_secure_installation</code>按照提示，优化安装</li>
+</ol>
+<p>看到上面信息，说明整个安装已经成功了。</p>
+<p>测试运行</p>
+<pre><code>直接输入
+mysql
+
+错误信息
+
+ERROR 2002 (HY000): Can&apos;t connect to local MySQL server through socket &apos;/var/lib/mysql/mysql.sock&apos; (2)
+</code></pre><p>这个原因是没有启动mysql服务，5.6.22版本服务名称是<code>mysql</code>,之前是<code>mysqld</code>,可以通过 <code>ll /etc/init.d/ | grep mysql</code>查询</p>
+<pre><code>启动mysql服务
+service mysql start
+</code></pre><p>再次输入</p>
+<pre><code>mysql
+
+错误信息
+
+ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: NO)
+</code></pre><p>这是因为没有输入root的密码，mysql5.6.22为每个版本默认设置了密码，放在隐藏文件下</p>
+<pre><code>查看生成的默认root密码，每个人，应该都不相同
+[root@centos65 soft]# cat /root/.mysql_secret
+# The random password set for the root user at Sat Jan 31 14:30:05 2015 (local time): vc82GaO9xntAL9HK
+
+使用密码再次登录
+mysql -uroot -pvc82GaO9xntAL9HK
+
+执行简单命令
+mysql&gt; show databases;
+
+错误信息
+ERROR 1820 (HY000): You must SET PASSWORD before executing this statement
+
+必须重置默认密码
+
+SET PASSWORD = PASSWORD(&apos;000000&apos;);
+</code></pre><p>设置后，<code>\q</code>退出mysql命令行<code>ctrl + c</code>暴力退出</p>
+<p>再次登录</p>
+<pre><code>[root@centos65 soft]# mysql -uroot -p000000
+</code></pre><p>所有工作ok。</p>
+<p>我在有一台机器上遇到如下错误</p>
+<pre><code>service mysql start ，遇到下面错误
+Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql/master.pid).
+</code></pre><p>说明根本没有安装成功，可能是磁盘满了，那台机器硬盘空间较小，之前搞过hadoop集群测试，<br>不过这个问题，每个人情况可能都不一样</p>
+<p>总结</p>
+<ol>
+<li>mysql 5.6.22 和之前相比较，提升了很多新东西，建议升级</li>
+<li>Linux centos 6 上安装和mac区别太大，遇到问题，要能搞定</li>
+<li>学会看官方文档和Google</li>
+</ol>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/27/thinking-about-it-learning/" itemprop="url">
+                  学习知识的心得
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-27T23:44:01+08:00" content="2015-01-27">
+              2015-01-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/heart/" itemprop="url" rel="index">
+                    <span itemprop="name">heart</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/27/thinking-about-it-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/thinking-about-it-learning/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/27/thinking-about-it-learning/" class="leancloud_visitors" data-flag-title="学习知识的心得">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="学习知识的体会心得"><a href="#学习知识的体会心得" class="headerlink" title="学习知识的体会心得"></a>学习知识的体会心得</h1><p>目前自己掌握了基础的学习新知识的能力，在不断的被吊打中磨练出来的</p>
+<p>知识，要积累，要多模仿，换成自己的，自己要有自己的知识体系和归档，方便用时候查阅</p>
+<p>能力，需要不断的锻炼，不断去读书，打好基础，计算机行业的话，操作系统和数据结构和算法，这个<br>一定要懂，不要求十分精通，但是一定要掌握，不然永远是飘着的，根儿没扎好</p>
+<p>学新东西，看官方，英文文档是很重要的，那么自然的，阅读英文的能力对于程序员来说是必备的，还不行的<br>话，就从现在开始，自己做项目的空闲时间，找自己当前项目用到的技术的官方reference或者document，提<br>高不是一蹴而就</p>
+<p>学英文，stackoverflow要上，Quora要上，上面找自己感兴趣的话题和标签，他们会给你推送很多东西，读<br>然后进步</p>
+<p>全面看一个东西的API很有用，比如学习Jquery，它的官方API如果你看过，而且看完了，肯定是会有收获的，</p>
+<p>看书学东西，是很推荐的，但是刚开始的时候总是那么难，当你拿到一个600页，700页的书的时候，总是那么害怕，<br>当打开书的时候，一看内容，有些会，但有些真的不会，适当跳过，敲源代码，慢慢在工作中领悟</p>
+<p>一本书都是作者智慧的结晶，写过博客的人才能体会到吧，不管人家写的多烂，或者是讲解API，毕竟肯定多多少少<br>加入了自己的思考和总结，总能学到自己不会得</p>
+<p>遇到问题的时候，不轻易放过，多想想为什么自己想错了，当年理解Jquery对象和javascript对象之后，豁然开朗，为什么<br>对javascript对象.val()不能获取到值，而且后来教给了好几个同事</p>
+<p>后台，分布式，多线程，tcp/ip很重要啊，工作5-6年如果感觉自己到瓶颈，那就是自己的问题了 ~~</p>
+<p>14年一边看，一边学了Linux应用，因为没做过运维或管理员，很顺利的忘记了那些 囧~，但是我现在回来重新用的时候，<br>可以通过记忆和笔记不用Google解决问题，然后再分享成博客归档，我想我说我掌握Linux使用比较合适吧，千万不能说<br>精通，然后再走向熟练，但是也比了解好太多，只能说掌握，嗯，掌握，很好地中性词</p>
+<p>靠搜索引擎才会的东西，不算掌握，只能说了解，而知识也都是自己亲身要用了，才会真正去学习，会有很多雷达，关注<br>很多东西，但是 没太走心 </p>
+<p>使用IDE的时候，把所有的提示都关闭了吧，然后API放手边，随时看，随时写，多写几遍，那些方法名就记下来了，然后<br>你会发现，自己在不断提高</p>
+<p>早点建立自己的博客吧，也可以是csdn或者cnblogs，任何博客平台都好，关键是你要写，</p>
+<p>14年，我在搜索引擎上发现可以用github写博客，当时很兴奋，但是一看早在2012年左右，人们已经用的如火如荼，好吧，又是别人已经不准备用的东西，我才知道，我才进来 在囧一次</p>
+<p>当时，只记得那个同学告诉我，重要是你要写，在哪写不重要，这句话，永远记得，</p>
+<p>最难的也就是，重要是你要做</p>
+<p>尽管有jekyll，有markdown，有ruby，在当时都是一窍不通，但是都走过来了，</p>
+<p>重要的是要做，步子迈起来是多么重要啊</p>
+<p>要学得还很多</p>
+<p>早点停止打游戏吧，庆幸11年下半年已经结束</p>
+<p>时间总是挤的，也总是不够用</p>
+<p>，嗯，早点睡吧，不早了 ~~~</p>
+<p>竟然写了这么多</p>
+<p>-EOF-</p>
 
           
         
@@ -1082,7 +1185,7 @@ user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mism
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1123,7 +1226,7 @@ user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mism
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1131,7 +1234,7 @@ user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mism
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1140,7 +1243,7 @@ user favoorr: authentication failure for &quot;/svn/account&quot;: Password Mism
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

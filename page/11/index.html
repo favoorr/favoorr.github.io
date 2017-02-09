@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
-                  git rebase命令学习
+                <a class="post-title-link" href="/2015/05/18/install-zabbix-agentd/" itemprop="url">
+                  zabbix agentd 安装
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-08T20:24:25+08:00" content="2015-01-08">
-              2015-01-08
+            <time itemprop="dateCreated" datetime="2015-05-18T17:49:21+08:00" content="2015-05-18">
+              2015-05-18
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/08/git-rebase-command-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-rebase-command-summary/" itemprop="commentsCount"></span>
+                <a href="/2015/05/18/install-zabbix-agentd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-agentd/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/01/08/git-rebase-command-summary/" class="leancloud_visitors" data-flag-title="git rebase命令学习">
+             <span id="/2015/05/18/install-zabbix-agentd/" class="leancloud_visitors" data-flag-title="zabbix agentd 安装">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,29 +337,7 @@
       
         
           
-            <h1 id="git-rebase命令学习"><a href="#git-rebase命令学习" class="headerlink" title="git rebase命令学习"></a>git rebase命令学习</h1><p>阮老师对git rebase讲了一个点，可以和merge类似的操作，<br>最基本的时候，可以达到merge相同效果</p>
-<p>一个台湾同胞写的教程，非常详细</p>
-<p><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase</a></p>
-<p>这里也简单介绍到了</p>
-<p><a href="http://gitbook.liuhui998.com/4_3.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_3.html</a></p>
-<p>写下自己的理解：</p>
-<p><strong>假设</strong></p>
-<p>三个分支 master dev favoorr</p>
-<p><strong>场景一</strong></p>
-<p>favoorr衍生于 dev ，现在想修改到master，</p>
-<p>可以在favoorr分支执行 git rebase master ，切换参考基准</p>
-<p><strong>场景二</strong></p>
-<p>favoorr 分支,本来衍生自提交aaaaa，现在想修改，衍生自提交yyyyy</p>
-<p>在favoorr分支上上执行 git rebase –onto yyyyy aaaaa</p>
-<p>git rebase –onto <new base-commit=""> <current base-commit=""></current></new></p>
-<p>git rebase –continue 如果有冲突，处理完冲突后，继续</p>
-<p><strong>场景三</strong></p>
-<p>1.开发的时候，遇到很多提交，想合并连续两次的小提交</p>
-<p>2.或者之前的提交想改变顺序，提交zzz，应该放到提交xxx的前面</p>
-<p>3.或者之前的提交commit写的有错别字，那么可以用rebase修改</p>
-<p>git rebase -i xxxxx,你准备从这里开始整理提交，在提交一遍</p>
-<p>git rebase 都可以做到</p>
-<p>svn 里面没有搞过这种修改</p>
+            <h1 id="agentd-install"><a href="#agentd-install" class="headerlink" title="agentd install"></a>agentd install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">groupadd zabbix -g 201</div><div class="line"></div><div class="line">useradd -g zabbix -u 201 -m zabbix</div><div class="line"></div><div class="line">tar -zxv -f zabbix-2.4.5.tar.gz</div><div class="line"></div><div class="line">cd zabbix-2.4.5</div><div class="line"></div><div class="line">yum -y install gcc gcc-c++ autoconf  mod_ssl mod_perl  net-snmp-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-agent</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; /etc/zabbix/zabbix_agentd.conf</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=192.168.56.110</div><div class="line">ServerActive=192.168.56.110</div><div class="line">Hostname=dev1</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
 
           
         
@@ -409,8 +387,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/01/08/git-remote-command-summary/" itemprop="url">
-                  git操作远程仓库
+                <a class="post-title-link" href="/2015/05/18/install-zabbix-server/" itemprop="url">
+                  zabbix server安装
                 </a>
               
             
@@ -423,8 +401,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-08T20:22:07+08:00" content="2015-01-08">
-              2015-01-08
+            <time itemprop="dateCreated" datetime="2015-05-18T17:46:09+08:00" content="2015-05-18">
+              2015-05-18
             </time>
           </span>
 
@@ -437,8 +415,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
                   </a>
                 </span>
 
@@ -453,8 +431,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/01/08/git-remote-command-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-remote-command-summary/" itemprop="commentsCount"></span>
+                <a href="/2015/05/18/install-zabbix-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-server/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -464,7 +442,7 @@
 
           
           
-             <span id="/2015/01/08/git-remote-command-summary/" class="leancloud_visitors" data-flag-title="git操作远程仓库">
+             <span id="/2015/05/18/install-zabbix-server/" class="leancloud_visitors" data-flag-title="zabbix server安装">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -488,366 +466,40 @@
       
         
           
-            <h1 id="git操作远程仓库"><a href="#git操作远程仓库" class="headerlink" title="git操作远程仓库"></a>git操作远程仓库</h1><p>这里对fetch和rebase的用法存在疑惑，Google了下，找到阮老师的教程，<br>推荐看原版，下面内容加入了自己理解</p>
-<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><pre><code>git clone https://github.com/jquery/jquery.git 远程主机被默认命名为 origin（起源）
-git clone https://github.com/jquery/jquery.git myjquerycopy 创建自己的目录，一般不需要加目录
-</code></pre><p>支持的所有的协议</p>
-<pre><code>git clone http[s]://example.com/path/to/repo.git/
-git clone ssh://example.com/path/to/repo.git/
-git clone git://example.com/path/to/repo.git/
-git clone /opt/git/project.git 
-git clone file:///opt/git/project.git
-git clone ftp[s]://example.com/path/to/repo.git/
-git clone rsync://example.com/path/to/repo.git/
-</code></pre><h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><pre><code>git remote 查看所有的远程主机，只会显示列表
-git remote -v
-git clone -o jQuery https://github.com/jquery/jquery.git  将远程仓库命名为jQuery，即更改默认的origin
-git remote show 查看更加详细的信息
-git remote add origin https://github.com/jquery/jquery.git 添加远程仓库
-git remote rm origin 删除远程仓库
-git remote rename origin github 将远程仓库由默认的origin更改为github
-</code></pre><h2 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h2><p>这个命令是将远程仓库的更新拉到本地仓库，而不是本地工作区，但不会与当前分支合并</p>
-<pre><code>git fetch 拉取远程仓库所有分支的所有更新
-git fetch master 仅仅拉取master分支的更新
-git branch -r 查看远程的所有分支
-git branch -a 查看所有分支
-git checkout -b newBrach origin/master 取回远程分支的更新，并创建新分支
-git merge origin/master 将远程分支更新取回本地仓库，并与当前分支合并
-
-git rebase origin/master 
-等同于
-git merge origin/master
-</code></pre><h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>取回远程主机的某个分支与本地的某个分支合并</p>
-<pre><code>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;
-
-git pull origin next:master 取回远程主机的next分支与本地的master分支合并
-git pull origin next 取回远程主机的next分支，与当前默认分支合并，这里要注意了
-
-git pull origin next 
-等同于 
-git fetch origin
-git merge origin/next
-
-本地分支与远程同名分支默认会建立追踪关系，git clone 时，会将本地master和远程master建立关系
-
-git branch --set-upstream master origin/next 将本地的master和远程的next建立追踪关系
-
-如何查看本地分支是否与远程分支建立追踪关系？？？？
-
-git branch -r 可以列出远程有追踪关系的分支，但是不能针对分支查看，比如查看本地dev关联什么分支，可能习惯上，本地分支和远程分支名称都要一样，你可以不关联，但是不要搞本地 xx 分支 和远程yy分支关联
-
-如果当前分支有与之建立追踪关系的远程分支，git pull可以省略远程分支名
-
-git pull origin 本地分支自动拉取origin与之建立追踪关系的分支的更新并且合并
-
-git pull 如果只有一个远程主机，并建立一个追踪关系，可以省略全部参数
-
-git pull --rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; 如果需要采用rebase模式，何时采用哪？？？
-</code></pre><h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>将本地分支的更新推送到远程分支</p>
-<pre><code>git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
-
-git push origin master 如果已经建立追踪关系，可以省略远程分支，如果远程分支不存在，就会新建
-
-git push origin :master 省略本地分支，等于推送了空到远程分支，相当于删除所有内容
-等同于
-git push origin --delete master 删除origin主机的master分支
-
-git push origin 如果本地分支和远程分支有追踪关系，两个名词都可以省略
-
-git push 如果只有一个远程追踪，远程主机也可以省略
-
-git push -u origin master 如果存在多个远程主机关联，可以使用-u设置默认主机，设置后，可以使用 git push
-
-push.default 含义，2.0之前采用matching，之后改为simple
-
-git config --global push.default matching
-git config --global push.default simple
-
-simple 默认只推送当前分支
-matching 会推送所有有追踪关系的本地分支
-
-git push --all origin 不管是否有对应的远程分支，全部推送到远程主机
-
-git push --force origin 如果远程高于本地无法推送，可以强行推送，不建议使用
-
-git push origin --tags tag默认不会推送，必须加参数
-
-git push --set-upstream origin master  和远程master分支建立追踪关系，并push当前分支
-</code></pre><h2 id="新增远程仓库操作"><a href="#新增远程仓库操作" class="headerlink" title="新增远程仓库操作"></a>新增远程仓库操作</h2><pre><code>git clone -o booyah  命名初始远程仓库不叫 origin ，叫 booyah
-
-git fetch origin  更新本地分支与远程分支同步，拉取远程代码到本地
-
-git remote add github git@xxxx.xxx.xx:yy.git 添加新的远程仓库 github 
-
-git push origin serverfix:awesomebranch 将本地分支 serverfix 推送到远程仓库 origin 中 awesomebranch
-
-git merge origin/serverfix 将远程分支与自己当前分支合并
-
-git checkout -b serverfix origin/serverfix  新建分支，以 远程分支为基础
-
-git checkout -b sf origin/serverfix  远程分支和本地分支使用不同的名字
-
-git checkout --track origin/serverfix  跟踪分支，远程分支和本地分支操作简化命令
-
-git branch -u origin/serverfix 当前本地分支关联远程分支 --set-upstream-to 的简写 -u
-
-git merge @{u}  等于 git merge git merge origin/master  ,使用 @{u} @{upstream} 代替 origin/master
-
-git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远程分支情况
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/29/git-learn-summary/" itemprop="url">
-                  git 入门学习笔记-备忘
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-29T17:46:42+08:00" content="2014-12-29">
-              2014-12-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/29/git-learn-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/29/git-learn-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/29/git-learn-summary/" class="leancloud_visitors" data-flag-title="git 入门学习笔记-备忘">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习参照连接：</p>
-<p>廖雪峰老师的git教程</p>
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
-<h1 id="下面是学习笔记"><a href="#下面是学习笔记" class="headerlink" title="下面是学习笔记"></a>下面是学习笔记</h1><p>再次推荐程序员使用mac笔记本，不多说</p>
-<h2 id="单机功能"><a href="#单机功能" class="headerlink" title="单机功能"></a>单机功能</h2><pre><code>git init 初始化本地仓库
-git add filename ... 添加到暂存区 
-
-git commit -m &quot;a tip&quot; 添加到本地仓库 没有add的，不会 commit
-git commit readme.txt -m &quot;test1&quot;   会提交所有的改动，即使没有add，
-
-git status 查看本地工作区状态
-git log 查看本地提交日志
-git reflog 查看本地所有操作记录
-git reset --hard xxxxx 从本地仓库恢复到某个版本，改变head指针
-git reset --hard HEAD^  恢复上一个稳定版本
-
-log的几种用法 截取的zsh下的alias  ，alias | grep &apos;git log&apos;
-glg=&apos;git log --stat --max-count=10&apos;
-glgg=&apos;git log --graph --max-count=10&apos;
-glgga=&apos;git log --graph --decorate --all&apos;
-glo=&apos;git log --oneline --decorate --color&apos;
-glog=&apos;git log --oneline --decorate --color --graph&apos;
-
-git log --pretty=oneline --abbrev-commit   简短显示提交内容
-git log -p -2 展示每次提交的差异,显示的是行层面的对比
-git log -U1 --word-diff  显示的是单词层面的对比
-git log --stat  显示增改行数统计
-git log --pretty=oneline 一行显示  glo ,会显示最后一次提交的
-
-gitk 一个查看git发布的工具，执行命令后，直接显示
-</code></pre><p>概念部分</p>
-<pre><code>工作区 新建文件，就在工作区
-暂存区 通过add 就添加到暂存区
-本地仓库 通过commit，就添加到本地仓库，进行版本管理
-</code></pre><p>git 管理的是提交，而不是文件，下面是示例</p>
-<p>git对同一个文件修改两次，但是只有一次会被提交到仓库</p>
-<p>第一次修改 – add – 第二次修改 – commit – 只有第一次add的被commit到本地库</p>
-<p>上面操作过后，第二次对文件的修改并没有被提交</p>
-<p>撤销修改</p>
-<pre><code>git checkout -- readme.txt  恢复一次修改
-</code></pre><p>一种可能是还没有add到暂存区，那么直接可以恢复到修改之前</p>
-<p>一种是add到暂存区，还没有到本地仓库,然后又修改了，这样子会回到上一次add的状态，没有add的会回退</p>
-<p>会回到上次 add 之前的状态</p>
-<pre><code>git reset HEAD  file 回到 add 前的状态，从暂存区拉倒工作区
-
-git checkout -- file 从工作区拉倒修改前
-</code></pre><p>删除文件</p>
-<pre><code>git rm file  删除文件，否则不能提交
-</code></pre><p>分支</p>
-<pre><code>分支使用：创建分支--添加功能--分支提交--切换主分支--主分支合并--删除子分支
-git checkout -b dev  创建并切换
-git branch dev 创建dev分支
-git checkout dev  切换dev分支
-vim readme.txt
-git add readme.txt
-git commit -m &quot;branch test&quot;
-git checkout master
-git merge dev
-git branch -d dev
-</code></pre><p>当出现同时编辑一行的时候，会出现冲突，冲突后需要手工合并，在提交</p>
-<p>合并分支中，</p>
-<pre><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev
-</code></pre><p>通过参数，禁用fast-forward,产生合并记录</p>
-<pre><code>git log --graph --pretty=oneline --abbrev-commit  查看分支合并图
-</code></pre><p>分支使用场景：暂停手头工作–拉取分支–修改bug–提交–合并</p>
-<p>工作进行到一半，需要修改bug，</p>
-<pre><code>git stash 
-
-fix bug
-
-git merge
-
-git stash pop
-
-git stash list
-
-git stash apply 
-
-对于没有合并的分支
-
-git branch -D branchName 强行删除
-</code></pre><p>标签tag</p>
-<pre><code>git tag v1.0  为当前提交打tag 1.0
-git tag 列出当前有的 tag
-git show v0.9 显示某个标签信息
-git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164  从以往的提交建立带说明的标签
-git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 私钥签名的标签
-git tag -d v0.1 删除本地标签
-git push origin v1.0  将本地标签推送远程
-git push origin --tags  一次性将本地未推送的标签全部推送
-如果标签已经推送远程仓库，删除需要两步
-git tag -d v0.9  删除本地
-git push origin :refs/tags/v0.9 删除远程标签
-</code></pre><h2 id="github作为远程仓库"><a href="#github作为远程仓库" class="headerlink" title="github作为远程仓库"></a>github作为远程仓库</h2><pre><code>加入ssh key方法
-https://help.github.com/articles/generating-ssh-keys/ 
-
-ssh -T git@github.com
-Hi favoorr! You&apos;ve successfully authenticated, but GitHub does not provide shell access.
-
-git clone git@github.com:michaelliao/gitskills.git   克隆远程项目到本地
-git clone user@server:/path.git 协议规范
-git clone https://github.com/favoorr/gitdemo.git  使用https协议
-
-git remote add origin https://github.com/favoorr/gitdemo.git  关联远程仓库
-
-git push -u origin master 第一次关联后，推送本地仓库到远程仓库，需要输入账号和密码
-
-git push origin master 如果已经和远程仓库关联，将本地的内容推送到远程的master分支
-
-git remote 显示远程仓库信息 
-git remote -v
-
-git pull 拉取最新修改 ，可能会失败，要先让本地分支和远程分支关联
-
-git checkout -b dev origin/dev  创建远程分支到本地
-
-git push origin dev  将本地仓库内容推送到远程dev分支，如果远程分支版本高于自己，会失败，要先拉取，合并，在push
-</code></pre><h2 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h2><p>设置颜色</p>
-<pre><code>git config --global color.ui true
-</code></pre><p>忽略特殊文件，如果某些文件不想提交，可以写在这个文件里面</p>
-<pre><code>.gitignore
-</code></pre><p>手工别名</p>
-<pre><code>git config --global alias.st status
-</code></pre><p>配置文件</p>
-<pre><code>.git/config
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>以上为学习过程中的笔记，整体来说，学完这个简单的教程，会有一个整体的理解，<br>但是要在在工作中使用git，还需要多问Google</p>
+            <h1 id="censos-6-6-安装zabbix"><a href="#censos-6-6-安装zabbix" class="headerlink" title="censos 6.6 安装zabbix"></a>censos 6.6 安装zabbix</h1><p>已经手工安装了mysql，安装其他依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc gcc-c++ autoconf httpd php php-mysql httpd-manual mod_ssl mod_perl mod_auth_mysql php-gd php-xml php-mbstring php-ldap php-pear php-xmlrpc php-bcmath libdbi-dbd-mysql net-snmp-devel curl-devel unixODBC-devel OpenIPMI-devel java-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-server --enable-agent --enable-proxy --with-mysql --with-net-snmp --with-libcurl</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div></pre></td></tr></table></figure>
+<p>修改 php 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vim /etc/php.ini</div><div class="line"></div><div class="line">date.timezone = Asia/Shanghai</div><div class="line">max_execution_time = 300</div><div class="line">post_max_size = 32M</div><div class="line">max_input_time=300</div><div class="line">memory_limit = 128M</div><div class="line">mbstring.func_overload = 2</div><div class="line"></div><div class="line">修改php.ini 配置后，需要重启 service httpd restart</div></pre></td></tr></table></figure>
+<p>下载安装 zabbix，使用rpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget &quot;http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-2.4.5-1.el6.x86_64.rpm&quot;</div><div class="line"></div><div class="line">chmod +x zabbix-2.4.5-1.el6.x86_64.rpm</div><div class="line"></div><div class="line">rpm -ivh zabbix-2.4.5-1.el6.x86_64.rpm</div></pre></td></tr></table></figure>
+<p>启动mysql服务</p>
+<p>6.6服务名，由 mysqld 重命名为 mysql 了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service mysql status</div><div class="line"></div><div class="line">service mysql start</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chkconfig httpd on</div><div class="line"></div><div class="line">service httpd start</div></pre></td></tr></table></figure>
+<p>创建mysql数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div><div class="line"></div><div class="line">create database zabbix character set utf8;</div><div class="line"></div><div class="line">grant all privileges on zabbix.* to zabbix@localhost identified by &apos;zabbix&apos;;</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">测试</div><div class="line">mysql -uzabbix -pzabbix</div></pre></td></tr></table></figure>
+<p>执行初始化数据库脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/schema.sql</div><div class="line"></div><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/images.sql</div><div class="line"></div><div class="line">mysql -uzabbix -pzabbix zabbix &lt; ./database/mysql/data.sql</div></pre></td></tr></table></figure>
+<p>创建日志文件夹（如果是安装rpm，文件夹已经创建了，可跳过）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div></pre></td></tr></table></figure>
+<p>从源码目录复制 service 启动脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /root/zabbix-2.4.5</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_* /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_*</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_server</div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">BASEDIR=/usr 和 --prefix=/usr 保持一致</div></pre></td></tr></table></figure>
+<p>修改zabbix server配置文件 zabbix_server.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp conf/zabbix_server.conf /etc/zabbix/</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; zabbix_server.conf</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">线上环境参考配置</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_server.log</div><div class="line">DBHost=localhost</div><div class="line">DBName=zabbix</div><div class="line">DBUser=zabbix</div><div class="line">DBPassword=zabbix</div><div class="line">DBSocket=/var/lib/mysql/mysql.sock</div><div class="line">DBPort=3306</div><div class="line">StartPollers=160</div><div class="line">StartTrappers=20</div><div class="line">StartPingers=100</div><div class="line">StartDiscoverers=120</div><div class="line">MaxHousekeeperDelete=5000</div><div class="line">CacheSize=1024M</div><div class="line">StartDBSyncers=16</div><div class="line">HistoryCacheSize=1024M</div><div class="line">TrendCacheSize=1024M</div><div class="line">HistoryTextCacheSize=512M</div><div class="line">AlertScriptsPath=/etc/zabbix/alertscripts</div><div class="line">LogSlowQueries=1000</div></pre></td></tr></table></figure>
+<p>对本机进行监控，修改 zabbix_agentd.conf  配置文件</p>
+<p>Server=127.0.0.1 此处添加服务端的 ip,如服务器不为本机,则需要填写远端 zabbix_server 的ip地址<br>ServerActive=127.0.0.1 此处修改为服务端的 ip<br>UnsafeUserParameters=0 默认是不启用自定义脚本功能的,要自定义 key,需开启,设置为 1</p>
+<p>egrep -v “(#|^$)” /etc/zabbix/zabbix_agentd.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=127.0.0.1,192.168.1.89</div><div class="line">StartAgents=8</div><div class="line">ServerActive=192.168.1.89:10051</div><div class="line">Hostname=nat.kx1d.com</div><div class="line">Timeout=30</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
+<p>复制网页文件到 Apache 目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cp -r ./frontends/php/ /var/www/html/zabbix</div><div class="line">chown -R apache.apache /var/www/html/zabbix</div><div class="line"></div><div class="line">http://dev1/zabbix</div></pre></td></tr></table></figure>
+<p>Admin<br>zabbix</p>
+<p>排错使用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看是否有zabbix进程在运行</div><div class="line">ps aux |grep zabbix</div><div class="line"></div><div class="line">10050 10051 端口是否在监听</div><div class="line">netstat -nplut |grep zabbix</div><div class="line"></div><div class="line">关闭 selinux ，我是运维菜鸟，唯一应付的办法，就是停用 iptables 停用 selinux</div><div class="line">setsebool -P httpd_can_network_connect on</div></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="http://fengzhige.blog.51cto.com/3691377/1034485" target="_blank" rel="external">http://fengzhige.blog.51cto.com/3691377/1034485</a></p>
+<p><a href="http://54im.com/monitor/zabbix/zabbix%E7%9B%91%E6%8E%A7%E6%8A%A5%E9%94%99zabbix-server-is-not-running-the-information-displayed-may-not-be-current%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html" target="_blank" rel="external">http://54im.com/monitor/zabbix/zabbix%E7%9B%91%E6%8E%A7%E6%8A%A5%E9%94%99zabbix-server-is-not-running-the-information-displayed-may-not-be-current%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html</a></p>
+<p>我的问题时 selinux 没有关闭</p>
 
           
         
@@ -897,8 +549,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
             
               
                 
-                <a class="post-title-link" href="/2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="url">
-                  Sequel Pro不执行sql问题
+                <a class="post-title-link" href="/2015/05/18/linux-error/" itemprop="url">
+                  linux 排错记录
                 </a>
               
             
@@ -911,8 +563,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-24T11:32:01+08:00" content="2014-12-24">
-              2014-12-24
+            <time itemprop="dateCreated" datetime="2015-05-18T14:05:53+08:00" content="2015-05-18">
+              2015-05-18
             </time>
           </span>
 
@@ -925,8 +577,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -941,8 +593,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/24/sequal-pro-not-execute-sql-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="commentsCount"></span>
+                <a href="/2015/05/18/linux-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/linux-error/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -952,7 +604,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
 
           
           
-             <span id="/2014/12/24/sequal-pro-not-execute-sql-error/" class="leancloud_visitors" data-flag-title="Sequel Pro不执行sql问题">
+             <span id="/2015/05/18/linux-error/" class="leancloud_visitors" data-flag-title="linux 排错记录">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -976,12 +628,13 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
       
         
           
-            <p>Sequel Pro使用command + R 在Query视图不执行sql问题</p>
-<p>在mac上使用了Sequel Pro作为mysql管理客户端，昨天下午遇到了一个问题，<br>Query视图command + R不能执行sql语句了，研究了之后，发现是软件本身的机制，<br>下面图片大家看下</p>
-<p>正常情况下</p>
-<p><img src="/assets/sequal-pro-not-execute-sql-1.png" alt="pic 1" title="正常的图片"></p>
-<p>如果拉下来，就不能执行了</p>
-<p><img src="/assets/sequal-pro-not-execute-sql-2.png" alt="pic 2" title="如果拉下来，就不能执行了"></p>
+            <h1 id="Linux排错记录"><a href="#Linux排错记录" class="headerlink" title="Linux排错记录"></a>Linux排错记录</h1><p>记录所有在Linux上遇到的问题，以及错误解决过程和方法</p>
+<p>常用的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">查看一个进程是否运行</div><div class="line">ps aux |grep zabbix </div><div class="line">ps -ef | grep</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">查看某一个端口号是否在监听</div><div class="line">netstat -nplut | grep 22</div><div class="line">tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      2154/sshd</div><div class="line">tcp        0      0 :::22                       :::*                        LISTEN      2154/sshd</div><div class="line"></div><div class="line">查看某一个应用端口是否在监听</div><div class="line">netstat -nplut | grep mysqld</div><div class="line"></div><div class="line">tcp        0      0 :::3306                     :::*                        LISTEN      1519/mysqld</div></pre></td></tr></table></figure>
+<p>sshd 登录错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">ssh: connect to host dev1 port 22: Connection refused</div><div class="line"></div><div class="line">想到了是服务端sshd服务问题，</div><div class="line">service sshd status</div><div class="line"></div><div class="line">sshd is stopped</div><div class="line"></div><div class="line">然后启动 service sshd start</div><div class="line"></div><div class="line">Starting sshd:/var/empty/sshd must be owned by root and not group or world-writable. [FAILED]</div><div class="line"></div><div class="line">ll -d /var/empty/sshd</div><div class="line"></div><div class="line">drwxr--r--. 2 root root 4096 10月 15 2014 /var/empty/sshd/</div><div class="line"></div><div class="line">这个目录要求其他用户不能写</div><div class="line"></div><div class="line">chmod 744 /var/empty/sshd</div><div class="line"></div><div class="line">然后重新启动，启动成功，可以连接</div><div class="line"></div><div class="line">手贱不忍，之前因为日志打不了，执行了一个命令 chmod -R 777 /var  ,手贱</div></pre></td></tr></table></figure>
+<p>-EOF-</p>
 
           
         
@@ -1031,8 +684,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
             
               
                 
-                <a class="post-title-link" href="/2014/12/23/mysql-sytax-not-all/" itemprop="url">
-                  mysql语法不完全版
+                <a class="post-title-link" href="/2015/04/30/a-rental-experience/" itemprop="url">
+                  第一次租住小区房的教训
                 </a>
               
             
@@ -1045,8 +698,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-23T16:49:51+08:00" content="2014-12-23">
-              2014-12-23
+            <time itemprop="dateCreated" datetime="2015-04-30T17:31:50+08:00" content="2015-04-30">
+              2015-04-30
             </time>
           </span>
 
@@ -1059,8 +712,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
+                  <a href="/categories/heart/" itemprop="url" rel="index">
+                    <span itemprop="name">heart</span>
                   </a>
                 </span>
 
@@ -1075,8 +728,8 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/23/mysql-sytax-not-all/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/23/mysql-sytax-not-all/" itemprop="commentsCount"></span>
+                <a href="/2015/04/30/a-rental-experience/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/30/a-rental-experience/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1086,7 +739,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
 
           
           
-             <span id="/2014/12/23/mysql-sytax-not-all/" class="leancloud_visitors" data-flag-title="mysql语法不完全版">
+             <span id="/2015/04/30/a-rental-experience/" class="leancloud_visitors" data-flag-title="第一次租住小区房的教训">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1110,38 +763,170 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
       
         
           
-            <p>手写mysql语句需要用到的</p>
-<p>新增列时，如果直接增加COMMENTS,在很多版本中不支持，公司的测试机是5.1版本，不支持</p>
-<p>datetime 设置默认值，在5.6版本中才可以</p>
-<h2 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h2><pre><code>/* 在某列后面添加一列 */ 
-ALTER TABLE `user_call_log` ADD `callflag` TINYINT(4) UNSIGNED  DEFAULT 0  AFTER `fee`;
+            <h1 id="讲讲第一次租住小区房的故事"><a href="#讲讲第一次租住小区房的故事" class="headerlink" title="讲讲第一次租住小区房的故事"></a>讲讲第一次租住小区房的故事</h1><p>坐标：深圳 某地铁站旁</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>原来租住的单间，合同期14年4月到15年4月，结果14年10月，房东涨了120，跨入1500，房子贵得原因是有个大阳台，单间面积不足30，<br>再加上旁边工地太吵，实在是很吵，一直在施工，女朋友老妈要来深圳治病，房子就必须租2房了</p>
+<h2 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h2><p>找了中介，在2个地铁站看了房子，第一个地铁站，看了2套房子，没有心仪的，然后到后面一个地铁站，继续找中介只看了一套房，<br>就租了，签了合同，交了押金和首月房租，以及中介费。</p>
+<p>这个房子上一个租客比较复杂，不是其他的租客，是房东儿子，然后就得等他们搬走，速度也挺快，<br>但是卫生没搞，床垫也少了一个，问题就来了，这些在合同里面都没有写，还好房东还算人好，我说了之后，说卫生我找人搞，房东给100块<br>钱，床垫，房东买，我签收就好</p>
+<p>可是哪，我同学帮忙搬家时，看到小区外面有滚动字幕，房租价格比我租的价格要少1000，也就是，我tm被坑大法了，整个人都不好了，房子优点客厅、2室都带窗口，光线很不错，有阳台，虽然2室60平也是不大，但是自己看中的点，满足了后，整体感觉都还好，一次花费了1w4++，<br>不过房子算是搞定了，只不过是不是被坑还不知道、</p>
+<p>当时中介和房东的情形，没看出来是被坑，但是如果真高1000，感觉有些离谱了，中介和房东，完全在演戏，然后，我竟没看出来，难道平时看电视太少了吗</p>
+<p>先写到这，后续结果确定再说吧，我还是不相信，自己被坑这么狠 …</p>
+<p>把人想的太好了，平时买东西感觉别人花很多时间给自己讲解什么或展示，自己就感觉应该买下来或者付钱，这种心理以后不能有，他们以这个生存，达成这笔交易，这个是他们应该做的最基本的，没有什么其他的，自己有决定权，该不该要，不能被他们蒙蔽，要找不同的比较</p>
+<h2 id="教训"><a href="#教训" class="headerlink" title="教训"></a>教训</h2><ul>
+<li>做事情，不管多急，一定要比较，不要怕错过，错过了才是真的没缘分</li>
+<li>租房时，有个交房的过程，交房时，在给所有钱，签所有合同，别让自己被动，房子的卫生，很烦人的，比如厨房的卫生没给你搞</li>
+<li>租房时，里面的家具，要在租房时跟房东谈的时候定下来包含什么，不包含什么，免得到时候麻烦，比如少个床垫什么的</li>
+<li>看房时，找到自己最关心的，比如光线、阳台，然后房间小点别太小就没关系</li>
+<li>如果是压二付一，写押金条的时候，一个月是房租押金，一月是家具押金，要让房东分开写</li>
+<li>中介，是个很不同寻常的群体，跟他们打交道，多多小心</li>
+</ul>
 
-/* 把tinyint更改为 unsigned */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED NULL  DEFAULT 0;
+          
+        
+      
+    </div>
 
-/* 把tinyint变成 sign */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  NULL  DEFAULT &apos;0&apos;;
+    <div>
+      
+    </div>
 
-/* 变更列顺序 */ 
-ALTER TABLE `user_call_log` MODIFY COLUMN `callflag` TINYINT(4) UNSIGNED NULL DEFAULT 0 AFTER `fee`;
+    <div>
+      
+    </div>
 
-/* UNSIGNED 类型默认值 更改为 0 */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;;
+    <footer class="post-footer">
+      
 
-/* 删除某列 */ 
-ALTER TABLE `user_call_log` DROP `callflag`;
+      
 
-/* 添加注释 */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;  COMMENT &apos;主叫删除标示&apos;;
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
 
-/*  */ 
-ALTER TABLE `user_cash_log` CHANGE `real_name` `real_name` VARCHAR(20)  CHARACTER SET utf8  COLLATE utf8_general_ci  NULL  DEFAULT NULL  COMMENT &apos;用户真实姓名&apos;;
-</code></pre><h2 id="show"><a href="#show" class="headerlink" title="show"></a>show</h2><pre><code>/* 17:02:18 172.16.12.85-user_chat */ 
-SHOW CREATE TABLE `user_call_log`;
 
-/* 显示某个表的索引 */ 
-SHOW INDEX FROM `user_call_log`;
-</code></pre><h2 id="grant"><a href="#grant" class="headerlink" title="grant"></a>grant</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">grant all on *.* to atlas@192.168.56.1 identified by &apos;atlas&apos;;</div><div class="line"></div><div class="line">grant all on hive.* to hive@&apos;%&apos; identified by &apos;hive&apos;;   //创建hive用户，并授权</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">show grants;</div><div class="line"></div><div class="line">show grants for atlas@192.168.56.1;</div></pre></td></tr></table></figure>
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/debug-jekyll-blog/" itemprop="url">
+                  博客的折腾
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-22T10:36:06+08:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/jekyll/" itemprop="url" rel="index">
+                    <span itemprop="name">jekyll</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/debug-jekyll-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/debug-jekyll-blog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/22/debug-jekyll-blog/" class="leancloud_visitors" data-flag-title="博客的折腾">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>去年开始使用 markdown 在 github 上使用 github Pages 来写博客，<br>最开始，我是直接fork别人得模板，修改了 _config.yml 里面的配置，<br>就 push 到 github 上，可以通过 favoorr.github.io 来进行访问了</p>
+<p>现在遇到了一个问题，就是在处理</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">段落内容</div></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> (<span class="string">'Hello world!)'</span></div></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面那种段落或者语法高亮时，我的必须使用</p>
+<p>{ % highlight  linenos    %<br> { –% endhighlight –% </p>
+<p>来实现，jekyll 原生支持的，我一直不知道为什么，用 MacDown 在 OS X 上写的时候，<br>我发现他那个里面可以非常方便的设置，于是决定，要求我的也可以这么来写，这是<br>不能容忍的</p>
+<p>找了文章</p>
+<p><a href="http://www.jianshu.com/p/6c157af09e84" target="_blank" rel="external">Mac 下两款 Markdown 编辑器 Mou/MacDown 大 PK</a><br><a href="http://liberize.me/tech/bootstrap-tweaks.html" target="_blank" rel="external">Bootstrap 简单定制 - 二、设置代码高亮</a>    </p>
+<p><a href="http://jekyllcn.com/docs/configuration/#markdown-" target="_blank" rel="external">jekyll官网的说明</a><br><a href="https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks" target="_blank" rel="external">github 关于enced-code-blocks</a><br><a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">redcarpet灵活的扩展</a></p>
+<p><a href="http://yulijia.net/cn/%E6%89%80%E6%80%9D%E6%89%80%E6%82%9F/2015/04/03/basic-knowledge-of-build-a-blog-theme.html" target="_blank" rel="external">一个博客模版应该包括的内容</a> </p>
+<p><a href="http://jekyllthemes.org/" target="_blank" rel="external">官方主题库</a><br><a href="http://www.zhanxin.info/themes.html" target="_blank" rel="external">掌心个人设计的主题</a></p>
+<p>问题出在使用的 markdown 解释器上，默认是 <code>liquid</code> ，这里使用另外一种，也即是 从markdown 翻译到 HTML 使用的引擎,<br>这项功能使用 <code>redcarpet</code></p>
+<p>再者就是 <code>redcarpet</code> 支持<a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">灵活的扩展</a> 然后我的问题解决方法如下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">markdown: redcarpet</div><div class="line">redcarpet:</div><div class="line">  extensions: [&quot;no_intra_emphasis&quot;, &quot;fenced_code_blocks&quot;, &quot;autolink&quot;, &quot;strikethrough&quot;, &quot;superscript&quot;, &quot;with_toc_data&quot;, &quot;tables&quot;]</div></pre></td></tr></table></figure>
+<p>-EOF-</p>
 
           
         
@@ -1174,7 +959,7 @@ SHOW INDEX FROM `user_call_log`;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1215,7 +1000,7 @@ SHOW INDEX FROM `user_call_log`;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1223,7 +1008,7 @@ SHOW INDEX FROM `user_call_log`;
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1232,7 +1017,7 @@ SHOW INDEX FROM `user_call_log`;
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

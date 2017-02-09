@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/13/macos-python2-make-vim-crash/" itemprop="url">
-                  macos-python2-make-vim-crash
+                <a class="post-title-link" href="/2017/02/09/zookeeper-server-ops/" itemprop="url">
+                  使用短命令和 Zookeeper 服务端通信
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-13T20:35:35+08:00" content="2017-01-13">
-              2017-01-13
+            <time itemprop="dateCreated" datetime="2017-02-09T15:25:27+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/13/macos-python2-make-vim-crash/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/13/macos-python2-make-vim-crash/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/zookeeper-server-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-server-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2017/01/13/macos-python2-make-vim-crash/" class="leancloud_visitors" data-flag-title="macos-python2-make-vim-crash">
+             <span id="/2017/02/09/zookeeper-server-ops/" class="leancloud_visitors" data-flag-title="使用短命令和 Zookeeper 服务端通信">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,14 +337,18 @@
       
         
           
-            <p>上礼拜，因为下载 you-get 自动把 python 升级到了 3.6 最新版本，然后是原来的 virtualenv 开始报错，<br>那当然是修复错误了，<a href="https://favoorr.github.io/2017/01/03/python3-6-virtualenvwrapper-problem/">在这篇文章</a>，我记录了修复的过程，然后在最后，我升级 python2 到 2.7.13<br>并且删除了默认的 python 2.10，一直没重启机器，相安无事</p>
-<p>后面重启了 Mac ，每次打开 vim , Python 都会崩溃，看到是 vim 插件 YouCompleteMe 的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">otool -L /usr/local/Cellar/vim/7.4.712/bin/vim | grep -i python</div><div class="line"></div><div class="line">	/System/Library/Frameworks/Python.framework/Versions/2.7/Python (compatibility version 2.7.0, current version 2.7.6)</div></pre></td></tr></table></figure>
-<p>下面是重新修复问题的步骤：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sudo rm -R /System/Library/Frameworks/Python.framework/Versions/2.7</div><div class="line">sudo mv /Library/Frameworks/Python.framework/Versions/2.7 /System/Library/Frameworks/Python.framework/Versions/2.7</div><div class="line">sudo chown -R root:wheel /System/Library/Frameworks/Python.framework/Versions/2.7</div><div class="line">sudo rm /System/Library/Frameworks/Python.framework/Versions/Current</div><div class="line">sudo ln -s /System/Library/Frameworks/Python.framework/Versions/2.7 /System/Library/Frameworks/Python.framework/Versions/Current</div><div class="line">sudo rm /usr/bin/pydoc</div><div class="line">sudo rm /usr/bin/python</div><div class="line">sudo rm /usr/bin/pythonw</div><div class="line">sudo rm /usr/bin/python-config</div><div class="line">sudo ln -s /System/Library/Frameworks/Python.framework/Versions/2.7/bin/pydoc /usr/bin/pydoc</div><div class="line">sudo ln -s /System/Library/Frameworks/Python.framework/Versions/2.7/bin/python /usr/bin/python</div><div class="line">sudo ln -s /System/Library/Frameworks/Python.framework/Versions/2.7/bin/pythonw /usr/bin/pythonw</div><div class="line">sudo ln -s /System/Library/Frameworks/Python.framework/Versions/2.7/bin/python-config /usr/bin/python-config</div></pre></td></tr></table></figure>
-<p>全部执行之后，vim 启动不会再有崩溃了</p>
-<p>经过这个步骤之后，vim 打开没有问题了，祝君好运 ~</p>
-
+            <p>ZooKeeper 支持某些特定的四字命令字母与其的交互。<br>它们大多是查询命令，用来获取 ZooKeeper 服务的当前状态及相关信息。<br>用户在客户端可以通过 telnet 或 nc 向 ZooKeeper 提交相应的命令    </p>
+<h1 id="来查看哪个节点被选择作为follower或者leader"><a href="#来查看哪个节点被选择作为follower或者leader" class="headerlink" title="来查看哪个节点被选择作为follower或者leader"></a>来查看哪个节点被选择作为follower或者leader</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo stat | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="测试是否启动了该Server，若回复-imok-表示已经启动"><a href="#测试是否启动了该Server，若回复-imok-表示已经启动" class="headerlink" title="测试是否启动了该Server，若回复 imok 表示已经启动"></a>测试是否启动了该Server，若回复 imok 表示已经启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo ruok | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的会话和临时节点"><a href="#列出未经处理的会话和临时节点" class="headerlink" title="列出未经处理的会话和临时节点"></a>列出未经处理的会话和临时节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo dump | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="关掉server"><a href="#关掉server" class="headerlink" title="关掉server"></a>关掉server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo kill | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出相关服务配置的详细信息"><a href="#输出相关服务配置的详细信息" class="headerlink" title="输出相关服务配置的详细信息"></a>输出相关服务配置的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo conf | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出所有连接到服务器的客户端的完全的连接-会话的详细信息"><a href="#列出所有连接到服务器的客户端的完全的连接-会话的详细信息" class="headerlink" title="列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息"></a>列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo cons | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出关于服务环境的详细信息-区别于-conf-命令"><a href="#输出关于服务环境的详细信息-区别于-conf-命令" class="headerlink" title="输出关于服务环境的详细信息(区别于 conf 命令)"></a>输出关于服务环境的详细信息(区别于 conf 命令)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo envi | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的请求"><a href="#列出未经处理的请求" class="headerlink" title="列出未经处理的请求"></a>列出未经处理的请求</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo reqs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出服务器-watch-的详细信息"><a href="#列出服务器-watch-的详细信息" class="headerlink" title="列出服务器 watch 的详细信息"></a>列出服务器 watch 的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表"><a href="#通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表" class="headerlink" title="通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表"></a>通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchc | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径"><a href="#通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径" class="headerlink" title="通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径"></a>通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchp | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
           
         
       
@@ -393,8 +397,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/vagrant-box-management-best-practices/" itemprop="url">
-                  常用的 vagrant box 管理命令
+                <a class="post-title-link" href="/2017/02/09/kafka-queue-config/" itemprop="url">
+                  配置 Kafka Topic Queue 模式
                 </a>
               
             
@@ -407,8 +411,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T15:53:56+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:48:54+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -437,8 +441,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/vagrant-box-management-best-practices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-box-management-best-practices/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/kafka-queue-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-queue-config/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -448,7 +452,7 @@
 
           
           
-             <span id="/2017/01/06/vagrant-box-management-best-practices/" class="leancloud_visitors" data-flag-title="常用的 vagrant box 管理命令">
+             <span id="/2017/02/09/kafka-queue-config/" class="leancloud_visitors" data-flag-title="配置 Kafka Topic Queue 模式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -472,12 +476,19 @@
       
         
           
-            <p>favoorr 经常使用的 vagrant box 管理命令</p>
-<p>vagrant 命令用来管理虚拟机<br>vagrant box 命令用来管理 box 镜像文件</p>
-<p>两个查找镜像的地址</p>
-<p><a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a></p>
-<p><a href="http://www.vagrantbox.es/" target="_blank" rel="external">http://www.vagrantbox.es/</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">查看官方帮助文档</div><div class="line">vagrant box --help</div><div class="line"></div><div class="line">查看本地已经下载的所有镜像</div><div class="line">vagrant box list</div><div class="line"></div><div class="line">如果自动下载失败，通过手工添加的方法，文章参考 </div><div class="line">vagrant box add metadata.json</div><div class="line"></div><div class="line">更新某一个镜像</div><div class="line">vagrant box update ubuntu/xenial64</div><div class="line"></div><div class="line">根据版本号，删除一个镜像</div><div class="line">vagrant box remove ailispaw/barge --box-version 2.1.3</div></pre></td></tr></table></figure>
+            <p>当同一个 Topic 的 consumer 配置 group.id 相同时，即为 queue 模式</p>
+<p>kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181    </p>
+<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
+<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
+<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
+<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
+<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
+<h1 id="启动命令行消费者"><a href="#启动命令行消费者" class="headerlink" title="启动命令行消费者"></a>启动命令行消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">从安装目录复制一个消费者配置文件，并修改文件 group.id 相同，来测试 queue 模式</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/consumer.properties .</div><div class="line"></div><div class="line">vim consumer.properties</div><div class="line"></div><div class="line">启动命令行消费者</div><div class="line"></div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --consumer.config consumer.properties --topic test</div><div class="line"></div><div class="line">--consumer.config 指定消费者启动的配置文件</div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div><div class="line">启动相同 group.id 的 queue 消费者模式</div></pre></td></tr></table></figure>
+<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
+<h1 id="查看-Kafka-已经注册的-group"><a href="#查看-Kafka-已经注册的-group" class="headerlink" title="查看 Kafka 已经注册的 group"></a>查看 Kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">test-consumer-group</div></pre></td></tr></table></figure>
+<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group test-consumer-group</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 后，192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
+<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
+<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
           
         
       
@@ -526,8 +537,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/vagrant-management-best-practices/" itemprop="url">
-                  常用的 vagrant 管理命令
+                <a class="post-title-link" href="/2017/02/09/kafka-pub-sub-config/" itemprop="url">
+                  命令行配置测试 Kafka Pub-sub 模式
                 </a>
               
             
@@ -540,8 +551,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T15:36:39+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:48:46+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -570,8 +581,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/vagrant-management-best-practices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-management-best-practices/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/kafka-pub-sub-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-pub-sub-config/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -581,7 +592,7 @@
 
           
           
-             <span id="/2017/01/06/vagrant-management-best-practices/" class="leancloud_visitors" data-flag-title="常用的 vagrant 管理命令">
+             <span id="/2017/02/09/kafka-pub-sub-config/" class="leancloud_visitors" data-flag-title="命令行配置测试 Kafka Pub-sub 模式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -605,9 +616,19 @@
       
         
           
-            <p>favoorr 经常使用的 vagrant 管理命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant list-commands 查看完整的命令列表</div></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">找一个目录，初始化 vagrant</div><div class="line">vagrant init</div><div class="line">初始化，执行之后，会创建一个文件 Vagrantfile</div><div class="line"></div><div class="line">编辑 Vagrantfile 配置好自己的虚拟机后，启动</div><div class="line">vagrant up</div><div class="line"></div><div class="line">登录自己的虚拟机，如果是集群 vagrant ssh docker1</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">查看当前文件夹下虚拟机状态</div><div class="line">vagrant status</div><div class="line"></div><div class="line">强制关机</div><div class="line">vagrant halt</div><div class="line"></div><div class="line">修改了 Vagrantfile 配置，例如修改了 IP，主机名，内存，重新配置虚拟机</div><div class="line">vagrant reload</div><div class="line"></div><div class="line">重启虚拟机，例如重新修改了 Vagrantfile 的 provision 配置</div><div class="line">vagrant resume</div><div class="line"></div><div class="line">查看当前虚拟机的 ssh 配置</div><div class="line">vagrant ssh-config</div><div class="line"></div><div class="line">仅仅暂停虚拟机</div><div class="line">vagrant <span class="built_in">suspend</span></div><div class="line"></div><div class="line">全局查看 vagrant 的状态，这个命令在哪里都能执行，不一定非要在 vagrant 虚拟机目录下</div><div class="line">vagrant global-status</div><div class="line"></div><div class="line">根据查找的全局状态，删除自己不在使用的虚拟机</div><div class="line">vagrant destroy</div><div class="line"></div><div class="line">查看当前使用的 vagrant 版本</div><div class="line">vagrant version</div></pre></td></tr></table></figure>
+            <p>命令行调试 kafka pub-sub 模式</p>
+<p>Kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>Zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</p>
+<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
+<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
+<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
+<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
+<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
+<h1 id="在某一台-Kafka-安装机器上启动消费者"><a href="#在某一台-Kafka-安装机器上启动消费者" class="headerlink" title="在某一台 Kafka 安装机器上启动消费者"></a>在某一台 Kafka 安装机器上启动消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --topic test</div><div class="line"></div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div></pre></td></tr></table></figure>
+<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
+<h1 id="查看-kafka-已经注册的-group"><a href="#查看-kafka-已经注册的-group" class="headerlink" title="查看 kafka 已经注册的 group"></a>查看 kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">console-consumer-18858</div><div class="line">console-consumer-43333</div><div class="line">console-consumer-14208</div></pre></td></tr></table></figure>
+<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group console-consumer-18858</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">console-consumer-18858, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 1, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 2, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
+<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
+<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
           
         
       
@@ -656,8 +677,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="url">
-                  vagrant 多节点集群虚拟机配置指南
+                <a class="post-title-link" href="/2017/02/09/kafka-topic-ops/" itemprop="url">
+                  Kafka Topic 运维经验
                 </a>
               
             
@@ -670,8 +691,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T14:58:55+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:48:05+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -700,8 +721,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/kafka-topic-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-topic-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -711,7 +732,7 @@
 
           
           
-             <span id="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 多节点集群虚拟机配置指南">
+             <span id="/2017/02/09/kafka-topic-ops/" class="leancloud_visitors" data-flag-title="Kafka Topic 运维经验">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -735,15 +756,16 @@
       
         
           
-            <p>favoorr 平时使用的 vagrant 集群配置实践</p>
-<p>一个配置文件管理一个集群，嗯，相对于以前想玩一个集群需要搞 三个机器，😔，想想之前，都是泪</p>
-<p>这里要区分 vagrant box 配置，和虚拟机配置，3 台集群的虚拟机都是用同一版本 box 镜像</p>
-<p>核心配置说明：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">     <span class="comment"># 配置主机名</span></div><div class="line">    node1.vm.hostname = <span class="string">"node1"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置私有 IP</span></div><div class="line">    node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置虚拟机提供者配置，我用的 virtualbox</span></div><div class="line">    node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置在 virtualbox 中显示名字，不配置默认是 vagrant 自动生成的 id，</span></div><div class="line">      <span class="comment"># vagrant-globalstatus 可以查看 id</span></div><div class="line">      v.name = <span class="string">"node1-121"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置内存大小</span></div><div class="line">      v.memory = <span class="string">"1024"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置 CPU 核数</span></div><div class="line">      v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">    node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">    node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">    node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node2-122"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">    node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">    node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">    node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node3-123"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<p>配置好之后 <code>vagrant up</code> 启动集群</p>
-<p>启动成功后， <code>vagrant ssh node1</code> 即可登录集群服务器 1</p>
-<p>完整详细参考配置如下：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"bento/centos-7.2"</span></div><div class="line">  config.vm.box_version = <span class="string">"2.3.1"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  config.vm.box_check_update = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  <span class="comment"># config.vm.network "private_network", ip: "192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">      node1.vm.hostname = <span class="string">"node1"</span></div><div class="line">      node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line">      node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node1-121"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">      node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">      node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">      node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node2-122"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">      node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">      node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">      node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node3-123"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+            <p>Kafka Topic 运维操作记录</p>
+<p>会有全局的配置，但是如果每个 topic 自己配置，会覆盖掉全局配置</p>
+<h1 id="查看-Topic-列表"><a href="#查看-Topic-列表" class="headerlink" title="查看 Topic 列表"></a>查看 Topic 列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="查看单个-Topic-详情"><a href="#查看单个-Topic-详情" class="headerlink" title="查看单个 Topic 详情"></a>查看单个 Topic 详情</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">这个查看到的信息比较全，含分区和复制因子信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line"></div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=64000,flush.messages=1</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div><div class="line"></div><div class="line">这个查看的只有配置信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div><div class="line"></div><div class="line">Configs for topics:my-topic are max.message.bytes=256001,flush.messages=2001</div></pre></td></tr></table></figure>
+<h1 id="自定义配置创建-Topic"><a href="#自定义配置创建-Topic" class="headerlink" title="自定义配置创建 Topic"></a>自定义配置创建 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">三个分区，二个复制因子</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 3 --topic test</div><div class="line"></div><div class="line">三个分区，三个复制因子，加自定义参数</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line">Created topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">查看创建结果</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="更改-topic-配置"><a href="#更改-topic-配置" class="headerlink" title="更改 topic 配置"></a>更改 topic 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">更改配置的命令</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic my-topic --config max.message.bytes=128000 --config flush.messages=1000</div><div class="line"></div><div class="line">WARNING: Altering topic configuration from this script has been deprecated and may be removed in future releases.</div><div class="line">Going forward, please use kafka-configs.sh for this functionality</div><div class="line">Updated config for topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">更改之后，查看最新配置</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=128000,flush.messages=1000</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div></pre></td></tr></table></figure>
+<h1 id="最新的-topic-维护命令"><a href="#最新的-topic-维护命令" class="headerlink" title="最新的 topic 维护命令"></a>最新的 topic 维护命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">更改配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name=my-topic --alter --add-config max.message.bytes=256001 --add-config flush.messages=2001</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">这里一次性更改多个，需要添加多个 --add-config 命令，如果只写一个，后面的会被忽略</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div></pre></td></tr></table></figure>
+<h1 id="删除一个配置项"><a href="#删除一个配置项" class="headerlink" title="删除一个配置项"></a>删除一个配置项</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --alter --delete-config max.message.bytes --entity-type topics --entity-name my-topic</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">删除后，查看配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name my-topic --describe</div><div class="line"></div><div class="line">Configs for topics:my-topic are flush.messages=2001</div></pre></td></tr></table></figure>
+<h1 id="删除一个-Topic"><a href="#删除一个-Topic" class="headerlink" title="删除一个 Topic"></a>删除一个 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">为了测试，先创建</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic1 --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line"></div><div class="line">查看创建的结果</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div><div class="line"></div><div class="line">删除</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic my-topic1</div><div class="line">如果配置参数，就会直接删除</div><div class="line">Topic my-topic1 is marked for deletion.</div><div class="line">Note: This will have no impact if delete.topic.enable is not set to true.</div><div class="line">delete.topic.enable=true</div></pre></td></tr></table></figure>
+<h1 id="修改-Topic-分区数"><a href="#修改-Topic-分区数" class="headerlink" title="修改 Topic 分区数"></a>修改 Topic 分区数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic test --partitions 5</div><div class="line"></div><div class="line">分区数只能增加</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line">分区数 * 复制因子 = 10</div><div class="line"></div><div class="line">三台 broker 平均分布</div><div class="line">0 1 3 4</div><div class="line">1 2 4</div><div class="line">0 2 3</div><div class="line">433 分布</div><div class="line">对应的消费者最好是 5 个，每个消费者对应一个分区，多于 5 个，在没有消费者挂掉的</div><div class="line">情况下，只能等待</div></pre></td></tr></table></figure>
           
         
       
@@ -792,8 +814,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/import-vagrant-box-manually/" itemprop="url">
-                  手工下载和导入 vagrant 镜像
+                <a class="post-title-link" href="/2017/02/09/kafka-cluster-ops/" itemprop="url">
+                  Kafka 集群运维
                 </a>
               
             
@@ -806,8 +828,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T14:46:34+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:47:51+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -836,8 +858,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/import-vagrant-box-manually/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/import-vagrant-box-manually/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/kafka-cluster-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-cluster-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -847,7 +869,7 @@
 
           
           
-             <span id="/2017/01/06/import-vagrant-box-manually/" class="leancloud_visitors" data-flag-title="手工下载和导入 vagrant 镜像">
+             <span id="/2017/02/09/kafka-cluster-ops/" class="leancloud_visitors" data-flag-title="Kafka 集群运维">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -871,25 +893,19 @@
       
         
           
-            <p>vagrant box 手工导入</p>
-<p>这篇文章主要写给中国程序员，第一因为网速慢，第二因为有墙，第三因为下载的镜像可能会损坏，<br>所以需要手工下载包，然后再倒入进去</p>
-<p>操作过程如下：</p>
-<p>第一步：按照 Vagrantfile 配置好虚拟机后，启动虚拟机时可能会看到类似如下信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Bringing machine &apos;default&apos; up with &apos;virtualbox&apos; provider...</div><div class="line">==&gt; default: Box &apos;ubuntu/xenial64&apos; could not be found. Attempting to find and install...</div><div class="line">    default: Box Provider: virtualbox</div><div class="line">    default: Box Version: 20161209.0.0</div><div class="line">==&gt; default: Loading metadata for box &apos;ubuntu/xenial64&apos;</div><div class="line">    default: URL: https://atlas.hashicorp.com/ubuntu/xenial64</div><div class="line">==&gt; default: Adding box &apos;ubuntu/xenial64&apos; (v20161209.0.0) for provider: virtualbox</div><div class="line">    default: Downloading: https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
-<p>下载地址已经显示出来了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
-<p>手工下载会保险点，有 VPN 的，下载的镜像没损坏的请忽略本文章，我遇到过一次挂 VPN 下载失败的情况</p>
-<p>第二步：创建镜像元数据信息描述文件</p>
-<p>下载完成后，在 <code>virtualbox.box</code> 相同目录下，创建原始文件 <code>metadata.json</code>，内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"ubuntu/trusty64"</span>,</div><div class="line">    <span class="attr">"versions"</span>: [&#123;</div><div class="line">        <span class="attr">"version"</span>: <span class="string">"20160822.0.2"</span>,</div><div class="line">        <span class="attr">"providers"</span>: [&#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"virtualbox"</span>,</div><div class="line">            <span class="attr">"url"</span>: <span class="string">"file://virtualbox.box"</span></div><div class="line">        &#125;]</div><div class="line">    &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>简单配置说明：</p>
-<p>name 是镜像名<br>version 版本描述信息<br>version.version 是版本号<br>version.providers 是配置提供者信息，比如我用的 virtualbox<br>version.url 这里可以是 http 等其他协议，我放在本地目录，简单的 file 协议即可      </p>
-<p>第三步：执行命令导入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box add metadata.json</div></pre></td></tr></table></figure>
-<p>第四步：导入成功验证</p>
-<p>导入成功后，<code>vagrant box list</code> 就可以看到信息了</p>
-<p>之前最开始不知道这种方式的时候，自己用 <code>vagrant box add</code> 方式导入过，然后发现导入的 box 没有版本号，🤕，后来发现这种方式问题成功解决</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这种方式导入，没有版本号</div><div class="line">vagrant box add centos/7 --box-version 1605.01 file://virtualbox.box</div></pre></td></tr></table></figure>
+            <p>记录 Kafka 集群的启动和关闭，日志目录，及日志查看</p>
+<p>公司可能会有很多套环境，每套环境安装方式不一定相同，使用时要维护自己的脚本，提高效率</p>
+<p>脚本里面最好是用绝对路径，方便操作</p>
+<h1 id="启动前，先启动-zookeeper"><a href="#启动前，先启动-zookeeper" class="headerlink" title="启动前，先启动 zookeeper"></a>启动前，先启动 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
+<h1 id="验证启动成功"><a href="#验证启动成功" class="headerlink" title="验证启动成功"></a>验证启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可以查看系统日志</div><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div><div class="line"></div><div class="line">或者查看 Topic 列表</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="集群关闭"><a href="#集群关闭" class="headerlink" title="集群关闭"></a>集群关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
+<h1 id="暴力关闭"><a href="#暴力关闭" class="headerlink" title="暴力关闭"></a>暴力关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;kafka&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;| xargs kill -9</div></pre></td></tr></table></figure>
+<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div></pre></td></tr></table></figure>
+<h1 id="查看日志目录"><a href="#查看日志目录" class="headerlink" title="查看日志目录"></a>查看日志目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka_2.11-0.9.0.1/logs</div></pre></td></tr></table></figure>
+<p>查看 kafka 持久化文件保存情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka/kafka-logs</div></pre></td></tr></table></figure>
+<h1 id="删除所有-Kafka-日志"><a href="#删除所有-Kafka-日志" class="headerlink" title="删除所有 Kafka 日志"></a>删除所有 Kafka 日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/kafka_2.11-0.9.0.1/logs/*</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div><div class="line">cd /data/kafka_2.11-0.9.0.1</div><div class="line">ll /data/kafka_2.11-0.9.0.1</div></pre></td></tr></table></figure>
           
         
       
@@ -921,7 +937,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -962,7 +978,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -970,7 +986,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -979,7 +995,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

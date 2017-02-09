@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="url">
-                  Cento6.6 编译安装 the_silver_searcher
+                <a class="post-title-link" href="/2017/01/06/vagrant-management-best-practices/" itemprop="url">
+                  常用的 vagrant 管理命令
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-21T19:03:16+08:00" content="2015-07-21">
-              2015-07-21
+            <time itemprop="dateCreated" datetime="2017-01-06T15:36:39+08:00" content="2017-01-06">
+              2017-01-06
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="commentsCount"></span>
+                <a href="/2017/01/06/vagrant-management-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-management-best-practices/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" class="leancloud_visitors" data-flag-title="Cento6.6 编译安装 the_silver_searcher">
+             <span id="/2017/01/06/vagrant-management-best-practices/" class="leancloud_visitors" data-flag-title="常用的 vagrant 管理命令">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,21 +337,438 @@
       
         
           
-            <p>the_silver_searcher 好像是个神奇，摸索vim时候一个依赖包，</p>
-<p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
-<p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
-<p>Centos7 下安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
-<p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
-<p>错误：xz compression not available，并且 yum 不能使用</p>
-<p>xz 版本如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
-<p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
-<p>Centos6 下编译安装</p>
-<p>1.下载源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
-<p>执行成功，没有错误，则安装成功</p>
-<p>-EOF-</p>
+            <p>favoorr 经常使用的 vagrant 管理命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant list-commands 查看完整的命令列表</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">找一个目录，初始化 vagrant</div><div class="line">vagrant init</div><div class="line">初始化，执行之后，会创建一个文件 Vagrantfile</div><div class="line"></div><div class="line">编辑 Vagrantfile 配置好自己的虚拟机后，启动</div><div class="line">vagrant up</div><div class="line"></div><div class="line">登录自己的虚拟机，如果是集群 vagrant ssh docker1</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">查看当前文件夹下虚拟机状态</div><div class="line">vagrant status</div><div class="line"></div><div class="line">强制关机</div><div class="line">vagrant halt</div><div class="line"></div><div class="line">修改了 Vagrantfile 配置，例如修改了 IP，主机名，内存，重新配置虚拟机</div><div class="line">vagrant reload</div><div class="line"></div><div class="line">重启虚拟机，例如重新修改了 Vagrantfile 的 provision 配置</div><div class="line">vagrant resume</div><div class="line"></div><div class="line">查看当前虚拟机的 ssh 配置</div><div class="line">vagrant ssh-config</div><div class="line"></div><div class="line">仅仅暂停虚拟机</div><div class="line">vagrant <span class="built_in">suspend</span></div><div class="line"></div><div class="line">全局查看 vagrant 的状态，这个命令在哪里都能执行，不一定非要在 vagrant 虚拟机目录下</div><div class="line">vagrant global-status</div><div class="line"></div><div class="line">根据查找的全局状态，删除自己不在使用的虚拟机</div><div class="line">vagrant destroy</div><div class="line"></div><div class="line">查看当前使用的 vagrant 版本</div><div class="line">vagrant version</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="url">
+                  vagrant 多节点集群虚拟机配置指南
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T14:58:55+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 多节点集群虚拟机配置指南">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>favoorr 平时使用的 vagrant 集群配置实践</p>
+<p>一个配置文件管理一个集群，嗯，相对于以前想玩一个集群需要搞 三个机器，😔，想想之前，都是泪</p>
+<p>这里要区分 vagrant box 配置，和虚拟机配置，3 台集群的虚拟机都是用同一版本 box 镜像</p>
+<p>核心配置说明：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">     <span class="comment"># 配置主机名</span></div><div class="line">    node1.vm.hostname = <span class="string">"node1"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置私有 IP</span></div><div class="line">    node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置虚拟机提供者配置，我用的 virtualbox</span></div><div class="line">    node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置在 virtualbox 中显示名字，不配置默认是 vagrant 自动生成的 id，</span></div><div class="line">      <span class="comment"># vagrant-globalstatus 可以查看 id</span></div><div class="line">      v.name = <span class="string">"node1-121"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置内存大小</span></div><div class="line">      v.memory = <span class="string">"1024"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置 CPU 核数</span></div><div class="line">      v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">    node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">    node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">    node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node2-122"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">    node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">    node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">    node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node3-123"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>配置好之后 <code>vagrant up</code> 启动集群</p>
+<p>启动成功后， <code>vagrant ssh node1</code> 即可登录集群服务器 1</p>
+<p>完整详细参考配置如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"bento/centos-7.2"</span></div><div class="line">  config.vm.box_version = <span class="string">"2.3.1"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  config.vm.box_check_update = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  <span class="comment"># config.vm.network "private_network", ip: "192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">      node1.vm.hostname = <span class="string">"node1"</span></div><div class="line">      node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line">      node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node1-121"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">      node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">      node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">      node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node2-122"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">      node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">      node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">      node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node3-123"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/import-vagrant-box-manually/" itemprop="url">
+                  手工下载和导入 vagrant 镜像
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T14:46:34+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/import-vagrant-box-manually/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/import-vagrant-box-manually/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/import-vagrant-box-manually/" class="leancloud_visitors" data-flag-title="手工下载和导入 vagrant 镜像">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vagrant box 手工导入</p>
+<p>这篇文章主要写给中国程序员，第一因为网速慢，第二因为有墙，第三因为下载的镜像可能会损坏，<br>所以需要手工下载包，然后再倒入进去</p>
+<p>操作过程如下：</p>
+<p>第一步：按照 Vagrantfile 配置好虚拟机后，启动虚拟机时可能会看到类似如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Bringing machine &apos;default&apos; up with &apos;virtualbox&apos; provider...</div><div class="line">==&gt; default: Box &apos;ubuntu/xenial64&apos; could not be found. Attempting to find and install...</div><div class="line">    default: Box Provider: virtualbox</div><div class="line">    default: Box Version: 20161209.0.0</div><div class="line">==&gt; default: Loading metadata for box &apos;ubuntu/xenial64&apos;</div><div class="line">    default: URL: https://atlas.hashicorp.com/ubuntu/xenial64</div><div class="line">==&gt; default: Adding box &apos;ubuntu/xenial64&apos; (v20161209.0.0) for provider: virtualbox</div><div class="line">    default: Downloading: https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
+<p>下载地址已经显示出来了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
+<p>手工下载会保险点，有 VPN 的，下载的镜像没损坏的请忽略本文章，我遇到过一次挂 VPN 下载失败的情况</p>
+<p>第二步：创建镜像元数据信息描述文件</p>
+<p>下载完成后，在 <code>virtualbox.box</code> 相同目录下，创建原始文件 <code>metadata.json</code>，内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"ubuntu/trusty64"</span>,</div><div class="line">    <span class="attr">"versions"</span>: [&#123;</div><div class="line">        <span class="attr">"version"</span>: <span class="string">"20160822.0.2"</span>,</div><div class="line">        <span class="attr">"providers"</span>: [&#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"virtualbox"</span>,</div><div class="line">            <span class="attr">"url"</span>: <span class="string">"file://virtualbox.box"</span></div><div class="line">        &#125;]</div><div class="line">    &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单配置说明：</p>
+<p>name 是镜像名<br>version 版本描述信息<br>version.version 是版本号<br>version.providers 是配置提供者信息，比如我用的 virtualbox<br>version.url 这里可以是 http 等其他协议，我放在本地目录，简单的 file 协议即可      </p>
+<p>第三步：执行命令导入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box add metadata.json</div></pre></td></tr></table></figure>
+<p>第四步：导入成功验证</p>
+<p>导入成功后，<code>vagrant box list</code> 就可以看到信息了</p>
+<p>之前最开始不知道这种方式的时候，自己用 <code>vagrant box add</code> 方式导入过，然后发现导入的 box 没有版本号，🤕，后来发现这种方式问题成功解决</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这种方式导入，没有版本号</div><div class="line">vagrant box add centos/7 --box-version 1605.01 file://virtualbox.box</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="url">
+                  vagrant 虚拟机配置最佳实践
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T14:21:53+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 虚拟机配置最佳实践">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Mac-VirtualBox-Vagrant-管理虚拟机"><a href="#Mac-VirtualBox-Vagrant-管理虚拟机" class="headerlink" title="Mac VirtualBox Vagrant 管理虚拟机"></a>Mac VirtualBox Vagrant 管理虚拟机</h2><p>这篇文章定位是在理解了 vagrant 相关概念之后，教你如何灵活玩转自己的虚拟机配置</p>
+<p>本文为 @favoorr 常用的 Mac VirtualBox Vagrant 管理虚拟机的通用配置向导</p>
+<p>我的云梯 VPN 连接是 <a href="http://referyt.com/?r=9ea6f6df9967e57c" target="_blank" rel="external">http://referyt.com/?r=9ea6f6df9967e57c</a></p>
+<p>使用这个连接，你优惠 10 元，我获得 10 元</p>
+<p>1.去官方找自己想要的镜像文件信息<br><a href="https://atlas.hashicorp.com/search" target="_blank" rel="external">https://atlas.hashicorp.com/search</a></p>
+<p>例如想来个 ubuntu 16.04 64位，那么关键字就是 <code>xenial64</code></p>
+<p>找到的地址就是 <a href="https://atlas.hashicorp.com/ubuntu/boxes/xenial64" target="_blank" rel="external">https://atlas.hashicorp.com/ubuntu/boxes/xenial64</a></p>
+<p>2.在本地文件系统建立对应的存放目录，本地目录按照自己意愿，任意位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">该目录存放所有使用 vagrant 管理的虚拟机</div><div class="line">$ cd ~/Documents/try/vagrant/</div></pre></td></tr></table></figure>
+<p>3.初始化虚拟机存放目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">新建存放 ubuntu 16.04 64 位的文件位置</div><div class="line">$ mkdir xenial64 &amp;&amp; cd xenial64</div><div class="line"></div><div class="line">使用 vagrant 命令初始化虚拟机</div><div class="line">$ vagrant init ubuntu/xenial64</div><div class="line"></div><div class="line">执行完之后，发现 xenial64 目录下多了个配置文件 Vagrantfile</div></pre></td></tr></table></figure>
+<p>4.修改 Vagrantfile ，配置自己的虚拟机，</p>
+<p>其实什么都不修改，按照默认配置，这时候执行 <code>vagrant up</code> 的时候已经可以运行虚拟机了，这个是 hello world 的做法，实际使用中，还是要自己学会修改配置，知道每个配置项会带来的影响<br>有些配置是没有的，有些是有的默认是注释的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">配置主机名，进入操作系统执行 hostname 显示的名字，我用的规则是 系统版本-IP</div><div class="line">系统是 xenial64，IP 最后一位是 <span class="number">155</span></div><div class="line">config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line"></div><div class="line">vagrant box 的版本，如果不配置，会自动去下载最新版本</div><div class="line">我用的是 daily build 的版本，这个看自己喜好，我这个本来就是尝试一些新东西玩的</div><div class="line">config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">配置端口映射，通过访问本机的 <span class="number">8080</span> 端口，访问安装后虚拟机的 <span class="number">8080</span> 端口</div><div class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">8080</span>, <span class="symbol">host:</span> <span class="number">8080</span></div><div class="line"></div><div class="line">配置虚拟机的 ip，默认网卡一是 NAT 方式，不需要配置</div><div class="line">这里创建网卡二 Host-Only，对应 VirtualBox 的 vbox<span class="number">0</span></div><div class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">配置共享文件夹目录，进入系统后，自动挂载 /lesson</div><div class="line">config.vm.synced_folder <span class="string">"/Users/User/zl/python/lesson"</span>, <span class="string">"/lesson"</span></div><div class="line"></div><div class="line">VirtualBox 的配置</div><div class="line">config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">  <span class="comment"># 这里配置显示在 VirtualBox 的名字，要不然是默认的一长串字符，太丑了</span></div><div class="line">  vb.name = <span class="string">"xenial64-155"</span></div><div class="line">  </div><div class="line">  <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">  vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">  vb.memory = <span class="string">"1024"</span></div><div class="line">  vb.cpus = <span class="string">"2"</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>5.在 xenial64 目录下执行命令，初始化并启动虚拟机</p>
+<p>这里要注意，如果是第一次启动，会自动下载 vagrant box，最好挂 VPN了，不多解释，<br>如果没有 VPN，就手工下载包，导入后续会有文章介绍</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant up --provider virtualbox</div></pre></td></tr></table></figure>
+<p>6.在 xenial64 目录下执行命令，进入虚拟机，测试网络</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">进入虚拟机</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">测试网络，我全程 VPN，虚拟机内部访问 google 也是无压力的</div><div class="line">ping www.google.com</div></pre></td></tr></table></figure>
+<h2 id="参考-Vagrantfile-配置文件"><a href="#参考-Vagrantfile-配置文件" class="headerlink" title="参考 Vagrantfile 配置文件"></a>参考 Vagrantfile 配置文件</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-155"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 
           
         
@@ -401,8 +818,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/21/use-kvim/" itemprop="url">
-                  Centos6.6安装使用k-vim
+                <a class="post-title-link" href="/2017/01/06/getting-started-with-vagrant/" itemprop="url">
+                  Vagrant 入门指南
                 </a>
               
             
@@ -415,8 +832,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-21T18:43:32+08:00" content="2015-07-21">
-              2015-07-21
+            <time itemprop="dateCreated" datetime="2017-01-06T13:58:58+08:00" content="2017-01-06">
+              2017-01-06
             </time>
           </span>
 
@@ -429,8 +846,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -445,8 +862,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/21/use-kvim/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/use-kvim/" itemprop="commentsCount"></span>
+                <a href="/2017/01/06/getting-started-with-vagrant/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/getting-started-with-vagrant/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -456,7 +873,7 @@
 
           
           
-             <span id="/2015/07/21/use-kvim/" class="leancloud_visitors" data-flag-title="Centos6.6安装使用k-vim">
+             <span id="/2017/01/06/getting-started-with-vagrant/" class="leancloud_visitors" data-flag-title="Vagrant 入门指南">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -480,505 +897,17 @@
       
         
           
-            <p>环境 </p>
-<p>centos 6.6 64 位</p>
-<p>没敢在自己的 mac 上直接撸，怕把 mac 上的 vim 搞残了 …</p>
-<p>新手配置vim比较困难，先暂且使用别人的 vim </p>
-<p>曾经试着参考别人教程，搞一个属于自己的 vim，可惜 c c++ 基础太弱，一直没实现</p>
-<p>正文开始，参考 k-vim readme，和自己跳的坑</p>
-<p>1.从 github 克隆到本地</p>
-<pre><code>git clone https://github.com/wklken/k-vim.git
-</code></pre><p>2.安装依赖包</p>
-<pre><code># ctags, ag(the_silver_searcher)
-</code></pre><p>2.1 系统依赖</p>
-<pre><code>yum install python-devel.x86_64 or yum info python-devel.x86_64
-
-yum groupinstall &apos;Development Tools&apos;
-
-rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
-
-yum install the_silver_searcher 如果是centos6，需要自己安装，会出现错误 错误：xz compression not available 
-
-需要执行 rm -rf /etc/yum.repos.d/epel* ，使 yum 恢复ok
-</code></pre><p>centos6.6 安装 the_silver_searcher 参考 ，我写的教程</p>
-<p>2.2 使用 python</p>
-<pre><code>pip install pyflakes
-pip install pylint
-pip install pep8
-</code></pre><p>要安装很多东西 pip ，参考 </p>
-<p>2.3 如果使用Javascript, 不需要的跳过</p>
-<pre><code># 安装jshint和jslint,用于javascript语法检查
-# 需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
-
-# todo 没用 javascript 暂时跳过
-</code></pre><p>3 安装</p>
-<p>3.1 进入目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd k-vim/</div><div class="line"></div><div class="line">sh -x install.sh</div></pre></td></tr></table></figure>
-<p>一执行，就是好多个小时，至少5小时，具体我也不知道，还跟个人网速有关，我一整晚电脑放公司没关机 ….</p>
-<p>安装完成后，第二天来看到有错误，没理会，很想知道 k-vim 安装完成后是个什么样，vim 是残了还是变高大上了 </p>
-<p>于是执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>具体经历如下：</p>
-<p>错误一：一直提示 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div><div class="line"></div><div class="line">这个提示要去 编译 ycm ，好吧，本来以为3两下搞定，结果有此我漫长的编译之路，这个不简单，下面是我的苦逼经历</div><div class="line"></div><div class="line">后来才知道 ycm 依赖 clang，</div><div class="line">后来才知道 手贱选择了 clang 最新版 3.8.0</div><div class="line">后来才知道 clang 3.8.0 需要 gcc 4.7.0 以上</div><div class="line">后来才知道 centos 6.6 默认安装的 gcc 为 4.4.7</div><div class="line">后来才知道 自己需要编译 gcc，选择 v4.8.1</div><div class="line"></div><div class="line">困难在我这种人面前，并不可怕，结果是，我愣是把 ycm 撸出来了</div></pre></td></tr></table></figure>
-<p>成功编译 ycm 之后，上面提示从此不再出现</p>
-<p>错误二：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/.vimrc:</div><div class="line">line  166:</div><div class="line">E518: Unknown option: foldenable</div><div class="line">line  174:</div><div class="line">E518: Unknown option: foldmethod=indent</div><div class="line">line  175:</div><div class="line">E518: Unknown option: foldlevel=99</div><div class="line">line  213:</div><div class="line">E518: Unknown option: relativenumber</div><div class="line">  number</div><div class="line">line  568:</div><div class="line">E185: Cannot find color scheme solarized</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
-<p>奇怪的是这个错误只出现一次，Press 任意键进入 vim 后，再也没有继续出现该错误</p>
-<p>然并卵</p>
-<p>我之前自己参考过 <a href="https://github.com/yangyangwithgnu/use_vim_as_ide" target="_blank" rel="external">https://github.com/yangyangwithgnu/use_vim_as_ide</a> 里面的 readme 撸过 vim，然后配置 <code>colorscheme solarized</code> 想自己搞个主题，</p>
-<p>但是哪，我按照教程没撸出来，也就暂时放弃了，于是很想看看作者是如何搞的，我是 vim 新手，就看过 陈浩 的教程，自己能活下来  …</p>
-<p>我是直接给root安装的vim，所以，我就去 /root/.vim/ 目录里面看了下，竟然没有 colors 目录，我于是自己新建目录，scp 上传了自己上次下载的 solarized.vim ，结果上面这个不在出现的错误竟然又开始出现了，并且，注意是并且它还带来了新错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/k-vim/colors/solarized.vim</div></pre></td></tr></table></figure>
-<p>和一堆自己上次搞 主题时候碰到的一样的错误 ，还有 k-vim 作者更新到了 9.0 ，安装好之后的目录下 vim ~/.vim/vimrc ，Version: 8.1 没有更新，赶紧删除 新建的 colors 目录，让世界恢复平静 </p>
-<p>有此看到，错误二 还是必须要解决，一个个开始 google </p>
-<p>查了资料，发现问题解决并没有那么容易，我得先分解下 k-vim 作者这 30++ 插件</p>
-<p>记一</p>
-<p>准备在 mac 上使用 k-vim 了，</p>
-<p>brew install vim ，brew 里面的版本已经 404 了，需要自己手工修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brew edit vim</div><div class="line"></div><div class="line">修改如下</div><div class="line">  url &apos;http://ftp.debian.org/debian/pool/main/v/vim/vim_7.4.712.orig.tar.gz&apos;</div><div class="line">  sha1 &apos;284940b08956e30ee73e4751543076dc6ade99c7&apos;</div></pre></td></tr></table></figure>
-<p>记二</p>
-<p>mac 自带了 vim，新安装了vim之后，没有必要必须删除老版本，在使用的 shell 里面设置即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div><div class="line"></div><div class="line">alias vim=&apos;/usr/local/Cellar/vim/7.4.712/bin/vim&apos;</div><div class="line"></div><div class="line">source ~/.zshrc</div><div class="line"></div><div class="line">再次 执行 vim 就可以看到 最新版</div></pre></td></tr></table></figure>
-<p>待续 …</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/20/getting-start-with-atlas/" itemprop="url">
-                  Mysql-分库分表-Atlas试用笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-20T15:24:41+08:00" content="2015-07-20">
-              2015-07-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/20/getting-start-with-atlas/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/getting-start-with-atlas/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/20/getting-start-with-atlas/" class="leancloud_visitors" data-flag-title="Mysql-分库分表-Atlas试用笔记">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里使用的是 sharding 版本，    </p>
-<p>操作 MySQL-proxy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql-proxy/bin/mysql-proxyd test stop|start|status</div></pre></td></tr></table></figure>
-<p>遇到错误，原因是配置端口的时候不能加注释，需要去掉 <code># master</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306 # master</div><div class="line"></div><div class="line">2015-07-15 01:45:46: (message) chassis-unix-daemon.c:138: [angel] we try to keep PID=31372 alive</div><div class="line">2015-07-15 01:45:46: (message) mysql-proxy 0.8.2 started - instance: test</div><div class="line">2015-07-15 01:45:46: (message) proxy listening on port 0.0.0.0:1234</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 127.0.0.1:3306</div><div class="line">2015-07-15 01:45:46: (critical) network-address.c:253: IP-address has to be in the form [&lt;ip&gt;][:&lt;port&gt;], is &apos;127.0.0.1:3306  # master&apos;. Failed to parse the port at &apos;  # master&apos;</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 192.168.56.112:3306</div><div class="line">2015-07-15 01:45:46: (critical) chassis-unix-daemon.c:210: [angel] PID=31372 died on signal=11 (it used 5 kBytes max) ... waiting 2sec before restart</div></pre></td></tr></table></figure>
-<p>最终配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[shardrule-0]</div><div class="line">table = test.sharding_test</div><div class="line">type = range</div><div class="line">shard-key = id</div><div class="line">groups = 0:0-999,1:1000-1999</div><div class="line"></div><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3308 # slave</div><div class="line"></div><div class="line">[group-1]</div><div class="line">proxy-backend-addresses=192.168.56.114:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3310</div></pre></td></tr></table></figure>
-<p>atlas 官方的测试语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS `sharding_test`;</div><div class="line">CREATE TABLE `sharding_test` (</div><div class="line">      `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">      `name` char(50) COLLATE utf8_bin NOT NULL,</div><div class="line">      `age` int(11) DEFAULT NULL,</div><div class="line">      `birthday` date DEFAULT NULL,</div><div class="line">      `nickname` char(50) COLLATE utf8_bin DEFAULT NULL,</div><div class="line">      PRIMARY KEY (`id`)</div><div class="line">);</div><div class="line"></div><div class="line">连接 proxy</div><div class="line"></div><div class="line">$ mysql -h127.0.0.1 -P1234 -uroot -proot -c</div><div class="line"></div><div class="line">初始化 dbgroup0 数据值</div><div class="line"></div><div class="line">mysql&gt; use test;</div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1, &apos;test&apos;, 0);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(50, &apos;test&apos;, 0), (999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div><div class="line"></div><div class="line">如果跨 shard , sql 会报错</div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(100, &apos;test&apos;, 0), (1500, &apos;test&apos;, 0);</div><div class="line">ERROR 1105 (HY000): Proxy Warning - write operation is only allow to one dbgroup!</div><div class="line"></div><div class="line">初始化 dbgroup1 数据值</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1000, &apos;test&apos;, 0), (1999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
-<p>参考地址</p>
-<p><a href="https://github.com/Qihoo360/Atlas/wiki/Atlas-Sharding" target="_blank" rel="external">Atlas Sharding</a></p>
-<p><a href="http://www.guokr.com/blog/475765/" target="_blank" rel="external">mysql中间件研究(Atlas，cobar，TDDL)</a></p>
-<p><a href="http://www.gpfeng.com/?p=657" target="_blank" rel="external">谈谈MySQL水平扩展</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/19/install-vim-from-source/" itemprop="url">
-                  源码安装vim
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-19T11:46:45+08:00" content="2015-07-19">
-              2015-07-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/19/install-vim-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/install-vim-from-source/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/19/install-vim-from-source/" class="leancloud_visitors" data-flag-title="源码安装vim">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>环境 Centos 6.6 64位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">下载安装包</div><div class="line">wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2</div><div class="line"></div><div class="line">查找 centos 自带的 vim</div><div class="line">rpm -qa | grep vim</div><div class="line"></div><div class="line">删除自带的 vim</div><div class="line">yum remove vim-common-7.2.411-1.8.el6.x86_64 vim-enhanced-7.2.411-1.8.el6.x86_64 vim-minimal-7.2.411-1.8.el6.x86_64</div><div class="line"></div><div class="line">解压</div><div class="line">tar -jxv -f vim-7.4.tar.bz2</div><div class="line"></div><div class="line">cd ~/vim74/</div><div class="line"></div><div class="line">安装依赖</div><div class="line">yum install -y python-devel ruby-devel libX11-devel gtk2-devel ncurses-devel</div><div class="line"></div><div class="line">mkdir /usr/lib/python2.6/config/</div><div class="line"></div><div class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.6/config/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-luainterp</div><div class="line"></div><div class="line">make VIMRUNTIMEDIR=/usr/share/vim/vim74 &amp;&amp; make install</div></pre></td></tr></table></figure>
-<p>简单配置</p>
-<p>摁 i 后，进入 insert 模式，但是看不到 - insert - </p>
-<p>mac 下 delete 不能向前删除字符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot; allow backspacing over everything in insert mode</div><div class="line">&quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</div><div class="line">&quot; 插入模式下，“←&quot;如何删除光标前的字符：行首空白、换行符、插入点之前的字符</div><div class="line">&quot; this option is default in neovim</div><div class="line">set backspace=indent,eol,start</div></pre></td></tr></table></figure>
-<p>参考 <a href="https://github.com/Treri/dotfile/blob/master/vim/vimrc" target="_blank" rel="external">适合自己使用的vimrc文件</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="url">
-                  SSH认证-无密码配置问题总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-16T14:29:31+08:00" content="2015-07-16">
-              2015-07-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">ssh</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/16/ssh-connection-debugging-issues-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ssh-connection-debugging-issues-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/16/ssh-connection-debugging-issues-summary/" class="leancloud_visitors" data-flag-title="SSH认证-无密码配置问题总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>环境 </p>
-<p>服务端 Centos 6.6 64 位<br>客户端 Mac OS X 10.10.4</p>
-<p>常用调试方法</p>
-<p>1.查看客户端发送到服务器端的私钥信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ssh -v root@dev1</div><div class="line"></div><div class="line">ssh -vv root@dev1</div><div class="line"></div><div class="line">ssh -vvv root@dev1</div></pre></td></tr></table></figure>
-<p>2.使用不同的端口，另外起一个 sshd 进程，可以很清晰看到登录的日志，例如看到发送的 id_rsa.pub ,读取的 authorized_keys文件等信息，这些信息对调试很有帮助</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/sbin/sshd -p 2121 -D -d -e</div><div class="line"></div><div class="line">ssh -v root@dev1 -p 2121</div></pre></td></tr></table></figure>
-<p>3.查看服务器端日志</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tail -f /var/log/audit/audit.log (这个是重点)</div><div class="line"></div><div class="line">tail -f /var/log/secure (帮助不大)</div></pre></td></tr></table></figure>
-<p>遇到问题总结</p>
-<p>1./etc/ssh/sshd_config 文件 47-49行，不打开注释，也可以直接配置免密码登录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RSAAuthentication yes</div><div class="line">PubkeyAuthentication yes</div><div class="line">AuthorizedKeysFile      authorized_keys</div></pre></td></tr></table></figure>
-<p>2.<code>.ssh</code> 目录不能手工创建，否则在 selinux 开启的情况下会因为文件和文件夹上下文问题无法访问文件 <code>authorized_keys</code>，这个问题很严重，今天上午找了半天，终于发现问题了，目录权限建议设置为 700，而且所属是当前用户，不能使root</p>
-<p>3.<code>authorized_keys</code>这个文件可以手工创建，也可以使用<code>ssh-copy-id</code>，文件权限建议设置为 600,所属是当前用户，不能使root</p>
-<p>4.Selinux 打开引起的因为上下文无法访问文件，造成 ssh 配置后，还是需要密码登录，/var/log/audit/audit.log 日志片段如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:890): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=6e:96:69:b9:69:45:93:0d:89:da:e0:9c:e4:bb:04:04 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_KEY_USER msg=audit(1437024048.502:891): user pid=25633 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=destroy kind=server fp=ae:5b:f9:c5:a2:08:c5:9a:15:a7:4c:ad:18:d8:44:a1 direction=? spid=25633 suid=0  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:892): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-client cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line">type=CRYPTO_SESSION msg=audit(1437024048.506:893): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=start direction=from-server cipher=aes128-ctr ksize=128 spid=25633 suid=74 rport=63450 laddr=192.168.56.114 lport=22  exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=? res=success&apos;</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.567:894): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:894): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246160 a1=800 a2=1 a3=4 items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line">siy</div><div class="line">type=AVC msg=audit(1437024048.567:895): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.567:895): arch=c000003e syscall=2 success=no exit=-13 a0=7f83732487a0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.567:896): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div><div class="line">type=AVC msg=audit(1437024048.569:897): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:897): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=AVC msg=audit(1437024048.569:898): avc:  denied  &#123; read &#125; for  pid=25631 comm=&quot;sshd&quot; name=&quot;authorized_keys&quot; dev=dm-0 ino=655495 scontext=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file</div><div class="line">type=SYSCALL msg=audit(1437024048.569:898): arch=c000003e syscall=2 success=no exit=-13 a0=7f8373246ea0 a1=800 a2=1 a3=1b items=0 ppid=25127 pid=25631 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=19 comm=&quot;sshd&quot; exe=&quot;/usr/sbin/sshd&quot; subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 key=(null)</div><div class="line"></div><div class="line">type=USER_AUTH msg=audit(1437024048.569:899): user pid=25631 uid=0 auid=0 ses=19 subj=unconfined_u:system_r:sshd_t:s0-s0:c0.c1023 msg=&apos;op=pubkey acct=&quot;root&quot; exe=&quot;/usr/sbin/sshd&quot; hostname=? addr=192.168.56.1 terminal=ssh res=failed&apos;</div></pre></td></tr></table></figure>
-<p>解决方法，可以使用<code>restorecon</code>还原上下文，或者关闭 selinux </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">restorecon authorized_keys</div><div class="line"></div><div class="line">临时关闭 selinux </div><div class="line">setenforce 0</div><div class="line"></div><div class="line">永久关闭 </div><div class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config</div></pre></td></tr></table></figure>
-<p>5.客户端生成多对 ssh 公钥私钥的时候，注意 ssh-add 添加，在 mac 上使用 ssh-add 的时候，又需要机器重启就失效问题</p>
-<p>6.可以提高速度</p>
-<pre><code>ssh -o GSSAPIAuthentication=no xxx@dev1 `-o GSSAPIAuthentication=no` 
-</code></pre><p>7.Authentication refused: bad ownership or modes for file /home/work/.ssh/authorized_keys</p>
-<pre><code>chmod 600 authorized_keys
-</code></pre><p>爬坑记录</p>
-<p>安装机器，手工创建 .ssh 目录 和 authorized_keys 文件，然后直接贴 客户端的公钥，以为可以正常访问了，结果各种坑，还是需要输入密码，<br>最后通过好几篇文章找到调试日志，是 selinux 造成的问题，文件和目录上下文不一致，造成不能正常访问，然后就 ssh 新技能get<br>自己玩的时候，就把 selinux 停了吧，或者通过 ssh-keygen 生成.ssh 目录，不要手工创建</p>
-<p>参考文章</p>
-<p><a href="/git-more-sshkeys-more-host/">git配置多个不同邮箱</a></p>
-<p><a href="/macosx-config-ssh-login-virtual-machine-without-password/">LInux实战–Mac配置ssh免密码登录到虚拟主机</a></p>
-<p><a href="http://phutchins.com/blog/2015/03/09/debug-ssh-connections/" target="_blank" rel="external">Debugging SSH Connection Issues</a></p>
-<p><a href="http://www.saltycrane.com/blog/2011/08/notes-debugging-ssh-connection-problems/" target="_blank" rel="external">Notes on debugging ssh connection problems</a></p>
-<p><a href="https://blog.tinned-software.net/ssh-key-authentication-is-not-working-selinux/" target="_blank" rel="external">SSH-Key authentication is not working – SELinux</a></p>
-<p><a href="http://doiido.blog.51cto.com/5503054/1554485" target="_blank" rel="external">linux/centos6 查看SELinux状态 关闭SELinux</a></p>
+            <h2 id="Vagrant-的定位"><a href="#Vagrant-的定位" class="headerlink" title="Vagrant 的定位"></a>Vagrant 的定位</h2><p>一个第三方的虚拟机管理软件，平常的虚拟机比如 VirtualBox 是自己下载 iso 文件，<br>然后建立虚拟机，配置管理环境</p>
+<p>使用 vagrant ，它会给你做一些事情，让你更加方便和快捷的使用各种虚拟机，<br>有个概念要知道，vagrant 本身不是虚拟机，它可以通过 <code>vagrant up --provider virtualbox</code> 显式指定启动的时候使用 VirtualBox 作为虚拟机提供者</p>
+<h2 id="为什么要用-vagrant"><a href="#为什么要用-vagrant" class="headerlink" title="为什么要用 vagrant"></a>为什么要用 vagrant</h2><p>还有个问题就是为什么要用 vagrant，因为它提供了很方便的配置和使用，相对于自己手工去做，<br>要方便太多，提供了很多基础的功能，例如虚拟机的建立，启动，销毁，ssh 登录，等等</p>
+<h2 id="使用-vagrant-要分清楚的概念"><a href="#使用-vagrant-要分清楚的概念" class="headerlink" title="使用 vagrant 要分清楚的概念"></a>使用 vagrant 要分清楚的概念</h2><p>vagrant 新手首先要搞清楚的几个概念，这里简单列举下我的理解方式：</p>
+<p>1.首先 vagrant 是一个管理虚拟机的软件，官网地址  <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>2.首先需要安装一个 vagrant 的应用程序，跨平台 Mac Win，都有，官方下载地址 <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>3.vagrant box，这个是 vagrant 官方推出的一种镜像文件，类似之前的 iso 文件，官方搜索地址是 <a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a>，比如说想找 centos 的包，或者 ubuntu 的包，都可以来这里找</p>
+<p>4.vagrant 安装好之后，可以直接命令行管理，例如 <code>vagrant up</code> 启动一个虚拟机</p>
+<p>5.vagrant box 镜像是需要专门管理的，例如 <code>vagrant box list</code> 列出本地所有的包</p>
+<p>6.官方有 hello world ，地址在 <a href="https://docs.vagrantup.com" target="_blank" rel="external">https://docs.vagrantup.com</a> 可以跟着做，针对国内程序员，要能翻墙，因为 vagrant box 在 Vagrantfile 配置后，是自动下载的，对国内程序员是很不友好的</p>
+<p>7.这种工具类的软件知道皮毛最受折磨，后续除了问题会狠狠消耗时间，vagrant 的作者写了一本书 《Creating Development Environments with Vagrant, Second Edition》</p>
 
           
         
@@ -1011,7 +940,7 @@ pip install pep8
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1052,7 +981,7 @@ pip install pep8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1060,7 +989,7 @@ pip install pep8
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1069,7 +998,7 @@ pip install pep8
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

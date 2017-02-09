@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="url">
-                  mac os 10.10.1下编译安装svn1.8.8
+                <a class="post-title-link" href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="url">
+                  LInux实战--Mac配置ssh免密码登录到虚拟主机
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-27T21:15:29+08:00" content="2014-11-27">
-              2014-11-27
+            <time itemprop="dateCreated" datetime="2015-01-27T23:04:02+08:00" content="2015-01-27">
+              2015-01-27
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" itemprop="commentsCount"></span>
+                <a href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/11/27/compile-install-svn-1.8.8-on-mac-os-x-10.10.1/" class="leancloud_visitors" data-flag-title="mac os 10.10.1下编译安装svn1.8.8">
+             <span id="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" class="leancloud_visitors" data-flag-title="LInux实战--Mac配置ssh免密码登录到虚拟主机">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,221 +337,67 @@
       
         
           
-            <h2 id="为何编译"><a href="#为何编译" class="headerlink" title="为何编译"></a>为何编译</h2><p>mac下Apache配置http方式访问svn，依赖的lib如下</p>
-<pre><code>➜  ~  ll /usr/libexec/apache2|grep dav
--rwxr-xr-x  1 root  wheel   130K  9 10 06:11 mod_dav.so
--rwxr-xr-x  1 root  wheel    69K  9 10 06:11 mod_dav_fs.so
--rwxr-xr-x  1 root  wheel    29K  9 10 06:11 mod_dav_lock.so
--rwxr-xr-x  1 root  wheel   188K 11 27 17:19 mod_dav_svn.so
-</code></pre><p>其中 <code>mod_dav_svn.so mod_authz_svn.so</code> 自带的Apache是没有的，需要编译svn之后才能生成</p>
-<p>svn1.7版本之前使用 <code>neon</code> 处理<code>http</code>和<code>https scheme</code> ,<br>但是从1.8版本开始，使用 serf 处理<code>http</code>和<code>https scheme</code> ,<br>输入 <code>svn --version</code>输出如下</p>
-<pre><code>➜  ~  svn --version
-svn, version 1.8.8 (r1568071)
-   compiled Nov 27 2014, 21:06:17 on x86_64-apple-darwin14.0.0
+            <h1 id="LInux实战–Mac配置ssh免密码登录到虚拟主机"><a href="#LInux实战–Mac配置ssh免密码登录到虚拟主机" class="headerlink" title="LInux实战–Mac配置ssh免密码登录到虚拟主机"></a>LInux实战–Mac配置ssh免密码登录到虚拟主机</h1><h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
+<p>写在最前</p>
+<p>2014年3月份新购了Mac Book Pro 15，然后喜欢在上面使用VirtualBox安装虚拟机鼓捣东西,<br>最开始是鼓捣hadoop集群，由于13年花时间仔细阅读了Linux私房菜基础版，所以被轻轻虐待，<br>到最后能轻轻松给集群删除节点，配置新节点，当然，因为没有太多运维经验，所以是手工rsync+vim<br>虽然古老且笨拙，但是孰能生巧，中间好几个月搞其他东西，而且那时候也没有开始写博客，所以<br>东西都压在印象笔记里面，现在有新想法，搞gitlab + Java + Python + jenkins + test，而且<br>想玩自动化的，所以重新搞虚拟机，而且配置要求比较高点的。</p>
+<p>这次一步一步，把所做的，都记录下来，下面回到正文：</p>
+<h1 id="主机的配置"><a href="#主机的配置" class="headerlink" title="主机的配置"></a>主机的配置</h1><p>首先在Mac上使用virtualbox安装虚拟机，详细可以参照<a href="/mac-use-virtualbox/">博客文章</a></p>
+<pre><code>网络配置为：
 
-Copyright (C) 2013 The Apache Software Foundation.
-This software consists of contributions made by many people;
-see the NOTICE file for more information.
-Subversion is open source software, see http://subversion.apache.org/
+主机跟虚拟机之间建立独立的局域网，    
+主机ip 192.168.56.1     
+虚拟机ip192.168.56.110,     
+虚拟机hostname=centos65，    
+主机和虚拟机都添加host域名解析
 
-The following repository access (RA) modules are available:
+sudo vim /etc/hosts
 
-* ra_svn : Module for accessing a repository using the svn network protocol.
-  - with Cyrus SASL authentication
-  - handles &apos;svn&apos; scheme
-* ra_local : Module for accessing a repository on local disk.
-  - handles &apos;file&apos; scheme
-* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
-  - using serf 1.3.3
-  - handles &apos;http&apos; scheme
-  - handles &apos;https&apos; scheme
-</code></pre><p>如下是在mac10.10.1 上编译 svn 1.8.8 的过程，详细如下</p>
-<h2 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h2><pre><code>apr-1.5.1.tar.gz
-apr-util-1.5.4.tar.gz
-scons-2.3.4.tar.gz
-serf-1.3.8.tar.bz2
-subversion-1.8.8.tar.gz
-(mac下会自动解压 *.zip 和 *.gz)
-</code></pre><h2 id="编译步骤"><a href="#编译步骤" class="headerlink" title="编译步骤"></a>编译步骤</h2><p>apr-1.5.1.tar.gz</p>
-<p>–prefix=/Users/User/soft/apr-1.5.1 表示安装到该目录</p>
-<pre><code>cd apr-1.5.1/
-./configure --prefix=/Users/User/soft/apr-1.5.1
-sudo make
-sudo make install
-</code></pre><p>apr-util-1.5.4.tar.gz</p>
-<p>下载地址 <a href="https://apr.apache.org/download.cgi" target="_blank" rel="external">https://apr.apache.org/download.cgi</a></p>
-<pre><code>cd ..
-cd ../apr-util-1.5.4
-./configure --prefix=/Users/User/soft/apr-util-1.5.4 --with-apr=/Users/User/soft/apr-1.5.1
-sudo make
-sudo make install
-</code></pre><p>scons-2.3.4.tar.gz</p>
-<p>下载地址 <a href="http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html" target="_blank" rel="external">http://www.linuxfromscratch.org/blfs/view/svn/general/scons.html</a></p>
-<pre><code>cd ../scons-2.3.4
-sudo python setup.py install
-</code></pre><p>serf-1.3.8.tar.bz2 </p>
-<p>下载地址 <a href="http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2" target="_blank" rel="external">http://serf.googlecode.com/svn/src_releases/serf-1.3.8.tar.bz2</a></p>
-<pre><code>cd ../serf-1.3.3
-scons PREFIX=/Users/User/soft/serf-1.3.3 APR=/Users/User/soft/apr-1.5.1 APU=/Users/User/soft/apr-util-1.5.4 OPENSSL=/usr/bin
-scons install
-</code></pre><p>subversion-1.8.8.tar.gz</p>
-<p>下载地址<a href="http://subversion.apache.org/download/" target="_blank" rel="external">http://subversion.apache.org/download/</a></p>
-<pre><code>cd /Users/User/soft/subversion-1.8.8
-./configure --prefix=/usr/local --with-apr=/Users/User/soft/apr-1.5.1 --with-apr-util=/Users/User/soft/apr-util-1.5.4 --with-openssl --with-serf=/Users/User/soft/serf-1.3.3
-sudo make
-sudo make install
-</code></pre><p>复制<code>mod_dav_svn.so mod_authz_svn.so</code>到<code>Apache</code>的<code>lib</code>目录</p>
-<pre><code>sudo cp /usr/local/libexec/mod_dav_svn.so mod_authz_svn.so /usr/libexec/apache2
-</code></pre>
-          
-        
-      
-    </div>
+新增
+192.168.56.110 centos65
 
-    <div>
-      
-    </div>
+主机和虚拟机执行
 
-    <div>
-      
-    </div>
+ping centos65 都没有错误
 
-    <footer class="post-footer">
-      
+主机生成ssh公钥和私钥
 
-      
+cd ~ &amp;&amp; ssh-keygen 
+然后一路回车
+</code></pre><h1 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h1><p>首先在虚拟机上生成ssh公钥和私钥</p>
+<pre><code>cd /root &amp;&amp; ssh-keygen
+</code></pre><p>编辑虚拟机ssh配置，开启ssh，此步骤不必须</p>
+<pre><code>vim /etc/ssh/sshd_config
+ 47 RSAAuthentication yes
+ 48 PubkeyAuthentication yes
+ 49 AuthorizedKeysFile      .ssh/authorized_keys
+</code></pre><p> 这三行取消注释<br> 编辑后，退出保存</p>
+<p> 重启ssh服务</p>
+<pre><code>service sshd restart
+</code></pre><p>验证ssh服务</p>
+<pre><code>netstat -tlnp | grep ssh
+</code></pre><p>新增ssh认证文件，保存其他主机的公钥</p>
+<pre><code>vim /root/.ssh/authorized_keys
+</code></pre><p>这时候，需要把mac上面的</p>
+<pre><code>cat ~/.ssh/id_rsa.pub 
+</code></pre><p>内容全部copy进来，不能有空格，保存退出</p>
+<p>验证配置正确性</p>
+<p>主机输入</p>
+<pre><code>ssh root@centos65
+</code></pre><p>可能遇到问题</p>
+<p>1.主机上~/.ssh/目录权限要是700<br>2.主机上~/.ssh/id_rsa权限要是600，并且属于当前用户    </p>
+<p>例如我的主机favoorr-mac,当前用户名User,</p>
+<pre><code>执行 ls -ld ~/.ssh/ ; ll ~/.ssh/ ，结果如下
 
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/24/maven-repository-jenkins-errors/" itemprop="url">
-                  jenkins使用maven构建时遇到的repository的错误
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-24T15:24:37+08:00" content="2014-11-24">
-              2014-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">jenkins</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/24/maven-repository-jenkins-errors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/24/maven-repository-jenkins-errors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/24/maven-repository-jenkins-errors/" class="leancloud_visitors" data-flag-title="jenkins使用maven构建时遇到的repository的错误">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="jenkins使用maven构建时遇到的repository的错误"><a href="#jenkins使用maven构建时遇到的repository的错误" class="headerlink" title="jenkins使用maven构建时遇到的repository的错误"></a>jenkins使用maven构建时遇到的repository的错误</h1><p>部署jenkins后，构建maven项目，在执行 -X mvn clean installl 时，报错内容如下</p>
-<pre><code>Started by user anonymous
-Building in workspace /Users/Shared/Jenkins/Home/jobs/account2/workspace
-Updating svn://127.0.0.1/account/trunk2 at revision &apos;2014-11-24T11:52:51.614 +0800&apos;
-At revision 26
-no change for svn://127.0.0.1/account/trunk2 since the previous build
-[workspace] $ /Users/User/soft/apache-maven-3.2.1/bin/mvn clean install
-[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LocalRepositoryNotAccessibleException
-Build step &apos;Invoke top-level Maven targets&apos; marked build as failure
-Finished: FAILURE
-</code></pre><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>重点看这句</p>
-<pre><code>[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
-</code></pre><p>配置maven时，使用了默认的配置，所以就是匿名用户去寻找，</p>
-<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><p>1.配置maven时，不能使用默认配置，指定 <code>setting.xml</code> 的位置</p>
-<p>2.<code>setting.xml</code> 配置中，尽量不使用 类似 <code>${user.home}/.m2/repository</code> 使用环境变量的路径，<br>如果当前用户改变，整个本地仓库路径就改变了，</p>
-<p>例如使用 <code>jenkins</code> 用户，路径就变为 <code>/Users/Shared/Jenkins/.m2/repository</code><br>尽量使用 <code>/Users/User/.m2/repository</code> 这种绝对路径</p>
+favoorr-mac:~ User$ ls -ld ~/.ssh/ ; ll ~/.ssh/
+drwx------  5 User  staff  170  5 14 23:44 /Users/User/.ssh/
+total 24
+-rw-------  1 User  staff  1679  5 14 23:44 id_rsa
+-rw-r--r--  1 User  staff   398  5 14 23:44 id_rsa.pub
+</code></pre><p>3.虚拟机上新建目录~/.ssh权限为644，文件~/.ssh/authorized_keys权限为644<br>4.可以发送主机上的id_rsa.pub到虚拟机上，然后cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>5.如果手工复制 id_rsa.pub 里面的内容，注意选中之后不要修改，直接粘贴，修改就可能报错了，权限那些其实不容易出问题，默认即可，这里比较容易出错</p>
+<pre><code>ssh -v root@dev1  调试 ssh 信息，比如本地多个私钥，
+ssh -o GSSAPIAuthentication=no xxx@dev1
+</code></pre><p>6.几个月后，一次爬坑经历发现，/etc/ssh/sshd_config里面的内容，是可以不注释的</p>
+<p>-EOF-</p>
 
           
         
@@ -601,8 +447,8 @@ Finished: FAILURE
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/config-sublime-zh-cn-encode/" itemprop="url">
-                  Sublime打开中文文件乱码解决
+                <a class="post-title-link" href="/2015/01/25/jdk-jre-old-version-download/" itemprop="url">
+                  老版本JDK JRE下载
                 </a>
               
             
@@ -615,8 +461,8 @@ Finished: FAILURE
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T16:40:15+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2015-01-25T12:56:42+08:00" content="2015-01-25">
+              2015-01-25
             </time>
           </span>
 
@@ -629,8 +475,8 @@ Finished: FAILURE
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/sublime/" itemprop="url" rel="index">
-                    <span itemprop="name">sublime</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -645,8 +491,8 @@ Finished: FAILURE
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/config-sublime-zh-cn-encode/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/config-sublime-zh-cn-encode/" itemprop="commentsCount"></span>
+                <a href="/2015/01/25/jdk-jre-old-version-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/jdk-jre-old-version-download/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -656,7 +502,7 @@ Finished: FAILURE
 
           
           
-             <span id="/2014/11/22/config-sublime-zh-cn-encode/" class="leancloud_visitors" data-flag-title="Sublime打开中文文件乱码解决">
+             <span id="/2015/01/25/jdk-jre-old-version-download/" class="leancloud_visitors" data-flag-title="老版本JDK JRE下载">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -680,12 +526,13 @@ Finished: FAILURE
       
         
           
-            <h1 id="sublime打开中文文件乱码解决"><a href="#sublime打开中文文件乱码解决" class="headerlink" title="sublime打开中文文件乱码解决"></a>sublime打开中文文件乱码解决</h1><p>编码默认不支持中文的GB2312 或者 GB18030,需要安装插件增加支持</p>
-<p>1.安装 Package Control</p>
-<p>2.安装插件</p>
-<pre><code>ConvertToUTF8 
-codec33
-</code></pre>
+            <p>老版本jdk，jre下载</p>
+<p>oracle 提供的下载页只能下载最新的jdk或jre，</p>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>有时候做一些编译，需要用到老版本的jdk，程序对jdk版本做了限制，<br>例如编译hadoop2.0的文件时候，可以到下面地址下载</p>
+<p><a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/archive-139210.html</a></p>
+<p>-EOF-</p>
+
           
         
       
@@ -734,8 +581,8 @@ codec33
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/config-svn-server-on-mac-os-x/" itemprop="url">
-                  mac 配置svn服务器
+                <a class="post-title-link" href="/2015/01/23/linux-edit-hostname/" itemprop="url">
+                  centos6.5-linux实战-修改主机名
                 </a>
               
             
@@ -748,8 +595,8 @@ codec33
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T16:22:01+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2015-01-23T18:11:19+08:00" content="2015-01-23">
+              2015-01-23
             </time>
           </span>
 
@@ -762,8 +609,8 @@ codec33
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -778,8 +625,8 @@ codec33
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/config-svn-server-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/config-svn-server-on-mac-os-x/" itemprop="commentsCount"></span>
+                <a href="/2015/01/23/linux-edit-hostname/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/linux-edit-hostname/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -789,7 +636,7 @@ codec33
 
           
           
-             <span id="/2014/11/22/config-svn-server-on-mac-os-x/" class="leancloud_visitors" data-flag-title="mac 配置svn服务器">
+             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="centos6.5-linux实战-修改主机名">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -813,66 +660,30 @@ codec33
       
         
           
-            <h1 id="mac上配置svn服务器的步骤"><a href="#mac上配置svn服务器的步骤" class="headerlink" title="mac上配置svn服务器的步骤"></a>mac上配置svn服务器的步骤</h1><p>mac上面初始已经安装了svn服务端</p>
-<p>1.建立目录</p>
-<pre><code>cd ~/Documents
-mkdir svn-repos
-</code></pre><p>2.创建仓库</p>
-<pre><code>svnadmin create svn-repos/account
-</code></pre><p>3.配置登录用户</p>
-<p>此时的仓库匿名是可以访问的，通常会配置用户后，在使用</p>
-<p>编辑密码配置文件 </p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/svnserve.conf
-</code></pre><p>以下内容取消注释</p>
-<pre><code>anon-access = read
-auth-access = write
-password-db = passwd
-authz-db = authz
-realm = local-svn-repo
-</code></pre><p>编辑权限配置文件</p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/authz
-</code></pre><p>配置示例</p>
-<p>新建组manage 和 组 user，新建用户favoorr test，对目录 <code>/</code> ，<code>manage</code>组可以读写</p>
-<pre><code>[groups]
-# harry_and_sally = harry,sally
-# harry_sally_and_joe = harry,sally,&amp;joe
-manage = favoorr
-user = test
+            <h1 id="Centos-6-5-实战-修改主机名"><a href="#Centos-6-5-实战-修改主机名" class="headerlink" title="Centos 6.5 实战-修改主机名"></a>Centos 6.5 实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
+<p>需要root权限，修改主机名为master步骤如下</p>
+<pre><code>第一步
+vim /etc/sysconfig/network  实际修改主机名
 
+添加
+HOSTNAME=master
 
-[/]
-# harry = rw
-# &amp;joe = r
-# * =
-@manage = rw
+第二步
+vim /etc/hosts  本地解析
 
-[repository:/svnroot]
-# @harry_and_sally = rw
-# * = r
-manage = rw
-</code></pre><p>编辑设置密码文件</p>
-<pre><code>vim ~/Documents/svn-repos/account/conf/passwd
-</code></pre><p>示例</p>
-<pre><code>[users]
-# harry = harryssecret
-# sally = sallyssecret
-favoorr = 000000
-</code></pre><p>4.后台启动svn服务</p>
-<pre><code>svnserve -d -r svn-repos --listen-host 0.0.0.0
-</code></pre><p>5.命令行导入文件</p>
-<p>下面命令会把当前目录下所有文件上传到svn 仓库中</p>
-<pre><code>提交到svn仓库
-svn import -m &quot;initial import&quot; . svn://127.0.0.1/account/trunk --username favoorr --password 000000
+添加本机 ip 和主机名映射
+192.168.56.101 master
 
-由于我们的仓库在本机，也可以使用以下命令提交到本机
-svn import -m &quot;initial import&quot; . file:////Users/User/Documents/svn-repos/account/trunk --username favoorr --password 000000
-</code></pre><p>6.命令行查看文件列表</p>
-<pre><code>svn list svn://127.0.0.1/account/trunk
+第三步，防止 ip 配置错误
+ping master
 
-后台查看进程
+第四步
+reboot 重启
 
-ps -ef |grep svnserve
-</code></pre>
+重启完成后，查看修改结果
+hostname 查看主机名
+</code></pre><p>-EOF-</p>
+
           
         
       
@@ -921,8 +732,8 @@ ps -ef |grep svnserve
             
               
                 
-                <a class="post-title-link" href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="url">
-                  重启finder的方法
+                <a class="post-title-link" href="/2015/01/23/mac-use-virtualbox-config-network/" itemprop="url">
+                  mac上使用虚拟机网络配置总结
                 </a>
               
             
@@ -935,8 +746,8 @@ ps -ef |grep svnserve
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-22T16:00:25+08:00" content="2014-11-22">
-              2014-11-22
+            <time itemprop="dateCreated" datetime="2015-01-23T16:14:51+08:00" content="2015-01-23">
+              2015-01-23
             </time>
           </span>
 
@@ -949,8 +760,8 @@ ps -ef |grep svnserve
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
+                  <a href="/categories/virtualbox/" itemprop="url" rel="index">
+                    <span itemprop="name">virtualbox</span>
                   </a>
                 </span>
 
@@ -965,8 +776,8 @@ ps -ef |grep svnserve
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" itemprop="commentsCount"></span>
+                <a href="/2015/01/23/mac-use-virtualbox-config-network/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/mac-use-virtualbox-config-network/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -976,7 +787,7 @@ ps -ef |grep svnserve
 
           
           
-             <span id="/2014/11/22/three-ways-to-restart-finder-on-mac-os-x/" class="leancloud_visitors" data-flag-title="重启finder的方法">
+             <span id="/2015/01/23/mac-use-virtualbox-config-network/" class="leancloud_visitors" data-flag-title="mac上使用虚拟机网络配置总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1000,15 +811,187 @@ ps -ef |grep svnserve
       
         
           
-            <h1 id="三种重启Finder的方法"><a href="#三种重启Finder的方法" class="headerlink" title="三种重启Finder的方法"></a>三种重启Finder的方法</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>1.今天在使用<code>Sublime text</code>的时候,经常使用的 <code>Reveal In Finder</code>的功能不能使用</p>
-<p>2.昨天在Finder中使用 Go2Shell 的时候，打开Iterm非常慢</p>
-<p>然后看了监视器，Finder占用350M多内存，本来想直接重启机器，突然想了下<br>应该是Finder有问题了，需要重启，就Google了下，总共收集3种快速重启方法</p>
-<h2 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h2><p>方法一</p>
-<p>摁 <code>option</code> 之后，右键点击dock上的Finder图标，会在最下面出现 <code>重新开启</code> 的菜单</p>
-<p>方法二</p>
-<p>在命令行终端执行 <code>killall Finder</code> </p>
-<p>方法三</p>
-<p><code>option + command + esc</code> ,调出小窗口，找到Finder，强制退出重启</p>
+            <h1 id="mac上使用虚拟机网络配置总结"><a href="#mac上使用虚拟机网络配置总结" class="headerlink" title="mac上使用虚拟机网络配置总结"></a>mac上使用虚拟机网络配置总结</h1><p>2014年初，公司让探索hadoop相关技术，一直以来有种习惯，不管什么技术，<br>必须自己玩下，然后感觉心里才有底，玩hadoop，单机是没啥意思的，分布式<br>就要多台机器，然后看了mactalk后，上面有段有了mac，不管你什么LVS、hadoop<br>想怎么玩就怎么玩，年初钱攒够就买了，之后就是mac新手，开始被吊打之路，研究hadoop，<br>过程是苦逼的，但是都走过来了，这会需要用虚拟机，想起来当时自己的苦逼，写出来<br>，记录下来。</p>
+<p>根据mactalk的提示，我选择的虚拟机软件是virtualbox,然后过程中遇到问题，应该就是网络吧，首先说我的需求，</p>
+<p>本机可以连接虚拟机<br>虚拟机可以连接本机<br>虚拟机可以上网<br>虚拟机之间可以ssh无密码登录<br>本机可以跟ssh无密码登录    </p>
+<p>看了不少文章，虚拟机网络NAT、桥接和Host only区别区别，个人理解如下</p>
+<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT "></a>NAT </h2><p>如果你的虚拟机eth0配置没有修改，即自动获取ip，那么虚拟机安装成功启动后，会自动获取的ip，而且获取的ip和宿主机是一个网段的，可以直接ping的通，而且可以联网,virtual box网络配置里面可以看到，<code>command + ,</code>在virtualbox网络那栏里面，可以看到10.0.2.0/24,然后虚拟机启动后，会自动生成ip 10.0.2.15</p>
+<h2 id="Host-Only"><a href="#Host-Only" class="headerlink" title="Host-Only "></a>Host-Only </h2><p>是在宿主机上新增一个网卡，然后在宿主机和虚拟机之间设置独立的局域网，然后宿主机和虚拟机沟通无障碍，<br>这里我遇到的问题是当时在虚拟机的网络配置页面，激活网卡二，选择了Host-Only后，下面的<code>界面名称</code>一直没办法选择，现在明白了也就是virtualbox 给主机要新增一个网卡，但当时不懂，愣是找了好久好久，自己都忘记了多久,同样command+` ，调出virtualbox网络设置页面，然后再virtualbox的网络配置页面新增网卡，然后再虚拟机的网络配置页面才有网卡可以选择，宿主机默认ip是192.168.56.1，最小ip是192.168.56.101，最大是192.168.56.254，什么东西都是会了不难，难了不会，添加网卡二之后，我的宿主机新增了个ip192.168.56.1，然后5台虚拟机ip是 192.168.56.101 ~ 192.168.56.105 ，一般同时启动3台虚拟机</p>
+<h2 id="桥接"><a href="#桥接" class="headerlink" title="桥接 "></a>桥接 </h2><p>会获取跟宿主机一个段的ip地址，比如宿主机ip 192.168.1.101 ,虚拟机会获取192.168.1.103的ip，但是公司的ip应该都是严格管理的，所以这种方法不好维护，如果主机所在局域网中得其他机器不需要使用虚拟机上的功能，最好使用Host-Only建立独立局域网</p>
+<p>我的方案是</p>
+<p>网卡一 NAT 方式和宿主机共享网络，虚拟机可以联网，方便下载安装各种软件<br>网卡二 与主机建立独立局域网，和路由上其他的机器分离，(现在看这种方式太对了，我后来把mac带到公司用了，因为要演示hadoop集群计算，而公司的ip是需要向网管申请的)<br>每一台虚拟机的ip固定，因为hadoop集群要设置master，ip要固定下来</p>
+<p>网卡一使用NAT共享主机网络配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth0
+
+DEVICE=eth0
+HWADDR=08:00:27:41:90:4D
+TYPE=Ethernet
+UUID=1c2f383c-8fdb-4aa0-9e5b-8fa2f60117f9
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp
+</code></pre><p>新增网卡二，使用Host-Only方式配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth1
+
+DEVICE=eth1
+HWADDR=08:00:27:93:D4:33
+TYPE=Ethernet
+UUID=8ac73766-a02b-4417-8f71-6762218b6bf8
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=192.168.56.101
+NETMASK=255.255.255.0
+
+/etc/init.d/network restart  重启网络配置
+ifup eth0 /ifdown eth0  启用/停用某个网卡
+</code></pre><p>难点总结</p>
+<p>理解virtualbox给本机添加网卡<br>ip获取手工指定，修改默认的自动获取    </p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/23/git-reset-remote-url/" itemprop="url">
+                  Git实战-修改远程仓库地址
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T16:08:16+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/git-reset-remote-url/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/git-reset-remote-url/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/git-reset-remote-url/" class="leancloud_visitors" data-flag-title="Git实战-修改远程仓库地址">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Git-修改远程仓库"><a href="#Git-修改远程仓库" class="headerlink" title="Git 修改远程仓库"></a>Git 修改远程仓库</h1><p>之前方法太笨，最新方法如下，直接替换即可</p>
+<pre><code>git remote set-url origin git@172.16.10.9:ott/blog.git
+</code></pre><hr>
+<p>Git的远程仓库可以关联多个，而且可能遇到地址修改的需求，<br>例如前几天遇到需要将项目从自己目录，转移到小组目录里面</p>
+<pre><code>git remote --help 之后，看到了个newurl oldurl 的命令,想想应该就是它了
+</code></pre><p>于是执行</p>
+<pre><code>git remote set-url origin git@172.16.10.9:ott/blog.git git@172.16.10.9:youname/blog.git
+</code></pre><p>另外一种笨方法，删除之后，和新地址关联</p>
+<pre><code>git remote remove origin
+
+git remote add origin git@172.16.10.9:ott/blog.git
+
+git push --set-upstream origin master
+</code></pre><p>Git水很深，高级用法很多，一点一滴积累</p>
+<p>Git和Github、Gitlab很好用，没用的公司，赶紧用起来</p>
+<p>-EOF-</p>
 
           
         
@@ -1041,7 +1024,7 @@ ps -ef |grep svnserve
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1082,7 +1065,7 @@ ps -ef |grep svnserve
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1090,7 +1073,7 @@ ps -ef |grep svnserve
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1099,7 +1082,7 @@ ps -ef |grep svnserve
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

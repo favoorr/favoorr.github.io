@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="url">
-                  vagrant 虚拟机配置最佳实践
+                <a class="post-title-link" href="/2017/02/09/install-config-kafka/" itemprop="url">
+                  配置安装运行 Kafka
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T14:21:53+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:47:41+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/install-config-kafka/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/install-config-kafka/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 虚拟机配置最佳实践">
+             <span id="/2017/02/09/install-config-kafka/" class="leancloud_visitors" data-flag-title="配置安装运行 Kafka">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,27 +337,10 @@
       
         
           
-            <h2 id="Mac-VirtualBox-Vagrant-管理虚拟机"><a href="#Mac-VirtualBox-Vagrant-管理虚拟机" class="headerlink" title="Mac VirtualBox Vagrant 管理虚拟机"></a>Mac VirtualBox Vagrant 管理虚拟机</h2><p>这篇文章定位是在理解了 vagrant 相关概念之后，教你如何灵活玩转自己的虚拟机配置</p>
-<p>本文为 @favoorr 常用的 Mac VirtualBox Vagrant 管理虚拟机的通用配置向导</p>
-<p>我的云梯 VPN 连接是 <a href="http://referyt.com/?r=9ea6f6df9967e57c" target="_blank" rel="external">http://referyt.com/?r=9ea6f6df9967e57c</a></p>
-<p>使用这个连接，你优惠 10 元，我获得 10 元</p>
-<p>1.去官方找自己想要的镜像文件信息<br><a href="https://atlas.hashicorp.com/search" target="_blank" rel="external">https://atlas.hashicorp.com/search</a></p>
-<p>例如想来个 ubuntu 16.04 64位，那么关键字就是 <code>xenial64</code></p>
-<p>找到的地址就是 <a href="https://atlas.hashicorp.com/ubuntu/boxes/xenial64" target="_blank" rel="external">https://atlas.hashicorp.com/ubuntu/boxes/xenial64</a></p>
-<p>2.在本地文件系统建立对应的存放目录，本地目录按照自己意愿，任意位置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">该目录存放所有使用 vagrant 管理的虚拟机</div><div class="line">$ cd ~/Documents/try/vagrant/</div></pre></td></tr></table></figure>
-<p>3.初始化虚拟机存放目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">新建存放 ubuntu 16.04 64 位的文件位置</div><div class="line">$ mkdir xenial64 &amp;&amp; cd xenial64</div><div class="line"></div><div class="line">使用 vagrant 命令初始化虚拟机</div><div class="line">$ vagrant init ubuntu/xenial64</div><div class="line"></div><div class="line">执行完之后，发现 xenial64 目录下多了个配置文件 Vagrantfile</div></pre></td></tr></table></figure>
-<p>4.修改 Vagrantfile ，配置自己的虚拟机，</p>
-<p>其实什么都不修改，按照默认配置，这时候执行 <code>vagrant up</code> 的时候已经可以运行虚拟机了，这个是 hello world 的做法，实际使用中，还是要自己学会修改配置，知道每个配置项会带来的影响<br>有些配置是没有的，有些是有的默认是注释的</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">配置主机名，进入操作系统执行 hostname 显示的名字，我用的规则是 系统版本-IP</div><div class="line">系统是 xenial64，IP 最后一位是 <span class="number">155</span></div><div class="line">config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line"></div><div class="line">vagrant box 的版本，如果不配置，会自动去下载最新版本</div><div class="line">我用的是 daily build 的版本，这个看自己喜好，我这个本来就是尝试一些新东西玩的</div><div class="line">config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">配置端口映射，通过访问本机的 <span class="number">8080</span> 端口，访问安装后虚拟机的 <span class="number">8080</span> 端口</div><div class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">8080</span>, <span class="symbol">host:</span> <span class="number">8080</span></div><div class="line"></div><div class="line">配置虚拟机的 ip，默认网卡一是 NAT 方式，不需要配置</div><div class="line">这里创建网卡二 Host-Only，对应 VirtualBox 的 vbox<span class="number">0</span></div><div class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">配置共享文件夹目录，进入系统后，自动挂载 /lesson</div><div class="line">config.vm.synced_folder <span class="string">"/Users/User/zl/python/lesson"</span>, <span class="string">"/lesson"</span></div><div class="line"></div><div class="line">VirtualBox 的配置</div><div class="line">config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">  <span class="comment"># 这里配置显示在 VirtualBox 的名字，要不然是默认的一长串字符，太丑了</span></div><div class="line">  vb.name = <span class="string">"xenial64-155"</span></div><div class="line">  </div><div class="line">  <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">  vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">  vb.memory = <span class="string">"1024"</span></div><div class="line">  vb.cpus = <span class="string">"2"</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<p>5.在 xenial64 目录下执行命令，初始化并启动虚拟机</p>
-<p>这里要注意，如果是第一次启动，会自动下载 vagrant box，最好挂 VPN了，不多解释，<br>如果没有 VPN，就手工下载包，导入后续会有文章介绍</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant up --provider virtualbox</div></pre></td></tr></table></figure>
-<p>6.在 xenial64 目录下执行命令，进入虚拟机，测试网络</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">进入虚拟机</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">测试网络，我全程 VPN，虚拟机内部访问 google 也是无压力的</div><div class="line">ping www.google.com</div></pre></td></tr></table></figure>
-<h2 id="参考-Vagrantfile-配置文件"><a href="#参考-Vagrantfile-配置文件" class="headerlink" title="参考 Vagrantfile 配置文件"></a>参考 Vagrantfile 配置文件</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-155"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-
+            <p>Kafka 集群安装时，也是现在一台配置好，然后发送到其他机器，然后在修改个性化配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">备份配置文件</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/server.properties /data/kafka_2.11-0.9.0.1/config/server.properties.bak</div><div class="line"></div><div class="line">------第一台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line"></div><div class="line">设置 broker id</div><div class="line">broker.id=0</div><div class="line"></div><div class="line">访问方式</div><div class="line">listeners=PLAINTEXT://192.168.16.22:9092</div><div class="line"></div><div class="line">设置 host.name</div><div class="line">host.name=192.168.16.22</div><div class="line"></div><div class="line">设置持久化文件存放地点</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line"></div><div class="line">设置 Zookeeper 集群地址</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line"></div><div class="line">启用删除 Topic</div><div class="line">delete.topic.enable=true</div><div class="line"></div><div class="line">禁用自动创建 Topic，当 Topic 不存在时，必须手工创建</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第二台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=1</div><div class="line">listeners=PLAINTEXT://192.168.16.23:9092</div><div class="line">host.name=192.168.16.23</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第三台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=2</div><div class="line">listeners=PLAINTEXT://192.168.16.31:9092</div><div class="line">host.name=192.168.16.31</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
           
         
       
@@ -406,8 +389,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/06/getting-started-with-vagrant/" itemprop="url">
-                  Vagrant 入门指南
+                <a class="post-title-link" href="/2017/02/09/zookeeper-node-ops/" itemprop="url">
+                  Zookeeper 命令行操作节点
                 </a>
               
             
@@ -420,8 +403,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-06T13:58:58+08:00" content="2017-01-06">
-              2017-01-06
+            <time itemprop="dateCreated" datetime="2017-02-09T14:46:29+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -450,8 +433,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/06/getting-started-with-vagrant/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/getting-started-with-vagrant/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/zookeeper-node-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-node-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -461,7 +444,7 @@
 
           
           
-             <span id="/2017/01/06/getting-started-with-vagrant/" class="leancloud_visitors" data-flag-title="Vagrant 入门指南">
+             <span id="/2017/02/09/zookeeper-node-ops/" class="leancloud_visitors" data-flag-title="Zookeeper 命令行操作节点">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -485,17 +468,18 @@
       
         
           
-            <h2 id="Vagrant-的定位"><a href="#Vagrant-的定位" class="headerlink" title="Vagrant 的定位"></a>Vagrant 的定位</h2><p>一个第三方的虚拟机管理软件，平常的虚拟机比如 VirtualBox 是自己下载 iso 文件，<br>然后建立虚拟机，配置管理环境</p>
-<p>使用 vagrant ，它会给你做一些事情，让你更加方便和快捷的使用各种虚拟机，<br>有个概念要知道，vagrant 本身不是虚拟机，它可以通过 <code>vagrant up --provider virtualbox</code> 显式指定启动的时候使用 VirtualBox 作为虚拟机提供者</p>
-<h2 id="为什么要用-vagrant"><a href="#为什么要用-vagrant" class="headerlink" title="为什么要用 vagrant"></a>为什么要用 vagrant</h2><p>还有个问题就是为什么要用 vagrant，因为它提供了很方便的配置和使用，相对于自己手工去做，<br>要方便太多，提供了很多基础的功能，例如虚拟机的建立，启动，销毁，ssh 登录，等等</p>
-<h2 id="使用-vagrant-要分清楚的概念"><a href="#使用-vagrant-要分清楚的概念" class="headerlink" title="使用 vagrant 要分清楚的概念"></a>使用 vagrant 要分清楚的概念</h2><p>vagrant 新手首先要搞清楚的几个概念，这里简单列举下我的理解方式：</p>
-<p>1.首先 vagrant 是一个管理虚拟机的软件，官网地址  <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
-<p>2.首先需要安装一个 vagrant 的应用程序，跨平台 Mac Win，都有，官方下载地址 <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
-<p>3.vagrant box，这个是 vagrant 官方推出的一种镜像文件，类似之前的 iso 文件，官方搜索地址是 <a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a>，比如说想找 centos 的包，或者 ubuntu 的包，都可以来这里找</p>
-<p>4.vagrant 安装好之后，可以直接命令行管理，例如 <code>vagrant up</code> 启动一个虚拟机</p>
-<p>5.vagrant box 镜像是需要专门管理的，例如 <code>vagrant box list</code> 列出本地所有的包</p>
-<p>6.官方有 hello world ，地址在 <a href="https://docs.vagrantup.com" target="_blank" rel="external">https://docs.vagrantup.com</a> 可以跟着做，针对国内程序员，要能翻墙，因为 vagrant box 在 Vagrantfile 配置后，是自动下载的，对国内程序员是很不友好的</p>
-<p>7.这种工具类的软件知道皮毛最受折磨，后续除了问题会狠狠消耗时间，vagrant 的作者写了一本书 《Creating Development Environments with Vagrant, Second Edition》</p>
+            <p>ZooKeeper 命令行工具类似于 Linux 的 shell 环境，但是使用它我们可以简单的对ZooKeeper进行访问，数据创建，数据修改等操作. </p>
+<p>连接到 ZooKeeper 服务，连接成功后，系统会输出 ZooKeeper 的相关环境以及配置信息。</p>
+<p>命令行工具的一些简单操作如下：</p>
+<h1 id="连接服务端"><a href="#连接服务端" class="headerlink" title="连接服务端"></a>连接服务端</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkCli.sh -server 127.0.0.1:2181</div></pre></td></tr></table></figure>
+<h1 id="创建节点"><a href="#创建节点" class="headerlink" title="创建节点"></a>创建节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">create</div><div class="line"></div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 5] create /zk &quot;test&quot;</div><div class="line">Created /zk</div><div class="line"></div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 20] create /zk/test &quot;test&quot;</div><div class="line">Created /zk/test</div><div class="line"></div><div class="line">不支持递归创建，必须先创建父节点</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 29] create /test/node &quot;node1&quot;</div><div class="line">Node does not exist: /test/node</div><div class="line"></div><div class="line">只能创建一级目录的节点，多级时，必须一级一级创建</div><div class="line">create /zk null</div><div class="line">create /zk/test1 null</div><div class="line"></div><div class="line">节点不能以 / 结尾，会直接报错</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 60] create /zk/test2/ null</div><div class="line">Command failed: java.lang.IllegalArgumentException: Path must not end with / character</div></pre></td></tr></table></figure>
+<h1 id="查看节点下的信息"><a href="#查看节点下的信息" class="headerlink" title="查看节点下的信息"></a>查看节点下的信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ls /zk</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 62] ls /zk</div><div class="line">[test1, test2]</div></pre></td></tr></table></figure>
+<p>列出节点下的节点集合和更详细的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">ls2 /zk</div><div class="line"></div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 63] ls2 /zk</div><div class="line">[test1, test2]</div><div class="line">cZxid = 0x600000054</div><div class="line">ctime = Thu Jan 12 14:27:54 CST 2017</div><div class="line">mZxid = 0x600000054</div><div class="line">mtime = Thu Jan 12 14:27:54 CST 2017</div><div class="line">pZxid = 0x600000059</div><div class="line">cversion = 2</div><div class="line">dataVersion = 0</div><div class="line">aclVersion = 0</div><div class="line">ephemeralOwner = 0x0</div><div class="line">dataLength = 4</div><div class="line">numChildren = 2</div></pre></td></tr></table></figure>
+<h1 id="获取值"><a href="#获取值" class="headerlink" title="获取值"></a>获取值</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 42] get /test1</div><div class="line">&quot;&#123;aaa&#125;&quot;</div><div class="line">cZxid = 0x600000051</div><div class="line">ctime = Thu Jan 12 14:23:37 CST 2017</div><div class="line">mZxid = 0x600000051</div><div class="line">mtime = Thu Jan 12 14:23:37 CST 2017</div><div class="line">pZxid = 0x600000051</div><div class="line">cversion = 0</div><div class="line">dataVersion = 0</div><div class="line">aclVersion = 0</div><div class="line">ephemeralOwner = 0x0</div><div class="line">dataLength = 7</div><div class="line">numChildren = 0</div></pre></td></tr></table></figure>
+<h1 id="修改值"><a href="#修改值" class="headerlink" title="修改值"></a>修改值</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 43] set /test1 &quot;&#123;bbb&#125;&quot;</div><div class="line">cZxid = 0x600000051</div><div class="line">ctime = Thu Jan 12 14:23:37 CST 2017</div><div class="line">mZxid = 0x600000052</div><div class="line">mtime = Thu Jan 12 14:24:13 CST 2017</div><div class="line">pZxid = 0x600000051</div><div class="line">cversion = 0</div><div class="line">dataVersion = 1</div><div class="line">aclVersion = 0</div><div class="line">ephemeralOwner = 0x0</div><div class="line">dataLength = 7</div><div class="line">numChildren = 0</div></pre></td></tr></table></figure>
+<h1 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">delete /test1</div><div class="line"></div><div class="line">节点不为空不能删除</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 58] delete /zk</div><div class="line">Node not empty: /zk</div><div class="line"></div><div class="line">删除时，须先清空节点下的内容，才能删除节点</div><div class="line"></div><div class="line">delete /zk/test1</div><div class="line">delete /zk/test2</div><div class="line">delete /zk</div></pre></td></tr></table></figure>
+<p>在调试时，直接查看节点下的内容，方便，快捷</p>
 
           
         
@@ -545,8 +529,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/05/programming-road-environment/" itemprop="url">
-                  一路编程，一路环境折腾
+                <a class="post-title-link" href="/2017/02/09/zookeeper-cluster-ops/" itemprop="url">
+                  Zookeeper 集群运维
                 </a>
               
             
@@ -559,8 +543,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-05T17:02:09+08:00" content="2017-01-05">
-              2017-01-05
+            <time itemprop="dateCreated" datetime="2017-02-09T14:46:17+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -589,8 +573,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/05/programming-road-environment/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/zookeeper-cluster-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-cluster-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -600,7 +584,7 @@
 
           
           
-             <span id="/2017/01/05/programming-road-environment/" class="leancloud_visitors" data-flag-title="一路编程，一路环境折腾">
+             <span id="/2017/02/09/zookeeper-cluster-ops/" class="leancloud_visitors" data-flag-title="Zookeeper 集群运维">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -624,14 +608,20 @@
       
         
           
-            <h1 id="折腾之路"><a href="#折腾之路" class="headerlink" title="折腾之路"></a>折腾之路</h1><p>编程之路，踉踉跄跄就进来了，干了 2 年后，越发感觉有 N 多东西自己不知道，<br>有一个居安思危的心，有一颗对未知知识探索的心，一步，一步，自己去探索，<br>从未停止过。</p>
-<p>现在回头看，路走的很艰难，目前还在路上，庆幸自己有一颗百折不挠的心，虐<br>我千百遍，我待你如初恋 😂 </p>
-<p>细细想，折腾的入门是环境，但是环境往往是最难的，所以很多人第一步没迈进<br>来，这里记录我在自己的测试环境的探索之路，希望并介绍自己使用的系列工具，<br>前路漫漫，希望能帮一些人节省时间，毕竟时间很珍贵。</p>
-<h2 id="曾经的双系统"><a href="#曾经的双系统" class="headerlink" title="曾经的双系统"></a>曾经的双系统</h2><p>首先定位是后台开发，给自己选 os，是 Linux 系，比如 Ubuntu，centos，最开始<br>我尝试的是一台电脑装两个系统，最早是联想 Y460，安装了 Ubuntu-12.04 之后，<br>运行双系统，结果就是电脑已经使用了4， 5 年了，有些卡，好惨也没钱，这样<br>照着 Linux 书开始学命令，记笔记，想想都是泪</p>
-<h2 id="宿主机上建立虚拟机"><a href="#宿主机上建立虚拟机" class="headerlink" title="宿主机上建立虚拟机"></a>宿主机上建立虚拟机</h2><p>第二个是自己终于攒够钱买了 Mac Pro，当年最大的动力就是公司让研究 hadoop，<br>结果测试机最好是 3 台起步，然后脑海里就一直在想，什么时候我才能有自己 3 台<br>机器，任意完，买了 Mac 后终于实现了，Mac Book Pro 15 + VirtualBox ，最多时<br>开了5 台，一点不卡，照样该干啥干啥，网络配置是当时比较难的，文章记录在这里，<br><a href="https://favoorr.github.io/2015/01/23/mac-use-virtualbox-config-network/">mac上使用虚拟机网络配置总结</a></p>
-<h2 id="Vagrant-时代"><a href="#Vagrant-时代" class="headerlink" title="Vagrant 时代"></a>Vagrant 时代</h2><p>后来很长一段时间都是 Mac Book Pro + VirtualBox，直到后来知道了 Vagrant，以及新生<br>的 docker，进化了几代后，目前这个暂时是最终代，下面是我的使用场景：</p>
-<p>1.想玩一个新的 Linux，那么就用 vagrant 管理虚拟机，后续会有博客详细介绍<br>2.想玩 docker，一般不再宿主机上直接玩，某台 Linux 虚拟机，然后安装其他 docker 镜像<br>3.alpine 超小的 Linux 镜像，然后在安装自己想要的软件，比如 bash 也是手工安装</p>
-<p>后续会介绍在 vagrant 以及 docker 方面的使用实践，偏向于小折腾，不具备生产条件</p>
+            <h1 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
+<h1 id="查看集群启动成功"><a href="#查看集群启动成功" class="headerlink" title="查看集群启动成功"></a>查看集群启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
+<h1 id="关闭-zookeeper"><a href="#关闭-zookeeper" class="headerlink" title="关闭 zookeeper"></a>关闭 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
+<h1 id="重新启动-zookeeper-server"><a href="#重新启动-zookeeper-server" class="headerlink" title="重新启动 zookeeper server"></a>重新启动 zookeeper server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh restart</div></pre></td></tr></table></figure>
+<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail -100f /data/zookeeper/zk-logs/zookeeper.log</div></pre></td></tr></table></figure>
+<h1 id="查看日志文件"><a href="#查看日志文件" class="headerlink" title="查看日志文件"></a>查看日志文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/zookeeper/zk-logs/</div></pre></td></tr></table></figure>
+<h1 id="完整查看日志文件"><a href="#完整查看日志文件" class="headerlink" title="完整查看日志文件"></a>完整查看日志文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper/zk-logs/zookeeper.log</div></pre></td></tr></table></figure>
+<h1 id="清空日志文件目录"><a href="#清空日志文件目录" class="headerlink" title="清空日志文件目录"></a>清空日志文件目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/zookeeper/zk-logs/*</div></pre></td></tr></table></figure>
+<h1 id="查看-zookeeper-启动配置"><a href="#查看-zookeeper-启动配置" class="headerlink" title="查看 zookeeper 启动配置"></a>查看 zookeeper 启动配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper-3.4.6/conf/zoo.cfg</div></pre></td></tr></table></figure>
+<h1 id="查看-myid-配置"><a href="#查看-myid-配置" class="headerlink" title="查看 myid 配置"></a>查看 myid 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper/data/myid</div></pre></td></tr></table></figure>
+<h1 id="暴力停止进程"><a href="#暴力停止进程" class="headerlink" title="暴力停止进程"></a>暴力停止进程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;zookeeper&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;|xargs kill -9</div></pre></td></tr></table></figure>
+<h1 id="查看本机启动-java-进程"><a href="#查看本机启动-java-进程" class="headerlink" title="查看本机启动 java 进程"></a>查看本机启动 java 进程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div></pre></td></tr></table></figure>
+<h1 id="查看本机端口监听情况"><a href="#查看本机端口监听情况" class="headerlink" title="查看本机端口监听情况"></a>查看本机端口监听情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -nplut</div></pre></td></tr></table></figure>
+<p>server 成功启动后，可以用命令行测试或者各种语言的客户端测试</p>
 
           
         
@@ -681,8 +671,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="url">
-                  升级 python 后，原有依赖老版本 python 问题解决
+                <a class="post-title-link" href="/2017/02/09/install-config-zookeeper/" itemprop="url">
+                  配置安装运行 Zookeeper
                 </a>
               
             
@@ -695,8 +685,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-05T16:19:51+08:00" content="2017-01-05">
-              2017-01-05
+            <time itemprop="dateCreated" datetime="2017-02-09T14:45:54+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -709,8 +699,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -725,8 +715,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/install-config-zookeeper/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/install-config-zookeeper/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -736,7 +726,7 @@
 
           
           
-             <span id="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" class="leancloud_visitors" data-flag-title="升级 python 后，原有依赖老版本 python 问题解决">
+             <span id="/2017/02/09/install-config-zookeeper/" class="leancloud_visitors" data-flag-title="配置安装运行 Zookeeper">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -760,12 +750,15 @@
       
         
           
-            <p>python3.5.2 安装的 virtualenvwrapper 环境，更新到  3.6.0 之后，手残直接把 3.5.2 删除了</p>
-<p>原来环境就挂了，错误信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">User@favoorr-mac: ~/Documents/github/favoorr-programming-road/Python/python-lesson master!</div><div class="line"> $ ipython                                                                     [14:28:16]</div><div class="line">dyld: Library not loaded: @executable_path/../.Python</div><div class="line">  Referenced from: /Users/User/zl/python/project/venv/python-lesson/bin/python3.5</div><div class="line">  Reason: image not found</div><div class="line">[1]    43935 abort      ipython</div><div class="line">(python-lesson) FAIL</div></pre></td></tr></table></figure>
-<p>解决方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">断开工作台</div><div class="line">deactivate</div><div class="line"></div><div class="line">删除原来的虚拟环境，这里删除虚拟环境，原来的项目其实不会删除</div><div class="line">rmvirtualenv python-lesson</div><div class="line"></div><div class="line">重新创建虚拟环境</div><div class="line">mkvirtualenv python-lesson</div><div class="line"></div><div class="line">再次激活虚拟环境</div><div class="line">workon python-lesson</div><div class="line"></div><div class="line">跳转到原来的项目目录</div><div class="line">cd ~/Documents/github/favoorr-programming-road/Python/python-lesson</div><div class="line"></div><div class="line">原来的项目重新关联虚拟环境</div><div class="line">setvirtualenvproject</div><div class="line"></div><div class="line">重新安装需要的类库</div><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div></pre></td></tr></table></figure>
-<p>记录,备忘</p>
+            <p>Zookeeper 是 Java 中常用的分布式集群协调中间件，下面记录典型的安装过程</p>
+<p>多节点配置时，在一个节点上把所有配置修改完，再 scp 发送到所有节点上</p>
+<h1 id="安装测试命令"><a href="#安装测试命令" class="headerlink" title="安装测试命令"></a>安装测试命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y nc telnet</div></pre></td></tr></table></figure>
+<h1 id="修改-zk-配置文件"><a href="#修改-zk-配置文件" class="headerlink" title="修改 zk 配置文件"></a>修改 zk 配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cp /data/zookeeper-3.4.6/conf/zoo_sample.cfg /data/zookeeper-3.4.6/conf/zoo.cfg</div><div class="line">vim /data/zookeeper-3.4.6/conf/zoo.cfg</div><div class="line"></div><div class="line">修改配置</div><div class="line">dataDir=/data/zookeeper/data</div><div class="line">dataLogDir=/data/zookeeper/logs</div><div class="line">server.1=192.168.16.22:2888:3888</div><div class="line">server.2=192.168.16.23:2888:3888</div><div class="line">server.3=192.168.16.31:2888:3888</div></pre></td></tr></table></figure>
+<h1 id="每个节点操作命令"><a href="#每个节点操作命令" class="headerlink" title="每个节点操作命令"></a>每个节点操作命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;1&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div><div class="line"></div><div class="line"></div><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;2&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div><div class="line"></div><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;3&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div></pre></td></tr></table></figure>
+<h1 id="Log4j-配置"><a href="#Log4j-配置" class="headerlink" title="Log4j 配置"></a>Log4j 配置</h1><p>修改 log4j 日志生成方式统一使用 zookeeper.log，不在出现 zookeeper.out</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">备份配置文件</div><div class="line">cp /data/zookeeper-3.4.6/conf/log4j.properties /data/zookeeper-3.4.6/conf/log4j.properties.bak</div><div class="line"></div><div class="line">修改</div><div class="line">vim /data/zookeeper-3.4.6/conf/log4j.properties</div><div class="line">zookeeper.root.logger=INFO, CONSOLE</div><div class="line">更改为</div><div class="line">zookeeper.root.logger=INFO, ROLLINGFILE</div><div class="line"></div><div class="line"></div><div class="line">备份 zkEnv.sh</div><div class="line">cp /data/zookeeper-3.4.6/bin/zkEnv.sh /data/zookeeper-3.4.6/bin/zkEnv.sh.bak</div><div class="line"></div><div class="line">修改 zkEnv.sh</div><div class="line">vim /data/zookeeper-3.4.6/bin/zkEnv.sh</div><div class="line">ZOO_LOG_DIR=/data/zookeeper/zk-logs</div><div class="line">ZOO_LOG4J_PROP=INFO,ROLLINGFILE</div><div class="line"></div><div class="line">备份 zkServer.sh</div><div class="line">cp /data/zookeeper-3.4.6/bin/zkServer.sh /data/zookeeper-3.4.6/bin/zkServer.sh.bak</div><div class="line"></div><div class="line">vim /data/zookeeper-3.4.6/bin/zkServer.sh</div><div class="line">_ZOO_DAEMON_OUT=&quot;$ZOO_LOG_DIR/zookeeper.out&quot;</div><div class="line">更改为</div><div class="line">_ZOO_DAEMON_OUT=&quot;$ZOO_LOG_DIR/zookeeper.log&quot;</div></pre></td></tr></table></figure>
+<p>目前不擅长使用 ansible 等集群管理工具，只能手工笨装 …</p>
+<p>全部配置完成后，等待启动，启动后验证配置情况</p>
 
           
         
@@ -815,8 +808,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
-                  python 升级到 3.6 virtualenvwrapper 报错问题
+                <a class="post-title-link" href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="url">
+                  在 MacOS 上配置 Python3 virtualenvwrapper
                 </a>
               
             
@@ -829,8 +822,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-03T10:48:35+08:00" content="2017-01-03">
-              2017-01-03
+            <time itemprop="dateCreated" datetime="2017-02-09T13:52:33+08:00" content="2017-02-09">
+              2017-02-09
             </time>
           </span>
 
@@ -843,8 +836,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -859,8 +852,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/03/python3-6-virtualenvwrapper-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -870,7 +863,7 @@
 
           
           
-             <span id="/2017/01/03/python3-6-virtualenvwrapper-problem/" class="leancloud_visitors" data-flag-title="python 升级到 3.6 virtualenvwrapper 报错问题">
+             <span id="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" class="leancloud_visitors" data-flag-title="在 MacOS 上配置 Python3 virtualenvwrapper">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -894,19 +887,12 @@
       
         
           
-            <p>Yesterday, I install the <code>you-get</code>, and Python upgrade to newest version 3.6 by this<br>install, Then the <code>virtualenvwrapper</code> could’t work well any more.</p>
-<p>I got the error as:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Last login: Tue Jan  3 09:38:53 on ttys002</div><div class="line">/usr/local/opt/python3/bin/python3.6: Error while finding module specification for &apos;virtualenvwrapper.hook_loader&apos; (ModuleNotFoundError: No module named &apos;virtualenvwrapper&apos;)</div><div class="line">virtualenvwrapper.sh: There was a problem running the initialization hooks.</div><div class="line"></div><div class="line">If Python could not import the module virtualenvwrapper.hook_loader,</div><div class="line">check that virtualenvwrapper has been installed for</div><div class="line">VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 and that PATH is</div><div class="line">set properly.</div></pre></td></tr></table></figure>
-<p>And in my ~/.zshrc file, I already config as:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=/Users/User/zl/python/project/venv</div><div class="line">export PROJECT_HOME=/Users/User/zl/python/project</div><div class="line">export VIRTUALENVWRAPPER_PYTHON=`which python3`</div><div class="line">source /usr/local/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
-<p>Do the follow tips may solve the problem:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">First: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U pip</div><div class="line"></div><div class="line">Second: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U virtualenvwrapper</div></pre></td></tr></table></figure>
-<p>One more thing:</p>
-<p>macOS will install the python2.7.10 by default,</p>
-<p>I use brew to install python instead of the macOS default.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">/usr/bin/python</div><div class="line"></div><div class="line">rm the default python</div><div class="line"></div><div class="line">sudo rm /usr/bin/python</div></pre></td></tr></table></figure>
-<p>If need python2, the newest version of python2 is python-2.7.13</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python</div></pre></td></tr></table></figure>
+            <p>Mac 使用 virtualenvwrapper 配置过程</p>
+<h3 id="Macos-配置-virtualenvwrapper"><a href="#Macos-配置-virtualenvwrapper" class="headerlink" title="Macos 配置 virtualenvwrapper"></a>Macos 配置 virtualenvwrapper</h3><p>配置和使用常用开发工具，这个最好在宿主机上搞，例如自己 Mac</p>
+<p>所以这里需要在 mac 环境下把 virtualenvwrapper 配置起来</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">不建议过早使用 IDE</div><div class="line">学习的时候使用命令行，把焦点放在某一个点</div><div class="line"></div><div class="line">Mac 下使用 brew 和 zsh</div><div class="line"></div><div class="line">Mac 下的 .zshrc 配置如下</div><div class="line"></div><div class="line"><span class="built_in">export</span> WORKON_HOME=/Users/User/zl/python/lesson/venv</div><div class="line"><span class="built_in">export</span> PROJECT_HOME=/Users/User/zl/python/lesson/py</div><div class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=`<span class="built_in">which</span> python3`</div><div class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">alpine <span class="built_in">source</span> /usr/bin/virtualenvwrapper.sh 和 Mac 路径不同</div><div class="line">Mac 配置为 <span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">mkproject 会创建项目目录和 venv 目录</div><div class="line">mkvirtualenv 只会创建虚拟目录</div></pre></td></tr></table></figure>
+<h3 id="Mac-下安装常用的工具"><a href="#Mac-下安装常用的工具" class="headerlink" title="Mac 下安装常用的工具"></a>Mac 下安装常用的工具</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div><div class="line"></div><div class="line">创建测试学习项目</div><div class="line">mkproject <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h3 id="Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件"><a href="#Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件" class="headerlink" title="Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件"></a>Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">首先安装好 sublime text3，并配置软连接</div><div class="line">ln <span class="_">-s</span> <span class="string">"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"</span> /usr/<span class="built_in">local</span>/bin/subl</div><div class="line"></div><div class="line">text text.py 可以直接在 sublime 打开文件</div><div class="line">text=subl</div><div class="line"></div><div class="line">ipython 中 ed 直接在 sublime 中打开文件</div><div class="line">配置环境变量</div><div class="line">vim .zshrc</div><div class="line"><span class="built_in">export</span> EDITOR=<span class="string">"/usr/local/bin/subl"</span></div><div class="line"></div><div class="line">进入 ipython</div><div class="line">ed hello.py</div></pre></td></tr></table></figure>
           
         
       
@@ -938,7 +924,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -979,7 +965,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -987,7 +973,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -996,7 +982,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
