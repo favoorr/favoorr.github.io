@@ -258,6 +258,145 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/06/getting-started-with-vagrant/" itemprop="url">
+                  Vagrant 入门指南
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T13:58:58+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/getting-started-with-vagrant/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/getting-started-with-vagrant/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/getting-started-with-vagrant/" class="leancloud_visitors" data-flag-title="Vagrant 入门指南">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Vagrant-的定位"><a href="#Vagrant-的定位" class="headerlink" title="Vagrant 的定位"></a>Vagrant 的定位</h2><p>一个第三方的虚拟机管理软件，平常的虚拟机比如 VirtualBox 是自己下载 iso 文件，<br>然后建立虚拟机，配置管理环境</p>
+<p>使用 vagrant ，它会给你做一些事情，让你更加方便和快捷的使用各种虚拟机，<br>有个概念要知道，vagrant 本身不是虚拟机，它可以通过 <code>vagrant up --provider virtualbox</code> 显式指定启动的时候使用 VirtualBox 作为虚拟机提供者</p>
+<h2 id="为什么要用-vagrant"><a href="#为什么要用-vagrant" class="headerlink" title="为什么要用 vagrant"></a>为什么要用 vagrant</h2><p>还有个问题就是为什么要用 vagrant，因为它提供了很方便的配置和使用，相对于自己手工去做，<br>要方便太多，提供了很多基础的功能，例如虚拟机的建立，启动，销毁，ssh 登录，等等</p>
+<h2 id="使用-vagrant-要分清楚的概念"><a href="#使用-vagrant-要分清楚的概念" class="headerlink" title="使用 vagrant 要分清楚的概念"></a>使用 vagrant 要分清楚的概念</h2><p>vagrant 新手首先要搞清楚的几个概念，这里简单列举下我的理解方式：</p>
+<p>1.首先 vagrant 是一个管理虚拟机的软件，官网地址  <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>2.首先需要安装一个 vagrant 的应用程序，跨平台 Mac Win，都有，官方下载地址 <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>3.vagrant box，这个是 vagrant 官方推出的一种镜像文件，类似之前的 iso 文件，官方搜索地址是 <a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a>，比如说想找 centos 的包，或者 ubuntu 的包，都可以来这里找</p>
+<p>4.vagrant 安装好之后，可以直接命令行管理，例如 <code>vagrant up</code> 启动一个虚拟机</p>
+<p>5.vagrant box 镜像是需要专门管理的，例如 <code>vagrant box list</code> 列出本地所有的包</p>
+<p>6.官方有 hello world ，地址在 <a href="https://docs.vagrantup.com" target="_blank" rel="external">https://docs.vagrantup.com</a> 可以跟着做，针对国内程序员，要能翻墙，因为 vagrant box 在 Vagrantfile 配置后，是自动下载的，对国内程序员是很不友好的</p>
+<p>7.这种工具类的软件知道皮毛最受折磨，后续除了问题会狠狠消耗时间，vagrant 的作者写了一本书 《Creating Development Environments with Vagrant, Second Edition》</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/01/05/programming-road-environment/" itemprop="url">
                   一路编程，一路环境折腾
                 </a>
@@ -783,155 +922,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/31/zsh-summary/" itemprop="url">
-                  ZSH 使用总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-31T11:20:40+08:00" content="2015-08-31">
-              2015-08-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zsh/" itemprop="url" rel="index">
-                    <span itemprop="name">zsh</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/31/zsh-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/31/zsh-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/08/31/zsh-summary/" class="leancloud_visitors" data-flag-title="ZSH 使用总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Mac 下好用软件很多，多使用，多总结</p>
-<p>1.插件</p>
-<p>plugins=(git sudo extract cp)</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">插件列表</a></p>
-<p>2.autojump 工具</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">官方地址</a></p>
-<p>3.d </p>
-<p>显示历史进入的目录，输入数字进入历史目录，0是当前目录，其他依次记录</p>
-<p>4.清屏，输入 ls</p>
-<p>ctrl + l,我用的 command + r</p>
-<p>5.zsh_stats 可以统计使用最多的前20命令</p>
-<p>6.zsh-autosuggestions 就更好用的自动补全</p>
-<p>7.<a href="http://zshthem.es/" target="_blank" rel="external">http://zshthem.es/</a> 这里挑选喜欢的 theme</p>
-<p>… 待续</p>
-<p>参考</p>
-<p><a href="http://www.jiang-di.org/tools/2015/04/08/i-hope-know-when-first-use-zsh.html" target="_blank" rel="external">那些我希望在一开始使用 Zsh(oh-my-zsh) 时就知道的</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -972,7 +967,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -989,7 +984,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

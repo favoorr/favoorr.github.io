@@ -258,6 +258,200 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/10/learn-gdb-from-brendan/" itemprop="url">
+                  learn-gdb-from-brendan
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-10T14:40:25+08:00" content="2017-02-10">
+              2017-02-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/10/learn-gdb-from-brendan/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/learn-gdb-from-brendan/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/10/learn-gdb-from-brendan/" class="leancloud_visitors" data-flag-title="learn-gdb-from-brendan">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址</p>
+<p><a href="http://www.brendangregg.com/blog/2016-08-09/gdb-example-ncurses.html" target="_blank" rel="external">http://www.brendangregg.com/blog/2016-08-09/gdb-example-ncurses.html</a></p>
+<p>跟着 Brendan 大神学习 GDB 一些调试技巧</p>
+<h1 id="1-Core-Dumps-说明"><a href="#1-Core-Dumps-说明" class="headerlink" title="1.Core Dumps 说明"></a>1.Core Dumps 说明</h1><p>如果 Core Dumps 打开了，那么当进程崩溃时，会生成 dump 文件，如果 Core Dumps 关闭了，那么就不会生成，收到的报错信息也不一样</p>
+<p>如果 Core Dumps 关闭了，收到的信息是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Segmentation fault</div></pre></td></tr></table></figure>
+<p>如果 Core Dumps 打开了，收到信息应该是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Segmentation fault (core dumped)</div></pre></td></tr></table></figure>
+<h1 id="2-设置-Core-Dumps"><a href="#2-设置-Core-Dumps" class="headerlink" title="2.设置 Core Dumps"></a>2.设置 Core Dumps</h1><p>查看 Core Dumps 配置选项，并打开 Core dumps</p>
+<p>如果有如下输出，表示 Core Dumps 是关闭的，需要打开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ulimit -c</div><div class="line">0</div><div class="line"></div><div class="line">0 表示输出文件大小是 0 字节</div></pre></td></tr></table></figure>
+<p>设置 Core Dumps 文件大小不受限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ulimit -c unlimited</div></pre></td></tr></table></figure>
+<h1 id="3-设置-Core-Dumps-文件输出格式"><a href="#3-设置-Core-Dumps-文件输出格式" class="headerlink" title="3.设置 Core Dumps 文件输出格式"></a>3.设置 Core Dumps 文件输出格式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ubuntu 16.04.1</div><div class="line"></div><div class="line">默认格式为</div><div class="line">cat /proc/sys/kernel/core_pattern</div><div class="line">|/usr/share/apport/apport %p %s %c %P</div><div class="line"></div><div class="line">可以这么修改</div><div class="line">echo &quot;/var/cores/core.%e.%p&quot; &gt; /proc/sys/kernel/core_pattern</div></pre></td></tr></table></figure>
+<p>具体缩写含义参考</p>
+<p><a href="https://www.kernel.org/doc/Documentation/sysctl/kernel.txt" target="_blank" rel="external">https://www.kernel.org/doc/Documentation/sysctl/kernel.txt</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">core_pattern:</div><div class="line"></div><div class="line">core_pattern is used to specify a core dumpfile pattern name.</div><div class="line">. max length 128 characters; default value is &quot;core&quot;</div><div class="line">. core_pattern is used as a pattern template for the output filename;</div><div class="line">  certain string patterns (beginning with &apos;%&apos;) are substituted with</div><div class="line">  their actual values.</div><div class="line">. backward compatibility with core_uses_pid:</div><div class="line">	If core_pattern does not include &quot;%p&quot; (default does not)</div><div class="line">	and core_uses_pid is set, then .PID will be appended to</div><div class="line">	the filename.</div><div class="line">. corename format specifiers:</div><div class="line">	%&lt;NUL&gt;	&apos;%&apos; is dropped</div><div class="line">	%%	output one &apos;%&apos;</div><div class="line">	%p	pid</div><div class="line">	%P	global pid (init PID namespace)</div><div class="line">	%i	tid</div><div class="line">	%I	global tid (init PID namespace)</div><div class="line">	%u	uid (in initial user namespace)</div><div class="line">	%g	gid (in initial user namespace)</div><div class="line">	%d	dump mode, matches PR_SET_DUMPABLE and</div><div class="line">		/proc/sys/fs/suid_dumpable</div><div class="line">	%s	signal number</div><div class="line">	%t	UNIX time of dump</div><div class="line">	%h	hostname</div><div class="line">	%e	executable filename (may be shortened)</div><div class="line">	%E	executable path</div><div class="line">	%&lt;OTHER&gt; both are dropped</div><div class="line">. If the first character of the pattern is a &apos;|&apos;, the kernel will treat</div><div class="line">  the rest of the pattern as a command to run.  The core dump will be</div><div class="line">  written to the standard input of that program instead of to a file.</div></pre></td></tr></table></figure>
+<h1 id="4-启动-GDB-参考"><a href="#4-启动-GDB-参考" class="headerlink" title="4.启动 GDB 参考"></a>4.启动 GDB 参考</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb `which python` /var/cores/core.python.30520</div></pre></td></tr></table></figure>
+<h1 id="5-查看系统共享库"><a href="#5-查看系统共享库" class="headerlink" title="5.查看系统共享库"></a>5.查看系统共享库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg -l | grep libncursesw</div></pre></td></tr></table></figure>
+<h1 id="6-Back-Trace"><a href="#6-Back-Trace" class="headerlink" title="6.Back Trace"></a>6.Back Trace</h1><p>查看目前的函数调用栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bt</div><div class="line"></div><div class="line">short for backtrace</div></pre></td></tr></table></figure>
+<h1 id="7-disas-反汇编具体方法"><a href="#7-disas-反汇编具体方法" class="headerlink" title="7.disas 反汇编具体方法"></a>7.disas 反汇编具体方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">disas doupdate</div><div class="line"></div><div class="line">doupdate 是符号，即方法名</div></pre></td></tr></table></figure>
+<p>8.查看寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">i r</div><div class="line"></div><div class="line">short for info registers</div></pre></td></tr></table></figure>
+<p>9.查看整个进程内存映射</p>
+<p>可以看到进程起始地址及合法范围地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">i proc m</div><div class="line"></div><div class="line">short for info proc mappings</div></pre></td></tr></table></figure>
+<p>10.设置断点</p>
+<p>设置断点时，可以设置到具体的行，符号名，或者指令地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">b 11</div><div class="line"></div><div class="line">b doupdate</div><div class="line"></div><div class="line">b *doupdate + 289</div><div class="line"></div><div class="line">b *0x00007f0a37aac40d</div></pre></td></tr></table></figure>
+<p>11.单步调试机器码 native code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">si 单步进入</div><div class="line">ni 单步执行</div><div class="line"></div><div class="line">short for stepi</div></pre></td></tr></table></figure>
+<p>12.下载共享库的 Debug 信息包</p>
+<p>一般的程序发布后，我们安装的时候，只安装代码部分，为了减小体积，<br>符号等信息都会被压缩或直接去掉，调试时候需要安装对应的调试包</p>
+<p>查找调试包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apt-cache search libncursesw</div><div class="line"></div><div class="line">libncursesw5 - shared libraries for terminal handling (wide character support)</div><div class="line">libncursesw5-dbg - debugging/profiling libraries for ncursesw</div><div class="line">libncursesw5-dev - developer&apos;s libraries for ncursesw</div><div class="line"></div><div class="line">dpkg -l | grep libncursesw</div><div class="line"></div><div class="line">ii  libncursesw5:amd64                 6.0+20160213-1ubuntu1                    amd64        shared libraries for terminal handling (wide character support)</div><div class="line"></div><div class="line">apt-get install -y libncursesw5-dbg</div></pre></td></tr></table></figure>
+<p>在安装调试包之后，在执行 bt 查看时，信息就会全面很多</p>
+<h1 id="13-查看机器码对应的源码"><a href="#13-查看机器码对应的源码" class="headerlink" title="13.查看机器码对应的源码"></a>13.查看机器码对应的源码</h1><p>在调试包安装之后，可以查看机器码和源码的对应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disas/s</div></pre></td></tr></table></figure>
+<p>14.TUI 协助查看源代码</p>
+<p>Text User Interface</p>
+<p>使用方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb --tui `which python` /var/cores/core.python.30520</div></pre></td></tr></table></figure>
+<p>15.动态追踪某个方法执行</p>
+<p>使用 perf 动态跟踪函数的执行，并获取第一个参数值</p>
+<p>首先找到函数的位置，在哪个贡献库？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(gdb) info symbol set_curterm</div><div class="line">set_curterm in section .text of /lib/x86_64-linux-gnu/libtinfo.so.5</div><div class="line"></div><div class="line"># objdump -tT /lib/x86_64-linux-gnu/libncursesw.so.5 | grep cur_term</div><div class="line">0000000000000000      DO *UND*  0000000000000000  NCURSES_TINFO_5.0.19991023 cur_term</div><div class="line"></div><div class="line"># objdump -tT /lib/x86_64-linux-gnu/libtinfo.so.5 | grep cur_term</div><div class="line">0000000000228948 g    DO .bss   0000000000000008  NCURSES_TINFO_5.0.19991023 cur_term</div><div class="line"></div><div class="line">可以看到 gdb 更好用</div></pre></td></tr></table></figure>
+<p>使用 perf 动态追踪方法执行，并打印第一个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># /apps/perf-tools/bin/uprobe &apos;p:/lib/x86_64-linux-gnu/libtinfo.so.5:set_curterm %di&apos;</div><div class="line">Tracing uprobe set_curterm (p:set_curterm /lib/x86_64-linux-gnu/libtinfo.so.5:0xfa80 %di). Ctrl-C to end.</div><div class="line">          python-31617 [007] d... 24236402.719959: set_curterm: (0x7f116fcc2a80) arg1=0x1345d70</div><div class="line">          python-31617 [007] d... 24236402.720033: set_curterm: (0x7f116fcc2a80) arg1=0x13a22e0</div><div class="line">          python-31617 [007] d... 24236402.723804: set_curterm: (0x7f116fcc2a80) arg1=0x14cdfa0</div><div class="line">          python-31617 [007] d... 24236402.723838: set_curterm: (0x7f116fcc2a80) arg1=0x0</div><div class="line"></div><div class="line">%di 存放第一个参数</div><div class="line"></div><div class="line">不同ABI下，参数与寄存器对应关系</div><div class="line"></div><div class="line"># man syscall</div><div class="line">[...]</div><div class="line">       arch/ABI      arg1  arg2  arg3  arg4  arg5  arg6  arg7  Notes</div><div class="line">       ──────────────────────────────────────────────────────────────────</div><div class="line">       arm/OABI      a1    a2    a3    a4    v1    v2    v3</div><div class="line">       arm/EABI      r0    r1    r2    r3    r4    r5    r6</div><div class="line">       arm64         x0    x1    x2    x3    x4    x5    -</div><div class="line">       blackfin      R0    R1    R2    R3    R4    R5    -</div><div class="line">       i386          ebx   ecx   edx   esi   edi   ebp   -</div><div class="line">       ia64          out0  out1  out2  out3  out4  out5  -</div><div class="line">       mips/o32      a0    a1    a2    a3    -     -     -     See below</div><div class="line">       mips/n32,64   a0    a1    a2    a3    a4    a5    -</div><div class="line">       parisc        r26   r25   r24   r23   r22   r21   -</div><div class="line">       s390          r2    r3    r4    r5    r6    r7    -</div><div class="line">       s390x         r2    r3    r4    r5    r6    r7    -</div><div class="line">       sparc/32      o0    o1    o2    o3    o4    o5    -</div><div class="line">       sparc/64      o0    o1    o2    o3    o4    o5    -</div><div class="line">       x86_64        rdi   rsi   rdx   r10   r8    r9    -</div></pre></td></tr></table></figure>
+<h1 id="16-使用-BCC-动态跟踪方法执行"><a href="#16-使用-BCC-动态跟踪方法执行" class="headerlink" title="16.使用 BCC 动态跟踪方法执行"></a>16.使用 BCC 动态跟踪方法执行</h1><p>动态跟踪方法执行，并打印第一个参数，这里使用 BCC 调试 BCC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd bcc/tools</div><div class="line"></div><div class="line"># ./trace.py &apos;p:tinfo:set_curterm &quot;%d&quot;, arg1&apos;</div><div class="line"></div><div class="line">PID    TID    COMM         FUNC             -</div><div class="line">2376   2376   python       set_curterm      24284384</div><div class="line">2376   2376   python       set_curterm      24580656</div></pre></td></tr></table></figure>
+<h1 id="17-改写寄存器的内存"><a href="#17-改写寄存器的内存" class="headerlink" title="17.改写寄存器的内存"></a>17.改写寄存器的内存</h1><p>假设一个场景，某个程序内执行一个方法 4 次，第四次会出现错误，那么在<br>调试模式下，可以观察最后一次成功执行时某个寄存器的值，在第四次发生错误前，<br>修改寄存器的值，看是否能绕过错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">(gdb) p/x $rdi</div><div class="line">$1 = 0x0</div><div class="line">(gdb) set $rdi=0xbecb90</div><div class="line">(gdb) p/x $rdi</div><div class="line">$2 = 0xbecb90</div><div class="line">(gdb) i r</div><div class="line">rax            0x100    256</div><div class="line">rbx            0x1  1</div><div class="line">rcx            0xe71    3697</div><div class="line">rdx            0x0  0</div><div class="line">rsi            0x7ffff5dd45d3   140737318307283</div><div class="line">rdi            0xbecb90 12503952</div><div class="line">rbp            0x100    0x100</div><div class="line">rsp            0x7fffffffa5b8   0x7fffffffa5b8</div><div class="line">r8             0xbf0050 12517456</div><div class="line">r9             0x1999999999999999   1844674407370955161</div><div class="line">r10            0xbf0040 12517440</div><div class="line">r11            0x7ffff7bb4b78   140737349634936</div><div class="line">r12            0xbecb70 12503920</div><div class="line">r13            0xbeaea0 12496544</div><div class="line">r14            0x7fffffffa9a0   140737488333216</div><div class="line">r15            0x7fffffffa8a0   140737488332960</div><div class="line">rip            0x7ffff3c76a80   0x7ffff3c76a80 &lt;set_curterm&gt;</div><div class="line">eflags         0x246    [ PF ZF IF ]</div><div class="line">cs             0x33 51</div><div class="line">ss             0x2b 43</div><div class="line">ds             0x0  0</div><div class="line">es             0x0  0</div><div class="line">fs             0x0  0</div><div class="line">gs             0x0  0</div></pre></td></tr></table></figure>
+<h1 id="18-条件断点"><a href="#18-条件断点" class="headerlink" title="18.条件断点"></a>18.条件断点</h1><p>某个寄存器等于一个特定值时，设置断点，例如 0 ,0x0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cond 1 $rdi==0x0</div></pre></td></tr></table></figure>
+<h1 id="18-强制到某条机器指令后，返回方法，不继续执行"><a href="#18-强制到某条机器指令后，返回方法，不继续执行" class="headerlink" title="18.强制到某条机器指令后，返回方法，不继续执行"></a>18.强制到某条机器指令后，返回方法，不继续执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ret</div></pre></td></tr></table></figure>
+<h1 id="19-Python-上下文"><a href="#19-Python-上下文" class="headerlink" title="19.Python 上下文"></a>19.Python 上下文</h1><p>可以安装 Python 的调试信息，如方法符号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install -y python-dbg</div><div class="line"></div><div class="line">2.7 版本</div></pre></td></tr></table></figure>
+<h1 id="20-Reverse-Stepping"><a href="#20-Reverse-Stepping" class="headerlink" title="20.Reverse Stepping "></a>20.Reverse Stepping </h1><p>这个功能应该算是高级功能了，录制，并且回放之前走的步骤</p>
+<p>加断点并且录制执行过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(gdb) b doupdate</div><div class="line">Function &quot;doupdate&quot; not defined.</div><div class="line">Make breakpoint pending on future shared library load? (y or [n]) y</div><div class="line">Breakpoint 1 (doupdate) pending.</div><div class="line">(gdb) r cachetop.py</div><div class="line">Starting program: /usr/bin/python cachetop.py</div><div class="line">[Thread debugging using libthread_db enabled]</div><div class="line">Using host libthread_db library &quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;.</div><div class="line">warning: JITed object file architecture unknown is not compatible with target architecture i386:x86-64.</div><div class="line"></div><div class="line">Breakpoint 1, 0x00007ffff34ad2e0 in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) record</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Program received signal SIGSEGV, Segmentation fault.</div><div class="line">0x00007ffff34ad40d in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div></pre></td></tr></table></figure>
+<p>回放，并查询寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">(gdb) reverse-stepi</div><div class="line">0x00007ffff34ad40d in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) reverse-stepi</div><div class="line">0x00007ffff34ad40b in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) i r</div><div class="line">rax            0x7ffff3e8f948   140737285519688</div><div class="line">rbx            0xaea060 11444320</div><div class="line">rcx            0xae72a0 11432608</div><div class="line">rdx            0xa403d0 10748880</div><div class="line">rsi            0x0  0</div><div class="line">rdi            0xa403d0 10748880</div><div class="line">rbp            0x7ffff3e8fb10   0x7ffff3e8fb10 &lt;SP&gt;</div><div class="line">rsp            0x7fffffffd390   0x7fffffffd390</div><div class="line">r8             0x7ffff36ba3e0   140737277305824</div><div class="line">r9             0x0  0</div><div class="line">r10            0x8  8</div><div class="line">r11            0x302    770</div><div class="line">r12            0x0  0</div><div class="line">r13            0x0  0</div><div class="line">r14            0x7ffff3e8fb10   140737285520144</div><div class="line">r15            0xa403d0 10748880</div><div class="line">rip            0x7ffff34ad40b   0x7ffff34ad40b &lt;doupdate+299&gt;</div><div class="line">eflags         0x202    [ IF ]</div><div class="line">cs             0x33 51</div><div class="line">ss             0x2b 43</div><div class="line">ds             0x0  0</div><div class="line">es             0x0  0</div><div class="line">fs             0x0  0</div><div class="line">gs             0x0  0</div><div class="line">(gdb) p/a 0x7ffff3e8f948</div><div class="line">$1 = 0x7ffff3e8f948 &lt;cur_term&gt;</div></pre></td></tr></table></figure>
+<h1 id="21-总结"><a href="#21-总结" class="headerlink" title="21.总结"></a>21.总结</h1><p>最重要的是学习思路</p>
+<p>这里学习到了几个高级技巧，例如：</p>
+<p>设置 Core dumps，并直接调试进程 dump 文件<br>下载 debug info 安装包<br>对程序调用错误的现场分析<br>一个方法被调用多次，尝试修改寄存器的值为最后一次成功调用的值来跳过错误<br>直接不执行方法内的错误代码，手工使用 ret 返回函数，当错误函数被多次调用时，尝试多次 ret<br>使用 BCC 动态跟踪技术来跟踪程序内函数的调用，并获取函数的参数值<br>录制 GDB 的执行过程，并返回查看<br>条件断点<br>查看源代码</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/zookeeper-server-ops/" itemprop="url">
                   使用短命令和 Zookeeper 服务端通信
                 </a>
@@ -793,151 +987,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/kafka-cluster-ops/" itemprop="url">
-                  Kafka 集群运维
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:47:51+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-cluster-ops/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-cluster-ops/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/kafka-cluster-ops/" class="leancloud_visitors" data-flag-title="Kafka 集群运维">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>记录 Kafka 集群的启动和关闭，日志目录，及日志查看</p>
-<p>公司可能会有很多套环境，每套环境安装方式不一定相同，使用时要维护自己的脚本，提高效率</p>
-<p>脚本里面最好是用绝对路径，方便操作</p>
-<h1 id="启动前，先启动-zookeeper"><a href="#启动前，先启动-zookeeper" class="headerlink" title="启动前，先启动 zookeeper"></a>启动前，先启动 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
-<h1 id="验证启动成功"><a href="#验证启动成功" class="headerlink" title="验证启动成功"></a>验证启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可以查看系统日志</div><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div><div class="line"></div><div class="line">或者查看 Topic 列表</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
-<h1 id="集群关闭"><a href="#集群关闭" class="headerlink" title="集群关闭"></a>集群关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
-<h1 id="暴力关闭"><a href="#暴力关闭" class="headerlink" title="暴力关闭"></a>暴力关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;kafka&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;| xargs kill -9</div></pre></td></tr></table></figure>
-<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div></pre></td></tr></table></figure>
-<h1 id="查看日志目录"><a href="#查看日志目录" class="headerlink" title="查看日志目录"></a>查看日志目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka_2.11-0.9.0.1/logs</div></pre></td></tr></table></figure>
-<p>查看 kafka 持久化文件保存情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka/kafka-logs</div></pre></td></tr></table></figure>
-<h1 id="删除所有-Kafka-日志"><a href="#删除所有-Kafka-日志" class="headerlink" title="删除所有 Kafka 日志"></a>删除所有 Kafka 日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/kafka_2.11-0.9.0.1/logs/*</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div><div class="line">cd /data/kafka_2.11-0.9.0.1</div><div class="line">ll /data/kafka_2.11-0.9.0.1</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -978,7 +1032,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -995,7 +1049,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

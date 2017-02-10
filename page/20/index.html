@@ -258,6 +258,381 @@
             
               
                 
+                <a class="post-title-link" href="/2014/10/17/learn-markdown-syntax/" itemprop="url">
+                  Markdown 语法整理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-17T22:29:27+08:00" content="2014-10-17">
+              2014-10-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/markdown/" itemprop="url" rel="index">
+                    <span itemprop="name">markdown</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/10/17/learn-markdown-syntax/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/17/learn-markdown-syntax/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/10/17/learn-markdown-syntax/" class="leancloud_visitors" data-flag-title="Markdown 语法整理">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Markdown-语法速查表"><a href="#Markdown-语法速查表" class="headerlink" title="Markdown 语法速查表"></a>Markdown 语法速查表</h2><p>内容从Mou Help整理而来，Mou为mac操作系统上优秀的Markdown IDE</p>
+<h3 id="1-文字加粗、斜体、突出显示"><a href="#1-文字加粗、斜体、突出显示" class="headerlink" title="1.文字加粗、斜体、突出显示"></a>1.文字加粗、斜体、突出显示</h3><p>加粗  <strong>xxx</strong>    </p>
+<p>斜体  <em>google是一家伟大的公司</em> </p>
+<p>突出显示的文字 <code>微说网络电话</code> , 深圳市出众网络出品</p>
+<pre><code>加粗**xxx**
+斜体*微说网络电话*
+其中 * 可以使用 _ 代替，效果相同
+突出显示的文字 `微说网络电话` , 深圳市出众网络出品
+</code></pre><h2 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h2><blockquote>
+<p>haha</p>
+<p>haha</p>
+</blockquote>
+<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#102;&#97;&#x76;&#x6f;&#111;&#x72;&#x72;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#102;&#97;&#x76;&#x6f;&#111;&#x72;&#x72;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
+<pre><code>方法一
+&lt;https://www.google.com&gt; 这种不能编写悬停文字
+
+方法二
+[微说网络电话](http://www.weishuo.cn &quot;web官网地址&quot;)，好友间的网络电话
+
+方法三
+[微说网络电话][vs-index]，好友间的网络电话 
+
+[vs-index]: http://www.weishuo.cn &quot;官网地址&quot;
+</code></pre><h2 id="4-图片引用"><a href="#4-图片引用" class="headerlink" title="4.图片引用"></a>4.图片引用</h2><p><img src="http://25.io/smaller/favicon.ico" alt="small icon" title="收藏夹图片"></p>
+<p>另一种 <img src="http://25.io/smaller/favicon.ico" alt="small icon" title="另一种写法"> 写法</p>
+<pre><code>方法一
+![small icon](http://25.io/smaller/favicon.ico &quot;收藏夹图片&quot;)
+
+方法二
+另一种 ![small icon][2] 写法
+
+[2]: http://25.io/smaller/favicon.ico &quot;另一种写法&quot;
+</code></pre><h2 id="5-普通片段显示方式"><a href="#5-普通片段显示方式" class="headerlink" title="5.普通片段显示方式"></a>5.普通片段显示方式</h2><pre><code>Hello world!
+注释：写法上为开头一个tab，或者4个半角空格
+</code></pre><h2 id="6-无序列表"><a href="#6-无序列表" class="headerlink" title="6.无序列表"></a>6.无序列表</h2><ul>
+<li>列表项一</li>
+<li>列表项二</li>
+<li>列表项三</li>
+</ul>
+<p>end</p>
+<pre><code>* 列表项一
+* 列表项二
+* 列表项三
+其中 * 可以使用 - 代替,注意 * 号后面有至少一个空格
+</code></pre><h2 id="7-强制换行"><a href="#7-强制换行" class="headerlink" title="7.强制换行"></a>7.强制换行</h2><p>一句很长很长很长很长很长很长<br>很长的话</p>
+<pre><code>一句很长很长很长很长很长很长&lt;br /&gt;很长的话
+</code></pre><h2 id="8-水平横线"><a href="#8-水平横线" class="headerlink" title="8.水平横线"></a>8.水平横线</h2><pre><code>***
+---
+
+* - 至少要三个
+</code></pre><h2 id="9-标题"><a href="#9-标题" class="headerlink" title="9.标题"></a>9.标题</h2><p>第一种写法</p>
+<pre><code>标题一
+===
+
+标题一
+---
+
+= 和 - 至少三个
+</code></pre><p>第二种写法</p>
+<pre><code># 标题一
+## 标题二
+### 标题三
+#### 标题四
+##### 标题五
+###### 标题六
+</code></pre><h2 id="10-脚注"><a href="#10-脚注" class="headerlink" title="10.脚注"></a>10.脚注</h2><p>markdown语法简略指南参考连接.<a href="http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具">^1</a></p>
+<pre><code>markdown语法简略指南参考连接.[^1]
+
+[^1]: http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具
+</code></pre><h2 id="11-过期文字表示"><a href="#11-过期文字表示" class="headerlink" title="11.过期文字表示"></a>11.过期文字表示</h2><p><del>文字中间会有中划线，表示已经过期</del></p>
+<pre><code>~~文字中间会有中划线，表示已经过期~~
+</code></pre><h2 id="12-高亮文字块"><a href="#12-高亮文字块" class="headerlink" title="12.高亮文字块"></a>12.高亮文字块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line"></div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line"></div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
+</code></pre><h2 id="13-代码块"><a href="#13-代码块" class="headerlink" title="13.代码块"></a>13.代码块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def print_hi(name)</div><div class="line">  puts &quot;Hi, #&#123;name&#125;&quot;</div><div class="line">end</div><div class="line">print_hi(&apos;Tom&apos;)</div><div class="line">#=&gt; prints &apos;Hi, Tom&apos; to STDOUT.</div></pre></td></tr></table></figure>
+<p>Java(linenos)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> intNum = <span class="number">15</span>;</div><div class="line">		System.out.println(<span class="string">"Java Hello World!"</span>);</div><div class="line">		<span class="comment">//=&gt;will show Java Hello World in STDOUT.</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="14-表格构建"><a href="#14-表格构建" class="headerlink" title="14.表格构建"></a>14.表格构建</h2><p>二列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>三列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>四列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>五列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<pre><code>二列
+
+First Header | Second Header
+------------ | -------------
+Content Cell | Content Cell
+Content Cell | Content Cell
+
+三列
+
+First Header | Second Header | Third Header
+------------ | ------------- | ------------
+Content Cell | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell
+
+四列
+
+First Header | Second Header | Third Header | Third Header
+------------ | ------------- | ------------ | ------------
+Content Cell | Content Cell  | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell  | Content Cell
+
+五列
+
+First Header | Second Header | Third Header | Third Header | Third Header
+------------ | ------------- | ------------ | ------------ | ------------
+Content Cell | Content Cell  | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell  | Content Cell
+</code></pre><p>也可以这么写</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<pre><code>| First Header | Second Header | Third Header |
+| ------------ | ------------- | ------------ |
+| Content Cell | Content Cell  | Content Cell |
+| Content Cell | Content Cell  | Content Cell |
+</code></pre><p>如果想让列居中，还可以这么写，不过统一加了css也可以</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">First Header</th>
+<th style="text-align:center">Second Header</th>
+<th style="text-align:right">Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:center">Center</td>
+<td style="text-align:right">Right</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:center">Center</td>
+<td style="text-align:right">Right</td>
+</tr>
+</tbody>
+</table>
+<pre><code>First Header | Second Header | Third Header
+:----------- | :-----------: | -----------:
+Left         | Center        | Right
+Left         | Center        | Right
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/09/16/start-writing-blog/" itemprop="url">
                   我的博客系统发布了
                 </a>
@@ -845,148 +1220,11 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/08/30/eclipse-properties-file-edit/" itemprop="url">
-                  eclipse打开含中文properties文件乱码解决
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-30T13:20:25+08:00" content="2014-08-30">
-              2014-08-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">eclipse</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/08/30/eclipse-properties-file-edit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/30/eclipse-properties-file-edit/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/08/30/eclipse-properties-file-edit/" class="leancloud_visitors" data-flag-title="eclipse打开含中文properties文件乱码解决">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="eclipse打开含中文properties文件乱码解决"><a href="#eclipse打开含中文properties文件乱码解决" class="headerlink" title="eclipse打开含中文properties文件乱码解决"></a>eclipse打开含中文properties文件乱码解决</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>Java项目里面经常会使用properties文件，如果在里面添加中文注释，项目转移重新checkout后<br>如果使用Eclipse默认的properties编辑器就会乱码，解决方案就是安装第三方插件，替换自带的<br>properties编辑器</p>
-<h2 id="选择一-property-edit"><a href="#选择一-property-edit" class="headerlink" title="选择一 property edit "></a>选择一 property edit </h2><p>一个日本开源作者编写的插件，原声编辑器增强版，能够打开含有中文的文件不乱码<br>算是一个轻量级版本，如果不做大型的国际化功能，这个功能足够</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1i3Ibp7R" target="_blank" rel="external">http://pan.baidu.com/s/1i3Ibp7R</a></p>
-<h2 id="选择二-rbe"><a href="#选择二-rbe" class="headerlink" title="选择二 rbe "></a>选择二 rbe </h2><p>一个功能强大的资源文件编辑工具，支持对key排序和分组展示、直接新建对应国家资源文件等</p>
-<p>例如:</p>
-<p>user.name</p>
-<p>user.password</p>
-<p>在展示的时候会展示为user节点，然后下面有两个子节点，如果做大型的国际化网站，这个还是很不错的</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1hq89RG4" target="_blank" rel="external">http://pan.baidu.com/s/1hq89RG4</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1027,7 +1265,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1044,7 +1282,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

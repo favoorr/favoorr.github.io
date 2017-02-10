@@ -258,6 +258,165 @@
             
               
                 
+                <a class="post-title-link" href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="url">
+                  mac使用svn遇到的一些问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-04T09:38:14+08:00" content="2014-12-04">
+              2014-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" class="leancloud_visitors" data-flag-title="mac使用svn遇到的一些问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mac使用svn遇到的一些问题"><a href="#mac使用svn遇到的一些问题" class="headerlink" title="mac使用svn遇到的一些问题"></a>mac使用svn遇到的一些问题</h1><p>1.在安装了最新的subversion 1.8.10 和 subeclipse1.10.6之后，<br>使用svn执行更新和其他操作会出现如下错误</p>
+<pre><code>org.apache.subversion.javahl.ClientException: Couldn&apos;t perform atomic initialization
+svn: Couldn&apos;t perform atomic initialization
+SQLite error
+svn: SQLite compiled for 3.8.6, but running with 3.8.5
+</code></pre><p>解决方法</p>
+<pre><code>brew uninstall sqlite
+
+brew uninstall subversion
+
+brew edit sqlite
+
+ 3 class Sqlite &lt; Formula
+ 4   homepage &quot;http://sqlite.org/&quot;
+ 5   url &quot;https://www.sqlite.org/2014/sqlite-autoconf-3080500.tar.gz&quot;
+ 6   version &quot;3.8.5.0&quot;
+ 7   sha1 &quot;7f667e10ccebc26ab2086b8a30cb0a600ca0acae&quot;
+
+34   resource &quot;docs&quot; do
+35     url &quot;https://www.sqlite.org/2014/sqlite-doc-3080500.zip&quot;
+36     version &quot;3.8.5.0&quot;
+37     sha1 &quot;c5655a4004095c50dc8403661e0ed02fd4191d57&quot;
+38   end
+
+brew install --universal --java subversion
+</code></pre><p>参考链接<a href="http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5" target="_blank" rel="external">http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5</a></p>
+<p>2.本来在svn仓库中已经有项目A了，然后由于一些原因，本地也有项目A，并且<br>某些文件需要和svn仓库中合并，直接选择了<code>share project</code>之后，会出现如下错误</p>
+<pre><code>post commit FS processing had error
+Could&apos;t open rep-cache database
+</code></pre><p>解决方法</p>
+<pre><code>从workplace删除项目，然后在重新导入就ok了
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/12/01/mac-os-x-apahe-server-tips/" itemprop="url">
                   apache server在mac上的信息
                 </a>
@@ -930,161 +1089,11 @@ sudo make install
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/24/maven-repository-jenkins-errors/" itemprop="url">
-                  jenkins使用maven构建时遇到的repository的错误
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-24T15:24:37+08:00" content="2014-11-24">
-              2014-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">jenkins</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/24/maven-repository-jenkins-errors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/24/maven-repository-jenkins-errors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/24/maven-repository-jenkins-errors/" class="leancloud_visitors" data-flag-title="jenkins使用maven构建时遇到的repository的错误">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="jenkins使用maven构建时遇到的repository的错误"><a href="#jenkins使用maven构建时遇到的repository的错误" class="headerlink" title="jenkins使用maven构建时遇到的repository的错误"></a>jenkins使用maven构建时遇到的repository的错误</h1><p>部署jenkins后，构建maven项目，在执行 -X mvn clean installl 时，报错内容如下</p>
-<pre><code>Started by user anonymous
-Building in workspace /Users/Shared/Jenkins/Home/jobs/account2/workspace
-Updating svn://127.0.0.1/account/trunk2 at revision &apos;2014-11-24T11:52:51.614 +0800&apos;
-At revision 26
-no change for svn://127.0.0.1/account/trunk2 since the previous build
-[workspace] $ /Users/User/soft/apache-maven-3.2.1/bin/mvn clean install
-[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LocalRepositoryNotAccessibleException
-Build step &apos;Invoke top-level Maven targets&apos; marked build as failure
-Finished: FAILURE
-</code></pre><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>重点看这句</p>
-<pre><code>[ERROR] Could not create local repository at /var/empty/.m2/repository -&gt; [Help 1]
-</code></pre><p>配置maven时，使用了默认的配置，所以就是匿名用户去寻找，</p>
-<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><p>1.配置maven时，不能使用默认配置，指定 <code>setting.xml</code> 的位置</p>
-<p>2.<code>setting.xml</code> 配置中，尽量不使用 类似 <code>${user.home}/.m2/repository</code> 使用环境变量的路径，<br>如果当前用户改变，整个本地仓库路径就改变了，</p>
-<p>例如使用 <code>jenkins</code> 用户，路径就变为 <code>/Users/Shared/Jenkins/.m2/repository</code><br>尽量使用 <code>/Users/User/.m2/repository</code> 这种绝对路径</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1125,7 +1134,7 @@ Finished: FAILURE
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1142,7 +1151,7 @@ Finished: FAILURE
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

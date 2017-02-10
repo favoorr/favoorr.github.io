@@ -258,6 +258,154 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/debug-jekyll-blog/" itemprop="url">
+                  博客的折腾
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-22T10:36:06+08:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/jekyll/" itemprop="url" rel="index">
+                    <span itemprop="name">jekyll</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/debug-jekyll-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/debug-jekyll-blog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/22/debug-jekyll-blog/" class="leancloud_visitors" data-flag-title="博客的折腾">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>去年开始使用 markdown 在 github 上使用 github Pages 来写博客，<br>最开始，我是直接fork别人得模板，修改了 _config.yml 里面的配置，<br>就 push 到 github 上，可以通过 favoorr.github.io 来进行访问了</p>
+<p>现在遇到了一个问题，就是在处理</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">段落内容</div></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> (<span class="string">'Hello world!)'</span></div></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面那种段落或者语法高亮时，我的必须使用</p>
+<p>{ % highlight  linenos    %<br> { –% endhighlight –% </p>
+<p>来实现，jekyll 原生支持的，我一直不知道为什么，用 MacDown 在 OS X 上写的时候，<br>我发现他那个里面可以非常方便的设置，于是决定，要求我的也可以这么来写，这是<br>不能容忍的</p>
+<p>找了文章</p>
+<p><a href="http://www.jianshu.com/p/6c157af09e84" target="_blank" rel="external">Mac 下两款 Markdown 编辑器 Mou/MacDown 大 PK</a><br><a href="http://liberize.me/tech/bootstrap-tweaks.html" target="_blank" rel="external">Bootstrap 简单定制 - 二、设置代码高亮</a>    </p>
+<p><a href="http://jekyllcn.com/docs/configuration/#markdown-" target="_blank" rel="external">jekyll官网的说明</a><br><a href="https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks" target="_blank" rel="external">github 关于enced-code-blocks</a><br><a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">redcarpet灵活的扩展</a></p>
+<p><a href="http://yulijia.net/cn/%E6%89%80%E6%80%9D%E6%89%80%E6%82%9F/2015/04/03/basic-knowledge-of-build-a-blog-theme.html" target="_blank" rel="external">一个博客模版应该包括的内容</a> </p>
+<p><a href="http://jekyllthemes.org/" target="_blank" rel="external">官方主题库</a><br><a href="http://www.zhanxin.info/themes.html" target="_blank" rel="external">掌心个人设计的主题</a></p>
+<p>问题出在使用的 markdown 解释器上，默认是 <code>liquid</code> ，这里使用另外一种，也即是 从markdown 翻译到 HTML 使用的引擎,<br>这项功能使用 <code>redcarpet</code></p>
+<p>再者就是 <code>redcarpet</code> 支持<a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">灵活的扩展</a> 然后我的问题解决方法如下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">markdown: redcarpet</div><div class="line">redcarpet:</div><div class="line">  extensions: [&quot;no_intra_emphasis&quot;, &quot;fenced_code_blocks&quot;, &quot;autolink&quot;, &quot;strikethrough&quot;, &quot;superscript&quot;, &quot;with_toc_data&quot;, &quot;tables&quot;]</div></pre></td></tr></table></figure>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/20/config-non-password-login-for-ubuntu/" itemprop="url">
                   ubuntu-配置无密码登录
                 </a>
@@ -1028,164 +1176,11 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/27/thinking-about-it-learning/" itemprop="url">
-                  学习知识的心得
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-27T23:44:01+08:00" content="2015-01-27">
-              2015-01-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/heart/" itemprop="url" rel="index">
-                    <span itemprop="name">heart</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/27/thinking-about-it-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/thinking-about-it-learning/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/27/thinking-about-it-learning/" class="leancloud_visitors" data-flag-title="学习知识的心得">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="学习知识的体会心得"><a href="#学习知识的体会心得" class="headerlink" title="学习知识的体会心得"></a>学习知识的体会心得</h1><p>目前自己掌握了基础的学习新知识的能力，在不断的被吊打中磨练出来的</p>
-<p>知识，要积累，要多模仿，换成自己的，自己要有自己的知识体系和归档，方便用时候查阅</p>
-<p>能力，需要不断的锻炼，不断去读书，打好基础，计算机行业的话，操作系统和数据结构和算法，这个<br>一定要懂，不要求十分精通，但是一定要掌握，不然永远是飘着的，根儿没扎好</p>
-<p>学新东西，看官方，英文文档是很重要的，那么自然的，阅读英文的能力对于程序员来说是必备的，还不行的<br>话，就从现在开始，自己做项目的空闲时间，找自己当前项目用到的技术的官方reference或者document，提<br>高不是一蹴而就</p>
-<p>学英文，stackoverflow要上，Quora要上，上面找自己感兴趣的话题和标签，他们会给你推送很多东西，读<br>然后进步</p>
-<p>全面看一个东西的API很有用，比如学习Jquery，它的官方API如果你看过，而且看完了，肯定是会有收获的，</p>
-<p>看书学东西，是很推荐的，但是刚开始的时候总是那么难，当你拿到一个600页，700页的书的时候，总是那么害怕，<br>当打开书的时候，一看内容，有些会，但有些真的不会，适当跳过，敲源代码，慢慢在工作中领悟</p>
-<p>一本书都是作者智慧的结晶，写过博客的人才能体会到吧，不管人家写的多烂，或者是讲解API，毕竟肯定多多少少<br>加入了自己的思考和总结，总能学到自己不会得</p>
-<p>遇到问题的时候，不轻易放过，多想想为什么自己想错了，当年理解Jquery对象和javascript对象之后，豁然开朗，为什么<br>对javascript对象.val()不能获取到值，而且后来教给了好几个同事</p>
-<p>后台，分布式，多线程，tcp/ip很重要啊，工作5-6年如果感觉自己到瓶颈，那就是自己的问题了 ~~</p>
-<p>14年一边看，一边学了Linux应用，因为没做过运维或管理员，很顺利的忘记了那些 囧~，但是我现在回来重新用的时候，<br>可以通过记忆和笔记不用Google解决问题，然后再分享成博客归档，我想我说我掌握Linux使用比较合适吧，千万不能说<br>精通，然后再走向熟练，但是也比了解好太多，只能说掌握，嗯，掌握，很好地中性词</p>
-<p>靠搜索引擎才会的东西，不算掌握，只能说了解，而知识也都是自己亲身要用了，才会真正去学习，会有很多雷达，关注<br>很多东西，但是 没太走心 </p>
-<p>使用IDE的时候，把所有的提示都关闭了吧，然后API放手边，随时看，随时写，多写几遍，那些方法名就记下来了，然后<br>你会发现，自己在不断提高</p>
-<p>早点建立自己的博客吧，也可以是csdn或者cnblogs，任何博客平台都好，关键是你要写，</p>
-<p>14年，我在搜索引擎上发现可以用github写博客，当时很兴奋，但是一看早在2012年左右，人们已经用的如火如荼，好吧，又是别人已经不准备用的东西，我才知道，我才进来 在囧一次</p>
-<p>当时，只记得那个同学告诉我，重要是你要写，在哪写不重要，这句话，永远记得，</p>
-<p>最难的也就是，重要是你要做</p>
-<p>尽管有jekyll，有markdown，有ruby，在当时都是一窍不通，但是都走过来了，</p>
-<p>重要的是要做，步子迈起来是多么重要啊</p>
-<p>要学得还很多</p>
-<p>早点停止打游戏吧，庆幸11年下半年已经结束</p>
-<p>时间总是挤的，也总是不够用</p>
-<p>，嗯，早点睡吧，不早了 ~~~</p>
-<p>竟然写了这么多</p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1226,7 +1221,7 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1243,7 +1238,7 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

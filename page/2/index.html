@@ -258,6 +258,146 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/09/kafka-cluster-ops/" itemprop="url">
+                  Kafka 集群运维
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T14:47:51+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/kafka-cluster-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-cluster-ops/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/kafka-cluster-ops/" class="leancloud_visitors" data-flag-title="Kafka 集群运维">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>记录 Kafka 集群的启动和关闭，日志目录，及日志查看</p>
+<p>公司可能会有很多套环境，每套环境安装方式不一定相同，使用时要维护自己的脚本，提高效率</p>
+<p>脚本里面最好是用绝对路径，方便操作</p>
+<h1 id="启动前，先启动-zookeeper"><a href="#启动前，先启动-zookeeper" class="headerlink" title="启动前，先启动 zookeeper"></a>启动前，先启动 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
+<h1 id="验证启动成功"><a href="#验证启动成功" class="headerlink" title="验证启动成功"></a>验证启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可以查看系统日志</div><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div><div class="line"></div><div class="line">或者查看 Topic 列表</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="集群关闭"><a href="#集群关闭" class="headerlink" title="集群关闭"></a>集群关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
+<h1 id="暴力关闭"><a href="#暴力关闭" class="headerlink" title="暴力关闭"></a>暴力关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;kafka&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;| xargs kill -9</div></pre></td></tr></table></figure>
+<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div></pre></td></tr></table></figure>
+<h1 id="查看日志目录"><a href="#查看日志目录" class="headerlink" title="查看日志目录"></a>查看日志目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka_2.11-0.9.0.1/logs</div></pre></td></tr></table></figure>
+<p>查看 kafka 持久化文件保存情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka/kafka-logs</div></pre></td></tr></table></figure>
+<h1 id="删除所有-Kafka-日志"><a href="#删除所有-Kafka-日志" class="headerlink" title="删除所有 Kafka 日志"></a>删除所有 Kafka 日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/kafka_2.11-0.9.0.1/logs/*</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div><div class="line">cd /data/kafka_2.11-0.9.0.1</div><div class="line">ll /data/kafka_2.11-0.9.0.1</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/install-config-kafka/" itemprop="url">
                   配置安装运行 Kafka
                 </a>
@@ -787,144 +927,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="url">
-                  在 MacOS 上配置 Python3 virtualenvwrapper
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T13:52:33+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" class="leancloud_visitors" data-flag-title="在 MacOS 上配置 Python3 virtualenvwrapper">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Mac 使用 virtualenvwrapper 配置过程</p>
-<h3 id="Macos-配置-virtualenvwrapper"><a href="#Macos-配置-virtualenvwrapper" class="headerlink" title="Macos 配置 virtualenvwrapper"></a>Macos 配置 virtualenvwrapper</h3><p>配置和使用常用开发工具，这个最好在宿主机上搞，例如自己 Mac</p>
-<p>所以这里需要在 mac 环境下把 virtualenvwrapper 配置起来</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">不建议过早使用 IDE</div><div class="line">学习的时候使用命令行，把焦点放在某一个点</div><div class="line"></div><div class="line">Mac 下使用 brew 和 zsh</div><div class="line"></div><div class="line">Mac 下的 .zshrc 配置如下</div><div class="line"></div><div class="line"><span class="built_in">export</span> WORKON_HOME=/Users/User/zl/python/lesson/venv</div><div class="line"><span class="built_in">export</span> PROJECT_HOME=/Users/User/zl/python/lesson/py</div><div class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=`<span class="built_in">which</span> python3`</div><div class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">alpine <span class="built_in">source</span> /usr/bin/virtualenvwrapper.sh 和 Mac 路径不同</div><div class="line">Mac 配置为 <span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">mkproject 会创建项目目录和 venv 目录</div><div class="line">mkvirtualenv 只会创建虚拟目录</div></pre></td></tr></table></figure>
-<h3 id="Mac-下安装常用的工具"><a href="#Mac-下安装常用的工具" class="headerlink" title="Mac 下安装常用的工具"></a>Mac 下安装常用的工具</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div><div class="line"></div><div class="line">创建测试学习项目</div><div class="line">mkproject <span class="built_in">test</span></div></pre></td></tr></table></figure>
-<h3 id="Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件"><a href="#Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件" class="headerlink" title="Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件"></a>Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">首先安装好 sublime text3，并配置软连接</div><div class="line">ln <span class="_">-s</span> <span class="string">"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"</span> /usr/<span class="built_in">local</span>/bin/subl</div><div class="line"></div><div class="line">text text.py 可以直接在 sublime 打开文件</div><div class="line">text=subl</div><div class="line"></div><div class="line">ipython 中 ed 直接在 sublime 中打开文件</div><div class="line">配置环境变量</div><div class="line">vim .zshrc</div><div class="line"><span class="built_in">export</span> EDITOR=<span class="string">"/usr/local/bin/subl"</span></div><div class="line"></div><div class="line">进入 ipython</div><div class="line">ed hello.py</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -965,7 +972,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -982,7 +989,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

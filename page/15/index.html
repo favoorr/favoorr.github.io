@@ -258,6 +258,240 @@
             
               
                 
+                <a class="post-title-link" href="/2015/01/08/git-remote-command-summary/" itemprop="url">
+                  git操作远程仓库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-08T20:22:07+08:00" content="2015-01-08">
+              2015-01-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/08/git-remote-command-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-remote-command-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/08/git-remote-command-summary/" class="leancloud_visitors" data-flag-title="git操作远程仓库">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git操作远程仓库"><a href="#git操作远程仓库" class="headerlink" title="git操作远程仓库"></a>git操作远程仓库</h1><p>这里对fetch和rebase的用法存在疑惑，Google了下，找到阮老师的教程，<br>推荐看原版，下面内容加入了自己理解</p>
+<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><pre><code>git clone https://github.com/jquery/jquery.git 远程主机被默认命名为 origin（起源）
+git clone https://github.com/jquery/jquery.git myjquerycopy 创建自己的目录，一般不需要加目录
+</code></pre><p>支持的所有的协议</p>
+<pre><code>git clone http[s]://example.com/path/to/repo.git/
+git clone ssh://example.com/path/to/repo.git/
+git clone git://example.com/path/to/repo.git/
+git clone /opt/git/project.git 
+git clone file:///opt/git/project.git
+git clone ftp[s]://example.com/path/to/repo.git/
+git clone rsync://example.com/path/to/repo.git/
+</code></pre><h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><pre><code>git remote 查看所有的远程主机，只会显示列表
+git remote -v
+git clone -o jQuery https://github.com/jquery/jquery.git  将远程仓库命名为jQuery，即更改默认的origin
+git remote show 查看更加详细的信息
+git remote add origin https://github.com/jquery/jquery.git 添加远程仓库
+git remote rm origin 删除远程仓库
+git remote rename origin github 将远程仓库由默认的origin更改为github
+</code></pre><h2 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h2><p>这个命令是将远程仓库的更新拉到本地仓库，而不是本地工作区，但不会与当前分支合并</p>
+<pre><code>git fetch 拉取远程仓库所有分支的所有更新
+git fetch master 仅仅拉取master分支的更新
+git branch -r 查看远程的所有分支
+git branch -a 查看所有分支
+git checkout -b newBrach origin/master 取回远程分支的更新，并创建新分支
+git merge origin/master 将远程分支更新取回本地仓库，并与当前分支合并
+
+git rebase origin/master 
+等同于
+git merge origin/master
+</code></pre><h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>取回远程主机的某个分支与本地的某个分支合并</p>
+<pre><code>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;
+
+git pull origin next:master 取回远程主机的next分支与本地的master分支合并
+git pull origin next 取回远程主机的next分支，与当前默认分支合并，这里要注意了
+
+git pull origin next 
+等同于 
+git fetch origin
+git merge origin/next
+
+本地分支与远程同名分支默认会建立追踪关系，git clone 时，会将本地master和远程master建立关系
+
+git branch --set-upstream master origin/next 将本地的master和远程的next建立追踪关系
+
+如何查看本地分支是否与远程分支建立追踪关系？？？？
+
+git branch -r 可以列出远程有追踪关系的分支，但是不能针对分支查看，比如查看本地dev关联什么分支，可能习惯上，本地分支和远程分支名称都要一样，你可以不关联，但是不要搞本地 xx 分支 和远程yy分支关联
+
+如果当前分支有与之建立追踪关系的远程分支，git pull可以省略远程分支名
+
+git pull origin 本地分支自动拉取origin与之建立追踪关系的分支的更新并且合并
+
+git pull 如果只有一个远程主机，并建立一个追踪关系，可以省略全部参数
+
+git pull --rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt; 如果需要采用rebase模式，何时采用哪？？？
+</code></pre><h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>将本地分支的更新推送到远程分支</p>
+<pre><code>git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
+
+git push origin master 如果已经建立追踪关系，可以省略远程分支，如果远程分支不存在，就会新建
+
+git push origin :master 省略本地分支，等于推送了空到远程分支，相当于删除所有内容
+等同于
+git push origin --delete master 删除origin主机的master分支
+
+git push origin 如果本地分支和远程分支有追踪关系，两个名词都可以省略
+
+git push 如果只有一个远程追踪，远程主机也可以省略
+
+git push -u origin master 如果存在多个远程主机关联，可以使用-u设置默认主机，设置后，可以使用 git push
+
+push.default 含义，2.0之前采用matching，之后改为simple
+
+git config --global push.default matching
+git config --global push.default simple
+
+simple 默认只推送当前分支
+matching 会推送所有有追踪关系的本地分支
+
+git push --all origin 不管是否有对应的远程分支，全部推送到远程主机
+
+git push --force origin 如果远程高于本地无法推送，可以强行推送，不建议使用
+
+git push origin --tags tag默认不会推送，必须加参数
+
+git push --set-upstream origin master  和远程master分支建立追踪关系，并push当前分支
+</code></pre><h2 id="新增远程仓库操作"><a href="#新增远程仓库操作" class="headerlink" title="新增远程仓库操作"></a>新增远程仓库操作</h2><pre><code>git clone -o booyah  命名初始远程仓库不叫 origin ，叫 booyah
+
+git fetch origin  更新本地分支与远程分支同步，拉取远程代码到本地
+
+git remote add github git@xxxx.xxx.xx:yy.git 添加新的远程仓库 github 
+
+git push origin serverfix:awesomebranch 将本地分支 serverfix 推送到远程仓库 origin 中 awesomebranch
+
+git merge origin/serverfix 将远程分支与自己当前分支合并
+
+git checkout -b serverfix origin/serverfix  新建分支，以 远程分支为基础
+
+git checkout -b sf origin/serverfix  远程分支和本地分支使用不同的名字
+
+git checkout --track origin/serverfix  跟踪分支，远程分支和本地分支操作简化命令
+
+git branch -u origin/serverfix 当前本地分支关联远程分支 --set-upstream-to 的简写 -u
+
+git merge @{u}  等于 git merge git merge origin/master  ,使用 @{u} @{upstream} 代替 origin/master
+
+git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远程分支情况
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/12/29/git-learn-summary/" itemprop="url">
                   git 入门学习笔记-备忘
                 </a>
@@ -967,170 +1201,11 @@ invalid target release: 1.8
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="url">
-                  mac使用svn遇到的一些问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-04T09:38:14+08:00" content="2014-12-04">
-              2014-12-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/04/mac-os-x-subeclipse-sqlite-error/" class="leancloud_visitors" data-flag-title="mac使用svn遇到的一些问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mac使用svn遇到的一些问题"><a href="#mac使用svn遇到的一些问题" class="headerlink" title="mac使用svn遇到的一些问题"></a>mac使用svn遇到的一些问题</h1><p>1.在安装了最新的subversion 1.8.10 和 subeclipse1.10.6之后，<br>使用svn执行更新和其他操作会出现如下错误</p>
-<pre><code>org.apache.subversion.javahl.ClientException: Couldn&apos;t perform atomic initialization
-svn: Couldn&apos;t perform atomic initialization
-SQLite error
-svn: SQLite compiled for 3.8.6, but running with 3.8.5
-</code></pre><p>解决方法</p>
-<pre><code>brew uninstall sqlite
-
-brew uninstall subversion
-
-brew edit sqlite
-
- 3 class Sqlite &lt; Formula
- 4   homepage &quot;http://sqlite.org/&quot;
- 5   url &quot;https://www.sqlite.org/2014/sqlite-autoconf-3080500.tar.gz&quot;
- 6   version &quot;3.8.5.0&quot;
- 7   sha1 &quot;7f667e10ccebc26ab2086b8a30cb0a600ca0acae&quot;
-
-34   resource &quot;docs&quot; do
-35     url &quot;https://www.sqlite.org/2014/sqlite-doc-3080500.zip&quot;
-36     version &quot;3.8.5.0&quot;
-37     sha1 &quot;c5655a4004095c50dc8403661e0ed02fd4191d57&quot;
-38   end
-
-brew install --universal --java subversion
-</code></pre><p>参考链接<a href="http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5" target="_blank" rel="external">http://stackoverflow.com/questions/25904364/subclipse-error-svn-sqlite-compiled-for-3-8-6-but-running-with-3-8-5</a></p>
-<p>2.本来在svn仓库中已经有项目A了，然后由于一些原因，本地也有项目A，并且<br>某些文件需要和svn仓库中合并，直接选择了<code>share project</code>之后，会出现如下错误</p>
-<pre><code>post commit FS processing had error
-Could&apos;t open rep-cache database
-</code></pre><p>解决方法</p>
-<pre><code>从workplace删除项目，然后在重新导入就ok了
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1171,7 +1246,7 @@ Could&apos;t open rep-cache database
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1188,7 +1263,7 @@ Could&apos;t open rep-cache database
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

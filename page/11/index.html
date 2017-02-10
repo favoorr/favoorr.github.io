@@ -258,6 +258,137 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/25/zabbix-custom-monitor-item/" itemprop="url">
+                  zabbix 自定义监控key
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-25T15:10:04+08:00" content="2015-05-25">
+              2015-05-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/25/zabbix-custom-monitor-item/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/zabbix-custom-monitor-item/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/25/zabbix-custom-monitor-item/" class="leancloud_visitors" data-flag-title="zabbix 自定义监控key">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="zabbix自定义监控key"><a href="#zabbix自定义监控key" class="headerlink" title="zabbix自定义监控key"></a>zabbix自定义监控key</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /etc/zabbix/zabbix_agentd.conf.d</div><div class="line">(Include=/etc/zabbix/zabbix_agentd.conf.d/ 这个设置要打开)</div><div class="line"></div><div class="line">vim count_line_passwd.conf</div><div class="line"></div><div class="line">输入</div><div class="line">UserParameter=count.line.passwd,wc -l /etc/passwd|awk &apos;&#123;print $1&#125;&apos;</div><div class="line"></div><div class="line"></div><div class="line">/usr/local/zabbix/bin/zabbix_get -s dev2 -k count.line.passwd</div><div class="line"></div><div class="line">能够显示30 （数字取决于当前系统用户数），说明自定义 成功</div></pre></td></tr></table></figure>
+<p>UserParameter 示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UserParameter=&lt;key&gt;,&lt;command&gt;</div><div class="line"></div><div class="line">UserParameter=get.os.type,head -1 /etc/issue</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k get.os.type</div><div class="line"></div><div class="line">UserParameter=wc[*],grep -c &quot;$2&quot; $1</div><div class="line"></div><div class="line">zabbix_get -s 127.0.0.1 -k wc[/etc/passwd,root]</div><div class="line"></div><div class="line">$1 为 root $2 为 /etc/passwd</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/18/install-zabbix-agentd/" itemprop="url">
                   zabbix agentd 安装
                 </a>
@@ -807,159 +938,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/debug-jekyll-blog/" itemprop="url">
-                  博客的折腾
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-22T10:36:06+08:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jekyll/" itemprop="url" rel="index">
-                    <span itemprop="name">jekyll</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/debug-jekyll-blog/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/debug-jekyll-blog/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/22/debug-jekyll-blog/" class="leancloud_visitors" data-flag-title="博客的折腾">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>去年开始使用 markdown 在 github 上使用 github Pages 来写博客，<br>最开始，我是直接fork别人得模板，修改了 _config.yml 里面的配置，<br>就 push 到 github 上，可以通过 favoorr.github.io 来进行访问了</p>
-<p>现在遇到了一个问题，就是在处理</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">段落内容</div></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> (<span class="string">'Hello world!)'</span></div></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面那种段落或者语法高亮时，我的必须使用</p>
-<p>{ % highlight  linenos    %<br> { –% endhighlight –% </p>
-<p>来实现，jekyll 原生支持的，我一直不知道为什么，用 MacDown 在 OS X 上写的时候，<br>我发现他那个里面可以非常方便的设置，于是决定，要求我的也可以这么来写，这是<br>不能容忍的</p>
-<p>找了文章</p>
-<p><a href="http://www.jianshu.com/p/6c157af09e84" target="_blank" rel="external">Mac 下两款 Markdown 编辑器 Mou/MacDown 大 PK</a><br><a href="http://liberize.me/tech/bootstrap-tweaks.html" target="_blank" rel="external">Bootstrap 简单定制 - 二、设置代码高亮</a>    </p>
-<p><a href="http://jekyllcn.com/docs/configuration/#markdown-" target="_blank" rel="external">jekyll官网的说明</a><br><a href="https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks" target="_blank" rel="external">github 关于enced-code-blocks</a><br><a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">redcarpet灵活的扩展</a></p>
-<p><a href="http://yulijia.net/cn/%E6%89%80%E6%80%9D%E6%89%80%E6%82%9F/2015/04/03/basic-knowledge-of-build-a-blog-theme.html" target="_blank" rel="external">一个博客模版应该包括的内容</a> </p>
-<p><a href="http://jekyllthemes.org/" target="_blank" rel="external">官方主题库</a><br><a href="http://www.zhanxin.info/themes.html" target="_blank" rel="external">掌心个人设计的主题</a></p>
-<p>问题出在使用的 markdown 解释器上，默认是 <code>liquid</code> ，这里使用另外一种，也即是 从markdown 翻译到 HTML 使用的引擎,<br>这项功能使用 <code>redcarpet</code></p>
-<p>再者就是 <code>redcarpet</code> 支持<a href="(https://github.com/vmg/redcarpet/blob/v2.2.2/README.markdown#and-its-like-really-simple-to-use)">灵活的扩展</a> 然后我的问题解决方法如下，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">markdown: redcarpet</div><div class="line">redcarpet:</div><div class="line">  extensions: [&quot;no_intra_emphasis&quot;, &quot;fenced_code_blocks&quot;, &quot;autolink&quot;, &quot;strikethrough&quot;, &quot;superscript&quot;, &quot;with_toc_data&quot;, &quot;tables&quot;]</div></pre></td></tr></table></figure>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1000,7 +983,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1017,7 +1000,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

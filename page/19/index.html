@@ -398,6 +398,882 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/10/mysql-date-api/" itemprop="url">
+                  mysql date time datetime类型操作api
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
+              2014-11-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/10/mysql-date-api/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/mysql-date-api/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/10/mysql-date-api/" class="leancloud_visitors" data-flag-title="mysql date time datetime类型操作api">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mysql-date-time-datetime类型操作api"><a href="#mysql-date-time-datetime类型操作api" class="headerlink" title="mysql date time datetime类型操作api"></a>mysql date time datetime类型操作api</h1><h2 id="返回当前时间"><a href="#返回当前时间" class="headerlink" title="返回当前时间"></a>返回当前时间</h2><p>CURDATE()    Return the current date</p>
+<pre><code>SELECT CURDATE();
+&gt; 2014-11-10
+SELECT CURDATE() + 0;
+&gt; 20141110
+</code></pre><p>CURRENT_DATE(), CURRENT_DATE    Synonyms for CURDATE()</p>
+<pre><code>select CURRENT_DATE();
+&gt; 2014-11-10
+select CURRENT_DATE;
+&gt; 2014-11-10
+</code></pre><p>CURRENT_TIME(), CURRENT_TIME    Synonyms for CURTIME()</p>
+<pre><code>select CURRENT_TIME();
+&gt; 20:10:41
+select CURRENT_TIME;
+&gt; 20:10:53
+</code></pre><p>CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP    Synonyms for NOW()</p>
+<pre><code>select CURRENT_TIMESTAMP();
+&gt; 2014-11-10 20:11:10
+</code></pre><p>select CURRENT_TIMESTAMP</p>
+<p>CURTIME()    Return the current time</p>
+<pre><code>select CURTIME()
+&gt; 20:11:49
+select CURTIME() + 0
+&gt; 201205
+</code></pre><p>LOCALTIME(), LOCALTIME    Synonym for NOW()</p>
+<p>LOCALTIMESTAMP, LOCALTIMESTAMP()    Synonym for NOW()</p>
+<p>NOW()    Return the current date and time</p>
+<pre><code>SELECT NOW();
+&gt; 2014-11-10 20:46:43
+
+SELECT NOW() + 0;
+&gt; 20141110204659
+
+SELECT NOW(), SLEEP(2), NOW();
+&gt; 2014-11-10 20:47:25    0    2014-11-10 20:47:25
+
+SELECT SYSDATE(), SLEEP(2), SYSDATE();
+&gt; 2014-11-10 20:48:03    0    2014-11-10 20:48:05
+</code></pre><p>SYSDATE()    Return the time at which the function executes</p>
+<pre><code>SELECT SYSDATE(), SLEEP(2), SYSDATE();
+&gt; 2014-11-10 20:58:11    0    2014-11-10 20:58:13
+</code></pre><p>UTC_DATE()    Return the current UTC date</p>
+<pre><code>SELECT UTC_DATE(), UTC_DATE() + 0;
+&gt; 2014-11-10    20141110
+</code></pre><p>SELECT UTC_TIME(), UTC_TIME() + 0;</p>
+<pre><code>UTC_TIME()    Return the current UTC time
+&gt; 13:10:07    131007
+</code></pre><p>UTC_TIMESTAMP()    Return the current UTC date and time</p>
+<pre><code>SELECT UTC_TIMESTAMP(), UTC_TIMESTAMP() + 0;
+&gt; 2014-11-10 13:10:35    20141110131035
+</code></pre><h2 id="获取指定字段"><a href="#获取指定字段" class="headerlink" title="获取指定字段"></a>获取指定字段</h2><p>YEAR()    Return the year</p>
+<pre><code>SELECT YEAR(&apos;1987-01-01&apos;);
+&gt; 1987
+</code></pre><p>MONTH()    Return the month from the date passed</p>
+<pre><code>SELECT MONTH(&apos;2008-02-03&apos;);
+&gt; 2
+</code></pre><p>DAY()    Synonym for DAYOFMONTH()</p>
+<p>DAYOFMONTH()    Return the day of the month (0-31)</p>
+<pre><code>SELECT DAYOFMONTH(&apos;2007-02-03&apos;);
+&gt; 3
+</code></pre><p>HOUR()    Extract the hour</p>
+<pre><code>SELECT HOUR(&apos;10:05:03&apos;);
+&gt; 10
+
+SELECT HOUR(&apos;272:59:59&apos;);
+&gt; 272
+</code></pre><p>MINUTE()    Return the minute from the argument</p>
+<pre><code>SELECT MINUTE(&apos;2008-02-03 10:05:03&apos;);
+&gt; 5
+</code></pre><p>SECOND()    Return the second (0-59)</p>
+<pre><code>SELECT SECOND(&apos;10:05:03&apos;);
+&gt; 3
+</code></pre><p>DAYNAME()    Return the name of the weekday</p>
+<pre><code>SELECT DAYNAME(&apos;2007-02-03&apos;);
+&gt; Saturday
+</code></pre><p>DAYOFWEEK()    Return the weekday index of the argument</p>
+<pre><code>SELECT DAYOFWEEK(&apos;2007-02-03&apos;);
+&gt; 7
+</code></pre><p>DAYOFYEAR()    Return the day of the year (1-366)</p>
+<pre><code>SELECT DAYOFYEAR(&apos;2007-02-03&apos;);
+&gt; 34
+</code></pre><p>EXTRACT()    Extract part of a date</p>
+<pre><code>SELECT EXTRACT(YEAR FROM &apos;2009-07-02&apos;);
+&gt; 2009
+
+SELECT EXTRACT(YEAR_MONTH FROM &apos;2009-07-02 01:02:03&apos;);
+&gt; 200907
+
+SELECT EXTRACT(DAY_MINUTE FROM &apos;2009-07-02 01:02:03&apos;);
+&gt; 20102
+
+SELECT EXTRACT(MICROSECOND FROM &apos;2003-01-02 10:30:00.000123&apos;);
+&gt; 123
+</code></pre><p>LAST_DAY    Return the last day of the month for the argument</p>
+<pre><code>SELECT LAST_DAY(&apos;2003-02-05&apos;);
+&gt; &apos;2003-02-28&apos;
+
+SELECT LAST_DAY(&apos;2004-02-05&apos;);
+&gt; &apos;2004-02-29&apos;
+
+SELECT LAST_DAY(&apos;2004-01-01 01:01:01&apos;);
+&gt; &apos;2004-01-31&apos;
+
+SELECT LAST_DAY(&apos;2003-03-32&apos;);
+&gt; NULL
+</code></pre><p>MAKEDATE()    Create a date from the year and day of year</p>
+<pre><code>SELECT MAKEDATE(2011,31), MAKEDATE(2011,32);
+&gt; &apos;2011-01-31&apos;, &apos;2011-02-01&apos;
+
+SELECT MAKEDATE(2011,365), MAKEDATE(2014,365);
+&gt; &apos;2011-12-31&apos;, &apos;2014-12-31&apos;
+
+SELECT MAKEDATE(2011,0);
+&gt; NULL
+</code></pre><p>MAKETIME    MAKETIME()</p>
+<pre><code>SELECT MAKETIME(12,15,30);
+&gt; 12:15:30
+</code></pre><p>MICROSECOND()    Return the microseconds from argument</p>
+<pre><code>SELECT MICROSECOND(&apos;12:00:00.123456&apos;);
+&gt; 123456
+
+SELECT MICROSECOND(&apos;2009-12-31 23:59:59.000010&apos;);
+&gt; 10
+</code></pre><p>MONTHNAME()    Return the name of the month</p>
+<pre><code>SELECT MONTHNAME(&apos;2008-02-03&apos;);
+&gt; February
+</code></pre><p>QUARTER()    Return the quarter from a date argument</p>
+<pre><code>SELECT QUARTER(&apos;2008-04-01&apos;);
+&gt; 2
+</code></pre><p>TIME()    Extract the time portion of the expression passed</p>
+<pre><code>SELECT TIME(&apos;2003-12-31 01:02:03&apos;);
+&gt; 01:02:03
+
+SELECT TIME(&apos;2003-12-31 01:02:03.000123&apos;);
+&gt; 01:02:03.000123
+</code></pre><p>TIMESTAMP()    With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments</p>
+<pre><code>SELECT TIMESTAMP(&apos;2003-12-31&apos;);
+&gt; 2003-12-31 00:00:00
+
+SELECT TIMESTAMP(&apos;2003-12-31 12:00:00&apos;,&apos;12:00:00&apos;);
+&gt; 2004-01-01 00:00:00
+</code></pre><p>UNIX_TIMESTAMP()    Return a UNIX timestamp</p>
+<pre><code>SELECT UNIX_TIMESTAMP();
+&gt; 1415624876
+
+SELECT UNIX_TIMESTAMP(&apos;2007-11-30 10:30:19&apos;);
+&gt; 1196389819
+
+SELECT FROM_UNIXTIME(1111885200);
+&gt; 2005-03-27 09:00:00
+</code></pre><p>WEEK()    Return the week number</p>
+<pre><code>SELECT WEEK(&apos;2008-02-20&apos;);
+&gt; 7
+SELECT WEEK(&apos;2008-02-20&apos;,0);
+&gt; 7
+
+SELECT WEEK(&apos;2008-02-20&apos;,1);
+&gt; 8
+SELECT WEEK(&apos;2008-12-31&apos;,1);
+&gt; 53
+
+SELECT YEAR(&apos;2000-01-01&apos;), WEEK(&apos;2000-01-01&apos;,0);
+&gt; 2000    0
+</code></pre><p>WEEKDAY()    Return the weekday index</p>
+<pre><code>SELECT WEEKDAY(&apos;2008-02-03 22:23:00&apos;);
+&gt; 6
+SELECT WEEKDAY(&apos;2007-11-06&apos;);
+&gt; 1
+</code></pre><p>WEEKOFYEAR()    Return the calendar week of the date (0-53)</p>
+<pre><code>SELECT WEEKOFYEAR(&apos;2008-02-20&apos;);
+&gt; 8
+</code></pre><p>YEARWEEK()    Return the year and week</p>
+<pre><code>SELECT YEARWEEK(&apos;1987-01-01&apos;);
+&gt; 198652
+</code></pre><h2 id="时间相加减计算"><a href="#时间相加减计算" class="headerlink" title="时间相加减计算"></a>时间相加减计算</h2><p>ADDDATE()    Add time values (intervals) to a date value</p>
+<pre><code>SELECT ADDDATE(&apos;2008-01-02&apos;, INTERVAL 31 DAY); 按天计算
+&gt; 2008-02-02
+SELECT ADDDATE(&apos;2008-01-02&apos;, 31);
+&gt; 2008-02-02
+</code></pre><p>ADDTIME()    Add time</p>
+<pre><code>SELECT ADDTIME(&apos;2007-12-31 23:59:59.999999&apos;, &apos;1 1:1:1.000002&apos;); 
+&gt; 2008-01-02 01:01:01.000001
+
+SELECT ADDTIME(&apos;01:00:00.999999&apos;, &apos;02:00:00.999998&apos;);
+&gt; 03:00:01.999997
+</code></pre><p>DATE_ADD()    Add time values (intervals) to a date value<br>方法语法</p>
+<pre><code>DATE_ADD(date,INTERVAL expr unit), DATE_SUB(date,INTERVAL expr unit)
+</code></pre><p>可选值列表</p>
+<table>
+<thead>
+<tr>
+<th>unit Value</th>
+<th>Expected expr Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MICROSECOND</td>
+<td>MICROSECONDS</td>
+</tr>
+<tr>
+<td>SECOND</td>
+<td>SECONDS</td>
+</tr>
+<tr>
+<td>MINUTE</td>
+<td>MINUTES</td>
+</tr>
+<tr>
+<td>HOUR</td>
+<td>HOURS</td>
+</tr>
+<tr>
+<td>DAY</td>
+<td>DAYS</td>
+</tr>
+<tr>
+<td>WEEK</td>
+<td>WEEKS</td>
+</tr>
+<tr>
+<td>MONTH</td>
+<td>MONTHS</td>
+</tr>
+<tr>
+<td>QUARTER</td>
+<td>QUARTERS</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>YEARS</td>
+</tr>
+<tr>
+<td>SECOND_MICROSECOND</td>
+<td>‘SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>MINUTE_MICROSECOND</td>
+<td>‘MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>MINUTE_SECOND</td>
+<td>‘MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_MICROSECOND</td>
+<td>‘HOURS:MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_SECOND</td>
+<td>‘HOURS:MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>HOUR_MINUTE</td>
+<td>‘HOURS:MINUTES’</td>
+</tr>
+<tr>
+<td>DAY_MICROSECOND</td>
+<td>‘DAYS HOURS:MINUTES:SECONDS.MICROSECONDS’</td>
+</tr>
+<tr>
+<td>DAY_SECOND</td>
+<td>‘DAYS HOURS:MINUTES:SECONDS’</td>
+</tr>
+<tr>
+<td>DAY_MINUTE</td>
+<td>‘DAYS HOURS:MINUTES’</td>
+</tr>
+<tr>
+<td>DAY_HOUR</td>
+<td>‘DAYS HOURS’</td>
+</tr>
+<tr>
+<td>YEAR_MONTH</td>
+<td>‘YEARS-MONTHS’</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT DATE_ADD(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2008-02-02
+
+SELECT &apos;2008-12-31 23:59:59&apos; + INTERVAL 1 SECOND;
+&gt; 2009-01-01 00:00:00
+
+SELECT INTERVAL 1 DAY + &apos;2008-12-31&apos;;
+&gt; 2009-01-01
+
+SELECT DATE_ADD(&apos;2000-12-31 23:59:59&apos;,INTERVAL 1 SECOND);
+&gt; 2001-01-01 00:00:00
+
+SELECT DATE_ADD(&apos;2010-12-31 23:59:59&apos;, INTERVAL 1 DAY);
+&gt; 2011-01-01 23:59:59
+
+SELECT DATE_ADD(&apos;2100-12-31 23:59:59&apos;, INTERVAL &apos;1:1&apos; MINUTE_SECOND);
+&gt; 2101-01-01 00:01:00
+
+SELECT DATE_SUB(&apos;2005-01-01 00:00:00&apos;, INTERVAL &apos;1 1:1:1&apos; DAY_SECOND);
+&gt; 2004-12-30 22:58:59
+
+SELECT DATE_ADD(&apos;1900-01-01 00:00:00&apos;, INTERVAL &apos;-1 10&apos; DAY_HOUR);
+&gt; 1899-12-30 14:00:00
+
+SELECT DATE_SUB(&apos;1998-01-02&apos;, INTERVAL 31 DAY);
+&gt; 1997-12-02
+
+SELECT DATE_ADD(&apos;1992-12-31 23:59:59.000002&apos;, INTERVAL &apos;1.999999&apos; SECOND_MICROSECOND);
+&gt; 1993-01-01 00:00:01.000001
+
+SELECT 6/4;
+&gt; 1.5000
+
+SELECT DATE_ADD(&apos;2009-01-01&apos;, INTERVAL 6/4 HOUR_MINUTE); 增加1小时 5000分钟
+&gt; 2009-01-04 12:20:00
+
+SELECT DATE_ADD(&apos;2009-01-01&apos;, INTERVAL 1.5 HOUR_MINUTE); 增加1小时5分钟
+&gt; 2009-01-01 01:05:00
+
+SELECT CAST(6/4 AS DECIMAL(3,1));
+&gt; 1.5
+SELECT DATE_ADD(&apos;1970-01-01 12:00:00&apos;, INTERVAL CAST(6/4 AS DECIMAL(3,1)) HOUR_MINUTE);
+&gt; 1970-01-01 13:05:00
+
+SELECT DATE_ADD(&apos;2013-01-01&apos;, INTERVAL 1 DAY);
+&gt; 2013-01-02
+
+SELECT DATE_ADD(&apos;2013-01-01&apos;, INTERVAL 1 HOUR);
+&gt; 2013-01-01 01:00:00
+
+SELECT DATE_ADD(&apos;2009-01-30&apos;, INTERVAL 1 MONTH);
+&gt; 2009-02-28
+
+SELECT DATE_ADD(&apos;2006-07-00&apos;, INTERVAL 1 DAY);
+&gt; NULL
+
+SELECT &apos;2005-03-32&apos; + INTERVAL 1 MONTH;
+&gt; NULL
+</code></pre><p>DATE_SUB()    Subtract a time value (interval) from a date</p>
+<pre><code>select DATE_SUB(&apos;2014-11-11&apos;,INTERVAL 3 DAY);
+&gt; 2014-10-08
+
+select DATE_SUB(&apos;2014-11-11&apos;,INTERVAL 30 DAY);
+&gt; 2014-10-12
+
+select date_sub(&apos;2014-01-01&apos;,interval 31 day);
+&gt; 2013-12-01
+</code></pre><p>DATE()     Extract the date part of a date or datetime expression</p>
+<pre><code>SELECT DATE(&apos;2003-12-31 01:02:03&apos;);
+&gt; 2003-12-31
+
+DATEDIFF()    Subtract two dates
+SELECT DATEDIFF(&apos;2007-12-31 23:59:59&apos;,&apos;2007-12-30&apos;);
+&gt; 1
+
+select datediff(&apos;2014-11-11&apos;,&apos;2014-11-12&apos;);
+&gt; -1
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-12&apos;);
+&gt; 0
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 13:00&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 11:00&apos;);
+&gt; 2
+
+select datediff(&apos;2014-11-12&apos;,&apos;2014-11-10 00:00:01&apos;);
+&gt; 2
+
+SELECT DATEDIFF(&apos;2010-11-30 23:59:59&apos;,&apos;2010-12-31&apos;);
+&gt; -31
+</code></pre><p>SUBDATE()    A synonym for DATE_SUB() when invoked with three arguments</p>
+<pre><code>SELECT DATE_SUB(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2007-12-02
+
+SELECT SUBDATE(&apos;2008-01-02&apos;, INTERVAL 31 DAY);
+&gt; 2007-12-02
+
+SELECT SUBDATE(&apos;2008-01-02 12:00:00&apos;, 31);
+&gt; 2007-12-02 12:00:00
+
+SUBTIME()    Subtract times
+SELECT SUBTIME(&apos;2007-12-31 23:59:59.999999&apos;,&apos;1 1:1:1.000002&apos;);
+&gt; 2007-12-30 22:58:58.999997
+
+SELECT SUBTIME(&apos;01:00:00.999999&apos;, &apos;02:00:00.999998&apos;);
+&gt; -00:59:59.999999
+</code></pre><p>TIMEDIFF()    Subtract time</p>
+<pre><code>SELECT TIMEDIFF(&apos;2000:01:01 00:00:00&apos;, &apos;2000:01:01 00:00:00.000001&apos;);
+&gt; -00:00:00.000001
+
+SELECT TIMEDIFF(&apos;2008-12-31 23:59:59.000001&apos;, &apos;2008-12-30 01:01:01.000002&apos;);
+&gt; 46:58:57.999999
+</code></pre><p>TIMESTAMPADD()    Add an interval to a datetime expression</p>
+<pre><code>SELECT TIMESTAMPADD(MINUTE,1,&apos;2003-01-02&apos;);
+&gt; 2003-01-02 00:01:00
+
+SELECT TIMESTAMPADD(WEEK,1,&apos;2003-01-02&apos;);
+&gt; 2003-01-09
+</code></pre><p>TIMESTAMPDIFF()    Subtract an interval from a datetime expression</p>
+<pre><code>SELECT TIMESTAMPDIFF(MONTH,&apos;2003-02-01&apos;,&apos;2003-05-01&apos;);
+&gt; 3
+
+SELECT TIMESTAMPDIFF(YEAR,&apos;2002-05-01&apos;,&apos;2001-01-01&apos;);
+&gt; -1
+
+SELECT TIMESTAMPDIFF(MINUTE,&apos;2003-02-01&apos;,&apos;2003-05-01 12:05:55&apos;);
+&gt; 128885
+</code></pre><p>PERIOD_ADD()    Add a period to a year-month YYYYMM</p>
+<pre><code>SELECT PERIOD_ADD(200801,2);
+&gt; 200803
+</code></pre><p>PERIOD_DIFF()    Return the number of months between periods</p>
+<pre><code>SELECT PERIOD_DIFF(200802,200703);
+&gt; 11
+</code></pre><h2 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h2><p>DATE_FORMAT()    Format date as specified</p>
+<table>
+<thead>
+<tr>
+<th>Specifier</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%a</td>
+<td>Abbreviated weekday name (Sun..Sat)</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>Abbreviated month name (Jan..Dec)</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>Month, numeric (0..12)</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>Day of the month with English suffix (0th, 1st, 2nd, 3rd, …)</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>Day of the month, numeric (00..31)</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>Day of the month, numeric (0..31)</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>Microseconds (000000..999999)</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>Hour (00..23)</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>Hour (01..12)</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>Hour (01..12)</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>Minutes, numeric (00..59)</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>Day of year (001..366)</td>
+</tr>
+<tr>
+<td>%k</td>
+<td>Hour (0..23)</td>
+</tr>
+<tr>
+<td>%l</td>
+<td>Hour (1..12)</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>Month name (January..December)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>Month, numeric (00..12)</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>AM or PM</td>
+</tr>
+<tr>
+<td>%r</td>
+<td>Time, 12-hour (hh:mm:ss followed by AM or PM)</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>Seconds (00..59)</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>Seconds (00..59)</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>Time, 24-hour (hh:mm:ss)</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>Week (00..53), where Sunday is the first day of the week</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>Week (00..53), where Monday is the first day of the week</td>
+</tr>
+<tr>
+<td>%V</td>
+<td>Week (01..53), where Sunday is the first day of the week; used with %X</td>
+</tr>
+<tr>
+<td>%v</td>
+<td>Week (01..53), where Monday is the first day of the week; used with %x</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>Weekday name (Sunday..Saturday)</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>Day of the week (0=Sunday..6=Saturday)</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>Year for the week where Sunday is the first day of the week, numeric, four digits; used with %V</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>Year for the week, where Monday is the first day of the week, numeric, four digits; used with %v</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>Year, numeric, four digits</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>Year, numeric (two digits)</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>A literal “%” character</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>x, for any “x” not listed above</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT DATE_FORMAT(&apos;2009-10-04 22:23:00&apos;, &apos;%W %M %Y&apos;);
+&gt; Sunday October 2009
+
+SELECT DATE_FORMAT(&apos;2007-10-04 22:23:00&apos;, &apos;%H:%i:%s&apos;);
+&gt; 22:23:00
+
+SELECT DATE_FORMAT(&apos;1900-10-04 22:23:00&apos;, &apos;%D %y %a %d %m %b %j&apos;);
+&gt; 4th 00 Thu 04 10 Oct 277
+
+SELECT DATE_FORMAT(&apos;1997-10-04 22:23:00&apos;, &apos;%H %k %I %r %T %S %w&apos;);
+&gt; 22 22 10 10:23:00 PM 22:23:00 00 6
+
+SELECT DATE_FORMAT(&apos;1999-01-01&apos;, &apos;%X %V&apos;); 
+&gt; 1998 52
+
+SELECT DATE_FORMAT(&apos;2006-06-00&apos;, &apos;%d&apos;);
+&gt; 00
+</code></pre><p>GET_FORMAT()    Return a date format string</p>
+<table>
+<thead>
+<tr>
+<th>Function Call</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET_FORMAT(DATE,’USA’)</td>
+<td>‘%m.%d.%Y’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’JIS’)</td>
+<td>‘%Y-%m-%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’ISO’)</td>
+<td>‘%Y-%m-%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’EUR’)</td>
+<td>‘%d.%m.%Y’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATE,’INTERNAL’)</td>
+<td>‘%Y%m%d’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’USA’)</td>
+<td>‘%Y-%m-%d %H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’JIS’)</td>
+<td>‘%Y-%m-%d %H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’ISO’)</td>
+<td>‘%Y-%m-%d %H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’EUR’)</td>
+<td>‘%Y-%m-%d %H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(DATETIME,’INTERNAL’)</td>
+<td>‘%Y%m%d%H%i%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’USA’)</td>
+<td>‘%h:%i:%s %p’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’JIS’)</td>
+<td>‘%H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’ISO’)</td>
+<td>‘%H:%i:%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’EUR’)</td>
+<td>‘%H.%i.%s’</td>
+</tr>
+<tr>
+<td>GET_FORMAT(TIME,’INTERNAL’)</td>
+<td>‘%H%i%s’</td>
+</tr>
+</tbody>
+</table>
+<pre><code>select GET_FORMAT(DATETIME,&apos;ISO&apos;);
+&gt; %Y-%m-%d %H:%i:%s
+
+SELECT DATE_FORMAT(&apos;2003-10-03&apos;,GET_FORMAT(DATE,&apos;EUR&apos;));
+&gt; &apos;03.10.2003&apos;
+
+SELECT STR_TO_DATE(&apos;10.31.2003&apos;,GET_FORMAT(DATE,&apos;USA&apos;));
+&gt; &apos;2003-10-31&apos;
+</code></pre><h2 id="和字符串之间转换"><a href="#和字符串之间转换" class="headerlink" title="和字符串之间转换"></a>和字符串之间转换</h2><p>STR_TO_DATE()    Convert a string to a date</p>
+<pre><code>SELECT STR_TO_DATE(&apos;01,5,2013&apos;,&apos;%d,%m,%Y&apos;);
+&gt; 2013-05-01
+
+SELECT STR_TO_DATE(&apos;May 1, 2013&apos;,&apos;%M %d,%Y&apos;);
+&gt; &apos;2013-05-01&apos;
+
+SELECT STR_TO_DATE(&apos;a09:30:17&apos;,&apos;a%h:%i:%s&apos;);
+&gt; 09:30:17
+
+SELECT STR_TO_DATE(&apos;a09:30:17&apos;,&apos;%h:%i:%s&apos;);
+&gt; NULL
+
+SELECT STR_TO_DATE(&apos;09:30:17a&apos;,&apos;%h:%i:%s&apos;);
+&gt; 09:30:17
+
+SELECT STR_TO_DATE(&apos;abc&apos;,&apos;abc&apos;);
+&gt; 0000-00-00
+
+SELECT STR_TO_DATE(&apos;9&apos;,&apos;%m&apos;);
+&gt; 0000-09-00
+
+SELECT STR_TO_DATE(&apos;9&apos;,&apos;%s&apos;);
+&gt; 00:00:09
+
+SELECT STR_TO_DATE(&apos;00/00/0000&apos;, &apos;%m/%d/%Y&apos;);
+&gt; 0000-00-00
+
+SELECT STR_TO_DATE(&apos;04/31/2004&apos;, &apos;%m/%d/%Y&apos;);
+&gt; 2004-04-31
+
+SELECT STR_TO_DATE(&apos;200442 Monday&apos;, &apos;%X%V %W&apos;);
+&gt; 2004-10-18
+</code></pre><p>TIME_FORMAT()    Format as time</p>
+<pre><code>SELECT TIME_FORMAT(&apos;100:00:00&apos;, &apos;%H %k %h %I %l&apos;);
+&gt; 100 100 04 04 4
+</code></pre><p>TIME_TO_SEC()    Return the argument converted to seconds</p>
+<pre><code>SELECT TIME_TO_SEC(&apos;22:23:00&apos;);
+&gt; 80580
+
+SELECT TIME_TO_SEC(&apos;00:39:38&apos;);
+&gt; 2378
+</code></pre><p>TO_DAYS()    Return the date argument converted to days</p>
+<pre><code>SELECT TO_DAYS(950501);
+&gt; 728779
+
+SELECT TO_DAYS(&apos;2007-10-07&apos;);
+&gt; 733321
+
+SELECT TO_DAYS(&apos;2008-10-07&apos;), TO_DAYS(&apos;08-10-07&apos;);
+&gt; 733687    733687
+
+SELECT TO_DAYS(&apos;0000-00-00&apos;);
+
+SHOW WARNINGS;
+
+SELECT TO_DAYS(&apos;0000-01-01&apos;);
+&gt; 1
+</code></pre><p>TO_SECONDS()    Return the date or datetime argument converted to seconds since Year 0</p>
+<pre><code>SELECT TO_SECONDS(950501);
+&gt; 62966505600
+
+SELECT TO_SECONDS(&apos;2009-11-29&apos;);
+
+SELECT TO_SECONDS(&apos;2009-11-29 13:43:32&apos;);
+
+SELECT TO_SECONDS( NOW() );
+&gt; 63582872844
+</code></pre><p>SEC_TO_TIME()    Converts seconds to ‘HH:MM:SS’ format</p>
+<pre><code>SELECT SEC_TO_TIME(2378);
+&gt; 00:39:38
+
+SELECT SEC_TO_TIME(2378) + 0;
+&gt; 3938
+</code></pre><p>FROM_DAYS()    Convert a day number to a date</p>
+<pre><code>SELECT FROM_DAYS(730669)
+&gt; 2000-07-03
+</code></pre><p>FROM_UNIXTIME()    Format UNIX timestamp as a date</p>
+<pre><code>SELECT FROM_UNIXTIME(1196440219);
+&gt; 2007-12-01 00:30:19
+
+SELECT FROM_UNIXTIME(1196440219) + 0;
+&gt; 20071201003019
+
+SELECT FROM_UNIXTIME(UNIX_TIMESTAMP(), &apos;%Y %D %M %h:%i:%s %x&apos;);
+&gt; 2014 10th November 08:37:11 2014
+</code></pre><h2 id="时区操作"><a href="#时区操作" class="headerlink" title="时区操作"></a>时区操作</h2><pre><code>CONVERT_TZ()    Convert from one timezone to another
+SELECT @@global.time_zone, @@session.time_zone;
+
+SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;GMT&apos;,&apos;MET&apos;);
+
+SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:00&apos;);
+&gt; 2004-01-01 22:00:00
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/07/how-to-visit-google-in-china/" itemprop="url">
                   国内如何访问Google
                 </a>
@@ -805,386 +1681,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/10/17/learn-markdown-syntax/" itemprop="url">
-                  Markdown 语法整理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-10-17T22:29:27+08:00" content="2014-10-17">
-              2014-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/markdown/" itemprop="url" rel="index">
-                    <span itemprop="name">markdown</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/10/17/learn-markdown-syntax/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/17/learn-markdown-syntax/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/10/17/learn-markdown-syntax/" class="leancloud_visitors" data-flag-title="Markdown 语法整理">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Markdown-语法速查表"><a href="#Markdown-语法速查表" class="headerlink" title="Markdown 语法速查表"></a>Markdown 语法速查表</h2><p>内容从Mou Help整理而来，Mou为mac操作系统上优秀的Markdown IDE</p>
-<h3 id="1-文字加粗、斜体、突出显示"><a href="#1-文字加粗、斜体、突出显示" class="headerlink" title="1.文字加粗、斜体、突出显示"></a>1.文字加粗、斜体、突出显示</h3><p>加粗  <strong>xxx</strong>    </p>
-<p>斜体  <em>google是一家伟大的公司</em> </p>
-<p>突出显示的文字 <code>微说网络电话</code> , 深圳市出众网络出品</p>
-<pre><code>加粗**xxx**
-斜体*微说网络电话*
-其中 * 可以使用 _ 代替，效果相同
-突出显示的文字 `微说网络电话` , 深圳市出众网络出品
-</code></pre><h2 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h2><blockquote>
-<p>haha</p>
-<p>haha</p>
-</blockquote>
-<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x66;&#97;&#x76;&#x6f;&#111;&#x72;&#114;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;">&#x66;&#97;&#x76;&#x6f;&#111;&#x72;&#114;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
-<pre><code>方法一
-&lt;https://www.google.com&gt; 这种不能编写悬停文字
-
-方法二
-[微说网络电话](http://www.weishuo.cn &quot;web官网地址&quot;)，好友间的网络电话
-
-方法三
-[微说网络电话][vs-index]，好友间的网络电话 
-
-[vs-index]: http://www.weishuo.cn &quot;官网地址&quot;
-</code></pre><h2 id="4-图片引用"><a href="#4-图片引用" class="headerlink" title="4.图片引用"></a>4.图片引用</h2><p><img src="http://25.io/smaller/favicon.ico" alt="small icon" title="收藏夹图片"></p>
-<p>另一种 <img src="http://25.io/smaller/favicon.ico" alt="small icon" title="另一种写法"> 写法</p>
-<pre><code>方法一
-![small icon](http://25.io/smaller/favicon.ico &quot;收藏夹图片&quot;)
-
-方法二
-另一种 ![small icon][2] 写法
-
-[2]: http://25.io/smaller/favicon.ico &quot;另一种写法&quot;
-</code></pre><h2 id="5-普通片段显示方式"><a href="#5-普通片段显示方式" class="headerlink" title="5.普通片段显示方式"></a>5.普通片段显示方式</h2><pre><code>Hello world!
-注释：写法上为开头一个tab，或者4个半角空格
-</code></pre><h2 id="6-无序列表"><a href="#6-无序列表" class="headerlink" title="6.无序列表"></a>6.无序列表</h2><ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-</ul>
-<p>end</p>
-<pre><code>* 列表项一
-* 列表项二
-* 列表项三
-其中 * 可以使用 - 代替,注意 * 号后面有至少一个空格
-</code></pre><h2 id="7-强制换行"><a href="#7-强制换行" class="headerlink" title="7.强制换行"></a>7.强制换行</h2><p>一句很长很长很长很长很长很长<br>很长的话</p>
-<pre><code>一句很长很长很长很长很长很长&lt;br /&gt;很长的话
-</code></pre><h2 id="8-水平横线"><a href="#8-水平横线" class="headerlink" title="8.水平横线"></a>8.水平横线</h2><pre><code>***
----
-
-* - 至少要三个
-</code></pre><h2 id="9-标题"><a href="#9-标题" class="headerlink" title="9.标题"></a>9.标题</h2><p>第一种写法</p>
-<pre><code>标题一
-===
-
-标题一
----
-
-= 和 - 至少三个
-</code></pre><p>第二种写法</p>
-<pre><code># 标题一
-## 标题二
-### 标题三
-#### 标题四
-##### 标题五
-###### 标题六
-</code></pre><h2 id="10-脚注"><a href="#10-脚注" class="headerlink" title="10.脚注"></a>10.脚注</h2><p>markdown语法简略指南参考连接.<a href="http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具">^1</a></p>
-<pre><code>markdown语法简略指南参考连接.[^1]
-
-[^1]: http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具
-</code></pre><h2 id="11-过期文字表示"><a href="#11-过期文字表示" class="headerlink" title="11.过期文字表示"></a>11.过期文字表示</h2><p><del>文字中间会有中划线，表示已经过期</del></p>
-<pre><code>~~文字中间会有中划线，表示已经过期~~
-</code></pre><h2 id="12-高亮文字块"><a href="#12-高亮文字块" class="headerlink" title="12.高亮文字块"></a>12.高亮文字块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line"></div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line"></div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
-</code></pre><h2 id="13-代码块"><a href="#13-代码块" class="headerlink" title="13.代码块"></a>13.代码块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def print_hi(name)</div><div class="line">  puts &quot;Hi, #&#123;name&#125;&quot;</div><div class="line">end</div><div class="line">print_hi(&apos;Tom&apos;)</div><div class="line">#=&gt; prints &apos;Hi, Tom&apos; to STDOUT.</div></pre></td></tr></table></figure>
-<p>Java(linenos)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> intNum = <span class="number">15</span>;</div><div class="line">		System.out.println(<span class="string">"Java Hello World!"</span>);</div><div class="line">		<span class="comment">//=&gt;will show Java Hello World in STDOUT.</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="14-表格构建"><a href="#14-表格构建" class="headerlink" title="14.表格构建"></a>14.表格构建</h2><p>二列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>三列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>四列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>五列</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<pre><code>二列
-
-First Header | Second Header
------------- | -------------
-Content Cell | Content Cell
-Content Cell | Content Cell
-
-三列
-
-First Header | Second Header | Third Header
------------- | ------------- | ------------
-Content Cell | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell
-
-四列
-
-First Header | Second Header | Third Header | Third Header
------------- | ------------- | ------------ | ------------
-Content Cell | Content Cell  | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell  | Content Cell
-
-五列
-
-First Header | Second Header | Third Header | Third Header | Third Header
------------- | ------------- | ------------ | ------------ | ------------
-Content Cell | Content Cell  | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell  | Content Cell
-</code></pre><p>也可以这么写</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<pre><code>| First Header | Second Header | Third Header |
-| ------------ | ------------- | ------------ |
-| Content Cell | Content Cell  | Content Cell |
-| Content Cell | Content Cell  | Content Cell |
-</code></pre><p>如果想让列居中，还可以这么写，不过统一加了css也可以</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">First Header</th>
-<th style="text-align:center">Second Header</th>
-<th style="text-align:right">Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Left</td>
-<td style="text-align:center">Center</td>
-<td style="text-align:right">Right</td>
-</tr>
-<tr>
-<td style="text-align:left">Left</td>
-<td style="text-align:center">Center</td>
-<td style="text-align:right">Right</td>
-</tr>
-</tbody>
-</table>
-<pre><code>First Header | Second Header | Third Header
-:----------- | :-----------: | -----------:
-Left         | Center        | Right
-Left         | Center        | Right
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1225,7 +1726,7 @@ Left         | Center        | Right
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1242,7 +1743,7 @@ Left         | Center        | Right
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

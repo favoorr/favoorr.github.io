@@ -258,6 +258,139 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="url">
+                  在 MacOS 上配置 Python3 virtualenvwrapper
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T13:52:33+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/using-python3-virtualenvwrapper-on-macos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/using-python3-virtualenvwrapper-on-macos/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/using-python3-virtualenvwrapper-on-macos/" class="leancloud_visitors" data-flag-title="在 MacOS 上配置 Python3 virtualenvwrapper">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mac 使用 virtualenvwrapper 配置过程</p>
+<h3 id="Macos-配置-virtualenvwrapper"><a href="#Macos-配置-virtualenvwrapper" class="headerlink" title="Macos 配置 virtualenvwrapper"></a>Macos 配置 virtualenvwrapper</h3><p>配置和使用常用开发工具，这个最好在宿主机上搞，例如自己 Mac</p>
+<p>所以这里需要在 mac 环境下把 virtualenvwrapper 配置起来</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">不建议过早使用 IDE</div><div class="line">学习的时候使用命令行，把焦点放在某一个点</div><div class="line"></div><div class="line">Mac 下使用 brew 和 zsh</div><div class="line"></div><div class="line">Mac 下的 .zshrc 配置如下</div><div class="line"></div><div class="line"><span class="built_in">export</span> WORKON_HOME=/Users/User/zl/python/lesson/venv</div><div class="line"><span class="built_in">export</span> PROJECT_HOME=/Users/User/zl/python/lesson/py</div><div class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=`<span class="built_in">which</span> python3`</div><div class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">alpine <span class="built_in">source</span> /usr/bin/virtualenvwrapper.sh 和 Mac 路径不同</div><div class="line">Mac 配置为 <span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh</div><div class="line"></div><div class="line">mkproject 会创建项目目录和 venv 目录</div><div class="line">mkvirtualenv 只会创建虚拟目录</div></pre></td></tr></table></figure>
+<h3 id="Mac-下安装常用的工具"><a href="#Mac-下安装常用的工具" class="headerlink" title="Mac 下安装常用的工具"></a>Mac 下安装常用的工具</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div><div class="line"></div><div class="line">创建测试学习项目</div><div class="line">mkproject <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h3 id="Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件"><a href="#Mac-下配置-zsh-IPython-ed-使用系统默认编辑器打开文本文件" class="headerlink" title="Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件"></a>Mac 下配置 zsh IPython ed 使用系统默认编辑器打开文本文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">首先安装好 sublime text3，并配置软连接</div><div class="line">ln <span class="_">-s</span> <span class="string">"/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"</span> /usr/<span class="built_in">local</span>/bin/subl</div><div class="line"></div><div class="line">text text.py 可以直接在 sublime 打开文件</div><div class="line">text=subl</div><div class="line"></div><div class="line">ipython 中 ed 直接在 sublime 中打开文件</div><div class="line">配置环境变量</div><div class="line">vim .zshrc</div><div class="line"><span class="built_in">export</span> EDITOR=<span class="string">"/usr/local/bin/subl"</span></div><div class="line"></div><div class="line">进入 ipython</div><div class="line">ed hello.py</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/using-python3-virtualenvwrapper-on-alpine/" itemprop="url">
                   在 alpine 上配置 Python3 virtualenvwrapper
                 </a>
@@ -838,192 +971,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/" itemprop="url">
-                  以 Ubuntu 为例列举 Disk 性能分析常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T10:53:29+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/performance/" itemprop="url" rel="index">
-                    <span itemprop="name">performance</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-disk-analysis-on-ubuntu/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/linux-performance-disk-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 Disk 性能分析常用命令">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>操作系统版本 Ubuntu 16.04.1</p>
-<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
-<p>从系统级和进程级的统计信息开始，深入到事件跟踪和控制器统计信息</p>
-<h1 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h1><p>各种单个磁盘统计信息</p>
-<p>-c 显示 CPU 报告<br>-d 显示磁盘报告<br>-k 使用 KB 代替 512B 块数目<br>-m 使用 MB 代替 512B 块数目<br>-p 包括单个分区的统计信息<br>-t 时间戳输出<br>-x 扩展统计信息<br>-z 不显示空活动汇总    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</div><div class="line">           0.09    0.03    0.08    0.02    0.00   99.79</div><div class="line"></div><div class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</div><div class="line">sda               2.92        16.30        49.71     445251    1357532</div><div class="line">sdb               0.01         0.05         0.00       1444          0</div></pre></td></tr></table></figure>
-<p>tps 每秒事务数 IOPS<br>kB_read/s kB_wrtn/s 每秒读取和写入 KB 数<br>kB_read    kB_wrtn 总共读取和写入 KB 数    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">iostat -zkdz 1</div><div class="line">-d 仅输出磁盘报告    </div><div class="line">-z 跳过全零的选项    </div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.52    0.91    1.97    16.10    49.10    45.28     0.00    0.79    0.61    0.87   0.21   0.06</div><div class="line">sdb               0.00     0.00    0.01    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
-<p>rrqm/s 每秒合并放入驱动请求队列的读请求数<br>wrqm/s 每秒合并放入驱动请求队列的写请求数<br>r/s 每秒发给磁盘设备的读请求数<br>w/s/ 每秒发给磁盘设备的写请求数<br>rKB/s 每秒从磁盘设备读取的 KB 数<br>wKB/s 每秒向磁盘设备写入的 KB 数    </p>
-<p>非零的 rrqm/s 和 wrqm/s 项说明为了提高性能，连续的请求在发往设备之前已经被合并了。这个指标也是工作负载为连续的标志。<br>r/s 和 w/s 列显示了实际发给设备的请求数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">iostat -xkdz 1</div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.26    0.82    1.77    14.46    47.97    48.18     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sdb               0.00     0.00    0.01    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
-<p>avgrq-sz 平均请求大小，单位为扇区 512B<br>avgqu-sz 在驱动请求队列和在设备中活跃的平均请求数<br>await 平均 I/O 响应时间，包括在驱动请求队列里等待和设备的 IO 响应时间 ms<br>r_await 和 await 一样，不过只针对读<br>w_await 和 await 一样，不过只针对写<br>svctm 推断磁盘设备的 IO 平均响应时间 ms<br>%util 设备忙处理 IO 请求的百分比(使用率)    </p>
-<p>avgrq-sz 是合并之后的数字，小尺寸（16个扇区或者更小）可以视作为无法合并的随机 IO 负载迹象。大尺寸有可能是大 IO，或者是合并的连续负载（前面的列里面有预示）</p>
-<p>输出性能里最重要的指标是 await。如果应用程序和文件系统使用了降低写延时（例如 写穿）的方法，w_await 可能不那么重要，而你可以主要关注 r_await</p>
-<p>对于资源使用和容量规划， %util 仍然很重要，不过记住这只是繁忙度的一个度量（非空闲时间），对于后面有多块磁盘支撑的虚拟设备意义不大。可以通过施加负载更好的了解这些设备 IOPS (r/s + w/s) 以及 吞吐量 (rKB/s + wKB/s)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">iostat -xkdzt -p ALL 1</div><div class="line"></div><div class="line">-t 引入了时间戳</div><div class="line">-p ALL 引入每个分区的统计信息</div><div class="line"></div><div class="line">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</div><div class="line">sda               0.00     2.21    0.80    1.73    14.14    46.90    48.18     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sda1              0.00     2.21    0.79    1.73    13.93    46.89    48.21     0.00    0.88    0.61    1.00   0.21   0.05</div><div class="line">sdb               0.00     0.00    0.00    0.00     0.05     0.00    18.51     0.00    0.36    0.36    0.00   0.28   0.00</div></pre></td></tr></table></figure>
-<p>当前 iostat 不包括磁盘错误</p>
-<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><p>磁盘历史统计信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sar -d 1</div><div class="line"></div><div class="line">-d 输出磁盘汇总</div><div class="line"></div><div class="line">10:21:08 AM       DEV       tps  rd_sec/s  wr_sec/s  avgrq-sz  avgqu-sz     await     svctm     %util</div><div class="line">10:21:09 AM    dev8-0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div><div class="line">10:21:09 AM   dev8-16      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
-<p>tps 设备每秒数据传输量<br>rd_sec/s wr_sec/s 每秒读取和写入扇区数(512B)</p>
-<h1 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h1><p>按进程列出磁盘 IO 使用情况</p>
-<p>pidstat 默认输出 CPU 使用情况，可以用 -d 选项输出磁盘 IO 统计信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pidstat -d 1</div><div class="line"></div><div class="line">10:23:51 AM   UID       PID   kB_rd/s   kB_wr/s kB_ccwr/s iodelay  Command</div><div class="line">10:23:51 AM   500       10512 3366.34   0.00    0.00               tar</div><div class="line">10:23:51 AM   500       10513 0.00      6051.49 13813.86           gzip</div></pre></td></tr></table></figure>
-<p>kB_rd/s 每秒读取 KB 数<br>kB_wr/s 每秒发出的写入 KB 数<br>kB_ccwr/s 每秒取消的写入 KB 数，例如 写回前的覆盖写</p>
-<p>只有超级用户 root 可以访问不属于自己的进程的磁盘统计信息。这些可以通过读取 /proc/PID/io 获得</p>
-<h1 id="blkstrace"><a href="#blkstrace" class="headerlink" title="blkstrace"></a>blkstrace</h1><p>磁盘 IO 时间跟踪</p>
-<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace "></a>DTrace </h1><p>自定义静态或动态跟踪</p>
-<h1 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h1><p>perf list | grep block:</p>
-<h1 id="iotop"><a href="#iotop" class="headerlink" title="iotop"></a>iotop</h1><p>需要内核 2.6.20 或者更新版本</p>
-<p>需要以下内核选项 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CONFIG_TASK_DELAY_ACCT</div><div class="line">CONFIG_TASK_IO_ACCOUNTING</div><div class="line">CONFIG_TASKSTATS</div><div class="line">CONFIG_VM_EVENT_COUNTERS</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install iotop</div></pre></td></tr></table></figure>
-<p>默认情况下，iotop 会清理屏幕并输出一秒内的汇总信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">iotop -bod5</div><div class="line"></div><div class="line">Total DISK READ :       0.00 B/s | Total DISK WRITE :       0.00 B/s</div><div class="line">Actual DISK READ:       0.00 B/s | Actual DISK WRITE:       0.00 B/s</div><div class="line">  TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND</div></pre></td></tr></table></figure>
-<p>-b 批量模式，可以滚动输出，不清理屏幕<br>-d5 每 5 s 输出一次<br>-a 输出累计 IO 而不是一段时间内的平均值<br>-o 仅显示那些正在执行磁盘 IO 的进程    </p>
-<h1 id="iosnoop"><a href="#iosnoop" class="headerlink" title="iosnoop"></a>iosnoop</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install perf-tools-unstable</div></pre></td></tr></table></figure>
-<p>通过块设备接口同事跟踪所有磁盘，并为每个磁盘 IO 打印一条输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo iosnoop</div><div class="line"></div><div class="line">COMM         PID    TYPE DEV      BLOCK        BYTES     LATms</div><div class="line">kworker/u4:1 8066   W    8,0      2662064      172032    10.15</div><div class="line">kworker/u4:1 8066   W    8,0      2662400      892928    11.08</div><div class="line">kworker/u4:1 8066   W    8,0      2664144      155648    13.26</div><div class="line">kworker/u4:1 8066   W    8,0      2664448      892928    14.08</div></pre></td></tr></table></figure>
-<p>PID 进程 ID<br>COMM 进程名<br>TYPE 方向 R=读，W=写<br>BLOCK 磁盘块地址(扇区)<br>BYTES IO 大小（字节）    </p>
-<h1 id="blktrace"><a href="#blktrace" class="headerlink" title="blktrace"></a>blktrace</h1><p>一个 Linux 上的块设备 IO 事件自定制跟踪工具，包括用来跟踪和缓冲数据的内核组件<br>后来被一到跟踪点，以及供用户态工具使用的控制和报告机制。<br>这些工具包括</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">blktrace</div><div class="line">blkparse</div><div class="line">btrace</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line"></div><div class="line">sudo apt install blktrace</div></pre></td></tr></table></figure>
-<p>blktrace 启用内核块驱动跟踪机制获取跟踪裸数据<br>供 blkparse 处理以产生可读的输出<br>btrace 工具调用 blktrace 和 blkparse</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">btrace /dev/sdb 可以捕捉命令发起的单次读事件</div></pre></td></tr></table></figure>
-<p>只显示感兴趣的事件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">btrace -a issue /dev/sdb</div><div class="line"></div><div class="line">-a read 仅跟踪读</div><div class="line">-a write 仅跟踪写</div><div class="line">-a sync 仅跟踪同步操作</div></pre></td></tr></table></figure>
-<p>MegaCli LSI 控制器统计信息</p>
-<p>smartctl 磁盘控制器统计信息</p>
-<p>磁盘有控制磁盘操作的逻辑，包括排队、缓存和错误处理。<br>与磁盘控制器类似，操作系统不能直接看到磁盘的内部行为，<br>这些信息是通过观察 IO 请求和延时来推断的</p>
-<p>sudo apt install smartmontools</p>
-<p>smartctl –all -d megaraid,0 /dev/sdb</p>
-<p>测试方法</p>
-<p>dd if=/dev/sda1 of=/dev/null bs=1024k count=1k</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1064,7 +1016,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1081,7 +1033,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
