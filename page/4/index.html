@@ -258,6 +258,143 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/09/using-vagrant-alpine-docker/" itemprop="url">
+                  使用 Vagrant-alpine-Docker 搭建学习环境
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T12:56:31+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/using-vagrant-alpine-docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/using-vagrant-alpine-docker/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/using-vagrant-alpine-docker/" class="leancloud_visitors" data-flag-title="使用 Vagrant-alpine-Docker 搭建学习环境">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 vagrant 中使用 ailispaw/barge 镜像默认安装 docker，需要新的干净运行环境时，使用 docker 管理非常方便</p>
+<p>alpine  linux 是一个非常小的 Linux 镜像，可用在平常练习使用</p>
+<h1 id="查看本机-docker-镜像"><a href="#查看本机-docker-镜像" class="headerlink" title="查看本机 docker 镜像"></a>查看本机 docker 镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker images</div><div class="line"></div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">alpine              latest              baa5d63471ea        3 months ago        4.799 MB</div></pre></td></tr></table></figure>
+<h1 id="拉取镜像-alpine"><a href="#拉取镜像-alpine" class="headerlink" title="拉取镜像 alpine"></a>拉取镜像 alpine</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">如果没有 alpine ，拉取 alpine</div><div class="line"></div><div class="line">docker pull alpine</div></pre></td></tr></table></figure>
+<h1 id="创建容器-python"><a href="#创建容器-python" class="headerlink" title="创建容器 python"></a>创建容器 python</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">创建一个名字为 python 的学习容器</div><div class="line">docker create -ti --name python -h python -p 8080:8080 -w /root alpine sh</div><div class="line"></div><div class="line">有共享路径</div><div class="line">docker create -ti --name python1 -h python1 -p 8081:8081 -v /lesson:/root/lesson -w /root alpine sh</div><div class="line"></div><div class="line">-ti 建立交互式命令行</div><div class="line">--name 指定容器名字</div><div class="line">-h 指定容器 hostname</div><div class="line">-p 容器端口映射 宿主机端口:容器端口</div><div class="line">-v 路径挂载 宿主机路径:容器路径</div><div class="line">-w 登录后路径 workdir</div><div class="line">alpine 镜像名称</div><div class="line">sh 登录后执行命令</div></pre></td></tr></table></figure>
+<h1 id="启动容器-python"><a href="#启动容器-python" class="headerlink" title="启动容器 python"></a>启动容器 python</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker start python</div></pre></td></tr></table></figure>
+<h1 id="查看容器启动情况"><a href="#查看容器启动情况" class="headerlink" title="查看容器启动情况"></a>查看容器启动情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[bargee@barge ~]$ docker ps -a</div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES</div><div class="line">d0b49a6a4762        alpine              &quot;sh&quot;                2 days ago          Exited (137) 2 days ago                       python1</div><div class="line">d286499d18e8        alpine              &quot;sh&quot;                8 weeks ago         Exited (0) 2 days ago                         python</div></pre></td></tr></table></figure>
+<h1 id="进入容器-python"><a href="#进入容器-python" class="headerlink" title="进入容器 python"></a>进入容器 python</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker attach python</div><div class="line">如果使用 ctrl + d 退出终端，那么容器也会结束</div><div class="line">使用命令 ctrl p, q 退出终端，容器不会结束</div><div class="line"></div><div class="line">使用 exec 进入容器，ctrl + d 退出，容器不会结束</div><div class="line">docker exec -it python &quot;sh&quot;</div></pre></td></tr></table></figure>
+<h1 id="停止一个容器"><a href="#停止一个容器" class="headerlink" title="停止一个容器"></a>停止一个容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker stop python</div></pre></td></tr></table></figure>
+<h1 id="删除一个容器"><a href="#删除一个容器" class="headerlink" title="删除一个容器"></a>删除一个容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker rm python</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/linux-performance-network-optimization-on-ubuntu/" itemprop="url">
                   以 Ubuntu 为例列举 Network 调优记录
                 </a>
@@ -950,188 +1087,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/linux-performance-memory-analysis-on-ubuntu/" itemprop="url">
-                  以 Ubuntu 为例列举 Memory 性能分析常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T10:53:08+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/performance/" itemprop="url" rel="index">
-                    <span itemprop="name">performance</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/linux-performance-memory-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-memory-analysis-on-ubuntu/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/linux-performance-memory-analysis-on-ubuntu/" class="leancloud_visitors" data-flag-title="以 Ubuntu 为例列举 Memory 性能分析常用命令">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>操作系统版本 Ubuntu 16.04.1</p>
-<p>手工实践记录，把新知识手工敲一遍，是把知识变成自己的第一步</p>
-<p>内存分析工具</p>
-<h1 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h1><p>虚拟和物理存储器统计信息<br>虚拟内存统计信息指令。提供了包括当前内存和换页在内的系统内存健康程度总览。<br>CPU 统计信息页包含在内  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vmstat 1</div><div class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</div><div class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</div><div class="line"> 0  0      0 177448 117012 666624    0    0    12    36   22   35  0  0 100  0  0</div><div class="line"> 0  0      0 177432 117012 666644    0    0     0     0   45   56  0  0 100  0  0</div><div class="line"> 0  0      0 177432 117012 666644    0    0     0     0   27   32  0  0 100  0  0</div><div class="line"> 0  0      0 177432 117012 666644    0    0     0     0   38   46  0  0 100  0  0</div><div class="line"> 0  0      0 177432 117012 666644    0    0     0    36   27   36  0  0 100  0  0</div></pre></td></tr></table></figure>
-<p>该版本的 vmstat 不在第一行输出自系统启动至今的 memory 列的汇总数据，而立刻显示当前状态。</p>
-<p>默认数据列如下，单位为 KB</p>
-<p>swpd 交换出的内存量<br>free  空闲的可用内存<br>buff 用于缓冲缓存的内存<br>cache 用于页缓存的内存<br>si 换入的内存 （换页）<br>so 换出的内存 （换页）</p>
-<p>如果 si 和 so 一直非 0，那么系统郑村镇内存压力并换页到交换设备或文件，用其他工具可以研究什么在消耗内存，例如能观察每进程内存使用的工具</p>
-<p>当服务器拥有大量内存是，数据列会不对齐而影响阅读。可以试着用 -Sm 来修改输出单位为 MB</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vmstat 1 -Sm</div><div class="line"></div><div class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</div><div class="line">r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</div><div class="line">0  0      0    181    119    682    0    0    12    35   22   35  0  0 100  0  0</div><div class="line">0  0      0    181    119    682    0    0     0     0   37   50  0  0 100  0  0</div><div class="line">0  0      0    181    119    682    0    0     0     0   32   47  0  0 100  0  0</div></pre></td></tr></table></figure>
-<p>选项 -a 可以输出非活动和活动页缓存的明细</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vmstat -a 1</div><div class="line"></div><div class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</div><div class="line">r  b   swpd   free  inact active   si   so    bi    bo   in   cs us sy id wa st</div><div class="line">1  0      0 177656 283976 394676    0    0    11    33   22   34  0  0 100  0  0</div><div class="line">0  0      0 177696 283976 394804    0    0     0     0   35   42  0  0 100  0  0</div><div class="line">0  0      0 177696 283976 394804    0    0     0     0   31   40  0  0 100  0  0</div><div class="line">0  0      0 177696 283976 394804    0    0     0     0   35   48  0  0 100  0  0</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">vmstat -a 1 -s</div><div class="line"></div><div class="line">       1016032 K total memory</div><div class="line">        54648 K used memory</div><div class="line">       394640 K active memory</div><div class="line">       283976 K inactive memory</div><div class="line">       177712 K free memory</div><div class="line">       117028 K buffer memory</div><div class="line">       666644 K swap cache</div><div class="line">            0 K total swap</div><div class="line">            0 K used swap</div><div class="line">            0 K free swap</div><div class="line">         4795 non-nice user cpu ticks</div><div class="line">         1418 nice user cpu ticks</div><div class="line">         3852 system cpu ticks</div><div class="line">      4013727 idle cpu ticks</div><div class="line">          858 IO-wait cpu ticks</div><div class="line">            0 IRQ cpu ticks</div><div class="line">          343 softirq cpu ticks</div><div class="line">            0 stolen cpu ticks</div><div class="line">       445751 pages paged in</div><div class="line">      1345760 pages paged out</div><div class="line">            0 pages swapped in</div><div class="line">            0 pages swapped out</div><div class="line">       866934 interrupts</div><div class="line">      1365253 CPU context switches</div><div class="line">   1486433983 boot time</div><div class="line">        39651 forks</div></pre></td></tr></table></figure>
-<h1 id="sar"><a href="#sar" class="headerlink" title="sar"></a>sar</h1><p>历史统计信息</p>
-<p>-B 换页统计信息<br>-H 大页面统计信息<br>-r 内存使用率<br>-R 内存统计信息<br>-S 内存空间统计信息<br>-W 交换统计信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sar -B 2 5</div><div class="line"></div><div class="line">03:58:55 PM  pgpgin/s pgpgout/s   fault/s  majflt/s  pgfree/s pgscank/s pgscand/s pgsteal/s    %vmeff</div><div class="line">03:58:57 PM      0.00      0.00      0.50      0.00     16.50      0.00      0.00      0.00      0.00</div><div class="line">03:58:59 PM      0.00      0.00      0.00      0.00     16.50      0.00      0.00      0.00      0.00</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sar -H 2 5</div><div class="line">04:01:03 PM kbhugfree kbhugused  %hugused</div><div class="line">04:01:05 PM         0         0      0.00</div><div class="line">04:01:07 PM         0         0      0.00</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sar -r 2 5</div><div class="line">04:01:36 PM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty</div><div class="line">04:01:38 PM    177304    838728     82.55    117028    531460    253444     24.94    395168    283736         0</div><div class="line">04:01:40 PM    177304    838728     82.55    117028    531460    253444     24.94    395168    283736         0</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sar -R 2 5</div><div class="line"></div><div class="line">04:02:31 PM   frmpg/s   bufpg/s   campg/s</div><div class="line">04:02:33 PM      0.00      0.00      0.00</div><div class="line">04:02:35 PM      0.00      0.00      0.00</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sar -S 2 5</div><div class="line"></div><div class="line">04:03:19 PM kbswpfree kbswpused  %swpused  kbswpcad   %swpcad</div><div class="line">04:03:21 PM         0         0      0.00         0      0.00</div><div class="line">04:03:23 PM         0         0      0.00         0      0.00</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sar -W 2 5</div><div class="line">04:03:43 PM  pswpin/s pswpout/s</div><div class="line">04:03:45 PM      0.00      0.00</div><div class="line">04:03:47 PM      0.00      0.00</div></pre></td></tr></table></figure>
-<p>pg 表示页<br>kb 表示 KB<br>% 表示百分比<br>/s 表示每秒    </p>
-<p>详细部分可读源码 mm/vmscan.c</p>
-<p>%vmeff 是衡量页回收率的一个有趣指标。高数值意味着成功从非活动列表中回收了页，表示健康<br>低数值意味着系统在挣扎。 100% 是高数值，少于 30% 是低数值</p>
-<h1 id="slabtop"><a href="#slabtop" class="headerlink" title="slabtop"></a>slabtop</h1><p>内核块分配统计信息</p>
-<p>可以通过 slab 分配器输出内核 slab 缓存使用情况。类似 top 实时更新屏幕</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">slabtop sc</div><div class="line"></div><div class="line"> Active / Total Objects (% used)    : 463095 / 475335 (97.4%)</div><div class="line"> Active / Total Slabs (% used)      : 17846 / 17846 (100.0%)</div><div class="line"> Active / Total Caches (% used)     : 71 / 126 (56.3%)</div><div class="line"> Active / Total Size (% used)       : 130874.50K / 133083.48K (98.3%)</div><div class="line"> Minimum / Average / Maximum Object : 0.01K / 0.28K / 8.00K</div><div class="line"></div><div class="line">  OBJS ACTIVE  USE OBJ SIZE  SLABS OBJ/SLAB CACHE SIZE NAME</div><div class="line"> 55425  55425 100%    1.05K   3695       15     59120K ext4_inode_cache</div><div class="line">122724 122724 100%    0.19K   5844       21     23376K dentry</div><div class="line">112203 104175  92%    0.10K   2877       39     11508K buffer_head</div><div class="line"> 18788  18471  98%    0.55K   1342       14     10736K inode_cache</div><div class="line"> 10416  10283  98%    0.57K    744       14      5952K radix_tree_node</div><div class="line">  6090   6090 100%    0.75K    290       21      4640K fuse_inode</div><div class="line"> 23426  23426 100%    0.12K    689       34      2756K kernfs_node_cache</div><div class="line">  2873   2811  97%    0.61K    221       13      1768K proc_inode_cache</div><div class="line">  1488   1315  88%    1.00K     93       16      1488K kmalloc-1024</div><div class="line"> 36516  35812  98%    0.04K    358      102      1432K ext4_extent_status</div><div class="line"> 30260  30260 100%    0.05K    356       85      1424K ftrace_event_field</div><div class="line">   272    242  88%    4.00K     34        8      1088K kmalloc-4096</div><div class="line">   448    347  77%    2.00K     28       16       896K kmalloc-2048</div><div class="line">   104     94  90%    8.00K     26        4       832K kmalloc-8192</div></pre></td></tr></table></figure>
-<p>输出包括顶部的汇总和 slab 列表，</p>
-<p>OBJS 对象数量<br>ACTIVE 多少是活动的<br>USE 使用百分比<br>OBJ SIZE 对象大小<br>CACHE SIZE 缓存大小    </p>
-<p>sc 按缓存大小排序，最大值在顶端<br>slab 统计信息取自 /proc/slabinfo, 也可以用 vmstat -m 输出</p>
-<h1 id="ps"><a href="#ps" class="headerlink" title="ps "></a>ps </h1><p>进程状态命令 ps 可以列出包括内存使用统计信息在内的所有进程细节</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ps aux</div><div class="line"></div><div class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root         1  0.1  0.5  37772  5948 ?        Ss   10:19   0:27 /lib/systemd/systemd --system --deserialize 20</div><div class="line">root         2  0.0  0.0      0     0 ?        S    10:19   0:00 [kthreadd]</div><div class="line">root         3  0.0  0.0      0     0 ?        S    10:19   0:00 [ksoftirqd/0]</div><div class="line">root         5  0.0  0.0      0     0 ?        S&lt;   10:19   0:00 [kworker/0:0H]</div></pre></td></tr></table></figure>
-<p>%MEM 主存使用（物理内存、RSS）占总内存的百分比<br>RSS 常驻集合大小 KB<br>VSZ 虚拟内存大小    </p>
-<p>RSS 显示主存使用，它也包括如系统库在内的映射共享段，可能会被几十个进程共享。如果把 RSS 列求和，可能会发现它超过系统的内存综合，这是由于重复计算了这部分共享内存。分析共享内存的使用可参考 pmap 命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ps -eo pid,pmem,vsz,rss,comm</div><div class="line">  PID %MEM    VSZ   RSS COMMAND</div><div class="line">    1  0.5  37772  5948 systemd</div><div class="line">    2  0.0      0     0 kthreadd</div><div class="line">    3  0.0      0     0 ksoftirqd/0</div><div class="line">    5  0.0      0     0 kworker/0:0H</div></pre></td></tr></table></figure>
-<p>linux 下也可以输出 maj_flt min_flt 列</p>
-<p>maj_flt 严重缺页<br>min_flt 轻微缺页    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ps -eo pid,pmem,vsz,rss,comm,maj_flt,min_flt</div><div class="line">25847  0.4  95368  5060 sshd                 0    177</div><div class="line">25848  0.5  23032  5224 bash                 0   1633</div><div class="line">30948  0.0      0     0 kworker/0:2          0      0</div></pre></td></tr></table></figure>
-<h1 id="top"><a href="#top" class="headerlink" title="top"></a>top</h1><p>监视每个进程存储器使用率</p>
-<p>监控排名靠前的运行中进程并且显示内存使用统计信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">top - 16:27:26 up  6:07,  2 users,  load average: 0.00, 0.00, 0.00</div><div class="line">Tasks: 125 total,   1 running, 124 sleeping,   0 stopped,   0 zombie</div><div class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</div><div class="line">KiB Mem :  1016032 total,   177272 free,    54816 used,   783944 buff/cache</div><div class="line">KiB Swap:        0 total,        0 free,        0 used.   748736 avail Mem</div><div class="line"></div><div class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</div><div class="line">    1 root      20   0   37772   5948   4148 S   0.0  0.6   0:27.64 systemd</div><div class="line">    2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd</div><div class="line">    3 root      20   0       0      0      0 S   0.0  0.0   0:00.10 ksoftirqd/0</div><div class="line">    5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H</div><div class="line">    7 root      20   0       0      0      0 S   0.0  0.0   0:00.67 rcu_sched</div><div class="line">    8 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_bh</div></pre></td></tr></table></figure>
-<p>Mem 主存<br>Swap 交换内存<br>buffers 缓冲缓存<br>cached 页缓存    </p>
-<p>VIRT 虚拟内存<br>RES 主存，常驻集合大小<br>%MEM 占用主存占比    </p>
-<h1 id="pmap"><a href="#pmap" class="headerlink" title="pmap"></a>pmap</h1><p>进程地址空间统计信息</p>
-<p>列出进程的内存映射，显示它们的大小、权限及映射的对象。这使进程内存使用能被仔细的检查以及量化共享内存。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">pmap -x 1969</div><div class="line"></div><div class="line">1969:   -bash</div><div class="line">Address           Kbytes     RSS   Dirty Mode  Mapping</div><div class="line">0000000000400000     976     888       0 r-x-- bash</div><div class="line">0000000000400000       0       0       0 r-x-- bash</div><div class="line">00000000006f3000       4       4       4 r---- bash</div><div class="line">00000000006f3000       0       0       0 r---- bash</div><div class="line">00000000006f4000      36      36      36 rw--- bash</div><div class="line">00000000006f4000       0       0       0 rw--- bash</div><div class="line">00000000006fd000      24      24      24 rw---   [ anon ]</div><div class="line">00000000006fd000       0       0       0 rw---   [ anon ]</div><div class="line">00000000025a4000    1940    1940    1940 rw---   [ anon ]</div><div class="line">00000000025a4000       0       0       0 rw---   [ anon ]</div></pre></td></tr></table></figure>
-<p>Kbytes 虚拟内存<br>RSS 主内存<br>Dirty 私有匿名内存<br>mode 权限    </p>
-<p>很少有内存是匿名的，而且大部分是只读的 r-x，这意味着这些页面可以被其他进程共享，尤其是系统库。</p>
-<p>对于有很多映射的进程，pmap 输出可能会很长。它还会暂停进程以报告内存使用，这会影响任务的性能。应在需要针对和分析时运行，不应作为监视工具频繁运行</p>
-<h1 id="DTrace"><a href="#DTrace" class="headerlink" title="DTrace "></a>DTrace </h1><p>分配跟踪</p>
-<p>DTrace 能跟踪用户和内核级的内存分配、轻微和严重缺页以及页面换出守护进程运行。这些功能支持使用特征归纳和想下挖掘分析。</p>
-<p>其他工具</p>
-<p>free 报告空闲内存，包括缓冲区高速缓存和页缓存<br>dmesg 检查来自 OOM 终结者的 Out of memory 信息<br>valgrind 一个包括 memcheck 在内的性能分析套件，它是一个内存使用分析的封装程序，可用于发现泄露。它能造成严重的系统开销，可能引起目标系统慢 20 - 30 倍<br>swapon 添加和观察物理交换设备或者文件<br>iostat 如果交换设备是物理磁盘或块，设备 I/O 可以用 iostat 来观测，它能指出系统是否在换页<br>perf 能观察 CPI MMU TSB 事件，以及源自 CPU 性能计数器的内存总线的停滞周期计数。还提供缺页以及一些内核内存 kmem 事件的探针<br>/proc/zoneinfo 内存区域的统计信息<br>/proc/buddyinfo 内核页面伙伴分配器统计信息    </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1177,7 +1132,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1194,7 +1149,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -258,6 +258,157 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/26/using-npm/" itemprop="url">
+                  npm 使用记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-26T00:46:44+08:00" content="2015-07-26">
+              2015-07-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/26/using-npm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/26/using-npm/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/26/using-npm/" class="leancloud_visitors" data-flag-title="npm 使用记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用 npm 下载软件包，但是各种蛋碎，一直下载不了，不管使用 淘宝或者cnpm，<br>最后找到问题是曲径的事情，曲径不知道绕了几次，没绕出来</p>
+<p>配置其他源过程</p>
+<p>1.通过config命令</p>
+<p>npm config set registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a>  npm info underscore<br>（如果上面配置正确这个命令会有字符串response）</p>
+<p>2.命令行指定</p>
+<p>npm –registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a> info underscore<br>3.编辑node_modules\npm.npmrc加入下面内容</p>
+<p>registry = <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a><br>如果上面的npm地址不行的话，大家可以试试淘宝的npm，非常稳定:</p>
+<p>地址：<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a></p>
+<p>最后能访问安装时，我的曲径列表是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">npmjs.org</div><div class="line">cnpmjs.org</div></pre></td></tr></table></figure>
+<p>参考配置，用这个配置，明天在试一下，确认问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">ssllabs.com</div><div class="line">digitalocean.com</div><div class="line">bitbucket.org</div><div class="line">atlassian.com</div><div class="line">cnpmjs.org</div><div class="line">readthedocs.org</div><div class="line">dtrace.org</div><div class="line">npmjs.com</div><div class="line">domdex.com</div><div class="line">seleniumhq.org</div><div class="line">caesarchi.com</div><div class="line">lvv2.com</div><div class="line">speakerdeck.com</div><div class="line">koajs.com</div><div class="line">goo.gl</div></pre></td></tr></table></figure>
+<p>目前我的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat .npmrc</div><div class="line">registry=http://registry.cnpmjs.org</div></pre></td></tr></table></figure>
+<p>验证 npm ok</p>
+<p>1.浏览器访问 <a href="http://registry.cnpmjs.org/jshint" target="_blank" rel="external">http://registry.cnpmjs.org/jshint</a><br>2.<code>npm info underscore</code></p>
+<p>注意事项</p>
+<p>1.<a href="https://getqujing.com/zh-CN/my/pac" target="_blank" rel="external">https://getqujing.com/zh-CN/my/pac</a>修改曲径配置，要等10分钟左右才生效<br>2.必须重启自己的 iterm2 </p>
+<p>参考</p>
+<p><a href="http://segmentfault.com/a/1190000002642514" target="_blank" rel="external">[玩玩Node] npm 包下载很慢的解决办法</a></p>
+<p><a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝 NPM 镜像</a></p>
+<p><a href="https://gist.github.com/fengmk2/e95b1bb0e152ce443123" target="_blank" rel="external">参考曲径配置</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/25/mac-brew-summary/" itemprop="url">
                   mac 下的 brew 总结
                 </a>
@@ -829,140 +980,6 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/22/crontab-ntp-synchronized-date/" itemprop="url">
-                  cron表达式同步Linux服务器时间
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T09:54:42+08:00" content="2015-07-22">
-              2015-07-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/22/crontab-ntp-synchronized-date/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/crontab-ntp-synchronized-date/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/22/crontab-ntp-synchronized-date/" class="leancloud_visitors" data-flag-title="cron表达式同步Linux服务器时间">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>环境 centos 6.6 64位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">1.安装</div><div class="line">yum install ntp</div><div class="line"></div><div class="line">2.以 time.nist.gov 为基准同步时间</div><div class="line">ntpdate pool.ntp.org</div><div class="line"></div><div class="line">3.通过 crontab 定时同步时间</div><div class="line">crontab -e</div><div class="line"></div><div class="line">*/10 * * * * ntpdate pool.ntp.org</div><div class="line"></div><div class="line">这样写，会出现错误，root会收到错误邮件，内容包含 </div><div class="line"></div><div class="line">/bin/sh: ntpdate: command not found</div><div class="line"></div><div class="line">所以要使用 </div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org </div><div class="line"></div><div class="line">查看配置结果</div><div class="line">crontab -l</div><div class="line"></div><div class="line">4.可用的其他时间服务器</div><div class="line"></div><div class="line">pool.ntp.org</div><div class="line">time.nist.gov</div><div class="line">time.nuri.net</div><div class="line">0.asia.pool.ntp.org</div><div class="line">1.asia.pool.ntp.org</div><div class="line">2.asia.pool.ntp.org</div><div class="line">3.asia.pool.ntp.org</div><div class="line"></div><div class="line">自己选择，选择 ping 值最低的一个</div><div class="line"></div><div class="line">5.配置执行 crontab 命令，不给 root 用户发送邮件</div><div class="line"></div><div class="line">vim /etc/crontab </div><div class="line"></div><div class="line">SHELL=/bin/bash</div><div class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">MAILTO=&quot;&quot; # 这里设置为空</div><div class="line">HOME=/</div><div class="line"></div><div class="line">MAILTO 设置为空，不让每次执行命令都给 root 用户发送邮件，</div><div class="line">后来发现改 MAILTO=&quot;&quot; 没用，需要使用命令</div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org &gt;/dev/null 2&gt;&amp;1</div><div class="line"></div><div class="line">这样就不会每次执行，都给 root 用户发送邮件了</div></pre></td></tr></table></figure>
-<p>cron表达式 简单教程</p>
-<p>0 <em>/2 </em> <em> </em> /sbin/service httpd restart  # 每两个小时重启一次apache<br>50 7 <em> </em> <em> /sbin/service sshd start  # 每天7：50开启ssh服务<br>50 22 </em> <em> </em> /sbin/service sshd stop  # 每天22：50关闭ssh服务<br>0 0 1,15 <em> </em> fsck /home  # 每月1号和15号检查/home 磁盘<br>1 <em> </em> <em> </em> /home/bruce/backup  # 每小时的第一分执行 /home/bruce/backup这个文件<br>00 03 <em> </em> 1-5 find /home “<em>.xxx” -mtime +4 -exec rm {} /;  # 每周一至周五3点钟，在目录/home中，查找文件名为</em>.xxx的文件，并删除4天前的文件。<br>30 6 <em>/10 </em> <em> ls  # 每月的1、11、21、31日是的6：30执行一次ls命令    
-</em>:1 <em> </em> <em> </em> /usr/bin/php /data/api/setup_server.php  &gt;/dev/null  # 每隔一秒执行一次    这个待确认</p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1008,7 +1025,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1025,7 +1042,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -258,6 +258,160 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/05/install-start-zookeeper/" itemprop="url">
+                  zookeeper入门-安装和启动-关闭服务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T10:29:59+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">zookeeper</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/install-start-zookeeper/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/install-start-zookeeper/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/install-start-zookeeper/" class="leancloud_visitors" data-flag-title="zookeeper入门-安装和启动-关闭服务">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>从 Paxos 到 ZooKeeper ，分步实一致性原理到实践 读书笔记</p>
+<p>zk配置</p>
+<pre><code>tickTime=2000
+dataDir=/tmp/zookeeper
+clientPort=2181
+initLimit=10
+syncLimit=5
+server.1=IP1:2888:3888
+server.2=IP2:2888:3888
+server.3=IP3:2888:3888
+</code></pre><p>server.id 每一行，代表一台机器<br>需要在数据目录 dataDir 创建myid文件，里面写机器编号<br>集群中 zoo.cfg 应该使用 svn 或者 git 管理，确保每台机器上的文件都能够一致<br>id 的范围是 1 ~ 255     </p>
+<p>启动服务</p>
+<pre><code>使用自带的shell启动
+sh zkServer.sh start
+
+使用原始Java方式启动
+java -cp zookeeper-3.4.6.jar:lib/slf4j-api-1.6.1.jar:lib/slf4j-log4j12-1.6.1.jar:lib/log4j-1.2.16.jar:conf org.apache.zookeeper.server.quorum.QuorumPeerMain conf/zoo.cfg
+</code></pre><p>验证服务</p>
+<pre><code>telnet 127.0.0.1 2181
+
+stat
+</code></pre><p>停止服务</p>
+<pre><code>sh zkServer.sh stop
+</code></pre><p>zk可执行脚本</p>
+<p>zkCleanup.sh 清理 zookeeper 的历史数据，包括事务日志文件和快照数据文件<br>zkCli.sh ZooKeeper 的简易客户端<br>zkEnv.sh 设置 ZooKeeper 的环境变量<br>zkServer.sh ZooKeeper服务的启动、停止、重启脚本    </p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/02/06/up-yourself/" itemprop="url">
                   身边没有牛人，如何进步
                 </a>
@@ -1064,140 +1218,6 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/25/jdk-jre-old-version-download/" itemprop="url">
-                  老版本JDK JRE下载
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T12:56:42+08:00" content="2015-01-25">
-              2015-01-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/25/jdk-jre-old-version-download/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/jdk-jre-old-version-download/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/25/jdk-jre-old-version-download/" class="leancloud_visitors" data-flag-title="老版本JDK JRE下载">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>老版本jdk，jre下载</p>
-<p>oracle 提供的下载页只能下载最新的jdk或jre，</p>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
-<p>有时候做一些编译，需要用到老版本的jdk，程序对jdk版本做了限制，<br>例如编译hadoop2.0的文件时候，可以到下面地址下载</p>
-<p><a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/archive-139210.html</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1243,7 +1263,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1260,7 +1280,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

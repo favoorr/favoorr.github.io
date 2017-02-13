@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="vagrant,performance," />
 
 
 
@@ -84,19 +84,22 @@
 
 
 
-<meta name="description" content="环境 centos 6.6 64位
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748491.安装yum install ntp2.以 time.nist.gov 为基准同步时间ntpdate pool.ntp.org3.通过 crontab 定时同步时间crontab -e">
+<meta name="description" content="最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。
+内核要求准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重
+使用的 Linux 内核版本要求比较高，比如 ubunt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cron表达式同步Linux服务器时间">
-<meta property="og:url" content="https://favoorr.github.io/2015/07/22/crontab-ntp-synchronized-date/index.html">
+<meta property="og:title" content="配置性能分析试验环境">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/13/set-up-performance-analysis-environment/index.html">
 <meta property="og:site_name" content="favoorr's blog">
-<meta property="og:description" content="环境 centos 6.6 64位
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748491.安装yum install ntp2.以 time.nist.gov 为基准同步时间ntpdate pool.ntp.org3.通过 crontab 定时同步时间crontab -e">
-<meta property="og:updated_time" content="2015-12-07T12:01:20.000Z">
+<meta property="og:description" content="最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。
+内核要求准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重
+使用的 Linux 内核版本要求比较高，比如 ubunt">
+<meta property="og:updated_time" content="2017-02-13T09:22:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cron表达式同步Linux服务器时间">
-<meta name="twitter:description" content="环境 centos 6.6 64位
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748491.安装yum install ntp2.以 time.nist.gov 为基准同步时间ntpdate pool.ntp.org3.通过 crontab 定时同步时间crontab -e">
+<meta name="twitter:title" content="配置性能分析试验环境">
+<meta name="twitter:description" content="最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。
+内核要求准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重
+使用的 Linux 内核版本要求比较高，比如 ubunt">
 
 
 
@@ -117,9 +120,9 @@
 
 
 
-  <link rel="canonical" href="https://favoorr.github.io/2015/07/22/crontab-ntp-synchronized-date/"/>
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/13/set-up-performance-analysis-environment/"/>
 
-  <title> cron表达式同步Linux服务器时间 | favoorr's blog </title>
+  <title> 配置性能分析试验环境 | favoorr's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +262,7 @@
             
             
               
-                cron表达式同步Linux服务器时间
+                配置性能分析试验环境
               
             
           </h1>
@@ -271,8 +274,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T09:54:42+08:00" content="2015-07-22">
-              2015-07-22
+            <time itemprop="dateCreated" datetime="2017-02-13T17:10:04+08:00" content="2017-02-13">
+              2017-02-13
             </time>
           </span>
 
@@ -285,8 +288,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
                   </a>
                 </span>
 
@@ -301,8 +304,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/22/crontab-ntp-synchronized-date/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/crontab-ntp-synchronized-date/" itemprop="commentsCount"></span>
+                <a href="/2017/02/13/set-up-performance-analysis-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/set-up-performance-analysis-environment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -312,7 +315,7 @@
 
           
           
-             <span id="/2015/07/22/crontab-ntp-synchronized-date/" class="leancloud_visitors" data-flag-title="cron表达式同步Linux服务器时间">
+             <span id="/2017/02/13/set-up-performance-analysis-environment/" class="leancloud_visitors" data-flag-title="配置性能分析试验环境">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -334,13 +337,14 @@
       
 
       
-        <p>环境 centos 6.6 64位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">1.安装</div><div class="line">yum install ntp</div><div class="line"></div><div class="line">2.以 time.nist.gov 为基准同步时间</div><div class="line">ntpdate pool.ntp.org</div><div class="line"></div><div class="line">3.通过 crontab 定时同步时间</div><div class="line">crontab -e</div><div class="line"></div><div class="line">*/10 * * * * ntpdate pool.ntp.org</div><div class="line"></div><div class="line">这样写，会出现错误，root会收到错误邮件，内容包含 </div><div class="line"></div><div class="line">/bin/sh: ntpdate: command not found</div><div class="line"></div><div class="line">所以要使用 </div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org </div><div class="line"></div><div class="line">查看配置结果</div><div class="line">crontab -l</div><div class="line"></div><div class="line">4.可用的其他时间服务器</div><div class="line"></div><div class="line">pool.ntp.org</div><div class="line">time.nist.gov</div><div class="line">time.nuri.net</div><div class="line">0.asia.pool.ntp.org</div><div class="line">1.asia.pool.ntp.org</div><div class="line">2.asia.pool.ntp.org</div><div class="line">3.asia.pool.ntp.org</div><div class="line"></div><div class="line">自己选择，选择 ping 值最低的一个</div><div class="line"></div><div class="line">5.配置执行 crontab 命令，不给 root 用户发送邮件</div><div class="line"></div><div class="line">vim /etc/crontab </div><div class="line"></div><div class="line">SHELL=/bin/bash</div><div class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">MAILTO=&quot;&quot; # 这里设置为空</div><div class="line">HOME=/</div><div class="line"></div><div class="line">MAILTO 设置为空，不让每次执行命令都给 root 用户发送邮件，</div><div class="line">后来发现改 MAILTO=&quot;&quot; 没用，需要使用命令</div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org &gt;/dev/null 2&gt;&amp;1</div><div class="line"></div><div class="line">这样就不会每次执行，都给 root 用户发送邮件了</div></pre></td></tr></table></figure>
-<p>cron表达式 简单教程</p>
-<p>0 <em>/2 </em> <em> </em> /sbin/service httpd restart  # 每两个小时重启一次apache<br>50 7 <em> </em> <em> /sbin/service sshd start  # 每天7：50开启ssh服务<br>50 22 </em> <em> </em> /sbin/service sshd stop  # 每天22：50关闭ssh服务<br>0 0 1,15 <em> </em> fsck /home  # 每月1号和15号检查/home 磁盘<br>1 <em> </em> <em> </em> /home/bruce/backup  # 每小时的第一分执行 /home/bruce/backup这个文件<br>00 03 <em> </em> 1-5 find /home “<em>.xxx” -mtime +4 -exec rm {} /;  # 每周一至周五3点钟，在目录/home中，查找文件名为</em>.xxx的文件，并删除4天前的文件。<br>30 6 <em>/10 </em> <em> ls  # 每月的1、11、21、31日是的6：30执行一次ls命令    
-</em>:1 <em> </em> <em> </em> /usr/bin/php /data/api/setup_server.php  &gt;/dev/null  # 每隔一秒执行一次    这个待确认</p>
-<p>-EOF-</p>
-
+        <p>最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。</p>
+<h1 id="内核要求"><a href="#内核要求" class="headerlink" title="内核要求"></a>内核要求</h1><p>准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新<br>版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重</p>
+<p>使用的 Linux 内核版本要求比较高，比如 ubuntu 16.04，内核版本 4.4，可以选择自己安装最新版本内核</p>
+<h1 id="vagrant-配置文件参考"><a href="#vagrant-配置文件参考" class="headerlink" title="vagrant 配置文件参考"></a>vagrant 配置文件参考</h1><p>我使用的是 ubuntu 16.04，使用 vagrant 管理虚拟机</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-156"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.156"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-156"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h1 id="安装-Perf"><a href="#安装-Perf" class="headerlink" title="安装 Perf"></a>安装 Perf</h1><p>perf 是老牌性能分析工具，ebpf/bcc 的流行可能完全替代这个老牌工具，<br>升级内核也不会那么激进，所以路还很长</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ sudo su - root</div><div class="line"><span class="comment"># apt update</span></div><div class="line"><span class="comment"># apt install linux-tools-common</span></div><div class="line"><span class="comment"># apt install linux-tools-4.4.0-53-generic</span></div><div class="line"><span class="comment"># apt install linux-cloud-tools-4.4.0-53-generic</span></div><div class="line"></div><div class="line">安装成功验证</div><div class="line"><span class="comment"># perf --version</span></div></pre></td></tr></table></figure>
+<h1 id="安装-BPF-BCC"><a href="#安装-BPF-BCC" class="headerlink" title="安装 BPF BCC"></a>安装 BPF BCC</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># echo "deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list</span></div><div class="line"><span class="comment"># sudo su - root</span></div><div class="line"><span class="comment"># apt-get update</span></div><div class="line"><span class="comment"># apt-get install bcc-tools</span></div><div class="line"></div><div class="line"><span class="comment"># vim .bashrc</span></div><div class="line"><span class="comment"># export PATH=$PATH:/usr/share/bcc/tools</span></div><div class="line"><span class="comment"># source .bashrc</span></div><div class="line"><span class="comment"># biolatency</span></div><div class="line"></div><div class="line">如果 biolatency 命令能正确执行，那就是安装 ok 了</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -382,7 +386,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag">#linux</a>
+            <a href="/tags/vagrant/" rel="tag">#vagrant</a>
+          
+            <a href="/tags/performance/" rel="tag">#performance</a>
           
         </div>
       
@@ -391,17 +397,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/22/compile-youcompleteme/" rel="next" title="编译YouCompleteMe">
-                <i class="fa fa-chevron-left"></i> 编译YouCompleteMe
+              <a href="/2017/02/13/as-i-understand-the-instance-the-state-the-context/" rel="next" title="我所理解的实例 状态 和 上下文">
+                <i class="fa fa-chevron-left"></i> 我所理解的实例 状态 和 上下文
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/" rel="prev" title="centos6.6源码安装gcc4.8.1">
-                centos6.6源码安装gcc4.8.1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,8 +429,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/07/22/crontab-ntp-synchronized-date/"
-           data-title="cron表达式同步Linux服务器时间" data-url="https://favoorr.github.io/2015/07/22/crontab-ntp-synchronized-date/">
+      <div class="ds-thread" data-thread-key="2017/02/13/set-up-performance-analysis-environment/"
+           data-title="配置性能分析试验环境" data-url="https://favoorr.github.io/2017/02/13/set-up-performance-analysis-environment/">
       </div>
     
   </div>
@@ -530,7 +532,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内核要求"><span class="nav-number">1.</span> <span class="nav-text">内核要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vagrant-配置文件参考"><span class="nav-number">2.</span> <span class="nav-text">vagrant 配置文件参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Perf"><span class="nav-number">3.</span> <span class="nav-text">安装 Perf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-BPF-BCC"><span class="nav-number">4.</span> <span class="nav-text">安装 BPF BCC</span></a></li></ol></div>
             
           </div>
         </section>

@@ -258,6 +258,141 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/13/set-up-performance-analysis-environment/" itemprop="url">
+                  配置性能分析试验环境
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-13T17:10:04+08:00" content="2017-02-13">
+              2017-02-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/13/set-up-performance-analysis-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/set-up-performance-analysis-environment/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/13/set-up-performance-analysis-environment/" class="leancloud_visitors" data-flag-title="配置性能分析试验环境">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。</p>
+<h1 id="内核要求"><a href="#内核要求" class="headerlink" title="内核要求"></a>内核要求</h1><p>准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新<br>版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重</p>
+<p>使用的 Linux 内核版本要求比较高，比如 ubuntu 16.04，内核版本 4.4，可以选择自己安装最新版本内核</p>
+<h1 id="vagrant-配置文件参考"><a href="#vagrant-配置文件参考" class="headerlink" title="vagrant 配置文件参考"></a>vagrant 配置文件参考</h1><p>我使用的是 ubuntu 16.04，使用 vagrant 管理虚拟机</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-156"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.156"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-156"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h1 id="安装-Perf"><a href="#安装-Perf" class="headerlink" title="安装 Perf"></a>安装 Perf</h1><p>perf 是老牌性能分析工具，ebpf/bcc 的流行可能完全替代这个老牌工具，<br>升级内核也不会那么激进，所以路还很长</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ sudo su - root</div><div class="line"><span class="comment"># apt update</span></div><div class="line"><span class="comment"># apt install linux-tools-common</span></div><div class="line"><span class="comment"># apt install linux-tools-4.4.0-53-generic</span></div><div class="line"><span class="comment"># apt install linux-cloud-tools-4.4.0-53-generic</span></div><div class="line"></div><div class="line">安装成功验证</div><div class="line"><span class="comment"># perf --version</span></div></pre></td></tr></table></figure>
+<h1 id="安装-BPF-BCC"><a href="#安装-BPF-BCC" class="headerlink" title="安装 BPF BCC"></a>安装 BPF BCC</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># echo "deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list</span></div><div class="line"><span class="comment"># sudo su - root</span></div><div class="line"><span class="comment"># apt-get update</span></div><div class="line"><span class="comment"># apt-get install bcc-tools</span></div><div class="line"></div><div class="line"><span class="comment"># vim .bashrc</span></div><div class="line"><span class="comment"># export PATH=$PATH:/usr/share/bcc/tools</span></div><div class="line"><span class="comment"># source .bashrc</span></div><div class="line"><span class="comment"># biolatency</span></div><div class="line"></div><div class="line">如果 biolatency 命令能正确执行，那就是安装 ok 了</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/13/as-i-understand-the-instance-the-state-the-context/" itemprop="url">
                   我所理解的实例 状态 和 上下文
                 </a>
@@ -855,146 +990,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/kafka-queue-config/" itemprop="url">
-                  配置 Kafka Topic Queue 模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:48:54+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-queue-config/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-queue-config/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/kafka-queue-config/" class="leancloud_visitors" data-flag-title="配置 Kafka Topic Queue 模式">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当同一个 Topic 的 consumer 配置 group.id 相同时，即为 queue 模式</p>
-<p>kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181    </p>
-<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
-<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
-<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
-<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
-<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
-<h1 id="启动命令行消费者"><a href="#启动命令行消费者" class="headerlink" title="启动命令行消费者"></a>启动命令行消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">从安装目录复制一个消费者配置文件，并修改文件 group.id 相同，来测试 queue 模式</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/consumer.properties .</div><div class="line"></div><div class="line">vim consumer.properties</div><div class="line"></div><div class="line">启动命令行消费者</div><div class="line"></div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --consumer.config consumer.properties --topic test</div><div class="line"></div><div class="line">--consumer.config 指定消费者启动的配置文件</div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div><div class="line">启动相同 group.id 的 queue 消费者模式</div></pre></td></tr></table></figure>
-<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
-<h1 id="查看-Kafka-已经注册的-group"><a href="#查看-Kafka-已经注册的-group" class="headerlink" title="查看 Kafka 已经注册的 group"></a>查看 Kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">test-consumer-group</div></pre></td></tr></table></figure>
-<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group test-consumer-group</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 后，192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
-<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
-<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1040,7 +1035,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1057,7 +1052,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

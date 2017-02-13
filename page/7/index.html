@@ -258,6 +258,140 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="url">
+                  升级 python 后，原有依赖老版本 python 问题解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-05T16:19:51+08:00" content="2017-01-05">
+              2017-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" class="leancloud_visitors" data-flag-title="升级 python 后，原有依赖老版本 python 问题解决">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python3.5.2 安装的 virtualenvwrapper 环境，更新到  3.6.0 之后，手残直接把 3.5.2 删除了</p>
+<p>原来环境就挂了，错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">User@favoorr-mac: ~/Documents/github/favoorr-programming-road/Python/python-lesson master!</div><div class="line"> $ ipython                                                                     [14:28:16]</div><div class="line">dyld: Library not loaded: @executable_path/../.Python</div><div class="line">  Referenced from: /Users/User/zl/python/project/venv/python-lesson/bin/python3.5</div><div class="line">  Reason: image not found</div><div class="line">[1]    43935 abort      ipython</div><div class="line">(python-lesson) FAIL</div></pre></td></tr></table></figure>
+<p>解决方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">断开工作台</div><div class="line">deactivate</div><div class="line"></div><div class="line">删除原来的虚拟环境，这里删除虚拟环境，原来的项目其实不会删除</div><div class="line">rmvirtualenv python-lesson</div><div class="line"></div><div class="line">重新创建虚拟环境</div><div class="line">mkvirtualenv python-lesson</div><div class="line"></div><div class="line">再次激活虚拟环境</div><div class="line">workon python-lesson</div><div class="line"></div><div class="line">跳转到原来的项目目录</div><div class="line">cd ~/Documents/github/favoorr-programming-road/Python/python-lesson</div><div class="line"></div><div class="line">原来的项目重新关联虚拟环境</div><div class="line">setvirtualenvproject</div><div class="line"></div><div class="line">重新安装需要的类库</div><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div></pre></td></tr></table></figure>
+<p>记录,备忘</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
                   python 升级到 3.6 virtualenvwrapper 报错问题
                 </a>
@@ -811,157 +945,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/26/using-npm/" itemprop="url">
-                  npm 使用记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-26T00:46:44+08:00" content="2015-07-26">
-              2015-07-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nodejs/" itemprop="url" rel="index">
-                    <span itemprop="name">nodejs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/26/using-npm/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/26/using-npm/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/26/using-npm/" class="leancloud_visitors" data-flag-title="npm 使用记录">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>使用 npm 下载软件包，但是各种蛋碎，一直下载不了，不管使用 淘宝或者cnpm，<br>最后找到问题是曲径的事情，曲径不知道绕了几次，没绕出来</p>
-<p>配置其他源过程</p>
-<p>1.通过config命令</p>
-<p>npm config set registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a>  npm info underscore<br>（如果上面配置正确这个命令会有字符串response）</p>
-<p>2.命令行指定</p>
-<p>npm –registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a> info underscore<br>3.编辑node_modules\npm.npmrc加入下面内容</p>
-<p>registry = <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a><br>如果上面的npm地址不行的话，大家可以试试淘宝的npm，非常稳定:</p>
-<p>地址：<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a></p>
-<p>最后能访问安装时，我的曲径列表是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">npmjs.org</div><div class="line">cnpmjs.org</div></pre></td></tr></table></figure>
-<p>参考配置，用这个配置，明天在试一下，确认问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">ssllabs.com</div><div class="line">digitalocean.com</div><div class="line">bitbucket.org</div><div class="line">atlassian.com</div><div class="line">cnpmjs.org</div><div class="line">readthedocs.org</div><div class="line">dtrace.org</div><div class="line">npmjs.com</div><div class="line">domdex.com</div><div class="line">seleniumhq.org</div><div class="line">caesarchi.com</div><div class="line">lvv2.com</div><div class="line">speakerdeck.com</div><div class="line">koajs.com</div><div class="line">goo.gl</div></pre></td></tr></table></figure>
-<p>目前我的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat .npmrc</div><div class="line">registry=http://registry.cnpmjs.org</div></pre></td></tr></table></figure>
-<p>验证 npm ok</p>
-<p>1.浏览器访问 <a href="http://registry.cnpmjs.org/jshint" target="_blank" rel="external">http://registry.cnpmjs.org/jshint</a><br>2.<code>npm info underscore</code></p>
-<p>注意事项</p>
-<p>1.<a href="https://getqujing.com/zh-CN/my/pac" target="_blank" rel="external">https://getqujing.com/zh-CN/my/pac</a>修改曲径配置，要等10分钟左右才生效<br>2.必须重启自己的 iterm2 </p>
-<p>参考</p>
-<p><a href="http://segmentfault.com/a/1190000002642514" target="_blank" rel="external">[玩玩Node] npm 包下载很慢的解决办法</a></p>
-<p><a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝 NPM 镜像</a></p>
-<p><a href="https://gist.github.com/fengmk2/e95b1bb0e152ce443123" target="_blank" rel="external">参考曲径配置</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1007,7 +990,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1024,7 +1007,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

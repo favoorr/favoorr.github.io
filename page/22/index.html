@@ -258,6 +258,150 @@
             
               
                 
+                <a class="post-title-link" href="/2014/08/27/using-vim-paste/" itemprop="url">
+                  linux环境下，vim粘贴时缩进错乱解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-08-27T10:54:26+08:00" content="2014-08-27">
+              2014-08-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/08/27/using-vim-paste/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/27/using-vim-paste/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/08/27/using-vim-paste/" class="leancloud_visitors" data-flag-title="linux环境下，vim粘贴时缩进错乱解决">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="linux环境下，vim粘贴时缩进错乱解决"><a href="#linux环境下，vim粘贴时缩进错乱解决" class="headerlink" title="linux环境下，vim粘贴时缩进错乱解决"></a>linux环境下，vim粘贴时缩进错乱解决</h1><p>粘贴前使用命令</p>
+<pre><code>:set paste  
+</code></pre><p>原来进入编辑模式，状态提示为 </p>
+<pre><code>-- INSERT --
+</code></pre><p>设置命令后，进入编辑模式状态提示为</p>
+<pre><code>-- INSERT (paste) -- 
+</code></pre><p>这样子，粘贴的时候，就可以按照原来复制时的缩进</p>
+<p>设置VIM开关快捷键</p>
+<pre><code>:set pastetoggle=&lt;F11&gt;
+</code></pre><p>参考博客<a href="http://blog.csdn.net/yizhou35/article/details/17366339" target="_blank" rel="external">http://blog.csdn.net/yizhou35/article/details/17366339</a></p>
+<p>意思是在输入 i ,进入编辑模式后，如果要取消缩进，就摁F11，然后在粘贴，等于输入:set paste,<br>粘贴之后，在摁，等于输入:set nopaste</p>
+<p>“+p ,这个在一般vim下不好用，必须使用带图形界面的vim才可以</p>
+<p>大概介绍是vim有自己的寄存器，系统有剪切板，然后yy复制的时候，进入寄存器了，</p>
+<p>:reg可以查看不同寄存器上已经复制的值,”+ 表示系统剪切板，但是一般的vim不支持</p>
+<p>google关键字 vim寄存器 系统剪切板</p>
+<p>参考：<a href="http://w.gdu.me/wiki/vim/vimcopy.html" target="_blank" rel="external">http://w.gdu.me/wiki/vim/vimcopy.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/08/22/free-mirrors/" itemprop="url">
                   免费镜像地址收集，让自己的下载更快一点
                 </a>
@@ -718,7 +862,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">108</span>
+              <span class="site-state-item-count">109</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -735,7 +879,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
