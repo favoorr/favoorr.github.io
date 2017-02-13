@@ -258,6 +258,303 @@
             
               
                 
+                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
+                  git实战篇--将本地项目提交到github/gitlab中
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
+              2015-01-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
+<p>在github/gitlab中新建项目zhunions</p>
+<p>1.在本地目录zhunions目录下初始化本地仓库</p>
+<pre><code>git init
+</code></pre><p>2.建立.gitignore README.md文件</p>
+<p>3.本地提交</p>
+<pre><code>git add . 提交当前目录
+git commit -m &quot;first commit&quot;
+</code></pre><p>4.添加远程关联</p>
+<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
+</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
+<pre><code>git push --set-upstream origin master
+</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
+<p>执行所有操作后，有如下结果：</p>
+<p>a.产生本地分支master</p>
+<p>b.与本地仓库关联的远程仓库origin</p>
+<p>c.与本地分支关联的远程分支master</p>
+<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
+                  git rebase命令学习
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-08T20:24:25+08:00" content="2015-01-08">
+              2015-01-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/08/git-rebase-command-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-rebase-command-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/08/git-rebase-command-summary/" class="leancloud_visitors" data-flag-title="git rebase命令学习">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git-rebase命令学习"><a href="#git-rebase命令学习" class="headerlink" title="git rebase命令学习"></a>git rebase命令学习</h1><p>阮老师对git rebase讲了一个点，可以和merge类似的操作，<br>最基本的时候，可以达到merge相同效果</p>
+<p>一个台湾同胞写的教程，非常详细</p>
+<p><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase</a></p>
+<p>这里也简单介绍到了</p>
+<p><a href="http://gitbook.liuhui998.com/4_3.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_3.html</a></p>
+<p>写下自己的理解：</p>
+<p><strong>假设</strong></p>
+<p>三个分支 master dev favoorr</p>
+<p><strong>场景一</strong></p>
+<p>favoorr衍生于 dev ，现在想修改到master，</p>
+<p>可以在favoorr分支执行 git rebase master ，切换参考基准</p>
+<p><strong>场景二</strong></p>
+<p>favoorr 分支,本来衍生自提交aaaaa，现在想修改，衍生自提交yyyyy</p>
+<p>在favoorr分支上上执行 git rebase –onto yyyyy aaaaa</p>
+<p>git rebase –onto <new base-commit=""> <current base-commit=""></current></new></p>
+<p>git rebase –continue 如果有冲突，处理完冲突后，继续</p>
+<p><strong>场景三</strong></p>
+<p>1.开发的时候，遇到很多提交，想合并连续两次的小提交</p>
+<p>2.或者之前的提交想改变顺序，提交zzz，应该放到提交xxx的前面</p>
+<p>3.或者之前的提交commit写的有错别字，那么可以用rebase修改</p>
+<p>git rebase -i xxxxx,你准备从这里开始整理提交，在提交一遍</p>
+<p>git rebase 都可以做到</p>
+<p>svn 里面没有搞过这种修改</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/01/08/git-remote-command-summary/" itemprop="url">
                   git操作远程仓库
                 </a>
@@ -859,348 +1156,6 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/23/mysql-sytax-not-all/" itemprop="url">
-                  mysql语法不完全版
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-23T16:49:51+08:00" content="2014-12-23">
-              2014-12-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/23/mysql-sytax-not-all/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/23/mysql-sytax-not-all/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/23/mysql-sytax-not-all/" class="leancloud_visitors" data-flag-title="mysql语法不完全版">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>手写mysql语句需要用到的</p>
-<p>新增列时，如果直接增加COMMENTS,在很多版本中不支持，公司的测试机是5.1版本，不支持</p>
-<p>datetime 设置默认值，在5.6版本中才可以</p>
-<h2 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h2><pre><code>/* 在某列后面添加一列 */ 
-ALTER TABLE `user_call_log` ADD `callflag` TINYINT(4) UNSIGNED  DEFAULT 0  AFTER `fee`;
-
-/* 把tinyint更改为 unsigned */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED NULL  DEFAULT 0;
-
-/* 把tinyint变成 sign */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  NULL  DEFAULT &apos;0&apos;;
-
-/* 变更列顺序 */ 
-ALTER TABLE `user_call_log` MODIFY COLUMN `callflag` TINYINT(4) UNSIGNED NULL DEFAULT 0 AFTER `fee`;
-
-/* UNSIGNED 类型默认值 更改为 0 */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;;
-
-/* 删除某列 */ 
-ALTER TABLE `user_call_log` DROP `callflag`;
-
-/* 添加注释 */ 
-ALTER TABLE `user_call_log` CHANGE `callflag` `callflag` TINYINT(4)  UNSIGNED  NULL  DEFAULT &apos;0&apos;  COMMENT &apos;主叫删除标示&apos;;
-
-/*  */ 
-ALTER TABLE `user_cash_log` CHANGE `real_name` `real_name` VARCHAR(20)  CHARACTER SET utf8  COLLATE utf8_general_ci  NULL  DEFAULT NULL  COMMENT &apos;用户真实姓名&apos;;
-</code></pre><h2 id="show"><a href="#show" class="headerlink" title="show"></a>show</h2><pre><code>/* 17:02:18 172.16.12.85-user_chat */ 
-SHOW CREATE TABLE `user_call_log`;
-
-/* 显示某个表的索引 */ 
-SHOW INDEX FROM `user_call_log`;
-</code></pre><h2 id="grant"><a href="#grant" class="headerlink" title="grant"></a>grant</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">grant all on *.* to atlas@192.168.56.1 identified by &apos;atlas&apos;;</div><div class="line"></div><div class="line">grant all on hive.* to hive@&apos;%&apos; identified by &apos;hive&apos;;   //创建hive用户，并授权</div><div class="line"></div><div class="line">flush privileges;</div><div class="line"></div><div class="line">show grants;</div><div class="line"></div><div class="line">show grants for atlas@192.168.56.1;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/04/maven-tips/" itemprop="url">
-                  maven使用总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-04T10:13:44+08:00" content="2014-12-04">
-              2014-12-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/maven/" itemprop="url" rel="index">
-                    <span itemprop="name">maven</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/04/maven-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/maven-tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/04/maven-tips/" class="leancloud_visitors" data-flag-title="maven使用总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="maven使用总结"><a href="#maven使用总结" class="headerlink" title="maven使用总结"></a>maven使用总结</h1><p>1.本地无法更新jar包了</p>
-<p>有时候我们用私服，然后发现本地无法更新了，不会自动去下载jar，</p>
-<p>先检查maven配置是否正确，<br>包括pom文件中Repository的配置和setting中mirror的配置，</p>
-<p>然后如果无误，看私服服务器是否能连接外网</p>
-<p>然后都检查过了，还是不行，就去把maven本地仓库中该jar的目录先删除，在下载，</p>
-<p>还是不行就手工下载jar，放到目录下</p>
-<p>2.m2e 有个offline ，有次无意间点到，彻底完蛋，麻痹的，不去访问私服，不能发布</p>
-<p>3.用户目录下的 setting.xml 文件，如果本地仓库地址修改了，更改没问题，默认的应该是<code>${user.home}/.m2/repository</code><br>  自己曾经在mac上又一次把目录写为 <code>~/.m2/repository</code>，原本以为能够自己解析，后来发现，我想错了，事情不是那样子<br>  项目每次简单的构建都会下载全部的jar，浪费了很多时间，但是自己却不知道问题出在哪里,而且还不知道怎么去问别人<br>  直到我看到每次构建都会在当前目录下新增 ~ 目录，而且新增jar包，我才意识到，本地仓库目录搞错了，我恍然大悟，<br>  oh my gold ！</p>
-<p>4.聚合和继承，是可以通过一个parent搞定，所有子模块依赖于 parent，然后可以选择性的快速构建</p>
-<p>5.maven项目从 svn 或者 git check out 下来后，如果无法按照自己想要的目录结构呈现，可以从 Eclipse 里面删除项目，然后在重新选择导入<br><code>Exsting maven project</code>可以搞定，或者点击项目名–&gt;鼠标右键Configure–&gt;选择<code>convert to maven project</code>，Convert稍微好用点</p>
-<p>6.在使用maven-release-plugin执行release:prepare的时候，出现如下错误</p>
-<pre><code>/bin/sh: svn: command not found
-</code></pre><p>解决方法</p>
-<pre><code>sudo ln -s /usr/local/bin/svn /bin/svn
-</code></pre><p>7.maven 单独使用clean compile的时候不会报错，maven-release-plugin执行release:prepare的时候<br>出现如下错误，</p>
-<pre><code>无效的目标版本： 1.7
-
-或者
-
-无效的目标版本： 1.8
-
-或者英文是
-
-invalid target release: 1.7
-
-invalid target release: 1.8
-</code></pre><p>环境上我的mac上安装了 1.6 1.7 1.8 三个版本的jdk，JAVA_HOME设置如下：</p>
-<pre><code>export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-</code></pre><p>Google之后，在stackoverflow找到的答案原因是你在maven配置的某个地方配置了固定版本的jdk，<br>但是你的maven-compile-plugin配置使用的是如下配置</p>
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.1&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;source&gt;1.6&lt;/source&gt;
-        &lt;target&gt;1.6&lt;/target&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-
-或许里面的1.6一开始写成了1.7或者1.8，然后就会报上面那个错误
-</code></pre><p>解决的方法就是换不同的版本试试，1.6，1.7或者1.8，maven执行一些shell命令的时候，走得是 /bin/sh,<br>但是我默认的shell是zsh，这里不知道怎么设置，比如在使用maven-release-plugin时候，执行的内嵌shell<br>都是用 /bin/sh 执行的通过debug日志，可以很清楚看到</p>
-<p>8.eclipse console中文乱码</p>
-<p>解决方法是<code>Run Configurations</code>,找到对应的项目，在<code>Common</code>面板中，<code>Encoding</code>修改为<code>GBK</code>就ok了<br>可能是内置了GBK编码，但是默认mac上是 UTF-8</p>
-<p>9.Maven 项目不显示 Maven Dependencies</p>
-<p>在使用Eclipse开发maven项目时，有时候会碰到依赖jar没办法显示的问题，</p>
-<pre><code>选择项目右键  --&gt; maven --&gt; disable maven nature,可以手工重现
-</code></pre><p>修复方法</p>
-<pre><code>选择项目右键 --&gt; Configure  --&gt; Convert to maven project
-</code></pre><p>9.当两个项目引用的 jar 包 artifactId  和 version 相同，遇到的诡异问题</p>
-<p>今天业务开发同学来找到我说 guava-18.0.jar 这个包有问题，说是在本地打的包没错，<br>到测试环境上这个包总是错的，坐标如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">  &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;guava&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;18.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>然后自己本地 md5 hash 947641f6bb535b1d942d1bc387c45290 ,跟 nexus 是一样的，<br>但是到测试上的包就有问题，告诉我是 jenkins 上的 guava 包有问题，后来我下载 jenkins 上<br>打的包，果然 md5 值不是 nexus 上的值，公司的 jenkins 是我维护的，我到 guava 目录看了下包<br>hash 是没错的，最后发现是某个组件依赖了一个其他的 guava，group id 不同，但是 artifactId  和 version<br>都是相同的，结果就会出现这种问题，jenkins 上有一段提示信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div><div class="line">[INFO] Building tar : /home/jenkins/workspace/workspace/order-service-1.0-clean-package-test2/target/order-service-6.0-SNAPSHOT-assembly.tar.gz</div><div class="line">[INFO] order-service-6.0-SNAPSHOT/lib/guava-18.0.jar already added, skipping</div></pre></td></tr></table></figure>
-<p>可以看到在打包的时候，这个包被跳过了，这里就是问题所在，而且这种问题相当难发现</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1246,7 +1201,7 @@ invalid target release: 1.8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1254,7 +1209,7 @@ invalid target release: 1.8
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1263,7 +1218,7 @@ invalid target release: 1.8
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

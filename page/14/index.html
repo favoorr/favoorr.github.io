@@ -258,6 +258,322 @@
             
               
                 
+                <a class="post-title-link" href="/2015/01/23/linux-edit-hostname/" itemprop="url">
+                  centos6.5-linux实战-修改主机名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T18:11:19+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/linux-edit-hostname/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/linux-edit-hostname/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/linux-edit-hostname/" class="leancloud_visitors" data-flag-title="centos6.5-linux实战-修改主机名">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Centos-6-5-实战-修改主机名"><a href="#Centos-6-5-实战-修改主机名" class="headerlink" title="Centos 6.5 实战-修改主机名"></a>Centos 6.5 实战-修改主机名</h1><p>配置hadoop集群时，修改主机名，便于标示和记忆，记录如下</p>
+<p>需要root权限，修改主机名为master步骤如下</p>
+<pre><code>第一步
+vim /etc/sysconfig/network  实际修改主机名
+
+添加
+HOSTNAME=master
+
+第二步
+vim /etc/hosts  本地解析
+
+添加本机 ip 和主机名映射
+192.168.56.101 master
+
+第三步，防止 ip 配置错误
+ping master
+
+第四步
+reboot 重启
+
+重启完成后，查看修改结果
+hostname 查看主机名
+</code></pre><p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/23/mac-use-virtualbox-config-network/" itemprop="url">
+                  mac上使用虚拟机网络配置总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T16:14:51+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/virtualbox/" itemprop="url" rel="index">
+                    <span itemprop="name">virtualbox</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/mac-use-virtualbox-config-network/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/mac-use-virtualbox-config-network/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/mac-use-virtualbox-config-network/" class="leancloud_visitors" data-flag-title="mac上使用虚拟机网络配置总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mac上使用虚拟机网络配置总结"><a href="#mac上使用虚拟机网络配置总结" class="headerlink" title="mac上使用虚拟机网络配置总结"></a>mac上使用虚拟机网络配置总结</h1><p>2014年初，公司让探索hadoop相关技术，一直以来有种习惯，不管什么技术，<br>必须自己玩下，然后感觉心里才有底，玩hadoop，单机是没啥意思的，分布式<br>就要多台机器，然后看了mactalk后，上面有段有了mac，不管你什么LVS、hadoop<br>想怎么玩就怎么玩，年初钱攒够就买了，之后就是mac新手，开始被吊打之路，研究hadoop，<br>过程是苦逼的，但是都走过来了，这会需要用虚拟机，想起来当时自己的苦逼，写出来<br>，记录下来。</p>
+<p>根据mactalk的提示，我选择的虚拟机软件是virtualbox,然后过程中遇到问题，应该就是网络吧，首先说我的需求，</p>
+<p>本机可以连接虚拟机<br>虚拟机可以连接本机<br>虚拟机可以上网<br>虚拟机之间可以ssh无密码登录<br>本机可以跟ssh无密码登录    </p>
+<p>看了不少文章，虚拟机网络NAT、桥接和Host only区别区别，个人理解如下</p>
+<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT "></a>NAT </h2><p>如果你的虚拟机eth0配置没有修改，即自动获取ip，那么虚拟机安装成功启动后，会自动获取的ip，而且获取的ip和宿主机是一个网段的，可以直接ping的通，而且可以联网,virtual box网络配置里面可以看到，<code>command + ,</code>在virtualbox网络那栏里面，可以看到10.0.2.0/24,然后虚拟机启动后，会自动生成ip 10.0.2.15</p>
+<h2 id="Host-Only"><a href="#Host-Only" class="headerlink" title="Host-Only "></a>Host-Only </h2><p>是在宿主机上新增一个网卡，然后在宿主机和虚拟机之间设置独立的局域网，然后宿主机和虚拟机沟通无障碍，<br>这里我遇到的问题是当时在虚拟机的网络配置页面，激活网卡二，选择了Host-Only后，下面的<code>界面名称</code>一直没办法选择，现在明白了也就是virtualbox 给主机要新增一个网卡，但当时不懂，愣是找了好久好久，自己都忘记了多久,同样command+` ，调出virtualbox网络设置页面，然后再virtualbox的网络配置页面新增网卡，然后再虚拟机的网络配置页面才有网卡可以选择，宿主机默认ip是192.168.56.1，最小ip是192.168.56.101，最大是192.168.56.254，什么东西都是会了不难，难了不会，添加网卡二之后，我的宿主机新增了个ip192.168.56.1，然后5台虚拟机ip是 192.168.56.101 ~ 192.168.56.105 ，一般同时启动3台虚拟机</p>
+<h2 id="桥接"><a href="#桥接" class="headerlink" title="桥接 "></a>桥接 </h2><p>会获取跟宿主机一个段的ip地址，比如宿主机ip 192.168.1.101 ,虚拟机会获取192.168.1.103的ip，但是公司的ip应该都是严格管理的，所以这种方法不好维护，如果主机所在局域网中得其他机器不需要使用虚拟机上的功能，最好使用Host-Only建立独立局域网</p>
+<p>我的方案是</p>
+<p>网卡一 NAT 方式和宿主机共享网络，虚拟机可以联网，方便下载安装各种软件<br>网卡二 与主机建立独立局域网，和路由上其他的机器分离，(现在看这种方式太对了，我后来把mac带到公司用了，因为要演示hadoop集群计算，而公司的ip是需要向网管申请的)<br>每一台虚拟机的ip固定，因为hadoop集群要设置master，ip要固定下来</p>
+<p>网卡一使用NAT共享主机网络配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth0
+
+DEVICE=eth0
+HWADDR=08:00:27:41:90:4D
+TYPE=Ethernet
+UUID=1c2f383c-8fdb-4aa0-9e5b-8fa2f60117f9
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp
+</code></pre><p>新增网卡二，使用Host-Only方式配置如下</p>
+<pre><code>cat /etc/sysconfig/network-scripts/ifcfg-eth1
+
+DEVICE=eth1
+HWADDR=08:00:27:93:D4:33
+TYPE=Ethernet
+UUID=8ac73766-a02b-4417-8f71-6762218b6bf8
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=192.168.56.101
+NETMASK=255.255.255.0
+
+/etc/init.d/network restart  重启网络配置
+ifup eth0 /ifdown eth0  启用/停用某个网卡
+</code></pre><p>难点总结</p>
+<p>理解virtualbox给本机添加网卡<br>ip获取手工指定，修改默认的自动获取    </p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/01/23/git-reset-remote-url/" itemprop="url">
                   Git实战-修改远程仓库地址
                 </a>
@@ -692,303 +1008,6 @@ Installation seems OK. File generation OK
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/09/use-gitlab-or-github/" itemprop="url">
-                  git实战篇--将本地项目提交到github/gitlab中
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-09T15:21:23+08:00" content="2015-01-09">
-              2015-01-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/09/use-gitlab-or-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/use-gitlab-or-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/09/use-gitlab-or-github/" class="leancloud_visitors" data-flag-title="git实战篇--将本地项目提交到github/gitlab中">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git实战篇–将本地项目提交到github-gitlab中"><a href="#git实战篇–将本地项目提交到github-gitlab中" class="headerlink" title="git实战篇–将本地项目提交到github/gitlab中"></a>git实战篇–将本地项目提交到github/gitlab中</h1><p>准备工作:</p>
-<p>在github/gitlab中新建项目zhunions</p>
-<p>1.在本地目录zhunions目录下初始化本地仓库</p>
-<pre><code>git init
-</code></pre><p>2.建立.gitignore README.md文件</p>
-<p>3.本地提交</p>
-<pre><code>git add . 提交当前目录
-git commit -m &quot;first commit&quot;
-</code></pre><p>4.添加远程关联</p>
-<pre><code>git remote add origin git@172.16.10.9:namespace/zhunions.git
-</code></pre><p>5.本地分支与远程分支关联，并推送到远程仓库</p>
-<pre><code>git push --set-upstream origin master
-</code></pre><p>以上5步可以完成本地仓库和分支与远程仓库和分支的关联.</p>
-<p>执行所有操作后，有如下结果：</p>
-<p>a.产生本地分支master</p>
-<p>b.与本地仓库关联的远程仓库origin</p>
-<p>c.与本地分支关联的远程分支master</p>
-<p>d.本地代码全部提交到了远程仓库，其他人可以共享了</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/08/git-rebase-command-summary/" itemprop="url">
-                  git rebase命令学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-08T20:24:25+08:00" content="2015-01-08">
-              2015-01-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/08/git-rebase-command-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/08/git-rebase-command-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/08/git-rebase-command-summary/" class="leancloud_visitors" data-flag-title="git rebase命令学习">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="git-rebase命令学习"><a href="#git-rebase命令学习" class="headerlink" title="git rebase命令学习"></a>git rebase命令学习</h1><p>阮老师对git rebase讲了一个点，可以和merge类似的操作，<br>最基本的时候，可以达到merge相同效果</p>
-<p>一个台湾同胞写的教程，非常详细</p>
-<p><a href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase" target="_blank" rel="external">http://blog.yorkxin.org/posts/2011/07/29/git-rebase</a></p>
-<p>这里也简单介绍到了</p>
-<p><a href="http://gitbook.liuhui998.com/4_3.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_3.html</a></p>
-<p>写下自己的理解：</p>
-<p><strong>假设</strong></p>
-<p>三个分支 master dev favoorr</p>
-<p><strong>场景一</strong></p>
-<p>favoorr衍生于 dev ，现在想修改到master，</p>
-<p>可以在favoorr分支执行 git rebase master ，切换参考基准</p>
-<p><strong>场景二</strong></p>
-<p>favoorr 分支,本来衍生自提交aaaaa，现在想修改，衍生自提交yyyyy</p>
-<p>在favoorr分支上上执行 git rebase –onto yyyyy aaaaa</p>
-<p>git rebase –onto <new base-commit=""> <current base-commit=""></current></new></p>
-<p>git rebase –continue 如果有冲突，处理完冲突后，继续</p>
-<p><strong>场景三</strong></p>
-<p>1.开发的时候，遇到很多提交，想合并连续两次的小提交</p>
-<p>2.或者之前的提交想改变顺序，提交zzz，应该放到提交xxx的前面</p>
-<p>3.或者之前的提交commit写的有错别字，那么可以用rebase修改</p>
-<p>git rebase -i xxxxx,你准备从这里开始整理提交，在提交一遍</p>
-<p>git rebase 都可以做到</p>
-<p>svn 里面没有搞过这种修改</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1034,7 +1053,7 @@ git commit -m &quot;first commit&quot;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1042,7 +1061,7 @@ git commit -m &quot;first commit&quot;
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1051,7 +1070,7 @@ git commit -m &quot;first commit&quot;
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

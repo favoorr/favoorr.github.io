@@ -258,6 +258,283 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/09/kafka-pub-sub-config/" itemprop="url">
+                  命令行配置测试 Kafka Pub-Sub 模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T14:48:46+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/kafka-pub-sub-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-pub-sub-config/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/kafka-pub-sub-config/" class="leancloud_visitors" data-flag-title="命令行配置测试 Kafka Pub-Sub 模式">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>命令行调试 kafka pub-sub 模式</p>
+<p>Kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>Zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</p>
+<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
+<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
+<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
+<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
+<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
+<h1 id="在某一台-Kafka-安装机器上启动消费者"><a href="#在某一台-Kafka-安装机器上启动消费者" class="headerlink" title="在某一台 Kafka 安装机器上启动消费者"></a>在某一台 Kafka 安装机器上启动消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --topic test</div><div class="line"></div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div></pre></td></tr></table></figure>
+<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
+<h1 id="查看-kafka-已经注册的-group"><a href="#查看-kafka-已经注册的-group" class="headerlink" title="查看 kafka 已经注册的 group"></a>查看 kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">console-consumer-18858</div><div class="line">console-consumer-43333</div><div class="line">console-consumer-14208</div></pre></td></tr></table></figure>
+<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group console-consumer-18858</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">console-consumer-18858, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 1, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 2, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
+<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
+<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/09/kafka-topic-ops/" itemprop="url">
+                  Kafka Topic 运维经验
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T14:48:05+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/kafka-topic-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-topic-ops/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/kafka-topic-ops/" class="leancloud_visitors" data-flag-title="Kafka Topic 运维经验">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Kafka Topic 运维操作记录</p>
+<p>会有全局的配置，但是如果每个 topic 自己配置，会覆盖掉全局配置</p>
+<h1 id="查看-Topic-列表"><a href="#查看-Topic-列表" class="headerlink" title="查看 Topic 列表"></a>查看 Topic 列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="查看单个-Topic-详情"><a href="#查看单个-Topic-详情" class="headerlink" title="查看单个 Topic 详情"></a>查看单个 Topic 详情</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">这个查看到的信息比较全，含分区和复制因子信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line"></div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=64000,flush.messages=1</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div><div class="line"></div><div class="line">这个查看的只有配置信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div><div class="line"></div><div class="line">Configs for topics:my-topic are max.message.bytes=256001,flush.messages=2001</div></pre></td></tr></table></figure>
+<h1 id="自定义配置创建-Topic"><a href="#自定义配置创建-Topic" class="headerlink" title="自定义配置创建 Topic"></a>自定义配置创建 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">三个分区，二个复制因子</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 3 --topic test</div><div class="line"></div><div class="line">三个分区，三个复制因子，加自定义参数</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line">Created topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">查看创建结果</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<h1 id="更改-topic-配置"><a href="#更改-topic-配置" class="headerlink" title="更改 topic 配置"></a>更改 topic 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">更改配置的命令</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic my-topic --config max.message.bytes=128000 --config flush.messages=1000</div><div class="line"></div><div class="line">WARNING: Altering topic configuration from this script has been deprecated and may be removed in future releases.</div><div class="line">Going forward, please use kafka-configs.sh for this functionality</div><div class="line">Updated config for topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">更改之后，查看最新配置</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=128000,flush.messages=1000</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div></pre></td></tr></table></figure>
+<h1 id="最新的-topic-维护命令"><a href="#最新的-topic-维护命令" class="headerlink" title="最新的 topic 维护命令"></a>最新的 topic 维护命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">更改配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name=my-topic --alter --add-config max.message.bytes=256001 --add-config flush.messages=2001</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">这里一次性更改多个，需要添加多个 --add-config 命令，如果只写一个，后面的会被忽略</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div></pre></td></tr></table></figure>
+<h1 id="删除一个配置项"><a href="#删除一个配置项" class="headerlink" title="删除一个配置项"></a>删除一个配置项</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --alter --delete-config max.message.bytes --entity-type topics --entity-name my-topic</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">删除后，查看配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name my-topic --describe</div><div class="line"></div><div class="line">Configs for topics:my-topic are flush.messages=2001</div></pre></td></tr></table></figure>
+<h1 id="删除一个-Topic"><a href="#删除一个-Topic" class="headerlink" title="删除一个 Topic"></a>删除一个 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">为了测试，先创建</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic1 --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line"></div><div class="line">查看创建的结果</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div><div class="line"></div><div class="line">删除</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic my-topic1</div><div class="line">如果配置参数，就会直接删除</div><div class="line">Topic my-topic1 is marked for deletion.</div><div class="line">Note: This will have no impact if delete.topic.enable is not set to true.</div><div class="line">delete.topic.enable=true</div></pre></td></tr></table></figure>
+<h1 id="修改-Topic-分区数"><a href="#修改-Topic-分区数" class="headerlink" title="修改 Topic 分区数"></a>修改 Topic 分区数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic test --partitions 5</div><div class="line"></div><div class="line">分区数只能增加</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line">分区数 * 复制因子 = 10</div><div class="line"></div><div class="line">三台 broker 平均分布</div><div class="line">0 1 3 4</div><div class="line">1 2 4</div><div class="line">0 2 3</div><div class="line">433 分布</div><div class="line">对应的消费者最好是 5 个，每个消费者对应一个分区，多于 5 个，在没有消费者挂掉的</div><div class="line">情况下，只能等待</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/kafka-cluster-ops/" itemprop="url">
                   Kafka 集群运维
                 </a>
@@ -286,8 +563,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
                   </a>
                 </span>
 
@@ -426,8 +703,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
                   </a>
                 </span>
 
@@ -557,8 +834,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
                   </a>
                 </span>
 
@@ -648,285 +925,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/zookeeper-cluster-ops/" itemprop="url">
-                  Zookeeper 集群运维
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:46:17+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/zookeeper-cluster-ops/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-cluster-ops/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/zookeeper-cluster-ops/" class="leancloud_visitors" data-flag-title="Zookeeper 集群运维">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
-<h1 id="查看集群启动成功"><a href="#查看集群启动成功" class="headerlink" title="查看集群启动成功"></a>查看集群启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
-<h1 id="关闭-zookeeper"><a href="#关闭-zookeeper" class="headerlink" title="关闭 zookeeper"></a>关闭 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
-<h1 id="重新启动-zookeeper-server"><a href="#重新启动-zookeeper-server" class="headerlink" title="重新启动 zookeeper server"></a>重新启动 zookeeper server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh restart</div></pre></td></tr></table></figure>
-<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail -100f /data/zookeeper/zk-logs/zookeeper.log</div></pre></td></tr></table></figure>
-<h1 id="查看日志文件"><a href="#查看日志文件" class="headerlink" title="查看日志文件"></a>查看日志文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/zookeeper/zk-logs/</div></pre></td></tr></table></figure>
-<h1 id="完整查看日志文件"><a href="#完整查看日志文件" class="headerlink" title="完整查看日志文件"></a>完整查看日志文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper/zk-logs/zookeeper.log</div></pre></td></tr></table></figure>
-<h1 id="清空日志文件目录"><a href="#清空日志文件目录" class="headerlink" title="清空日志文件目录"></a>清空日志文件目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/zookeeper/zk-logs/*</div></pre></td></tr></table></figure>
-<h1 id="查看-zookeeper-启动配置"><a href="#查看-zookeeper-启动配置" class="headerlink" title="查看 zookeeper 启动配置"></a>查看 zookeeper 启动配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper-3.4.6/conf/zoo.cfg</div></pre></td></tr></table></figure>
-<h1 id="查看-myid-配置"><a href="#查看-myid-配置" class="headerlink" title="查看 myid 配置"></a>查看 myid 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/zookeeper/data/myid</div></pre></td></tr></table></figure>
-<h1 id="暴力停止进程"><a href="#暴力停止进程" class="headerlink" title="暴力停止进程"></a>暴力停止进程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;zookeeper&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;|xargs kill -9</div></pre></td></tr></table></figure>
-<h1 id="查看本机启动-java-进程"><a href="#查看本机启动-java-进程" class="headerlink" title="查看本机启动 java 进程"></a>查看本机启动 java 进程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div></pre></td></tr></table></figure>
-<h1 id="查看本机端口监听情况"><a href="#查看本机端口监听情况" class="headerlink" title="查看本机端口监听情况"></a>查看本机端口监听情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -nplut</div></pre></td></tr></table></figure>
-<p>server 成功启动后，可以用命令行测试或者各种语言的客户端测试</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/install-config-zookeeper/" itemprop="url">
-                  配置安装运行 Zookeeper
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:45:54+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/install-config-zookeeper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/install-config-zookeeper/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/install-config-zookeeper/" class="leancloud_visitors" data-flag-title="配置安装运行 Zookeeper">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Zookeeper 是 Java 中常用的分布式集群协调中间件，下面记录典型的安装过程</p>
-<p>多节点配置时，在一个节点上把所有配置修改完，再 scp 发送到所有节点上</p>
-<h1 id="安装测试命令"><a href="#安装测试命令" class="headerlink" title="安装测试命令"></a>安装测试命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y nc telnet</div></pre></td></tr></table></figure>
-<h1 id="修改-zk-配置文件"><a href="#修改-zk-配置文件" class="headerlink" title="修改 zk 配置文件"></a>修改 zk 配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cp /data/zookeeper-3.4.6/conf/zoo_sample.cfg /data/zookeeper-3.4.6/conf/zoo.cfg</div><div class="line">vim /data/zookeeper-3.4.6/conf/zoo.cfg</div><div class="line"></div><div class="line">修改配置</div><div class="line">dataDir=/data/zookeeper/data</div><div class="line">dataLogDir=/data/zookeeper/logs</div><div class="line">server.1=192.168.16.22:2888:3888</div><div class="line">server.2=192.168.16.23:2888:3888</div><div class="line">server.3=192.168.16.31:2888:3888</div></pre></td></tr></table></figure>
-<h1 id="每个节点操作命令"><a href="#每个节点操作命令" class="headerlink" title="每个节点操作命令"></a>每个节点操作命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;1&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div><div class="line"></div><div class="line"></div><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;2&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div><div class="line"></div><div class="line">mkdir -p /data/zookeeper/data/</div><div class="line">mkdir -p /data/zookeeper/logs</div><div class="line">touch /data/zookeeper/data/myid</div><div class="line">echo &quot;3&quot; &gt;&gt; /data/zookeeper/data/myid</div><div class="line">cat /data/zookeeper/data/myid</div></pre></td></tr></table></figure>
-<h1 id="Log4j-配置"><a href="#Log4j-配置" class="headerlink" title="Log4j 配置"></a>Log4j 配置</h1><p>修改 log4j 日志生成方式统一使用 zookeeper.log，不在出现 zookeeper.out</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">备份配置文件</div><div class="line">cp /data/zookeeper-3.4.6/conf/log4j.properties /data/zookeeper-3.4.6/conf/log4j.properties.bak</div><div class="line"></div><div class="line">修改</div><div class="line">vim /data/zookeeper-3.4.6/conf/log4j.properties</div><div class="line">zookeeper.root.logger=INFO, CONSOLE</div><div class="line">更改为</div><div class="line">zookeeper.root.logger=INFO, ROLLINGFILE</div><div class="line"></div><div class="line"></div><div class="line">备份 zkEnv.sh</div><div class="line">cp /data/zookeeper-3.4.6/bin/zkEnv.sh /data/zookeeper-3.4.6/bin/zkEnv.sh.bak</div><div class="line"></div><div class="line">修改 zkEnv.sh</div><div class="line">vim /data/zookeeper-3.4.6/bin/zkEnv.sh</div><div class="line">ZOO_LOG_DIR=/data/zookeeper/zk-logs</div><div class="line">ZOO_LOG4J_PROP=INFO,ROLLINGFILE</div><div class="line"></div><div class="line">备份 zkServer.sh</div><div class="line">cp /data/zookeeper-3.4.6/bin/zkServer.sh /data/zookeeper-3.4.6/bin/zkServer.sh.bak</div><div class="line"></div><div class="line">vim /data/zookeeper-3.4.6/bin/zkServer.sh</div><div class="line">_ZOO_DAEMON_OUT=&quot;$ZOO_LOG_DIR/zookeeper.out&quot;</div><div class="line">更改为</div><div class="line">_ZOO_DAEMON_OUT=&quot;$ZOO_LOG_DIR/zookeeper.log&quot;</div></pre></td></tr></table></figure>
-<p>目前不擅长使用 ansible 等集群管理工具，只能手工笨装 …</p>
-<p>全部配置完成后，等待启动，启动后验证配置情况</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -972,7 +970,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -980,7 +978,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -989,7 +987,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -258,6 +258,294 @@
             
               
                 
+                <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
+                  Mac10.9.3仅安装Nginx
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-09-01T13:18:29+08:00" content="2014-09-01">
+              2014-09-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/01/install-nginx-on-mac/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-nginx-on-mac/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/09/01/install-nginx-on-mac/" class="leancloud_visitors" data-flag-title="Mac10.9.3仅安装Nginx">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Mac10-9-3仅安装Nginx"><a href="#Mac10-9-3仅安装Nginx" class="headerlink" title="Mac10.9.3仅安装Nginx"></a>Mac10.9.3仅安装Nginx</h1><p>首先安装Homebrew</p>
+<p>参照文章 <a href="/install-homebrew-on-mac/" title="Mac安装Homebrew">Mac安装Homebrew</a></p>
+<h2 id="查看nginx信息"><a href="#查看nginx信息" class="headerlink" title="查看nginx信息"></a>查看nginx信息</h2><pre><code>brew info nginx  
+</code></pre><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>brew install nginx  </p>
+<h2 id="配置nginx开机启动"><a href="#配置nginx开机启动" class="headerlink" title="配置nginx开机启动"></a>配置nginx开机启动</h2><p>ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents  </p>
+<p>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist  </p>
+<h2 id="nginx配置文件路径"><a href="#nginx配置文件路径" class="headerlink" title="nginx配置文件路径"></a>nginx配置文件路径</h2><pre><code>/usr/local/etc/nginx/nginx.conf  
+</code></pre><h2 id="nginx常用操作"><a href="#nginx常用操作" class="headerlink" title="nginx常用操作"></a>nginx常用操作</h2><p>直接启动</p>
+<pre><code>nginx   
+</code></pre><p>修改配置后，验证配置文件语法</p>
+<pre><code>nginx -t  
+</code></pre><p>nginx运行时直接重启</p>
+<pre><code>nginx -s reload  
+</code></pre><h2 id="nginx-启动异常"><a href="#nginx-启动异常" class="headerlink" title="nginx 启动异常"></a>nginx 启动异常</h2><p>执行重启命令 nginx -s reload ,出现如下错误</p>
+<p>nginx: [error] open() “/usr/local/var/run/nginx.pid” failed (2: No such file or directory)<br>原因是当前nginx还未启动，先执行 nginx,之后可以执行重启命令</p>
+<h2 id="测试安装启动成功"><a href="#测试安装启动成功" class="headerlink" title="测试安装启动成功"></a>测试安装启动成功</h2><p>浏览器访问 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 可以看到nginx的欢迎页</p>
+<p>如果想让nginx监听 80 端口，启动时要加 sudo</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/09/01/install-homebrew-on-mac/" itemprop="url">
+                  Mac安装Homebrew
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-09-01T12:28:39+08:00" content="2014-09-01">
+              2014-09-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mac/" itemprop="url" rel="index">
+                    <span itemprop="name">mac</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/01/install-homebrew-on-mac/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-homebrew-on-mac/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/09/01/install-homebrew-on-mac/" class="leancloud_visitors" data-flag-title="Mac安装Homebrew">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Mac安装Homebrew"><a href="#Mac安装Homebrew" class="headerlink" title="Mac安装Homebrew"></a>Mac安装Homebrew</h1><h2 id="Homebrew介绍"><a href="#Homebrew介绍" class="headerlink" title="Homebrew介绍"></a>Homebrew介绍</h2><p>类似yum 和 apt，Homebrew是Mac下的软件包管理工具</p>
+<h2 id="官方说明文档"><a href="#官方说明文档" class="headerlink" title="官方说明文档"></a>官方说明文档</h2><p><a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">http://brew.sh/index_zh-cn.html</a></p>
+<h2 id="Mac下安装命令-完全复制"><a href="#Mac下安装命令-完全复制" class="headerlink" title="Mac下安装命令(完全复制)"></a>Mac下安装命令(完全复制)</h2><pre><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;  
+</code></pre><p>在命令行运行后，根据提示安装</p>
+<h2 id="基础命令介绍"><a href="#基础命令介绍" class="headerlink" title="基础命令介绍"></a>基础命令介绍</h2><p>brew doctor 列出系统的建议和警告信息</p>
+<p>brew -v 显示版本信息</p>
+<p>brew up/update 更新brew软件包，应该是更新自己吧</p>
+<p>brew home package 查看软件包首页</p>
+<p>brew info package 查看软件包信息</p>
+<p>brew deps package  查看依赖</p>
+<p>brew search package 查找</p>
+<p>brew option package  查看软件包安装选项</p>
+<p>brew install package 如果加 -v 参数，表示显示安装编译信息</p>
+<p>brew uninstall / remove package 卸载软件包</p>
+<p>brew upgrade package 更新某个软件包，如果不加package参数，表示更新所有软件包</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/08/30/eclipse-properties-file-edit/" itemprop="url">
                   eclipse打开含中文properties文件乱码解决
                 </a>
@@ -651,294 +939,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/08/22/free-mirrors/" itemprop="url">
-                  免费镜像地址收集，让自己的下载更快一点
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-22T18:06:15+08:00" content="2014-08-22">
-              2014-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/08/22/free-mirrors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/22/free-mirrors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/08/22/free-mirrors/" class="leancloud_visitors" data-flag-title="免费镜像地址收集，让自己的下载更快一点">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="免费镜像地址收集，让自己的下载更快一点"><a href="#免费镜像地址收集，让自己的下载更快一点" class="headerlink" title="免费镜像地址收集，让自己的下载更快一点"></a>免费镜像地址收集，让自己的下载更快一点</h1><h2 id="免费镜像说明"><a href="#免费镜像说明" class="headerlink" title="免费镜像说明"></a>免费镜像说明</h2><p>免费镜像地址，让你的下载更快速<br>以前下载linux虚拟镜像的时候经常需要用百度网盘秒掉，然后在拉到本地下来，非常麻烦，<br>收集这个希望能够帮助更多的人节省时间 :)<br>截止博客发布，亲测所有地址可用<br>大家发现有更多可用地址，欢迎补充</p>
-<h2 id="企业贡献"><a href="#企业贡献" class="headerlink" title="企业贡献"></a>企业贡献</h2><p>搜狐开源镜像站：<a href="http://mirrors.sohu.com/" target="_blank" rel="external">http://mirrors.sohu.com/</a>(推荐)</p>
-<p>网易开源镜像站：<a href="http://mirrors.163.com/" target="_blank" rel="external">http://mirrors.163.com/</a></p>
-<p>阿里云镜像：<a href="http://mirrors.aliyun.com/" target="_blank" rel="external">http://mirrors.aliyun.com/</a>（2014年11月29日添加）</p>
-<p>国外的一个 <a href="http://mirror.cogentco.com/" target="_blank" rel="external">http://mirror.cogentco.com/</a> (2015-01-31添加)</p>
-<h2 id="国内高校的开源镜像站"><a href="#国内高校的开源镜像站" class="headerlink" title="国内高校的开源镜像站"></a>国内高校的开源镜像站</h2><p>中国科学技术大学(<a href="http://debian.ustc.edu.cn/" target="_blank" rel="external">http://debian.ustc.edu.cn/</a>)</p>
-<p>大连理工大学(<a href="http://mirror.dlut.edu.cn/" target="_blank" rel="external">http://mirror.dlut.edu.cn/</a>)</p>
-<p>北京交通大学(<a href="http://mirror.bjtu.edu.cn/cn/" target="_blank" rel="external">http://mirror.bjtu.edu.cn/cn/</a>)</p>
-<p>北京理工大学(<a href="http://mirror.bit.edu.cn/web/" target="_blank" rel="external">http://mirror.bit.edu.cn/web/</a>)</p>
-<p>东北大学(<a href="http://mirror.neu.edu.cn/" target="_blank" rel="external">http://mirror.neu.edu.cn/</a>)</p>
-<p>厦门大学(<a href="http://mirrors.xmu.edu.cn/" target="_blank" rel="external">http://mirrors.xmu.edu.cn/</a>)</p>
-<p>西安电子科技大学(<a href="http://linux.xidian.edu.cn/" target="_blank" rel="external">http://linux.xidian.edu.cn/</a>)</p>
-<p>哈尔滨工业大学(<a href="http://run.hit.edu.cn/html/" target="_blank" rel="external">http://run.hit.edu.cn/html/</a>)</p>
-<p>天津大学(<a href="http://mirror.tju.edu.cn/" target="_blank" rel="external">http://mirror.tju.edu.cn/</a>)</p>
-<p>东软信息学院(<a href="http://mirrors.neusoft.edu.cn/" target="_blank" rel="external">http://mirrors.neusoft.edu.cn/</a>)</p>
-<h2 id="美国各大学的镜像站"><a href="#美国各大学的镜像站" class="headerlink" title="美国各大学的镜像站"></a>美国各大学的镜像站</h2><p>麻省理工学院MIT(<a href="http://mirrors.mit.edu/" target="_blank" rel="external">http://mirrors.mit.edu/</a>)</p>
-<p>哥伦比亚大学(<a href="http://mirror.cc.columbia.edu/" target="_blank" rel="external">http://mirror.cc.columbia.edu/</a>)</p>
-<p>俄勒冈州立大学(<a href="http://ftp.osuosl.org/pub/" target="_blank" rel="external">http://ftp.osuosl.org/pub/</a>)</p>
-<p>伊利诺伊大学厄巴纳－香槟分校(<a href="http://cosmos.cites.illinois.edu/" target="_blank" rel="external">http://cosmos.cites.illinois.edu/</a>)</p>
-<p>杜克大学(<a href="http://archive.linux.duke.edu/" target="_blank" rel="external">http://archive.linux.duke.edu/</a>)</p>
-<h2 id="日本大学"><a href="#日本大学" class="headerlink" title="日本大学"></a>日本大学</h2><p>北陸先端科学技術大学院大学(<a href="http://ftp.jaist.ac.jp/" target="_blank" rel="external">http://ftp.jaist.ac.jp/</a>)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/04/22/use-easy-install/" itemprop="url">
-                  python 摸坑儿-easy_install使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-04-22T16:24:05+08:00" content="2014-04-22">
-              2014-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/04/22/use-easy-install/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/use-easy-install/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/04/22/use-easy-install/" class="leancloud_visitors" data-flag-title="python 摸坑儿-easy_install使用">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="easy-install-使用"><a href="#easy-install-使用" class="headerlink" title="easy_install 使用"></a>easy_install 使用</h1><p>Python社区强大，有很多功能很不错的第三方库，easy_install是Python管理第三方库的一个工具</p>
-<p>easy_install 使用</p>
-<p>[官方文档](<a href="https://pythonhosted.org/setuptools/easy_install.html" target="_blank" rel="external">https://pythonhosted.org/setuptools/easy_install.html</a>]</p>
-<p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo easy_install *.egg</div></pre></td></tr></table></figure>
-<p>安装指定版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">easy_install &quot;SomePackage==2.0&quot;</div></pre></td></tr></table></figure>
-<p>回归版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo easy_install PackageName==1.2.3</div></pre></td></tr></table></figure>
-<p>删除包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">easy_install -m peewee</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -984,7 +984,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -992,7 +992,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1001,7 +1001,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

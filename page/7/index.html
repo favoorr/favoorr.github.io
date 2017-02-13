@@ -258,6 +258,282 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
+                  python 升级到 3.6 virtualenvwrapper 报错问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-03T10:48:35+08:00" content="2017-01-03">
+              2017-01-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/03/python3-6-virtualenvwrapper-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/03/python3-6-virtualenvwrapper-problem/" class="leancloud_visitors" data-flag-title="python 升级到 3.6 virtualenvwrapper 报错问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Yesterday, I install the <code>you-get</code>, and Python upgrade to newest version 3.6 by this<br>install, Then the <code>virtualenvwrapper</code> could’t work well any more.</p>
+<p>I got the error as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Last login: Tue Jan  3 09:38:53 on ttys002</div><div class="line">/usr/local/opt/python3/bin/python3.6: Error while finding module specification for &apos;virtualenvwrapper.hook_loader&apos; (ModuleNotFoundError: No module named &apos;virtualenvwrapper&apos;)</div><div class="line">virtualenvwrapper.sh: There was a problem running the initialization hooks.</div><div class="line"></div><div class="line">If Python could not import the module virtualenvwrapper.hook_loader,</div><div class="line">check that virtualenvwrapper has been installed for</div><div class="line">VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 and that PATH is</div><div class="line">set properly.</div></pre></td></tr></table></figure>
+<p>And in my ~/.zshrc file, I already config as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=/Users/User/zl/python/project/venv</div><div class="line">export PROJECT_HOME=/Users/User/zl/python/project</div><div class="line">export VIRTUALENVWRAPPER_PYTHON=`which python3`</div><div class="line">source /usr/local/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
+<p>Do the follow tips may solve the problem:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">First: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U pip</div><div class="line"></div><div class="line">Second: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U virtualenvwrapper</div></pre></td></tr></table></figure>
+<p>One more thing:</p>
+<p>macOS will install the python2.7.10 by default,</p>
+<p>I use brew to install python instead of the macOS default.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">/usr/bin/python</div><div class="line"></div><div class="line">rm the default python</div><div class="line"></div><div class="line">sudo rm /usr/bin/python</div></pre></td></tr></table></figure>
+<p>If need python2, the newest version of python2 is python-2.7.13</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/28/macos-python3/" itemprop="url">
+                  macOS 安装使用 python 记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-28T21:33:22+08:00" content="2016-11-28">
+              2016-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/28/macos-python3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/macos-python3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macOS 安装使用 python 记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions/3.5</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
+<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
+<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
+<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
+<p>国内其他可选镜像如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/08/31/zsh-summary/" itemprop="url">
                   ZSH 使用总结
                 </a>
@@ -686,305 +962,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/25/mac-brew-summary/" itemprop="url">
-                  mac 下的 brew 总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-25T16:37:07+08:00" content="2015-07-25">
-              2015-07-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/brew/" itemprop="url" rel="index">
-                    <span itemprop="name">brew</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/25/mac-brew-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/25/mac-brew-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/25/mac-brew-summary/" class="leancloud_visitors" data-flag-title="mac 下的 brew 总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>mac 下 brew 使用总结</p>
-<p>1.no sudo</p>
-<pre><code>sudo chown -R `whoami` /usr/local
-</code></pre><p>2.brew 常用命令</p>
-<pre><code>brew install wget # 安装源码
-brew info svn # 显示软件的各种信息，包括版本啊源码地址啊等等
-brew uninstall wget # 卸载软件，很爽，一键静默卸载
-brew search git # 模糊搜索brew 支持的软件。如果不加软件名，就会列出所有它支持的软件。多的很。
-brew list # 列出本机通过brew安装的所有软件
-brew update # 跟新brew软件自身
-brew upgrade wget # 更新安装过的软件,如果不加软件名，就更新所有可以更新的软件
-brew cleanup # 清除下载的各种缓存
-
-brew deps wget  显示依赖信息
-brew --cache
-/Library/Caches/Homebrew
-</code></pre><p>5.安装目录 /usr/local</p>
-<pre><code>brew 默认安装在 /usr/local
-
-/usr/local/bin  :  可执行文件会安装在这边
-/usr/local/lib  :  c语言的动态库和静态库，编译的时候直接通过-l xx  可以依赖
-/usr/local/etc:  配置相关文件
-/usr/local/include: c语言头文件
-/Library/Caches/Homebrew : 你所有安装的软件，都会先下载到这个缓存文件夹中。
-</code></pre><p>6.brew cask 常用命令</p>
-<pre><code>brew install caskroom/cask/brew-cask
-
-brew cask install qq # 下载安装软件
-brew cask uninstall qq # 卸载软件
-brew cask search qq # 模糊搜索软件，如果不加软件名，就列出所有它支持的软件
-brew cask info qq # 显示这个软件的详细信息，如果已经用cask安装了，也会显示其安装目录信息等
-brew cask list # 列出本机按照过的软件列表
-brew cask cleanup #  清除下载的缓存以及各种链接信息
-brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
-</code></pre><p>一次维护记录</p>
-<p>执行 brew update 时候，提醒，必须先把本地的stash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local</div><div class="line">git stash</div><div class="line">git stash list</div><div class="line">brew update</div></pre></td></tr></table></figure>
-<p>参考</p>
-<p><a href="https://www.zybuluo.com/phper/note/87055" target="_blank" rel="external">https://www.zybuluo.com/phper/note/87055</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/23/compile-python2.7.10-from-source/" itemprop="url">
-                  编译python2.7.10
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-23T14:13:01+08:00" content="2015-07-23">
-              2015-07-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/23/compile-python2.7.10-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/compile-python2.7.10-from-source/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/23/compile-python2.7.10-from-source/" class="leancloud_visitors" data-flag-title="编译python2.7.10">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>环境 centos 6.6 , python 2.7.10</p>
-<p>编译 ycm ，我需要 libpython2.7.so ，但是默认的编译 ./configure 只有 /usr/local/lib/libpython2.7.a 不能被其他共享并链接</p>
-<p>手工编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum -y install python-devel openssl openssl-devel gcc sqlite-devel</div><div class="line"></div><div class="line">建立安装目录</div><div class="line">mkdir /usr/local/python2.7.10</div><div class="line"></div><div class="line">假设 已经解压 到 Python-2.7.10</div><div class="line">cd Python-2.7.10</div><div class="line">./configure --prefix=/usr/local/python2.7.10 --with-threads --enable-shared</div><div class="line">make</div><div class="line">make install altinstall</div><div class="line"></div><div class="line"></div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so.1.0 /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/bin/python2.7 /usr/local/bin</div><div class="line">/sbin/ldconfig -v</div><div class="line"></div><div class="line">locate libpython2.7.so</div><div class="line"></div><div class="line">如果安装这个方式，就不需要修改默认的 </div><div class="line"></div><div class="line">vim /usr/bin/yum</div><div class="line">mv /usr/bin/python /usr/bin/python2.6.6</div><div class="line"></div><div class="line">这个根据自己环境而定</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1030,7 +1007,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1038,7 +1015,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1047,7 +1024,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

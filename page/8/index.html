@@ -258,6 +258,305 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/25/mac-brew-summary/" itemprop="url">
+                  mac 下的 brew 总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-25T16:37:07+08:00" content="2015-07-25">
+              2015-07-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/brew/" itemprop="url" rel="index">
+                    <span itemprop="name">brew</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/25/mac-brew-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/25/mac-brew-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/25/mac-brew-summary/" class="leancloud_visitors" data-flag-title="mac 下的 brew 总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>mac 下 brew 使用总结</p>
+<p>1.no sudo</p>
+<pre><code>sudo chown -R `whoami` /usr/local
+</code></pre><p>2.brew 常用命令</p>
+<pre><code>brew install wget # 安装源码
+brew info svn # 显示软件的各种信息，包括版本啊源码地址啊等等
+brew uninstall wget # 卸载软件，很爽，一键静默卸载
+brew search git # 模糊搜索brew 支持的软件。如果不加软件名，就会列出所有它支持的软件。多的很。
+brew list # 列出本机通过brew安装的所有软件
+brew update # 跟新brew软件自身
+brew upgrade wget # 更新安装过的软件,如果不加软件名，就更新所有可以更新的软件
+brew cleanup # 清除下载的各种缓存
+
+brew deps wget  显示依赖信息
+brew --cache
+/Library/Caches/Homebrew
+</code></pre><p>5.安装目录 /usr/local</p>
+<pre><code>brew 默认安装在 /usr/local
+
+/usr/local/bin  :  可执行文件会安装在这边
+/usr/local/lib  :  c语言的动态库和静态库，编译的时候直接通过-l xx  可以依赖
+/usr/local/etc:  配置相关文件
+/usr/local/include: c语言头文件
+/Library/Caches/Homebrew : 你所有安装的软件，都会先下载到这个缓存文件夹中。
+</code></pre><p>6.brew cask 常用命令</p>
+<pre><code>brew install caskroom/cask/brew-cask
+
+brew cask install qq # 下载安装软件
+brew cask uninstall qq # 卸载软件
+brew cask search qq # 模糊搜索软件，如果不加软件名，就列出所有它支持的软件
+brew cask info qq # 显示这个软件的详细信息，如果已经用cask安装了，也会显示其安装目录信息等
+brew cask list # 列出本机按照过的软件列表
+brew cask cleanup #  清除下载的缓存以及各种链接信息
+brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
+</code></pre><p>一次维护记录</p>
+<p>执行 brew update 时候，提醒，必须先把本地的stash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local</div><div class="line">git stash</div><div class="line">git stash list</div><div class="line">brew update</div></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="https://www.zybuluo.com/phper/note/87055" target="_blank" rel="external">https://www.zybuluo.com/phper/note/87055</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/23/compile-python2.7.10-from-source/" itemprop="url">
+                  编译python2.7.10
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-23T14:13:01+08:00" content="2015-07-23">
+              2015-07-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/23/compile-python2.7.10-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/compile-python2.7.10-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/23/compile-python2.7.10-from-source/" class="leancloud_visitors" data-flag-title="编译python2.7.10">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>环境 centos 6.6 , python 2.7.10</p>
+<p>编译 ycm ，我需要 libpython2.7.so ，但是默认的编译 ./configure 只有 /usr/local/lib/libpython2.7.a 不能被其他共享并链接</p>
+<p>手工编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum -y install python-devel openssl openssl-devel gcc sqlite-devel</div><div class="line"></div><div class="line">建立安装目录</div><div class="line">mkdir /usr/local/python2.7.10</div><div class="line"></div><div class="line">假设 已经解压 到 Python-2.7.10</div><div class="line">cd Python-2.7.10</div><div class="line">./configure --prefix=/usr/local/python2.7.10 --with-threads --enable-shared</div><div class="line">make</div><div class="line">make install altinstall</div><div class="line"></div><div class="line"></div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so.1.0 /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/bin/python2.7 /usr/local/bin</div><div class="line">/sbin/ldconfig -v</div><div class="line"></div><div class="line">locate libpython2.7.so</div><div class="line"></div><div class="line">如果安装这个方式，就不需要修改默认的 </div><div class="line"></div><div class="line">vim /usr/bin/yum</div><div class="line">mv /usr/bin/python /usr/bin/python2.6.6</div><div class="line"></div><div class="line">这个根据自己环境而定</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/22/build-clang-from-source/" itemprop="url">
                   centos6.6 源码编译 clang
                 </a>
@@ -664,284 +963,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/22/compile-youcompleteme/" itemprop="url">
-                  编译YouCompleteMe
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T09:39:42+08:00" content="2015-07-22">
-              2015-07-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/22/compile-youcompleteme/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/compile-youcompleteme/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/22/compile-youcompleteme/" class="leancloud_visitors" data-flag-title="编译YouCompleteMe">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>centos 6.6 下编译 YouCompleteMe</p>
-<p>vundle 管理插件下载的时候，可以直接从 github 下载后，移动到目录 <code>~/.vim/bundle/</code> 下，<br>vundle 安装看不到进度，真心痛苦，昨天夜里下载了至少 5 个多小时吧，一整晚没关机</p>
-<p>编译完 gcc  4.8.1 参考博客文章 &lt;&gt;</p>
-<p>编译完 clang 3.8.0 参考博客文章 &lt;&gt;</p>
-<p>开始编译 ycm</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">cd ~/.vim/bundle/YouCompleteMe</div><div class="line"></div><div class="line">sh install.sh</div><div class="line"></div><div class="line">开始时大概是这样的</div><div class="line"></div><div class="line">[  0%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/errors.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/dict.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/slice.cpp.o</div><div class="line">[  3%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/tuple.cpp.o</div><div class="line">...</div><div class="line"></div><div class="line">90% 之后就报错了</div><div class="line"></div><div class="line">[ 90%] Building CXX object ycm/CMakeFiles/ycm_client_support.dir/versioning.cpp.o</div><div class="line">Linking CXX shared library /root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so</div><div class="line">/usr/bin/ld: /usr/local/lib/libpython2.7.a(abstract.o): relocation R_X86_64_32 against `.rodata.str1.8&apos; can not be used when making a shared object; recompile with -fPIC</div><div class="line">/usr/local/lib/libpython2.7.a: could not read symbols: Bad value</div><div class="line">collect2: 错误：ld 返回 1</div><div class="line">make[3]: *** [/root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so] 错误 1</div><div class="line">make[2]: *** [ycm/CMakeFiles/ycm_client_support.dir/all] 错误 2</div><div class="line">make[1]: *** [ycm/CMakeFiles/ycm_support_libs.dir/rule] 错误 2</div><div class="line">make: *** [ycm_support_libs] 错误 2</div><div class="line"></div><div class="line">作者给出的解答是 </div><div class="line"></div><div class="line">Your libpython2.7.a was not compiled with -fPIC so it can&apos;t be linked into ycm_core.so. Use the -DPYTHON_LIBRARY= cmake flag to point it to a .so version of libpython on your machine (for instance, -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so). Naturally, this means you&apos;ll have to go through the full installation guide by hand.</div><div class="line"></div><div class="line">我的做法是增加参数 --enable-shared 重新编译 python</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/python2.7 --with-threads --enable-shared</div><div class="line"></div><div class="line">编译完 Python 后，再次执行 sh install.sh</div></pre></td></tr></table></figure>
-<p>成功验证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">最后看到 </div><div class="line"></div><div class="line">[100%] Built target ycm_client_support</div><div class="line">Scanning dependencies of target ycm_support_libs</div><div class="line">[100%] Built target ycm_support_libs</div><div class="line"></div><div class="line">说明编译成功了，再次 vim file ，不会看到错误</div><div class="line"></div><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="url">
-                  Cento6.6 编译安装 the_silver_searcher
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-21T19:03:16+08:00" content="2015-07-21">
-              2015-07-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" class="leancloud_visitors" data-flag-title="Cento6.6 编译安装 the_silver_searcher">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>the_silver_searcher 好像是个神奇，摸索vim时候一个依赖包，</p>
-<p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
-<p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
-<p>Centos7 下安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
-<p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
-<p>错误：xz compression not available，并且 yum 不能使用</p>
-<p>xz 版本如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
-<p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
-<p>Centos6 下编译安装</p>
-<p>1.下载源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
-<p>执行成功，没有错误，则安装成功</p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -987,7 +1008,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">106</span>
+              <span class="site-state-item-count">108</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -995,7 +1016,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1004,7 +1025,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
