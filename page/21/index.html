@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/09/02/config-nginx-fastcgi/" itemprop="url">
-                  Mac10.9.4配置Nginx解析php
+                <a class="post-title-link" href="/2014/11/07/how-to-visit-google-in-china/" itemprop="url">
+                  国内如何访问Google
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-02T16:48:02+08:00" content="2014-09-02">
-              2014-09-02
+            <time itemprop="dateCreated" datetime="2014-11-07T14:10:01+08:00" content="2014-11-07">
+              2014-11-07
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
+                  <a href="/categories/vpn/" itemprop="url" rel="index">
+                    <span itemprop="name">vpn</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/02/config-nginx-fastcgi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/02/config-nginx-fastcgi/" itemprop="commentsCount"></span>
+                <a href="/2014/11/07/how-to-visit-google-in-china/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/07/how-to-visit-google-in-china/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2014/09/02/config-nginx-fastcgi/" class="leancloud_visitors" data-flag-title="Mac10.9.4配置Nginx解析php">
+             <span id="/2014/11/07/how-to-visit-google-in-china/" class="leancloud_visitors" data-flag-title="国内如何访问Google">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,196 +337,35 @@
       
         
           
-            <h1 id="Mac10-9-4配置Nginx解析php"><a href="#Mac10-9-4配置Nginx解析php" class="headerlink" title="Mac10.9.4配置Nginx解析php"></a>Mac10.9.4配置Nginx解析php</h1><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>参照文章 <a href="/install-nginx-on-mac/" title="Mac10.9.3仅安装Nginx">Mac10.9.3仅安装Nginx</a></p>
-<h2 id="配置php文件"><a href="#配置php文件" class="headerlink" title="配置php文件"></a>配置php文件</h2><p>10.9.4 默认安装了php，配置文件路径</p>
-<p>/private/etc/php-fpm.conf.default</p>
-<p>/private/etc/php.ini.default </p>
-<pre><code>cd /private/etc/  
-sudo cp php-fpm.conf.default php-fpm.conf  
-sudo cp php.ini.default php.ini  
-
-sudo vim php-fpm.conf  
-去掉注释的pid和log,&apos;;&apos;表示注释
-;pid = run/php-fpm.pid  
-;error_log = log/php-fpm.log  
-
-cp php-fpm.conf /usr/local/etc/php-fpm.conf  
-</code></pre><p>启动php-fpm</p>
-<pre><code>sudo php-fpm -c php.ini -y php-fpm.conf -p /usr/local/var  
-</code></pre><p>注意：该命令必须仍然在 /private/etc目录下执行，如果切换目录，需要制定ini文件和conf文件的路径</p>
-<h2 id="配置fastcgi"><a href="#配置fastcgi" class="headerlink" title="配置fastcgi"></a>配置fastcgi</h2><p>编辑nginx配置文件</p>
-<pre><code>vim /usr/local/etc/nginx/nginx.conf  
-</code></pre><p>增加server配置</p>
-<pre><code>server {  
-        listen       8082;  
-        server_name  localhost;  
-        root           /wwwroot/php1;  
-        error_page   500 502 503 504  /50x.html;  
-
-        location ~ \.php$ {  
-            fastcgi_pass   127.0.0.1:9000;  
-            fastcgi_index  index.php;  
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;  
-            include        fastcgi_params;  
-        }  
-}  
-
-说明：
-root           /wwwroot/php1; php程序的位置
-fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一定要加    $document_root不然会出现file not found的错误
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>新建测试文件</p>
-<p>/wwwroot/php1 下新建 index.php</p>
-<html><br><head><br>    <title>php hello world</title><br></head><br><body><br>    php测试<br><br>    &lt;?php phpinfo(); ?&gt;<br></body><br></html>  
-
-
-<http:localhost:8082 index.php="">
-
-<p>能够正确看到php配置说明文件</p>
-</http:localhost:8082>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/01/install-nginx-on-mac/" itemprop="url">
-                  Mac10.9.3仅安装Nginx
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T13:18:29+08:00" content="2014-09-01">
-              2014-09-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-nginx-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-nginx-on-mac/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/09/01/install-nginx-on-mac/" class="leancloud_visitors" data-flag-title="Mac10.9.3仅安装Nginx">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac10-9-3仅安装Nginx"><a href="#Mac10-9-3仅安装Nginx" class="headerlink" title="Mac10.9.3仅安装Nginx"></a>Mac10.9.3仅安装Nginx</h1><p>首先安装Homebrew</p>
-<p>参照文章 <a href="/install-homebrew-on-mac/" title="Mac安装Homebrew">Mac安装Homebrew</a></p>
-<h2 id="查看nginx信息"><a href="#查看nginx信息" class="headerlink" title="查看nginx信息"></a>查看nginx信息</h2><pre><code>brew info nginx  
-</code></pre><h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><p>brew install nginx  </p>
-<h2 id="配置nginx开机启动"><a href="#配置nginx开机启动" class="headerlink" title="配置nginx开机启动"></a>配置nginx开机启动</h2><p>ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents  </p>
-<p>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist  </p>
-<h2 id="nginx配置文件路径"><a href="#nginx配置文件路径" class="headerlink" title="nginx配置文件路径"></a>nginx配置文件路径</h2><pre><code>/usr/local/etc/nginx/nginx.conf  
-</code></pre><h2 id="nginx常用操作"><a href="#nginx常用操作" class="headerlink" title="nginx常用操作"></a>nginx常用操作</h2><p>直接启动</p>
-<pre><code>nginx   
-</code></pre><p>修改配置后，验证配置文件语法</p>
-<pre><code>nginx -t  
-</code></pre><p>nginx运行时直接重启</p>
-<pre><code>nginx -s reload  
-</code></pre><h2 id="nginx-启动异常"><a href="#nginx-启动异常" class="headerlink" title="nginx 启动异常"></a>nginx 启动异常</h2><p>执行重启命令 nginx -s reload ,出现如下错误</p>
-<p>nginx: [error] open() “/usr/local/var/run/nginx.pid” failed (2: No such file or directory)<br>原因是当前nginx还未启动，先执行 nginx,之后可以执行重启命令</p>
-<h2 id="测试安装启动成功"><a href="#测试安装启动成功" class="headerlink" title="测试安装启动成功"></a>测试安装启动成功</h2><p>浏览器访问 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 可以看到nginx的欢迎页</p>
-<p>如果想让nginx监听 80 端口，启动时要加 sudo</p>
+            <p>中国如何访问Google?试试下面几个吧</p>
+<p>随着时间推移，可能会有些不能用的，自己多试试</p>
+<h1 id="可以上网的地址"><a href="#可以上网的地址" class="headerlink" title="可以上网的地址"></a>可以上网的地址</h1><p><a href="http://gg.cellmean.com/" target="_blank" rel="external">http://gg.cellmean.com/</a></p>
+<p><a href="https://g.yh.gs/" target="_blank" rel="external">https://g.yh.gs/</a></p>
+<p>新增一个<a href="http://bar.freebuf.com/comment/3987" target="_blank" rel="external">http://bar.freebuf.com/comment/3987</a></p>
+<p>这个也很不错，都是好人<a href="http://googless.sinaapp.com/" target="_blank" rel="external">http://googless.sinaapp.com/</a></p>
+<p>比我收集的好</p>
+<p><a href="http://www.itechzero.com/google-mirror-sites-collect.html" target="_blank" rel="external">http://www.itechzero.com/google-mirror-sites-collect.html</a></p>
+<p>下面地址解救中国程序员，但是不保证完全能用哦</p>
+<p>最后更新时间 2015-01-29日</p>
+<p><a href="http://laoshandaoshi.so/?gws_rd=ssl" target="_blank" rel="external">http://laoshandaoshi.so/?gws_rd=ssl</a> 2015-01-29添加,感谢@Andrew 提供</p>
+<p><a href="http://www.886404.com" target="_blank" rel="external">http://www.886404.com</a> 2015-01-07 添加</p>
+<p><a href="http://64.233.182.102" target="_blank" rel="external">http://64.233.182.102</a> 2015-01-07 添加</p>
+<p><a href="http://www.glgoo.com/" target="_blank" rel="external">http://www.glgoo.com/</a></p>
+<p><a href="https://www.sssis.com/" target="_blank" rel="external">https://www.sssis.com/</a></p>
+<p><a href="http://www.xiexingwen.com/" target="_blank" rel="external">http://www.xiexingwen.com/</a></p>
+<p>host 更改的方法 <a href="http://serve.netsh.org/pub/gethosts.php" target="_blank" rel="external">http://serve.netsh.org/pub/gethosts.php</a></p>
+<p>vpn还是最好的，花钱买服务吧</p>
+<p>GAE，zf一开会就大姨妈</p>
+<p>哪个快，自己试试 ^.^</p>
+<hr>
+<p>已经不能访问如下</p>
+<p><a href="http://216.58.208.0/" target="_blank" rel="external">http://216.58.208.0/</a>   2015-01-07 添加,2015-01-29删除</p>
+<p><a href="http://guge.io" target="_blank" rel="external">http://guge.io</a>  2015-01-29删除</p>
+<p><a href="https://awk.so" target="_blank" rel="external">https://awk.so</a> 2015-01-29删除</p>
+<p><a href="http://wen.lu" target="_blank" rel="external">http://wen.lu</a> 2015-01-29删除</p>
+<p><a href="http://74.125.202.120/" target="_blank" rel="external">http://74.125.202.120/</a> 2015-01-29删除</p>
+<p><a href="https://edgecastcdn.net/00107ED/g/" target="_blank" rel="external">https://edgecastcdn.net/00107ED/g/</a> 2015-01-29删除</p>
+<p>如果大家发现哪个又可以了，欢迎留言</p>
 
           
         
@@ -576,8 +415,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/09/01/install-homebrew-on-mac/" itemprop="url">
-                  Mac安装Homebrew
+                <a class="post-title-link" href="/2014/10/30/mac-os-x-jdk6/" itemprop="url">
+                  Install Jdk6 on Mac OS X
                 </a>
               
             
@@ -590,8 +429,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-09-01T12:28:39+08:00" content="2014-09-01">
-              2014-09-01
+            <time itemprop="dateCreated" datetime="2014-10-30T13:28:29+08:00" content="2014-10-30">
+              2014-10-30
             </time>
           </span>
 
@@ -604,8 +443,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -620,8 +459,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/09/01/install-homebrew-on-mac/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/01/install-homebrew-on-mac/" itemprop="commentsCount"></span>
+                <a href="/2014/10/30/mac-os-x-jdk6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/30/mac-os-x-jdk6/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -631,7 +470,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/09/01/install-homebrew-on-mac/" class="leancloud_visitors" data-flag-title="Mac安装Homebrew">
+             <span id="/2014/10/30/mac-os-x-jdk6/" class="leancloud_visitors" data-flag-title="Install Jdk6 on Mac OS X">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -655,21 +494,9 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="Mac安装Homebrew"><a href="#Mac安装Homebrew" class="headerlink" title="Mac安装Homebrew"></a>Mac安装Homebrew</h1><h2 id="Homebrew介绍"><a href="#Homebrew介绍" class="headerlink" title="Homebrew介绍"></a>Homebrew介绍</h2><p>类似yum 和 apt，Homebrew是Mac下的软件包管理工具</p>
-<h2 id="官方说明文档"><a href="#官方说明文档" class="headerlink" title="官方说明文档"></a>官方说明文档</h2><p><a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">http://brew.sh/index_zh-cn.html</a></p>
-<h2 id="Mac下安装命令-完全复制"><a href="#Mac下安装命令-完全复制" class="headerlink" title="Mac下安装命令(完全复制)"></a>Mac下安装命令(完全复制)</h2><pre><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&quot;  
-</code></pre><p>在命令行运行后，根据提示安装</p>
-<h2 id="基础命令介绍"><a href="#基础命令介绍" class="headerlink" title="基础命令介绍"></a>基础命令介绍</h2><p>brew doctor 列出系统的建议和警告信息</p>
-<p>brew -v 显示版本信息</p>
-<p>brew up/update 更新brew软件包，应该是更新自己吧</p>
-<p>brew home package 查看软件包首页</p>
-<p>brew info package 查看软件包信息</p>
-<p>brew deps package  查看依赖</p>
-<p>brew search package 查找</p>
-<p>brew option package  查看软件包安装选项</p>
-<p>brew install package 如果加 -v 参数，表示显示安装编译信息</p>
-<p>brew uninstall / remove package 卸载软件包</p>
-<p>brew upgrade package 更新某个软件包，如果不加package参数，表示更新所有软件包</p>
+            <p>买得mac装得时10.9的系统，没有预装jdk，装了最新版jdk1.8，但是有时候<br>需要jdk1.6版本来编译一些java程序，oracle 官方发布的1.6都没有mac os 版本，<br>只有Linux版本，网上找半天才找到答案，记录备忘和分享给需要的人</p>
+<p>mac os x安装jdk1.6<br>苹果官方下载地址<a href="http://support.apple.com/kb/DL1572" target="_blank" rel="external">http://support.apple.com/kb/DL1572</a></p>
+<p>用到的地方<br>dbeaver 需要安装jre1.6<br>编译hadoop 2.0的时候需要jdk1.6</p>
 
           
         
@@ -719,8 +546,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/08/30/eclipse-properties-file-edit/" itemprop="url">
-                  eclipse打开含中文properties文件乱码解决
+                <a class="post-title-link" href="/2014/10/29/read-redis-design-and-implementation-1/" itemprop="url">
+                  《Redis设计与实现》- 数据结构与对象
                 </a>
               
             
@@ -733,8 +560,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-30T13:20:25+08:00" content="2014-08-30">
-              2014-08-30
+            <time itemprop="dateCreated" datetime="2014-10-29T13:28:29+08:00" content="2014-10-29">
+              2014-10-29
             </time>
           </span>
 
@@ -747,8 +574,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">eclipse</span>
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
                   </a>
                 </span>
 
@@ -763,8 +590,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/08/30/eclipse-properties-file-edit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/30/eclipse-properties-file-edit/" itemprop="commentsCount"></span>
+                <a href="/2014/10/29/read-redis-design-and-implementation-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/29/read-redis-design-and-implementation-1/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -774,7 +601,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/08/30/eclipse-properties-file-edit/" class="leancloud_visitors" data-flag-title="eclipse打开含中文properties文件乱码解决">
+             <span id="/2014/10/29/read-redis-design-and-implementation-1/" class="leancloud_visitors" data-flag-title="《Redis设计与实现》- 数据结构与对象">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -798,15 +625,18 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="eclipse打开含中文properties文件乱码解决"><a href="#eclipse打开含中文properties文件乱码解决" class="headerlink" title="eclipse打开含中文properties文件乱码解决"></a>eclipse打开含中文properties文件乱码解决</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>Java项目里面经常会使用properties文件，如果在里面添加中文注释，项目转移重新checkout后<br>如果使用Eclipse默认的properties编辑器就会乱码，解决方案就是安装第三方插件，替换自带的<br>properties编辑器</p>
-<h2 id="选择一-property-edit"><a href="#选择一-property-edit" class="headerlink" title="选择一 property edit "></a>选择一 property edit </h2><p>一个日本开源作者编写的插件，原声编辑器增强版，能够打开含有中文的文件不乱码<br>算是一个轻量级版本，如果不做大型的国际化功能，这个功能足够</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1i3Ibp7R" target="_blank" rel="external">http://pan.baidu.com/s/1i3Ibp7R</a></p>
-<h2 id="选择二-rbe"><a href="#选择二-rbe" class="headerlink" title="选择二 rbe "></a>选择二 rbe </h2><p>一个功能强大的资源文件编辑工具，支持对key排序和分组展示、直接新建对应国家资源文件等</p>
-<p>例如:</p>
-<p>user.name</p>
-<p>user.password</p>
-<p>在展示的时候会展示为user节点，然后下面有两个子节点，如果做大型的国际化网站，这个还是很不错的</p>
-<p>下载地址 <a href="http://pan.baidu.com/s/1hq89RG4" target="_blank" rel="external">http://pan.baidu.com/s/1hq89RG4</a></p>
+            <h1 id="《Redis设计与实现》——读书笔记一"><a href="#《Redis设计与实现》——读书笔记一" class="headerlink" title="《Redis设计与实现》——读书笔记一"></a>《Redis设计与实现》——读书笔记一</h1><p>这本书从1.0开始一直关注，然后平时redis doc也是看的书的作者维护的网站，<br>可以预定后，立即预定，并成为第一批到手的读者，可惜中间由于各种原因一直<br>没有时间仔细研读，最近终于有时间可以来细细品读本书。</p>
+<p>在地铁上看了本书的第一二三章，了解到本书的目录安排为四部分，分别是</p>
+<ul>
+<li>数据结构与对象</li>
+<li>单机数据库实现</li>
+<li>多机数据库实现</li>
+<li>独立功能的实现</li>
+</ul>
+<h1 id="第二章-简单动态字符串"><a href="#第二章-简单动态字符串" class="headerlink" title="第二章 简单动态字符串"></a>第二章 简单动态字符串</h1><p>讲解了设计理念，通过通俗易懂的语言和实例，讲解了sds(simple dynamic string)与<br>c语言原声的字符串之间的联系和区别，讲解了sds的设计结构，以及结构的优点</p>
+<p>其中保存字符串len，该理念可以用到后台设计中，比如保存用户充值记录时候，会保存<br>每一次操作的单个记录，也会按照每个用户的操作计算，每个用户产生一条记录，比如充值<br>总额，第一次充值时间，最后一次充值时间，最后一次充值金额等元素</p>
+<p>或者比如设计到count计算的数据，不会到用到的时候才去计算，而是出现数据后，就回去计算，<br>用到的时候，直接读取值，但是对于修改频繁的操作，保存时候，需要慎重，例如淘宝上每个商品<br>的浏览量，数据修改过于频繁，如果保存数据库，数据库压力会太大，而这部分数据又<br>不要去过于精确和实时，需要在准确性、数据库压力上找到权衡点</p>
+<h1 id="第三章-链表"><a href="#第三章-链表" class="headerlink" title="第三章 链表"></a>第三章 链表</h1><p>初步讲解了链表在Redis里面的实现方案，listNode结构和list结构，以及多态性，可以用于多种<br>数据结构，链表和链表节点的api，可以带领读者快速理解实现方案方案和优点</p>
 
           
         
@@ -856,8 +686,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               
                 
-                <a class="post-title-link" href="/2014/08/30/eclipse-java-compiler-level-error/" itemprop="url">
-                  Java compiler level does not match the installed Java project facet
+                <a class="post-title-link" href="/2014/10/17/learn-markdown-syntax/" itemprop="url">
+                  Markdown 语法整理
                 </a>
               
             
@@ -870,8 +700,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-08-30T12:05:26+08:00" content="2014-08-30">
-              2014-08-30
+            <time itemprop="dateCreated" datetime="2014-10-17T22:29:27+08:00" content="2014-10-17">
+              2014-10-17
             </time>
           </span>
 
@@ -884,8 +714,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">eclipse</span>
+                  <a href="/categories/markdown/" itemprop="url" rel="index">
+                    <span itemprop="name">markdown</span>
                   </a>
                 </span>
 
@@ -900,8 +730,8 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/08/30/eclipse-java-compiler-level-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/30/eclipse-java-compiler-level-error/" itemprop="commentsCount"></span>
+                <a href="/2014/10/17/learn-markdown-syntax/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/17/learn-markdown-syntax/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -911,7 +741,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
           
           
-             <span id="/2014/08/30/eclipse-java-compiler-level-error/" class="leancloud_visitors" data-flag-title="Java compiler level does not match the installed Java project facet">
+             <span id="/2014/10/17/learn-markdown-syntax/" class="leancloud_visitors" data-flag-title="Markdown 语法整理">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -935,11 +765,400 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
       
         
           
-            <h1 id="eclipse-报错-Java-compiler-level-does-not-match-the-version-of-the-installed-Java-project-facet"><a href="#eclipse-报错-Java-compiler-level-does-not-match-the-version-of-the-installed-Java-project-facet" class="headerlink" title="eclipse 报错 Java compiler level does not match the version of the installed Java project facet."></a>eclipse 报错 Java compiler level does not match the version of the installed Java project facet.</h1><h2 id="错误信息如下："><a href="#错误信息如下：" class="headerlink" title="错误信息如下："></a>错误信息如下：</h2><p>Description Resource<br>Path Location<br>Type<br>Java compiler level does not match the version of the installed Java project facet.<br>new-restDemo<br>Unknown Faceted Project Problem (Java Version Mismatch)</p>
-<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>在项目名上右键–&gt;选择属性–&gt;Project Facets –&gt;Java–&gt;Version 1.7</p>
-<p>我的问题是导入项目时出现该问题，开发jdk版本 1.7,</p>
-<p>报错是因为这里显示的是1.6，调整为1.7就可以</p>
-<p>根据自己情况选择合适的版本</p>
+            <h2 id="Markdown-语法速查表"><a href="#Markdown-语法速查表" class="headerlink" title="Markdown 语法速查表"></a>Markdown 语法速查表</h2><p>内容从Mou Help整理而来，Mou为mac操作系统上优秀的Markdown IDE</p>
+<h3 id="1-文字加粗、斜体、突出显示"><a href="#1-文字加粗、斜体、突出显示" class="headerlink" title="1.文字加粗、斜体、突出显示"></a>1.文字加粗、斜体、突出显示</h3><p>加粗  <strong>xxx</strong>    </p>
+<p>斜体  <em>google是一家伟大的公司</em> </p>
+<p>突出显示的文字 <code>微说网络电话</code> , 深圳市出众网络出品</p>
+<pre><code>加粗**xxx**
+斜体*微说网络电话*
+其中 * 可以使用 _ 代替，效果相同
+突出显示的文字 `微说网络电话` , 深圳市出众网络出品
+</code></pre><h2 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h2><blockquote>
+<p>haha</p>
+<p>haha</p>
+</blockquote>
+<h2 id="3-超链接"><a href="#3-超链接" class="headerlink" title="3.超链接"></a>3.超链接</h2><p>通过邮箱<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#102;&#97;&#118;&#111;&#111;&#114;&#x72;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#102;&#97;&#118;&#111;&#111;&#114;&#x72;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>联系我<br><a href="http://www.weishuo.cn" target="_blank" rel="external">http://www.weishuo.cn</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话<br><a href="https://www.google.com" title="google 首页地址" target="_blank" rel="external">Google 首页</a>，好友间的网络电话</p>
+<pre><code>方法一
+&lt;https://www.google.com&gt; 这种不能编写悬停文字
+
+方法二
+[微说网络电话](http://www.weishuo.cn &quot;web官网地址&quot;)，好友间的网络电话
+
+方法三
+[微说网络电话][vs-index]，好友间的网络电话 
+
+[vs-index]: http://www.weishuo.cn &quot;官网地址&quot;
+</code></pre><h2 id="4-图片引用"><a href="#4-图片引用" class="headerlink" title="4.图片引用"></a>4.图片引用</h2><p><img src="http://25.io/smaller/favicon.ico" alt="small icon" title="收藏夹图片"></p>
+<p>另一种 <img src="http://25.io/smaller/favicon.ico" alt="small icon" title="另一种写法"> 写法</p>
+<pre><code>方法一
+![small icon](http://25.io/smaller/favicon.ico &quot;收藏夹图片&quot;)
+
+方法二
+另一种 ![small icon][2] 写法
+
+[2]: http://25.io/smaller/favicon.ico &quot;另一种写法&quot;
+</code></pre><h2 id="5-普通片段显示方式"><a href="#5-普通片段显示方式" class="headerlink" title="5.普通片段显示方式"></a>5.普通片段显示方式</h2><pre><code>Hello world!
+注释：写法上为开头一个tab，或者4个半角空格
+</code></pre><h2 id="6-无序列表"><a href="#6-无序列表" class="headerlink" title="6.无序列表"></a>6.无序列表</h2><ul>
+<li>列表项一</li>
+<li>列表项二</li>
+<li>列表项三</li>
+</ul>
+<p>end</p>
+<pre><code>* 列表项一
+* 列表项二
+* 列表项三
+其中 * 可以使用 - 代替,注意 * 号后面有至少一个空格
+</code></pre><h2 id="7-强制换行"><a href="#7-强制换行" class="headerlink" title="7.强制换行"></a>7.强制换行</h2><p>一句很长很长很长很长很长很长<br>很长的话</p>
+<pre><code>一句很长很长很长很长很长很长&lt;br /&gt;很长的话
+</code></pre><h2 id="8-水平横线"><a href="#8-水平横线" class="headerlink" title="8.水平横线"></a>8.水平横线</h2><pre><code>***
+---
+
+* - 至少要三个
+</code></pre><h2 id="9-标题"><a href="#9-标题" class="headerlink" title="9.标题"></a>9.标题</h2><p>第一种写法</p>
+<pre><code>标题一
+===
+
+标题一
+---
+
+= 和 - 至少三个
+</code></pre><p>第二种写法</p>
+<pre><code># 标题一
+## 标题二
+### 标题三
+#### 标题四
+##### 标题五
+###### 标题六
+</code></pre><h2 id="10-脚注"><a href="#10-脚注" class="headerlink" title="10.脚注"></a>10.脚注</h2><p>markdown语法简略指南参考连接.<a href="http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具">^1</a></p>
+<pre><code>markdown语法简略指南参考连接.[^1]
+
+[^1]: http://favoorr.github.io,感谢Mou作者给我们带来这么优秀的工具
+</code></pre><h2 id="11-过期文字表示"><a href="#11-过期文字表示" class="headerlink" title="11.过期文字表示"></a>11.过期文字表示</h2><p><del>文字中间会有中划线，表示已经过期</del></p>
+<pre><code>~~文字中间会有中划线，表示已经过期~~
+</code></pre><h2 id="12-高亮文字块"><a href="#12-高亮文字块" class="headerlink" title="12.高亮文字块"></a>12.高亮文字块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line"></div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line"></div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Fenced code blocks are like Stardard Markdown’s regular code</div><div class="line">blocks, except that they’re not indented and instead rely on</div><div class="line">a start and end fence lines to delimit the code block.</div></pre></td></tr></table></figure>
+</code></pre><h2 id="13-代码块"><a href="#13-代码块" class="headerlink" title="13.代码块"></a>13.代码块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def print_hi(name)</div><div class="line">  puts &quot;Hi, #&#123;name&#125;&quot;</div><div class="line">end</div><div class="line">print_hi(&apos;Tom&apos;)</div><div class="line">#=&gt; prints &apos;Hi, Tom&apos; to STDOUT.</div></pre></td></tr></table></figure>
+<p>Java(linenos)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> intNum = <span class="number">15</span>;</div><div class="line">		System.out.println(<span class="string">"Java Hello World!"</span>);</div><div class="line">		<span class="comment">//=&gt;will show Java Hello World in STDOUT.</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="14-表格构建"><a href="#14-表格构建" class="headerlink" title="14.表格构建"></a>14.表格构建</h2><p>二列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>三列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>四列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>五列</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<pre><code>二列
+
+First Header | Second Header
+------------ | -------------
+Content Cell | Content Cell
+Content Cell | Content Cell
+
+三列
+
+First Header | Second Header | Third Header
+------------ | ------------- | ------------
+Content Cell | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell
+
+四列
+
+First Header | Second Header | Third Header | Third Header
+------------ | ------------- | ------------ | ------------
+Content Cell | Content Cell  | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell  | Content Cell
+
+五列
+
+First Header | Second Header | Third Header | Third Header | Third Header
+------------ | ------------- | ------------ | ------------ | ------------
+Content Cell | Content Cell  | Content Cell  | Content Cell
+Content Cell | Content Cell  | Content Cell  | Content Cell
+</code></pre><p>也可以这么写</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<pre><code>| First Header | Second Header | Third Header |
+| ------------ | ------------- | ------------ |
+| Content Cell | Content Cell  | Content Cell |
+| Content Cell | Content Cell  | Content Cell |
+</code></pre><p>如果想让列居中，还可以这么写，不过统一加了css也可以</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">First Header</th>
+<th style="text-align:center">Second Header</th>
+<th style="text-align:right">Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:center">Center</td>
+<td style="text-align:right">Right</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:center">Center</td>
+<td style="text-align:right">Right</td>
+</tr>
+</tbody>
+</table>
+<pre><code>First Header | Second Header | Third Header
+:----------- | :-----------: | -----------:
+Left         | Center        | Right
+Left         | Center        | Right
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/09/16/start-writing-blog/" itemprop="url">
+                  我的博客系统发布了
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-09-16T14:28:24+08:00" content="2014-09-16">
+              2014-09-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/heart/" itemprop="url" rel="index">
+                    <span itemprop="name">heart</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/16/start-writing-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/16/start-writing-blog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/09/16/start-writing-blog/" class="leancloud_visitors" data-flag-title="我的博客系统发布了">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="博客发布，记录点滴"><a href="#博客发布，记录点滴" class="headerlink" title="博客发布，记录点滴"></a>博客发布，记录点滴</h2><p>今天开始尝试编写自己的博客</p>
+<p>—2015年01月09日添加</p>
+<p>今天有个同学问我我的博客是怎么弄的，他在我的“教导”下今天注册了github账号，在学git，<br>然后问我他为什么没有博客，然后我想补充下我的博客由来</p>
+<p>fork from <a href="https://github.com/89ao/89ao.github.io" target="_blank" rel="external">https://github.com/89ao/89ao.github.io</a>，真正苦逼的经历是这样子的</p>
+<p>在互联网上闲逛的时候看到一篇推荐文章 <a href="http://github.thinkingbar.com/redis-use-situation/" target="_blank" rel="external">http://github.thinkingbar.com/redis-use-situation/</a>,进来后<br>被页面的简单吸引，那时候我已经在csdn开始自己写简单博客，知道用csdn写是什么感觉，不过也就写了<br>6，7篇</p>
+<p>然后问题来了，我想自己也有一个这样的博客该多好啊，然后我当时和我同学一样子，不知道作者是怎么弄的，<br>然后当时都想联系作者问了，灵机一动，Google神器，关键字 “github 博客”，然后首页的文章就惊呆了，原来<br>这东西早就很流行了，只是自己不知道而已 ~囧，</p>
+<p>然后了解了下，啃了下英文资料，github为开发者提供的平台，github pages，可以来编写wiki等，而且对markdown已经支持完美，这里感谢github</p>
+<p>然后的事情就是我找一个自己喜欢的模板，前端设计，就算了，我不擅长</p>
+<p>然后继续万能的Google，找了找，找了找，感觉这个算简洁，</p>
+<p>就fork了，修改了下，</p>
+<p>原版的颜色有些受不了，太难看，整体设计不行，修改颜色还是没问题的</p>
+<p>—2015年01月09日 end</p>
+<h2 id="模板做了如下修改"><a href="#模板做了如下修改" class="headerlink" title="模板做了如下修改"></a>模板做了如下修改</h2><ol>
+<li>超链接颜色修改</li>
+<li>标签和类别的灰色修改为蓝色系，</li>
+<li>鼠标悬停样式修改，原有红色背景去掉，改为字体放大加粗</li>
+<li>增加表格样式</li>
+<li>修改了代码块样式</li>
+</ol>
 
           
         
@@ -972,7 +1191,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1013,7 +1232,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-count">114</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1021,7 +1240,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1030,7 +1249,7 @@ fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;这里一�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

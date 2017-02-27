@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/26/using-npm/" itemprop="url">
-                  npm 使用记录
+                <a class="post-title-link" href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="url">
+                  升级 python 后，原有依赖老版本 python 问题解决
                 </a>
               
             
@@ -272,327 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-26T00:46:44+08:00" content="2015-07-26">
-              2015-07-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nodejs/" itemprop="url" rel="index">
-                    <span itemprop="name">nodejs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/26/using-npm/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/26/using-npm/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/26/using-npm/" class="leancloud_visitors" data-flag-title="npm 使用记录">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>使用 npm 下载软件包，但是各种蛋碎，一直下载不了，不管使用 淘宝或者cnpm，<br>最后找到问题是曲径的事情，曲径不知道绕了几次，没绕出来</p>
-<p>配置其他源过程</p>
-<p>1.通过config命令</p>
-<p>npm config set registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a>  npm info underscore<br>（如果上面配置正确这个命令会有字符串response）</p>
-<p>2.命令行指定</p>
-<p>npm –registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a> info underscore<br>3.编辑node_modules\npm.npmrc加入下面内容</p>
-<p>registry = <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a><br>如果上面的npm地址不行的话，大家可以试试淘宝的npm，非常稳定:</p>
-<p>地址：<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a></p>
-<p>最后能访问安装时，我的曲径列表是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">npmjs.org</div><div class="line">cnpmjs.org</div></pre></td></tr></table></figure>
-<p>参考配置，用这个配置，明天在试一下，确认问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">ssllabs.com</div><div class="line">digitalocean.com</div><div class="line">bitbucket.org</div><div class="line">atlassian.com</div><div class="line">cnpmjs.org</div><div class="line">readthedocs.org</div><div class="line">dtrace.org</div><div class="line">npmjs.com</div><div class="line">domdex.com</div><div class="line">seleniumhq.org</div><div class="line">caesarchi.com</div><div class="line">lvv2.com</div><div class="line">speakerdeck.com</div><div class="line">koajs.com</div><div class="line">goo.gl</div></pre></td></tr></table></figure>
-<p>目前我的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat .npmrc</div><div class="line">registry=http://registry.cnpmjs.org</div></pre></td></tr></table></figure>
-<p>验证 npm ok</p>
-<p>1.浏览器访问 <a href="http://registry.cnpmjs.org/jshint" target="_blank" rel="external">http://registry.cnpmjs.org/jshint</a><br>2.<code>npm info underscore</code></p>
-<p>注意事项</p>
-<p>1.<a href="https://getqujing.com/zh-CN/my/pac" target="_blank" rel="external">https://getqujing.com/zh-CN/my/pac</a>修改曲径配置，要等10分钟左右才生效<br>2.必须重启自己的 iterm2 </p>
-<p>参考</p>
-<p><a href="http://segmentfault.com/a/1190000002642514" target="_blank" rel="external">[玩玩Node] npm 包下载很慢的解决办法</a></p>
-<p><a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝 NPM 镜像</a></p>
-<p><a href="https://gist.github.com/fengmk2/e95b1bb0e152ce443123" target="_blank" rel="external">参考曲径配置</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/25/mac-brew-summary/" itemprop="url">
-                  mac 下的 brew 总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-25T16:37:07+08:00" content="2015-07-25">
-              2015-07-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/brew/" itemprop="url" rel="index">
-                    <span itemprop="name">brew</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/25/mac-brew-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/25/mac-brew-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/25/mac-brew-summary/" class="leancloud_visitors" data-flag-title="mac 下的 brew 总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>mac 下 brew 使用总结</p>
-<p>1.no sudo</p>
-<pre><code>sudo chown -R `whoami` /usr/local
-</code></pre><p>2.brew 常用命令</p>
-<pre><code>brew install wget # 安装源码
-brew info svn # 显示软件的各种信息，包括版本啊源码地址啊等等
-brew uninstall wget # 卸载软件，很爽，一键静默卸载
-brew search git # 模糊搜索brew 支持的软件。如果不加软件名，就会列出所有它支持的软件。多的很。
-brew list # 列出本机通过brew安装的所有软件
-brew update # 跟新brew软件自身
-brew upgrade wget # 更新安装过的软件,如果不加软件名，就更新所有可以更新的软件
-brew cleanup # 清除下载的各种缓存
-
-brew deps wget  显示依赖信息
-brew --cache
-/Library/Caches/Homebrew
-</code></pre><p>5.安装目录 /usr/local</p>
-<pre><code>brew 默认安装在 /usr/local
-
-/usr/local/bin  :  可执行文件会安装在这边
-/usr/local/lib  :  c语言的动态库和静态库，编译的时候直接通过-l xx  可以依赖
-/usr/local/etc:  配置相关文件
-/usr/local/include: c语言头文件
-/Library/Caches/Homebrew : 你所有安装的软件，都会先下载到这个缓存文件夹中。
-</code></pre><p>6.brew cask 常用命令</p>
-<pre><code>brew install caskroom/cask/brew-cask
-
-brew cask install qq # 下载安装软件
-brew cask uninstall qq # 卸载软件
-brew cask search qq # 模糊搜索软件，如果不加软件名，就列出所有它支持的软件
-brew cask info qq # 显示这个软件的详细信息，如果已经用cask安装了，也会显示其安装目录信息等
-brew cask list # 列出本机按照过的软件列表
-brew cask cleanup #  清除下载的缓存以及各种链接信息
-brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
-</code></pre><p>一次维护记录</p>
-<p>执行 brew update 时候，提醒，必须先把本地的stash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local</div><div class="line">git stash</div><div class="line">git stash list</div><div class="line">brew update</div></pre></td></tr></table></figure>
-<p>参考</p>
-<p><a href="https://www.zybuluo.com/phper/note/87055" target="_blank" rel="external">https://www.zybuluo.com/phper/note/87055</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/23/compile-python2.7.10-from-source/" itemprop="url">
-                  编译python2.7.10
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-23T14:13:01+08:00" content="2015-07-23">
-              2015-07-23
+            <time itemprop="dateCreated" datetime="2017-01-05T16:19:51+08:00" content="2017-01-05">
+              2017-01-05
             </time>
           </span>
 
@@ -621,8 +302,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/23/compile-python2.7.10-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/compile-python2.7.10-from-source/" itemprop="commentsCount"></span>
+                <a href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -632,7 +313,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
 
           
           
-             <span id="/2015/07/23/compile-python2.7.10-from-source/" class="leancloud_visitors" data-flag-title="编译python2.7.10">
+             <span id="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" class="leancloud_visitors" data-flag-title="升级 python 后，原有依赖老版本 python 问题解决">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -656,10 +337,13 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
       
         
           
-            <p>环境 centos 6.6 , python 2.7.10</p>
-<p>编译 ycm ，我需要 libpython2.7.so ，但是默认的编译 ./configure 只有 /usr/local/lib/libpython2.7.a 不能被其他共享并链接</p>
-<p>手工编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum -y install python-devel openssl openssl-devel gcc sqlite-devel</div><div class="line"></div><div class="line">建立安装目录</div><div class="line">mkdir /usr/local/python2.7.10</div><div class="line"></div><div class="line">假设 已经解压 到 Python-2.7.10</div><div class="line">cd Python-2.7.10</div><div class="line">./configure --prefix=/usr/local/python2.7.10 --with-threads --enable-shared</div><div class="line">make</div><div class="line">make install altinstall</div><div class="line"></div><div class="line"></div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so.1.0 /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/bin/python2.7 /usr/local/bin</div><div class="line">/sbin/ldconfig -v</div><div class="line"></div><div class="line">locate libpython2.7.so</div><div class="line"></div><div class="line">如果安装这个方式，就不需要修改默认的 </div><div class="line"></div><div class="line">vim /usr/bin/yum</div><div class="line">mv /usr/bin/python /usr/bin/python2.6.6</div><div class="line"></div><div class="line">这个根据自己环境而定</div></pre></td></tr></table></figure>
+            <p>python3.5.2 安装的 virtualenvwrapper 环境，更新到  3.6.0 之后，手残直接把 3.5.2 删除了</p>
+<p>原来环境就挂了，错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">User@favoorr-mac: ~/Documents/github/favoorr-programming-road/Python/python-lesson master!</div><div class="line"> $ ipython                                                                     [14:28:16]</div><div class="line">dyld: Library not loaded: @executable_path/../.Python</div><div class="line">  Referenced from: /Users/User/zl/python/project/venv/python-lesson/bin/python3.5</div><div class="line">  Reason: image not found</div><div class="line">[1]    43935 abort      ipython</div><div class="line">(python-lesson) FAIL</div></pre></td></tr></table></figure>
+<p>解决方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">断开工作台</div><div class="line">deactivate</div><div class="line"></div><div class="line">删除原来的虚拟环境，这里删除虚拟环境，原来的项目其实不会删除</div><div class="line">rmvirtualenv python-lesson</div><div class="line"></div><div class="line">重新创建虚拟环境</div><div class="line">mkvirtualenv python-lesson</div><div class="line"></div><div class="line">再次激活虚拟环境</div><div class="line">workon python-lesson</div><div class="line"></div><div class="line">跳转到原来的项目目录</div><div class="line">cd ~/Documents/github/favoorr-programming-road/Python/python-lesson</div><div class="line"></div><div class="line">原来的项目重新关联虚拟环境</div><div class="line">setvirtualenvproject</div><div class="line"></div><div class="line">重新安装需要的类库</div><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div></pre></td></tr></table></figure>
+<p>记录,备忘</p>
+
           
         
       
@@ -708,8 +392,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
             
               
                 
-                <a class="post-title-link" href="/2015/07/22/build-clang-from-source/" itemprop="url">
-                  centos6.6 源码编译 clang
+                <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
+                  python 升级到 3.6 virtualenvwrapper 报错问题
                 </a>
               
             
@@ -722,8 +406,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T14:23:39+08:00" content="2015-07-22">
-              2015-07-22
+            <time itemprop="dateCreated" datetime="2017-01-03T10:48:35+08:00" content="2017-01-03">
+              2017-01-03
             </time>
           </span>
 
@@ -736,8 +420,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/clang/" itemprop="url" rel="index">
-                    <span itemprop="name">clang</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -752,8 +436,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/22/build-clang-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/build-clang-from-source/" itemprop="commentsCount"></span>
+                <a href="/2017/01/03/python3-6-virtualenvwrapper-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -763,7 +447,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
 
           
           
-             <span id="/2015/07/22/build-clang-from-source/" class="leancloud_visitors" data-flag-title="centos6.6 源码编译 clang">
+             <span id="/2017/01/03/python3-6-virtualenvwrapper-problem/" class="leancloud_visitors" data-flag-title="python 升级到 3.6 virtualenvwrapper 报错问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -787,13 +471,298 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
       
         
           
-            <p>源码编译clang</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">1.新建文件夹</div><div class="line">mkdir /root/buildllvm #放置clang源码位置</div><div class="line">mkdir /root/buildllvm/build #放置clang编译文件位置</div><div class="line"></div><div class="line">2.svn 下载在新版 3.8.0 源代码</div><div class="line">cd /root/buildllvm</div><div class="line"></div><div class="line">svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm</div><div class="line"> </div><div class="line">cd llvm/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/cfe/trunk clang</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd llvm/tools/clang/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra</div><div class="line">cd ../../../..</div><div class="line"></div><div class="line">cd llvm/projects</div><div class="line">svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd /root/buildllvm/build</div><div class="line"></div><div class="line">3.安装文件放在 /usr/local/llvm 下；优化+只编译适应本机的代码</div><div class="line">../llvm/configure --prefix=/usr/local/llvm --enable-optimized --enable-targets=host-only</div><div class="line"> </div><div class="line">4.编译和安装，整个过程耗时 4小时 左右，在我的 mac 虚拟机上</div><div class="line">make   -j4  # 如果多核的话，可以 make -j4 (4个工作线程)</div><div class="line">make install    # 安装，如果有权限问题请 sudo make install</div><div class="line"></div><div class="line"></div><div class="line">都编译完成后</div><div class="line"></div><div class="line">vim .bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:/usr/local/llvm/bin:$PATH</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">整个安装过程结束</div></pre></td></tr></table></figure>
-<p>验证整个安装过程成功和环境变量设置正确</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">clang --version</div><div class="line"></div><div class="line">clang version 3.8.0 (trunk 242872)</div><div class="line">Target: x86_64-unknown-linux-gnu</div><div class="line">Thread model: posix</div></pre></td></tr></table></figure>
+            <p>Yesterday, I install the <code>you-get</code>, and Python upgrade to newest version 3.6 by this<br>install, Then the <code>virtualenvwrapper</code> could’t work well any more.</p>
+<p>I got the error as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Last login: Tue Jan  3 09:38:53 on ttys002</div><div class="line">/usr/local/opt/python3/bin/python3.6: Error while finding module specification for &apos;virtualenvwrapper.hook_loader&apos; (ModuleNotFoundError: No module named &apos;virtualenvwrapper&apos;)</div><div class="line">virtualenvwrapper.sh: There was a problem running the initialization hooks.</div><div class="line"></div><div class="line">If Python could not import the module virtualenvwrapper.hook_loader,</div><div class="line">check that virtualenvwrapper has been installed for</div><div class="line">VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 and that PATH is</div><div class="line">set properly.</div></pre></td></tr></table></figure>
+<p>And in my ~/.zshrc file, I already config as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=/Users/User/zl/python/project/venv</div><div class="line">export PROJECT_HOME=/Users/User/zl/python/project</div><div class="line">export VIRTUALENVWRAPPER_PYTHON=`which python3`</div><div class="line">source /usr/local/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
+<p>Do the follow tips may solve the problem:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">First: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U pip</div><div class="line"></div><div class="line">Second: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U virtualenvwrapper</div></pre></td></tr></table></figure>
+<p>One more thing:</p>
+<p>macOS will install the python2.7.10 by default,</p>
+<p>I use brew to install python instead of the macOS default.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">/usr/bin/python</div><div class="line"></div><div class="line">rm the default python</div><div class="line"></div><div class="line">sudo rm /usr/bin/python</div></pre></td></tr></table></figure>
+<p>If need python2, the newest version of python2 is python-2.7.13</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/28/macos-python3/" itemprop="url">
+                  macOS 安装使用 python 记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-28T21:33:22+08:00" content="2016-11-28">
+              2016-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/28/macos-python3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/macos-python3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macOS 安装使用 python 记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions/3.5</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
+<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
+<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
+<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
+<p>国内其他可选镜像如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/31/zsh-summary/" itemprop="url">
+                  ZSH 使用总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-31T11:20:40+08:00" content="2015-08-31">
+              2015-08-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/zsh/" itemprop="url" rel="index">
+                    <span itemprop="name">zsh</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/31/zsh-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/31/zsh-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/08/31/zsh-summary/" class="leancloud_visitors" data-flag-title="ZSH 使用总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mac 下好用软件很多，多使用，多总结</p>
+<p>1.插件</p>
+<p>plugins=(git sudo extract cp)</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">插件列表</a></p>
+<p>2.autojump 工具</p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">官方地址</a></p>
+<p>3.d </p>
+<p>显示历史进入的目录，输入数字进入历史目录，0是当前目录，其他依次记录</p>
+<p>4.清屏，输入 ls</p>
+<p>ctrl + l,我用的 command + r</p>
+<p>5.zsh_stats 可以统计使用最多的前20命令</p>
+<p>6.zsh-autosuggestions 就更好用的自动补全</p>
+<p>7.<a href="http://zshthem.es/" target="_blank" rel="external">http://zshthem.es/</a> 这里挑选喜欢的 theme</p>
+<p>… 待续</p>
 <p>参考</p>
-<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85llvmclang" target="_blank" rel="external">centos下安装llvm+clang</a></p>
-<p><a href="http://m.blog.csdn.net/blog/ccc64524422/46876499" target="_blank" rel="external">[转]CentOS 7+vim+ycm(clang)</a></p>
+<p><a href="http://www.jiang-di.org/tools/2015/04/08/i-hope-know-when-first-use-zsh.html" target="_blank" rel="external">那些我希望在一开始使用 Zsh(oh-my-zsh) 时就知道的</a></p>
 
           
         
@@ -843,8 +812,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
             
               
                 
-                <a class="post-title-link" href="/2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="url">
-                  centos6.6源码安装gcc4.8.1
+                <a class="post-title-link" href="/2015/08/24/network-server-idc/" itemprop="url">
+                  服务器-交换机的一次上架经验
                 </a>
               
             
@@ -857,8 +826,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T13:58:16+08:00" content="2015-07-22">
-              2015-07-22
+            <time itemprop="dateCreated" datetime="2015-08-24T12:55:57+08:00" content="2015-08-24">
+              2015-08-24
             </time>
           </span>
 
@@ -871,8 +840,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/gcc/" itemprop="url" rel="index">
-                    <span itemprop="name">gcc</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -887,8 +856,8 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="commentsCount"></span>
+                <a href="/2015/08/24/network-server-idc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/24/network-server-idc/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -898,7 +867,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
 
           
           
-             <span id="/2015/07/22/centos6.6-build-gcc5.2-from-source/" class="leancloud_visitors" data-flag-title="centos6.6源码安装gcc4.8.1">
+             <span id="/2015/08/24/network-server-idc/" class="leancloud_visitors" data-flag-title="服务器-交换机的一次上架经验">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -922,35 +891,31 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
       
         
           
-            <p>环境 </p>
-<p>CentOS 6.6 64位<br>gcc 4.8.1</p>
-<p>为何要手工编译 gcc 4.8.1</p>
-<p>为了编译 ycm YouCompleteMe 一个vim自动补全插件，<br>我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0<br>自己动手 …</p>
-<p>YouCompleteMe –&gt; clang –&gt; gcc</p>
-<p>下载 gcc4.8.1 源码</p>
-<p>国内gcc下载地址 <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> 华科的下载略慢 、、、</p>
-<p>官方 ftp地址  <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> <a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看 CentOS 6.6 自带的 gcc 信息</div><div class="line">[root@dev1 build]# gcc -v</div><div class="line"></div><div class="line">使用内建 specs。</div><div class="line">目标：x86_64-redhat-linux</div><div class="line">配置为：../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</div><div class="line">线程模型：posix</div><div class="line">gcc 版本 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">执行安装命令</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++</div><div class="line"></div><div class="line">检查安装配置，报错如下</div><div class="line">configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.</div><div class="line">Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify</div><div class="line">their locations.  Source code for these libraries can be found at</div><div class="line">their respective hosting sites as well as at</div><div class="line">ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also</div><div class="line">http://gcc.gnu.org/install/prerequisites.html for additional info.  If</div><div class="line">you obtained GMP, MPFR and/or MPC from a vendor distribution package,</div><div class="line">make sure that you have installed both the libraries and the header</div><div class="line">files.  They may be located in separate packages.</div><div class="line"></div><div class="line">开始配置安装环境</div><div class="line"></div><div class="line">1.安装 GMP https://gmplib.org/</div><div class="line"></div><div class="line">wget http://mirrors.ustc.edu.cn/gnu/gmp/gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">cd gmp-6.0.0</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">2.安装 mpfr</div><div class="line"></div><div class="line">wget  http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">mkdir /usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">cd mpfr-3.1.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpfr-3.1.3 --with-gmp=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">3.安装 mpc</div><div class="line"></div><div class="line">wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">tar -zxv -f mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">cd mpc-1.0.3</div><div class="line"></div><div class="line">mkdir /usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpc-1.0.3 --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">4.设置环境变量 $LD_LIBRARY_PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.0.0/lib:/usr/local/mpfr-3.1.3/lib</div><div class="line"></div><div class="line">不然会碰到错误 configure: error: cannot compute suffix of object files: cannot compile</div><div class="line"></div><div class="line">5.需要安装 32 位的 glibc-devel</div><div class="line"></div><div class="line">yum list | grep glibc-devel</div><div class="line"></div><div class="line">yum install glibc-devel.i686</div><div class="line"></div><div class="line">不然会遇到错误 </div><div class="line"></div><div class="line">/usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: 没有那个文件或目录</div><div class="line"> # include &lt;gnu/stubs-32.h&gt; </div><div class="line"></div><div class="line">6.全部安装完之后，再次执行安装，执行 make 会耗时很长，需要耐心等待</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++ --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3 --with-mpc=/usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">执行命令</div><div class="line"></div><div class="line">ln -s /usr/local/gcc-4.8.1/include/c++/4.8.1 /usr/include/c++/4.8.1 # 在 include/c++ 文件夹下添加最新的 c++ 4.8.1 版本(这是个符号链接)；</div><div class="line"></div><div class="line">配置系统环境变量</div><div class="line">vim ~/.bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:$PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div><div class="line">export C_INCLUDE_PATH=/usr/include</div><div class="line">export CPLUS_INCLUDE_PATH=/usr/include/c++/4.8.1:/usr/include/c++/4.8.1/x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">至此，整个 gcc 4.8.1 源码编译安装完成</div></pre></td></tr></table></figure>
-<p>后续</p>
-<p>1.在使用 gcc 编译 clang 时，由于 LD_LIBRARY_PATH 配置错误，会碰到如下错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/gcc/libexec/gcc/x86_64-unknown-linux-gnu/4.8.1/cc1plus: error while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
-<p>google 答案<a href="http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984" target="_blank" rel="external">http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div></pre></td></tr></table></figure>
-<p>一开始我写成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=/usr/local/lib</div></pre></td></tr></table></figure>
-<p>然后就跪的很彻底</p>
-<p>2.编译 clang 碰到错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/buildllvm/build/Release+Asserts/bin/llvm-tblgen: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15&apos; not found (required by /root/buildllvm/build/Release+Asserts/bin/llvm-tblgen)</div></pre></td></tr></table></figure></p>
-<p>google答案<a href="http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found" target="_blank" rel="external">http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found</a></p>
-<p>解决方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">替换 libstdc++.so.6 为最新编译的 libstdc++.so.6.0.18</div><div class="line">cp ~/buildgcc/x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.18 /usr/lib64/ # ~/buildgcc 为gcc 安装的路径</div><div class="line"></div><div class="line">rm /usr/lib64/libstdc++.so.6</div><div class="line"></div><div class="line">ln -s libstdc++.so.6.0.18 libstdc++.so.6</div></pre></td></tr></table></figure>
-<p>验证编译成功，和环境变量设置正确</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# gcc --version</div><div class="line">gcc (GCC) 4.8.1</div><div class="line">Copyright © 2013 Free Software Foundation, Inc.</div><div class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</div><div class="line">包括没有适销性和某一专用目的下的适用性担保。</div></pre></td></tr></table></figure>
-<p>参考文档</p>
-<p><a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/" target="_blank" rel="external">gcc官方文档</a></p>
-<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85gcc-481" target="_blank" rel="external">centos下安装gcc-4.8.1</a></p>
-<p><a href="http://www.cnblogs.com/peterpanzsy/archive/2013/04/10/3006838.html" target="_blank" rel="external">centos 6 升级gcc</a></p>
-<p><a href="http://robbiefeng.iteye.com/blog/2163305" target="_blank" rel="external">centos6.5上升级gcc到gcc4.9.2</a></p>
+            <p>参与了一次网络结构整改的项目，记下遇到的东西，为<br>以后能够好的安排资源和时间</p>
+<p>首先总结实施的步骤及要点：</p>
+<ol>
+<li><p>服务器扩容规划<br> 评估服务器总数</p>
+</li>
+<li><p>服务器采购<br> 一般来说公司都会有固定的服务器供应商，直接签订新的采购合同就好了，关键就是采购清单如果有更新，一定要同步，还有设备型号等等，中途有改动，要同步相关人员知会</p>
+</li>
+<li><p>网络拓扑结构<br> 根据现有的网络拓扑和新增的服务器总数，规划出新的网络拓扑结构，比如内网整改、核心交换位置、接入交换规划、内网和管理网分离、逻辑子网或者物理内网等。这个方案也可以让网络设备商和公司一起来商讨。考虑点，一方面是预算，另外一方面就是扩展和需求，网络拓扑，建议还是一次性做好了，劳民伤财</p>
+</li>
+<li><p>网络设备采购<br> 最主要得就是交换机了，思科、华三、华为、Juniper，都可以考虑，然后就看自己想要的交货日期他们是否能满足，以及自己的预算了。最好是每家厂商能找多个代理，然后让他们自己先砍下价格。虽然价格很坑，但是设备还是要买的，毕竟网络整改最终完成时间摆在那里。最后说合同，签订的时候付款一般是3，6，1，半年才会给清全款</p>
+</li>
+<li><p>整体的迁移计划<br> 在动手前，一定要有靠谱核心员工输出整体方案，然后按照方案一步一步实施，看机器规模和变更需求。还有就是能够应变，计划做的再好，到现场后，还是根据现实情况走，再次强调，完整的迁移计划很重要，而且有很多坑，就是时间的计算</p>
+</li>
+<li><p>IDC 管理方式<br> 有可能 IDC 的管理方式是，基地是某公司的，IDC是某公司的，然后机柜也是某公司的，然后上电又是某公司的，对的，你没看错，现实情况，基地自己为了方便自己管理，流程审批能把你搞到烦死，审批往往都是很耗时间的，周期3天是比较常见的，对应设备也要到机柜，sn号也要一个一个对应</p>
+</li>
+<li><p>机柜隔板<br> 机房一般最先问你要部署结构图，设备分布，比如某机柜放几个N U的设备，拿到分布图之后，会先去安装机柜的隔板，当然这个也是耗时间的，螺丝要一个一个来安装</p>
+</li>
+<li><p>机柜跳线<br> 假设一个机柜放置12台1U设备，连接线也是个麻烦事，而且根据机房实际情况不同，人员素质不同，布线质量也是区别很大，大概的时间是一个机柜的线路布局要1个半小时</p>
+</li>
+<li><p>设备安装调试<br> 所有的准备工作做好之后，就到了设备安装阶段，进出 IDC 都要工单审批，要提前做好，人员、车辆、身份证，然后到机房安装设备，打螺丝，然后交换机之间连接光纤，服务器之间连接五类、六类线缆，然后开始安装操作系统，PXE 等，然后修改管理网IP，修改内网IP，这些一点都不简单，不节省时间。</p>
+</li>
+</ol>
+<p>一切顺利的话，然后就交付机器</p>
+<p>一般来说，这种工程，时间预估上都不能太乐观，而且现场要有应变能力，要有决定权的人在场，很多事情，过了这个点，做的再好都已经没有意义了</p>
+<p>资源和时间，很珍贵，往往也是永远都不够的，做方案的时候，万分考虑</p>
 <p>-EOF-</p>
 
           
@@ -984,7 +949,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1025,7 +990,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-count">114</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1033,7 +998,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1042,7 +1007,7 @@ brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

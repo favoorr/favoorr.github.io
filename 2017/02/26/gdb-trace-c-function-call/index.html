@@ -1,0 +1,829 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gdb,c," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="说明重点通过调试查看函数调用过程中寄存器的使用和现场保护和恢复的整个过程，以及追踪参数和返回值处理过程
+重点寄存器如 rbp rsp rip
+C 语言示例在指令上加断点加断点，并且查看函数调用栈帧，这里学习在指令上加断点
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GDB 跟踪 C 语言函数执行过程">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/26/gdb-trace-c-function-call/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="说明重点通过调试查看函数调用过程中寄存器的使用和现场保护和恢复的整个过程，以及追踪参数和返回值处理过程
+重点寄存器如 rbp rsp rip
+C 语言示例在指令上加断点加断点，并且查看函数调用栈帧，这里学习在指令上加断点
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta property="og:updated_time" content="2017-02-27T03:23:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GDB 跟踪 C 语言函数执行过程">
+<meta name="twitter:description" content="说明重点通过调试查看函数调用过程中寄存器的使用和现场保护和恢复的整个过程，以及追踪参数和返回值处理过程
+重点寄存器如 rbp rsp rip
+C 语言示例在指令上加断点加断点，并且查看函数调用栈帧，这里学习在指令上加断点
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/26/gdb-trace-c-function-call/"/>
+
+  <title> GDB 跟踪 C 语言函数执行过程 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GDB 跟踪 C 语言函数执行过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-26T11:21:32+08:00" content="2017-02-26">
+              2017-02-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gdb/" itemprop="url" rel="index">
+                    <span itemprop="name">gdb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/26/gdb-trace-c-function-call/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/gdb-trace-c-function-call/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/26/gdb-trace-c-function-call/" class="leancloud_visitors" data-flag-title="GDB 跟踪 C 语言函数执行过程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>重点通过调试查看函数调用过程中寄存器的使用和现场保护和恢复的整个过程，<br>以及追踪参数和返回值处理过程</p>
+<p>重点寄存器如 rbp rsp rip</p>
+<h2 id="C-语言示例"><a href="#C-语言示例" class="headerlink" title="C 语言示例"></a>C 语言示例</h2><h3 id="在指令上加断点"><a href="#在指令上加断点" class="headerlink" title="在指令上加断点"></a>在指令上加断点</h3><p>加断点，并且查看函数调用栈帧，这里学习在指令上加断点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line">gcc -g -O0 -o ctest1 test.c</div><div class="line"></div><div class="line">root@trusty64-135:/go/go.lesson/src/function-call-stack# gdb ctest1</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from ctest1...done.</div><div class="line">(gdb) b main</div><div class="line">Breakpoint 1 at 0x400585: file test.c, line 19.</div><div class="line"></div><div class="line">(gdb) b add</div><div class="line">Breakpoint 2 at 0x40055c: file test.c, line 11.</div><div class="line"></div><div class="line">(gdb) b info</div><div class="line">Breakpoint 3 at 0x400538: file test.c, line 6.</div><div class="line"></div><div class="line">(gdb) r</div><div class="line">Starting program: /go/go.lesson/src/function-call-stack/ctest1</div><div class="line"></div><div class="line">Breakpoint 1, main (argc=1, argv=0x7fffffffe628) at test.c:19</div><div class="line">19		int x = 0x100;</div><div class="line"></div><div class="line">(gdb) disass</div><div class="line">Dump of assembler code for function main:</div><div class="line">   0x0000000000400576 &lt;+0&gt;:	push   %rbp</div><div class="line">   0x0000000000400577 &lt;+1&gt;:	mov    %rsp,%rbp</div><div class="line">   0x000000000040057a &lt;+4&gt;:	sub    $0x20,%rsp</div><div class="line">   0x000000000040057e &lt;+8&gt;:	mov    %edi,-0x14(%rbp)</div><div class="line">   0x0000000000400581 &lt;+11&gt;:	mov    %rsi,-0x20(%rbp)</div><div class="line">=&gt; 0x0000000000400585 &lt;+15&gt;:	movl   $0x100,-0xc(%rbp)</div><div class="line">   0x000000000040058c &lt;+22&gt;:	movl   $0x200,-0x8(%rbp)</div><div class="line">   0x0000000000400593 &lt;+29&gt;:	mov    -0x8(%rbp),%edx</div><div class="line">   0x0000000000400596 &lt;+32&gt;:	mov    -0xc(%rbp),%eax</div><div class="line">   0x0000000000400599 &lt;+35&gt;:	mov    %edx,%esi</div><div class="line">   0x000000000040059b &lt;+37&gt;:	mov    %eax,%edi</div><div class="line">   0x000000000040059d &lt;+39&gt;:	callq  0x40054e &lt;add&gt;</div><div class="line">   0x00000000004005a2 &lt;+44&gt;:	mov    %eax,-0x4(%rbp)</div><div class="line">   0x00000000004005a5 &lt;+47&gt;:	mov    -0x4(%rbp),%eax</div><div class="line">   0x00000000004005a8 &lt;+50&gt;:	mov    %eax,%esi</div><div class="line">   0x00000000004005aa &lt;+52&gt;:	mov    $0x40064d,%edi</div><div class="line">   0x00000000004005af &lt;+57&gt;:	mov    $0x0,%eax</div><div class="line">   0x00000000004005b4 &lt;+62&gt;:	callq  0x400410 &lt;printf@plt&gt;</div><div class="line">   0x00000000004005b9 &lt;+67&gt;:	mov    $0x0,%eax</div><div class="line">   0x00000000004005be &lt;+72&gt;:	leaveq</div><div class="line">   0x00000000004005bf &lt;+73&gt;:	retq</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) set disassembly-flavor intel</div><div class="line"></div><div class="line">(gdb) disass</div><div class="line">Dump of assembler code for function main:</div><div class="line">   0x0000000000400576 &lt;+0&gt;:	push   rbp</div><div class="line">   0x0000000000400577 &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x000000000040057a &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x000000000040057e &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400581 &lt;+11&gt;:	mov    QWORD PTR [rbp-0x20],rsi</div><div class="line">=&gt; 0x0000000000400585 &lt;+15&gt;:	mov    DWORD PTR [rbp-0xc],0x100</div><div class="line">   0x000000000040058c &lt;+22&gt;:	mov    DWORD PTR [rbp-0x8],0x200</div><div class="line">   0x0000000000400593 &lt;+29&gt;:	mov    edx,DWORD PTR [rbp-0x8]</div><div class="line">   0x0000000000400596 &lt;+32&gt;:	mov    eax,DWORD PTR [rbp-0xc]</div><div class="line">   0x0000000000400599 &lt;+35&gt;:	mov    esi,edx</div><div class="line">   0x000000000040059b &lt;+37&gt;:	mov    edi,eax</div><div class="line">   0x000000000040059d &lt;+39&gt;:	call   0x40054e &lt;add&gt;</div><div class="line">   0x00000000004005a2 &lt;+44&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x00000000004005a5 &lt;+47&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x00000000004005a8 &lt;+50&gt;:	mov    esi,eax</div><div class="line">   0x00000000004005aa &lt;+52&gt;:	mov    edi,0x40064d</div><div class="line">   0x00000000004005af &lt;+57&gt;:	mov    eax,0x0</div><div class="line">   0x00000000004005b4 &lt;+62&gt;:	call   0x400410 &lt;printf@plt&gt;</div><div class="line">   0x00000000004005b9 &lt;+67&gt;:	mov    eax,0x0</div><div class="line">   0x00000000004005be &lt;+72&gt;:	leave</div><div class="line">   0x00000000004005bf &lt;+73&gt;:	ret</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) info frame</div><div class="line">Stack level 0, frame at 0x7fffffffe550:</div><div class="line"> rip = 0x400585 in main (test.c:19); saved rip = 0x7ffff7a36f45</div><div class="line"> source language c.</div><div class="line"> Arglist at 0x7fffffffe540, args: argc=1, argv=0x7fffffffe628</div><div class="line"> Locals at 0x7fffffffe540, Previous frame&apos;s sp is 0x7fffffffe550</div><div class="line"> Saved registers:</div><div class="line">  rbp at 0x7fffffffe540, rip at 0x7fffffffe548</div><div class="line"></div><div class="line">执行到这里可以观察 main 函数的栈帧情况和当前 rip 寄存器的地址</div><div class="line">同时可以观察看到第一个参数使用寄存器 edi ,第二个参数使用 rsi</div><div class="line"></div><div class="line">下面开始调试，在机器码上打断点，并单步执行机器码</div><div class="line"></div><div class="line">这里可以看到 main 函数第一条指令时 0x0000000000400576，那么在这条指令上打断点就是 </div><div class="line"></div><div class="line">(gdb) b *0x0000000000400576</div><div class="line">Breakpoint 2 at 0x400576: file test.c, line 18.</div><div class="line">(gdb) l</div><div class="line">14		return z;</div><div class="line">15	&#125;</div><div class="line">16</div><div class="line">17	int main(int argc, char **argv)</div><div class="line">18	&#123;</div><div class="line">19		int x = 0x100;</div><div class="line">20		int y = 0x200;</div><div class="line">21		int z = add(x, y);</div><div class="line">22</div><div class="line">23		printf(&quot;%d\n&quot;, z);</div></pre></td></tr></table></figure>
+<h3 id="观察寄存器传递参数"><a href="#观察寄存器传递参数" class="headerlink" title="观察寄存器传递参数"></a>观察寄存器传递参数</h3><p>指令 0x000000000040057e 到指令 0x000000000040059b 是参数准备过程，<br>可以看到是通过寄存器 edi 和 esi 来传递参数值</p>
+<p>我们可以把断点加在指令 0x000000000040059d ，以观察寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">(gdb) b *0x000000000040059d // 在指令上加断点</div><div class="line">Breakpoint 4 at 0x40059d: file test.c, line 21.</div><div class="line"></div><div class="line">(gdb) c // 执行到断点</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Breakpoint 4, 0x000000000040059d in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">21		int z = add(x, y);</div><div class="line"></div><div class="line">(gdb) p/x $rdi // 寄存器传递参数 0x100 , p/x 是用 十六进制输出值</div><div class="line">$3 = 0x100</div><div class="line"></div><div class="line">(gdb) p/x $rsi // 寄存器传递参数 0x200</div><div class="line">$4 = 0x200</div><div class="line"></div><div class="line">(gdb) info r // 查看所有寄存器的值</div><div class="line">rax            0x100	256</div><div class="line">rbx            0x0	0</div><div class="line">rcx            0x0	0</div><div class="line">rdx            0x200	512</div><div class="line">rsi            0x200	512</div><div class="line">rdi            0x100	256</div><div class="line">rbp            0x7fffffffe540	0x7fffffffe540</div><div class="line">rsp            0x7fffffffe520	0x7fffffffe520</div><div class="line">r8             0x7ffff7dd4e80	140737351863936</div><div class="line">r9             0x7ffff7dea530	140737351951664</div><div class="line">r10            0x7fffffffe3d0	140737488348112</div><div class="line">r11            0x7ffff7a36e50	140737348070992</div><div class="line">r12            0x400440	4195392</div><div class="line">r13            0x7fffffffe620	140737488348704</div><div class="line">r14            0x0	0</div><div class="line">r15            0x0	0</div><div class="line">rip            0x40059d	0x40059d &lt;main+39&gt;</div><div class="line">eflags         0x202	[ IF ]</div><div class="line">cs             0x33	51</div><div class="line">ss             0x2b	43</div><div class="line">ds             0x0	0</div><div class="line">es             0x0	0</div><div class="line">fs             0x0	0</div><div class="line">gs             0x0	0</div></pre></td></tr></table></figure>
+<h3 id="观察现场保护"><a href="#观察现场保护" class="headerlink" title="观察现场保护"></a>观察现场保护</h3><p>所谓现场保护就是当前执行的是 main 函数，在调用 add 函数时，会保存 main<br>函数的关键栈帧值和 rip 的值，执行完 add 函数后，知道如何继续执行 main 函数</p>
+<p>这里会保存 main 函数的 rip 下一条指令 和 rbp main 函数栈帧底部</p>
+<p>现场保护的时候会把 rip 和 rbp 先后压入调用栈中，调用 add 函数时，main 函数相关的<br>现场入栈，调用 add 结束后，main 函数相关的现场出栈，这也是函数执行的代价</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">根据下面反汇编的值可以看到 call 函数的下一条指令应该是 </div><div class="line"></div><div class="line">rip = 0x00000000004005a2 指令地址</div><div class="line">rbp = 0x7fffffffe540  虚拟内存地址</div><div class="line"></div><div class="line">(gdb) disass</div><div class="line">Dump of assembler code for function main:</div><div class="line">   0x0000000000400576 &lt;+0&gt;:	push   rbp</div><div class="line">   0x0000000000400577 &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x000000000040057a &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x000000000040057e &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400581 &lt;+11&gt;:	mov    QWORD PTR [rbp-0x20],rsi</div><div class="line">   0x0000000000400585 &lt;+15&gt;:	mov    DWORD PTR [rbp-0xc],0x100</div><div class="line">   0x000000000040058c &lt;+22&gt;:	mov    DWORD PTR [rbp-0x8],0x200</div><div class="line">   0x0000000000400593 &lt;+29&gt;:	mov    edx,DWORD PTR [rbp-0x8]</div><div class="line">   0x0000000000400596 &lt;+32&gt;:	mov    eax,DWORD PTR [rbp-0xc]</div><div class="line">   0x0000000000400599 &lt;+35&gt;:	mov    esi,edx</div><div class="line">   0x000000000040059b &lt;+37&gt;:	mov    edi,eax</div><div class="line">=&gt; 0x000000000040059d &lt;+39&gt;:	call   0x40054e &lt;add&gt;</div><div class="line">   0x00000000004005a2 &lt;+44&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x00000000004005a5 &lt;+47&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x00000000004005a8 &lt;+50&gt;:	mov    esi,eax</div><div class="line">   0x00000000004005aa &lt;+52&gt;:	mov    edi,0x40064d</div><div class="line">   0x00000000004005af &lt;+57&gt;:	mov    eax,0x0</div><div class="line">   0x00000000004005b4 &lt;+62&gt;:	call   0x400410 &lt;printf@plt&gt;</div><div class="line">   0x00000000004005b9 &lt;+67&gt;:	mov    eax,0x0</div><div class="line">   0x00000000004005be &lt;+72&gt;:	leave</div><div class="line">   0x00000000004005bf &lt;+73&gt;:	ret</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) info frame</div><div class="line">Stack level 0, frame at 0x7fffffffe550:</div><div class="line"> rip = 0x40059d in main (test.c:21); saved rip = 0x7ffff7a36f45</div><div class="line"> source language c.</div><div class="line"> Arglist at 0x7fffffffe540, args: argc=1, argv=0x7fffffffe628</div><div class="line"> Locals at 0x7fffffffe540, Previous frame&apos;s sp is 0x7fffffffe550</div><div class="line"> Saved registers:</div><div class="line">  rbp at 0x7fffffffe540, rip at 0x7fffffffe548</div><div class="line"></div><div class="line">(gdb) si // 单步进入 add 函数调用</div><div class="line">add (x=0, y=0) at test.c:10</div><div class="line">10	&#123;</div><div class="line"></div><div class="line">(gdb) disass // 查看反汇编这时候已经是 add 函数的反汇编代码</div><div class="line">Dump of assembler code for function add:</div><div class="line">=&gt; 0x000000000040054e &lt;+0&gt;:	push   rbp</div><div class="line">   0x000000000040054f &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x0000000000400552 &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x0000000000400556 &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400559 &lt;+11&gt;:	mov    DWORD PTR [rbp-0x18],esi</div><div class="line">   0x000000000040055c &lt;+14&gt;:	mov    eax,DWORD PTR [rbp-0x18]</div><div class="line">   0x000000000040055f &lt;+17&gt;:	mov    edx,DWORD PTR [rbp-0x14]</div><div class="line">   0x0000000000400562 &lt;+20&gt;:	add    eax,edx</div><div class="line">   0x0000000000400564 &lt;+22&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x0000000000400567 &lt;+25&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x000000000040056a &lt;+28&gt;:	mov    edi,eax</div><div class="line">   0x000000000040056c &lt;+30&gt;:	call   0x40052d &lt;info&gt;</div><div class="line">   0x0000000000400571 &lt;+35&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x0000000000400574 &lt;+38&gt;:	leave</div><div class="line">   0x0000000000400575 &lt;+39&gt;:	ret</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) x/1xg $rsp // rsp 一直指向函数调用栈的顶部，这里可以看到 main 函数 rip 的值先入栈</div><div class="line">0x7fffffffe518:	0x00000000004005a2</div><div class="line"></div><div class="line">(gdb) ni // 执行 add 函数的第一条指令，0x000000000040054e</div><div class="line">0x000000000040054f	10	&#123;</div><div class="line"></div><div class="line">(gdb) x/1xg $rsp // 再次查看 rsp 的值，可以看到 main 函数 rbp 的值也入栈了</div><div class="line">0x7fffffffe510:	0x00007fffffffe540</div><div class="line"></div><div class="line">(gdb) p/x $rbp // 执行指令 0x000000000040054f 前查看 rbp 位置</div><div class="line">$1 = 0x7fffffffe540 </div><div class="line"></div><div class="line">(gdb) ni // 执行指令 0x000000000040054f 调整当前 rsp 和 rbp 为 add 函数</div><div class="line">0x0000000000400552	10	&#123;</div><div class="line"></div><div class="line">(gdb) p/x $rbp // 执行指令之后 再次查看</div><div class="line">$2 = 0x7fffffffe510</div></pre></td></tr></table></figure>
+<h3 id="观察现场恢复"><a href="#观察现场恢复" class="headerlink" title="观察现场恢复"></a>观察现场恢复</h3><p>执行完 add 函数后，整个保存的 main 的现场都会恢复，我们把断点打在 0x0000000000400571<br>指令处</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div></pre></td><td class="code"><pre><div class="line">(gdb) b *0x0000000000400571 // 加断点</div><div class="line">Breakpoint 5 at 0x400575: file test.c, line 15.</div><div class="line"></div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">info 768</div><div class="line"></div><div class="line">Breakpoint 8, add (x=256, y=512) at test.c:14</div><div class="line">14		return z;</div><div class="line">(gdb) disass</div><div class="line">Dump of assembler code for function add:</div><div class="line">   0x000000000040054e &lt;+0&gt;:	push   rbp</div><div class="line">   0x000000000040054f &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x0000000000400552 &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x0000000000400556 &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400559 &lt;+11&gt;:	mov    DWORD PTR [rbp-0x18],esi</div><div class="line">   0x000000000040055c &lt;+14&gt;:	mov    eax,DWORD PTR [rbp-0x18]</div><div class="line">   0x000000000040055f &lt;+17&gt;:	mov    edx,DWORD PTR [rbp-0x14]</div><div class="line">   0x0000000000400562 &lt;+20&gt;:	add    eax,edx</div><div class="line">   0x0000000000400564 &lt;+22&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x0000000000400567 &lt;+25&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x000000000040056a &lt;+28&gt;:	mov    edi,eax</div><div class="line">   0x000000000040056c &lt;+30&gt;:	call   0x40052d &lt;info&gt;</div><div class="line">=&gt; 0x0000000000400571 &lt;+35&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x0000000000400574 &lt;+38&gt;:	leave</div><div class="line">   0x0000000000400575 &lt;+39&gt;:	ret</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) ni // 执行指令 0x0000000000400571</div><div class="line">15	&#125;</div><div class="line"></div><div class="line">(gdb) disass // 当前指令到达 0x0000000000400574 执行之后，会恢复 main 的 rbp</div><div class="line">Dump of assembler code for function add:</div><div class="line">   0x000000000040054e &lt;+0&gt;:	push   rbp</div><div class="line">   0x000000000040054f &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x0000000000400552 &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x0000000000400556 &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400559 &lt;+11&gt;:	mov    DWORD PTR [rbp-0x18],esi</div><div class="line">   0x000000000040055c &lt;+14&gt;:	mov    eax,DWORD PTR [rbp-0x18]</div><div class="line">   0x000000000040055f &lt;+17&gt;:	mov    edx,DWORD PTR [rbp-0x14]</div><div class="line">   0x0000000000400562 &lt;+20&gt;:	add    eax,edx</div><div class="line">   0x0000000000400564 &lt;+22&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x0000000000400567 &lt;+25&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x000000000040056a &lt;+28&gt;:	mov    edi,eax</div><div class="line">   0x000000000040056c &lt;+30&gt;:	call   0x40052d &lt;info&gt;</div><div class="line">   0x0000000000400571 &lt;+35&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">=&gt; 0x0000000000400574 &lt;+38&gt;:	leave</div><div class="line">   0x0000000000400575 &lt;+39&gt;:	ret</div><div class="line">End of assembler dump.</div><div class="line"></div><div class="line">(gdb) info r // 查看寄存器的值</div><div class="line">rax            0x300	768</div><div class="line">rbx            0x0	0</div><div class="line">rcx            0x8	8</div><div class="line">rdx            0x7ffff7dd59e0	140737351866848</div><div class="line">rsi            0x7ffffff7	2147483639</div><div class="line">rdi            0x1	1</div><div class="line">rbp            0x7fffffffe510	0x7fffffffe510 // 当前还是 add 函数的</div><div class="line">rsp            0x7fffffffe4f0	0x7fffffffe4f0</div><div class="line">r8             0x7ffff7b8b9c0	140737349466560</div><div class="line">r9             0x0	0</div><div class="line">r10            0x7ffff7dd26a0	140737351853728</div><div class="line">r11            0x246	582</div><div class="line">r12            0x400440	4195392</div><div class="line">r13            0x7fffffffe620	140737488348704</div><div class="line">r14            0x0	0</div><div class="line">r15            0x0	0</div><div class="line">rip            0x400574	0x400574 &lt;add+38&gt;</div><div class="line">eflags         0x202	[ IF ]</div><div class="line">cs             0x33	51</div><div class="line">ss             0x2b	43</div><div class="line">ds             0x0	0</div><div class="line">es             0x0	0</div><div class="line">fs             0x0	0</div><div class="line">gs             0x0	0</div><div class="line"></div><div class="line">(gdb) ni // 执行指令 0x0000000000400574</div><div class="line">0x0000000000400575	15	&#125;</div><div class="line"></div><div class="line">(gdb) info r</div><div class="line">rax            0x300	768</div><div class="line">rbx            0x0	0</div><div class="line">rcx            0x8	8</div><div class="line">rdx            0x7ffff7dd59e0	140737351866848</div><div class="line">rsi            0x7ffffff7	2147483639</div><div class="line">rdi            0x1	1</div><div class="line">rbp            0x7fffffffe540	0x7fffffffe540 // rbp 已经恢复到 main 函数的值</div><div class="line">rsp            0x7fffffffe518	0x7fffffffe518</div><div class="line">r8             0x7ffff7b8b9c0	140737349466560</div><div class="line">r9             0x0	0</div><div class="line">r10            0x7ffff7dd26a0	140737351853728</div><div class="line">r11            0x246	582</div><div class="line">r12            0x400440	4195392</div><div class="line">r13            0x7fffffffe620	140737488348704</div><div class="line">r14            0x0	0</div><div class="line">r15            0x0	0</div><div class="line">rip            0x400575	0x400575 &lt;add+39&gt; // rip  未恢复</div><div class="line">eflags         0x202	[ IF ]</div><div class="line">cs             0x33	51</div><div class="line">ss             0x2b	43</div><div class="line">ds             0x0	0</div><div class="line">es             0x0	0</div><div class="line">fs             0x0	0</div><div class="line">gs             0x0	0</div><div class="line"></div><div class="line">(gdb) ni // 执行指令 0x0000000000400575</div><div class="line">0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">21		int z = add(x, y);</div><div class="line"></div><div class="line">(gdb) info r // 执行完成后 rip 也恢复</div><div class="line">rax            0x300	768</div><div class="line">rbx            0x0	0</div><div class="line">rcx            0x8	8</div><div class="line">rdx            0x7ffff7dd59e0	140737351866848</div><div class="line">rsi            0x7ffffff7	2147483639</div><div class="line">rdi            0x1	1</div><div class="line">rbp            0x7fffffffe540	0x7fffffffe540</div><div class="line">rsp            0x7fffffffe520	0x7fffffffe520</div><div class="line">r8             0x7ffff7b8b9c0	140737349466560</div><div class="line">r9             0x0	0</div><div class="line">r10            0x7ffff7dd26a0	140737351853728</div><div class="line">r11            0x246	582</div><div class="line">r12            0x400440	4195392</div><div class="line">r13            0x7fffffffe620	140737488348704</div><div class="line">r14            0x0	0</div><div class="line">r15            0x0	0</div><div class="line">rip            0x4005a2	0x4005a2 &lt;main+44&gt; // rip 也恢复到 main 函数值</div><div class="line">eflags         0x202	[ IF ]</div><div class="line">cs             0x33	51</div><div class="line">ss             0x2b	43</div><div class="line">ds             0x0	0</div><div class="line">es             0x0	0</div><div class="line">fs             0x0	0</div><div class="line">gs             0x0	0</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>C 语言中函数调用时会分配对应的栈帧，rsp 始终指向栈帧顶部，rbp 指向栈帧底部<br>C 语言中使用 (rbp - 偏移量) 来进行栈帧寻址操作，完成函数调用<br>C 语言中函数调用时，会使用寄存器来进行值复制传递<br>C 语言中现场保护时会保存 rbp 和 rip，下一级函数调用结束后，恢复值，继续执行    </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gdb/" rel="tag">#gdb</a>
+          
+            <a href="/tags/c/" rel="tag">#c</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/gdb-trace-function-call-stack/" rel="next" title="GDB 查看函数调用栈帧">
+                <i class="fa fa-chevron-left"></i> GDB 查看函数调用栈帧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/gdb-trace-go-function-call/" rel="prev" title="GDB 跟踪 Go 语言方法执行过程">
+                GDB 跟踪 Go 语言方法执行过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/26/gdb-trace-c-function-call/"
+           data-title="GDB 跟踪 C 语言函数执行过程" data-url="https://favoorr.github.io/2017/02/26/gdb-trace-c-function-call/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-语言示例"><span class="nav-number">2.</span> <span class="nav-text">C 语言示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在指令上加断点"><span class="nav-number">2.1.</span> <span class="nav-text">在指令上加断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察寄存器传递参数"><span class="nav-number">2.2.</span> <span class="nav-text">观察寄存器传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察现场保护"><span class="nav-number">2.3.</span> <span class="nav-text">观察现场保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察现场恢复"><span class="nav-number">2.4.</span> <span class="nav-text">观察现场恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

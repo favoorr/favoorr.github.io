@@ -1,0 +1,832 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gdb," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="GDB 静态跟踪和学习的时候非常有用，但是命令比较多，这里按照自己的分类总结输出
+按照 Brendan 的做法，有示例很重要
+未完待续 …
+开始调试gdb test12345678910111213141516171819202122232425gcc -g -O0 -o ctest1 test.cgdb testroot@trusty64-135:/go/go.lesson/src/functi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GDB 命令使用总结">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/26/gdb-commands-summary/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="GDB 静态跟踪和学习的时候非常有用，但是命令比较多，这里按照自己的分类总结输出
+按照 Brendan 的做法，有示例很重要
+未完待续 …
+开始调试gdb test12345678910111213141516171819202122232425gcc -g -O0 -o ctest1 test.cgdb testroot@trusty64-135:/go/go.lesson/src/functi">
+<meta property="og:updated_time" content="2017-02-27T03:19:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GDB 命令使用总结">
+<meta name="twitter:description" content="GDB 静态跟踪和学习的时候非常有用，但是命令比较多，这里按照自己的分类总结输出
+按照 Brendan 的做法，有示例很重要
+未完待续 …
+开始调试gdb test12345678910111213141516171819202122232425gcc -g -O0 -o ctest1 test.cgdb testroot@trusty64-135:/go/go.lesson/src/functi">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/26/gdb-commands-summary/"/>
+
+  <title> GDB 命令使用总结 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GDB 命令使用总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-26T10:29:32+08:00" content="2017-02-26">
+              2017-02-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gdb/" itemprop="url" rel="index">
+                    <span itemprop="name">gdb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/26/gdb-commands-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/gdb-commands-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/26/gdb-commands-summary/" class="leancloud_visitors" data-flag-title="GDB 命令使用总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>GDB 静态跟踪和学习的时候非常有用，但是命令比较多，这里按照自己的分类总结输出</p>
+<p>按照 Brendan 的做法，有示例很重要</p>
+<p>未完待续 …</p>
+<h2 id="开始调试"><a href="#开始调试" class="headerlink" title="开始调试"></a>开始调试</h2><h3 id="gdb-test"><a href="#gdb-test" class="headerlink" title="gdb test"></a>gdb test</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">gcc -g -O0 -o ctest1 test.c</div><div class="line"></div><div class="line">gdb test</div><div class="line">root@trusty64-135:/go/go.lesson/src/function-call-stack# gdb ctest1</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from ctest1...done.</div><div class="line"></div><div class="line">(gdb) r</div><div class="line">Starting program: /go/go.lesson/src/function-call-stack/ctest1</div><div class="line"></div><div class="line">Breakpoint 1, main (argc=1, argv=0x7fffffffe628) at test.c:19</div><div class="line">19		int x = 0x100;</div></pre></td></tr></table></figure>
+<h2 id="查看源代码"><a href="#查看源代码" class="headerlink" title="查看源代码"></a>查看源代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(gdb) l main</div><div class="line">13</div><div class="line">14		return z;</div><div class="line">15	&#125;</div><div class="line">16</div><div class="line">17	int main(int argc, char **argv)</div><div class="line">18	&#123;</div><div class="line">19		int x = 0x100;</div><div class="line">20		int y = 0x200;</div><div class="line">21		int z = add(x, y);</div><div class="line">22</div></pre></td></tr></table></figure>
+<h2 id="断点操作类"><a href="#断点操作类" class="headerlink" title="断点操作类"></a>断点操作类</h2><h3 id="符号名设置断点-b-main"><a href="#符号名设置断点-b-main" class="headerlink" title="符号名设置断点 b main"></a>符号名设置断点 b main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) b main</div><div class="line">Breakpoint 1 at 0x400585: file test.c, line 19.</div></pre></td></tr></table></figure>
+<h3 id="查看所有断点"><a href="#查看所有断点" class="headerlink" title="查看所有断点"></a>查看所有断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">info b</div><div class="line"></div><div class="line">Num     Type           Disp Enb Address            What</div><div class="line">1       breakpoint     keep y   0x0000000000400585 in main at test.c:19</div><div class="line">2       breakpoint     keep y   0x000000000040055c in add at test.c:11</div><div class="line">3       breakpoint     keep y   0x0000000000400538 in info at test.c:6</div></pre></td></tr></table></figure>
+<h3 id="根据编号删除断点"><a href="#根据编号删除断点" class="headerlink" title="根据编号删除断点"></a>根据编号删除断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(gdb) d 1</div></pre></td></tr></table></figure>
+<h3 id="删除所有断点"><a href="#删除所有断点" class="headerlink" title="删除所有断点"></a>删除所有断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) d</div><div class="line">Delete all breakpoints? (y or n) y</div><div class="line">(gdb) info b</div><div class="line">No breakpoints or watchpoints.</div></pre></td></tr></table></figure>
+<h2 id="查看寄存器类"><a href="#查看寄存器类" class="headerlink" title="查看寄存器类"></a>查看寄存器类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(gdb) info r</div><div class="line">rax            0x300	768</div><div class="line">rbx            0x0	0</div><div class="line">rcx            0x8	8</div><div class="line">rdx            0x7ffff7dd59e0	140737351866848</div><div class="line">rsi            0x7ffffff7	2147483639</div><div class="line">rdi            0x1	1</div><div class="line">rbp            0x7fffffffe540	0x7fffffffe540</div><div class="line">rsp            0x7fffffffe520	0x7fffffffe520</div><div class="line">r8             0x7ffff7b8b9c0	140737349466560</div><div class="line">r9             0x0	0</div><div class="line">r10            0x7ffff7dd26a0	140737351853728</div><div class="line">r11            0x246	582</div><div class="line">r12            0x400440	4195392</div><div class="line">r13            0x7fffffffe620	140737488348704</div><div class="line">r14            0x0	0</div><div class="line">r15            0x0	0</div><div class="line">rip            0x4005a2	0x4005a2 &lt;main+44&gt; // rip 也恢复到 main 函数值</div><div class="line">eflags         0x202	[ IF ]</div><div class="line">cs             0x33	51</div><div class="line">ss             0x2b	43</div><div class="line">ds             0x0	0</div><div class="line">es             0x0	0</div><div class="line">fs             0x0	0</div><div class="line">gs             0x0	0</div></pre></td></tr></table></figure>
+<h2 id="查看值类"><a href="#查看值类" class="headerlink" title="查看值类"></a>查看值类</h2><h3 id="查看函数的反汇编代码"><a href="#查看函数的反汇编代码" class="headerlink" title="查看函数的反汇编代码"></a>查看函数的反汇编代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(gdb) disass</div><div class="line">Dump of assembler code for function add:</div><div class="line">   0x000000000040054e &lt;+0&gt;:	push   rbp</div><div class="line">   0x000000000040054f &lt;+1&gt;:	mov    rbp,rsp</div><div class="line">   0x0000000000400552 &lt;+4&gt;:	sub    rsp,0x20</div><div class="line">   0x0000000000400556 &lt;+8&gt;:	mov    DWORD PTR [rbp-0x14],edi</div><div class="line">   0x0000000000400559 &lt;+11&gt;:	mov    DWORD PTR [rbp-0x18],esi</div><div class="line">   0x000000000040055c &lt;+14&gt;:	mov    eax,DWORD PTR [rbp-0x18]</div><div class="line">   0x000000000040055f &lt;+17&gt;:	mov    edx,DWORD PTR [rbp-0x14]</div><div class="line">   0x0000000000400562 &lt;+20&gt;:	add    eax,edx</div><div class="line">   0x0000000000400564 &lt;+22&gt;:	mov    DWORD PTR [rbp-0x4],eax</div><div class="line">   0x0000000000400567 &lt;+25&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">   0x000000000040056a &lt;+28&gt;:	mov    edi,eax</div><div class="line">   0x000000000040056c &lt;+30&gt;:	call   0x40052d &lt;info&gt;</div><div class="line">   0x0000000000400571 &lt;+35&gt;:	mov    eax,DWORD PTR [rbp-0x4]</div><div class="line">=&gt; 0x0000000000400574 &lt;+38&gt;:	leave</div><div class="line">   0x0000000000400575 &lt;+39&gt;:	ret</div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure>
+<h3 id="列出所有的局部变量"><a href="#列出所有的局部变量" class="headerlink" title="列出所有的局部变量"></a>列出所有的局部变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) info locals</div><div class="line">x = 256</div><div class="line">y = 512</div><div class="line">z = 0</div></pre></td></tr></table></figure>
+<h3 id="列出所有参数"><a href="#列出所有参数" class="headerlink" title="列出所有参数"></a>列出所有参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(gdb) info args</div><div class="line">argc = 1</div><div class="line">argv = 0x7fffffffe5f8</div></pre></td></tr></table></figure>
+<h3 id="运行期进程的内存映射"><a href="#运行期进程的内存映射" class="headerlink" title="运行期进程的内存映射"></a>运行期进程的内存映射</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">(gdb) info proc mappings</div><div class="line">process 1545</div><div class="line">Mapped address spaces:</div><div class="line"></div><div class="line">          Start Addr           End Addr       Size     Offset objfile</div><div class="line">            0x400000           0x401000     0x1000        0x0 /root/macshare/example/src/08/test</div><div class="line">            0x600000           0x601000     0x1000        0x0 /root/macshare/example/src/08/test</div><div class="line">            0x601000           0x602000     0x1000     0x1000 /root/macshare/example/src/08/test</div><div class="line">      0x7ffff7a15000     0x7ffff7bcf000   0x1ba000        0x0 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7bcf000     0x7ffff7dcf000   0x200000   0x1ba000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dcf000     0x7ffff7dd3000     0x4000   0x1ba000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dd3000     0x7ffff7dd5000     0x2000   0x1be000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dd5000     0x7ffff7dda000     0x5000        0x0</div><div class="line">      0x7ffff7dda000     0x7ffff7dfd000    0x23000        0x0 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7fed000     0x7ffff7ff0000     0x3000        0x0</div><div class="line">      0x7ffff7ff6000     0x7ffff7ff8000     0x2000        0x0</div><div class="line">      0x7ffff7ff8000     0x7ffff7ffa000     0x2000        0x0 [vvar]</div><div class="line">      0x7ffff7ffa000     0x7ffff7ffc000     0x2000        0x0 [vdso]</div><div class="line">      0x7ffff7ffc000     0x7ffff7ffd000     0x1000    0x22000 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7ffd000     0x7ffff7ffe000     0x1000    0x23000 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7ffe000     0x7ffff7fff000     0x1000        0x0</div><div class="line">      0x7ffffffde000     0x7ffffffff000    0x21000        0x0 [stack]</div><div class="line">  0xffffffffff600000 0xffffffffff601000     0x1000        0x0 [vsyscall]</div></pre></td></tr></table></figure>
+<h3 id="查看地址"><a href="#查看地址" class="headerlink" title="查看地址"></a>查看地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) p/x $rbp 查看一个特定的寄存器</div><div class="line">$2 = 0x7fffffffe510</div></pre></td></tr></table></figure>
+<h3 id="查看地址的值"><a href="#查看地址的值" class="headerlink" title="查看地址的值"></a>查看地址的值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) x/1xg $rsp // 查看地址的值是否符合预期</div><div class="line">0x7fffffffe510:	0x00007fffffffe540</div><div class="line"></div><div class="line">(gdb) x/1xg $rsp+0x18 // 根据 寄存器+偏移量寻址</div><div class="line">0xc820037f18:	0x0000000000000100</div></pre></td></tr></table></figure>
+<h3 id="查看调用栈帧"><a href="#查看调用栈帧" class="headerlink" title="查看调用栈帧"></a>查看调用栈帧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(gdb) bt</div><div class="line">#0  0x0000000000401149 in main.add (x=256, y=512, ~r2=0) at /go/go.lesson/src/function-call-stack/test.go:10</div><div class="line">#1  0x00000000004011bd in main.main () at /go/go.lesson/src/function-call-stack/test.go:18</div></pre></td></tr></table></figure>
+<h3 id="查看符号地址"><a href="#查看符号地址" class="headerlink" title="查看符号地址"></a>查看符号地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) info address main.main</div><div class="line">Symbol &quot;main.main&quot; is a function at address 0x401180.</div></pre></td></tr></table></figure>
+<h3 id="根据符号地址反向查看符号详情"><a href="#根据符号地址反向查看符号详情" class="headerlink" title="根据符号地址反向查看符号详情"></a>根据符号地址反向查看符号详情</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) info symbol 0x401180</div><div class="line">main.main in section .text of /go/go.lesson/src/function-call-stack/gtest1</div></pre></td></tr></table></figure>
+<h2 id="单步机器指令"><a href="#单步机器指令" class="headerlink" title="单步机器指令"></a>单步机器指令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">si 单步进入 </div><div class="line">ni 单步执行 next </div><div class="line">ret 单步返回</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gdb/" rel="tag">#gdb</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/gdb-trace-function-call-stack-config-env/" rel="next" title="GDB 跟踪方法调用栈-环境配置">
+                <i class="fa fa-chevron-left"></i> GDB 跟踪方法调用栈-环境配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/gdb-trace-function-call-stack/" rel="prev" title="GDB 查看函数调用栈帧">
+                GDB 查看函数调用栈帧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/26/gdb-commands-summary/"
+           data-title="GDB 命令使用总结" data-url="https://favoorr.github.io/2017/02/26/gdb-commands-summary/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始调试"><span class="nav-number">1.</span> <span class="nav-text">开始调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb-test"><span class="nav-number">1.1.</span> <span class="nav-text">gdb test</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看源代码"><span class="nav-number">2.</span> <span class="nav-text">查看源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断点操作类"><span class="nav-number">3.</span> <span class="nav-text">断点操作类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号名设置断点-b-main"><span class="nav-number">3.1.</span> <span class="nav-text">符号名设置断点 b main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看所有断点"><span class="nav-number">3.2.</span> <span class="nav-text">查看所有断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据编号删除断点"><span class="nav-number">3.3.</span> <span class="nav-text">根据编号删除断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除所有断点"><span class="nav-number">3.4.</span> <span class="nav-text">删除所有断点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看寄存器类"><span class="nav-number">4.</span> <span class="nav-text">查看寄存器类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看值类"><span class="nav-number">5.</span> <span class="nav-text">查看值类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看函数的反汇编代码"><span class="nav-number">5.1.</span> <span class="nav-text">查看函数的反汇编代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出所有的局部变量"><span class="nav-number">5.2.</span> <span class="nav-text">列出所有的局部变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出所有参数"><span class="nav-number">5.3.</span> <span class="nav-text">列出所有参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行期进程的内存映射"><span class="nav-number">5.4.</span> <span class="nav-text">运行期进程的内存映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看地址"><span class="nav-number">5.5.</span> <span class="nav-text">查看地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看地址的值"><span class="nav-number">5.6.</span> <span class="nav-text">查看地址的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看调用栈帧"><span class="nav-number">5.7.</span> <span class="nav-text">查看调用栈帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看符号地址"><span class="nav-number">5.8.</span> <span class="nav-text">查看符号地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据符号地址反向查看符号详情"><span class="nav-number">5.9.</span> <span class="nav-text">根据符号地址反向查看符号详情</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单步机器指令"><span class="nav-number">6.</span> <span class="nav-text">单步机器指令</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

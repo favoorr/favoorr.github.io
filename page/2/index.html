@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/09/kafka-queue-config/" itemprop="url">
-                  配置 Kafka Topic Queue 模式
+                <a class="post-title-link" href="/2017/02/13/set-up-performance-analysis-environment/" itemprop="url">
+                  配置性能分析试验环境
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:48:54+08:00" content="2017-02-09">
-              2017-02-09
+            <time itemprop="dateCreated" datetime="2017-02-13T17:10:04+08:00" content="2017-02-13">
+              2017-02-13
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
+                  <a href="/categories/performance/" itemprop="url" rel="index">
+                    <span itemprop="name">performance</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-queue-config/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-queue-config/" itemprop="commentsCount"></span>
+                <a href="/2017/02/13/set-up-performance-analysis-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/set-up-performance-analysis-environment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2017/02/09/kafka-queue-config/" class="leancloud_visitors" data-flag-title="配置 Kafka Topic Queue 模式">
+             <span id="/2017/02/13/set-up-performance-analysis-environment/" class="leancloud_visitors" data-flag-title="配置性能分析试验环境">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,19 +337,14 @@
       
         
           
-            <p>当同一个 Topic 的 consumer 配置 group.id 相同时，即为 queue 模式</p>
-<p>kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181    </p>
-<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
-<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
-<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
-<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
-<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
-<h1 id="启动命令行消费者"><a href="#启动命令行消费者" class="headerlink" title="启动命令行消费者"></a>启动命令行消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">从安装目录复制一个消费者配置文件，并修改文件 group.id 相同，来测试 queue 模式</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/consumer.properties .</div><div class="line"></div><div class="line">vim consumer.properties</div><div class="line"></div><div class="line">启动命令行消费者</div><div class="line"></div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --consumer.config consumer.properties --topic test</div><div class="line"></div><div class="line">--consumer.config 指定消费者启动的配置文件</div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div><div class="line">启动相同 group.id 的 queue 消费者模式</div></pre></td></tr></table></figure>
-<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
-<h1 id="查看-Kafka-已经注册的-group"><a href="#查看-Kafka-已经注册的-group" class="headerlink" title="查看 Kafka 已经注册的 group"></a>查看 Kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">test-consumer-group</div></pre></td></tr></table></figure>
-<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group test-consumer-group</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 后，192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
-<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
-<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
+            <p>最近 2 年通过 @agentz OpenResty 作者了解到了动态追踪技术和 Brendan Gregg，前几天终于在自己的环境下跑通了测试用例，记录在此。把握整个 Linux 运行时。</p>
+<h1 id="内核要求"><a href="#内核要求" class="headerlink" title="内核要求"></a>内核要求</h1><p>准备学习的工具是 bcc，动态追踪技术目前也一直在发布新的功能，所以最新<br>版本的内核是最好的，我们的目的是学习和试验，准备上生产环境时，应该慎重</p>
+<p>使用的 Linux 内核版本要求比较高，比如 ubuntu 16.04，内核版本 4.4，可以选择自己安装最新版本内核</p>
+<h1 id="vagrant-配置文件参考"><a href="#vagrant-配置文件参考" class="headerlink" title="vagrant 配置文件参考"></a>vagrant 配置文件参考</h1><p>我使用的是 ubuntu 16.04，使用 vagrant 管理虚拟机</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-156"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.156"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-156"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h1 id="安装-Perf"><a href="#安装-Perf" class="headerlink" title="安装 Perf"></a>安装 Perf</h1><p>perf 是老牌性能分析工具，ebpf/bcc 的流行可能完全替代这个老牌工具，<br>升级内核也不会那么激进，所以路还很长</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ sudo su - root</div><div class="line"><span class="comment"># apt update</span></div><div class="line"><span class="comment"># apt install linux-tools-common</span></div><div class="line"><span class="comment"># apt install linux-tools-4.4.0-53-generic</span></div><div class="line"><span class="comment"># apt install linux-cloud-tools-4.4.0-53-generic</span></div><div class="line"></div><div class="line">安装成功验证</div><div class="line"><span class="comment"># perf --version</span></div></pre></td></tr></table></figure>
+<h1 id="安装-BPF-BCC"><a href="#安装-BPF-BCC" class="headerlink" title="安装 BPF BCC"></a>安装 BPF BCC</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># echo "deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list</span></div><div class="line"><span class="comment"># sudo su - root</span></div><div class="line"><span class="comment"># apt-get update</span></div><div class="line"><span class="comment"># apt-get install bcc-tools</span></div><div class="line"></div><div class="line"><span class="comment"># vim .bashrc</span></div><div class="line"><span class="comment"># export PATH=$PATH:/usr/share/bcc/tools</span></div><div class="line"><span class="comment"># source .bashrc</span></div><div class="line"><span class="comment"># biolatency</span></div><div class="line"></div><div class="line">如果 biolatency 命令能正确执行，那就是安装 ok 了</div></pre></td></tr></table></figure>
           
         
       
@@ -398,8 +393,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/09/kafka-pub-sub-config/" itemprop="url">
-                  命令行配置测试 Kafka Pub-Sub 模式
+                <a class="post-title-link" href="/2017/02/13/as-i-understand-the-instance-the-state-the-context/" itemprop="url">
+                  我所理解的实例 状态 和 上下文
                 </a>
               
             
@@ -412,8 +407,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:48:46+08:00" content="2017-02-09">
-              2017-02-09
+            <time itemprop="dateCreated" datetime="2017-02-13T11:55:28+08:00" content="2017-02-13">
+              2017-02-13
             </time>
           </span>
 
@@ -426,8 +421,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -442,8 +437,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-pub-sub-config/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-pub-sub-config/" itemprop="commentsCount"></span>
+                <a href="/2017/02/13/as-i-understand-the-instance-the-state-the-context/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/as-i-understand-the-instance-the-state-the-context/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -453,7 +448,7 @@
 
           
           
-             <span id="/2017/02/09/kafka-pub-sub-config/" class="leancloud_visitors" data-flag-title="命令行配置测试 Kafka Pub-Sub 模式">
+             <span id="/2017/02/13/as-i-understand-the-instance-the-state-the-context/" class="leancloud_visitors" data-flag-title="我所理解的实例 状态 和 上下文">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -477,19 +472,23 @@
       
         
           
-            <p>命令行调试 kafka pub-sub 模式</p>
-<p>Kafka: 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092<br>Zookeeper: 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</p>
-<h1 id="Zookeeper-首先启动"><a href="#Zookeeper-首先启动" class="headerlink" title="Zookeeper 首先启动"></a>Zookeeper 首先启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh start</div></pre></td></tr></table></figure>
-<h1 id="验证查看-Zookeeper-启动成功"><a href="#验证查看-Zookeeper-启动成功" class="headerlink" title="验证查看 Zookeeper 启动成功"></a>验证查看 Zookeeper 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh status</div></pre></td></tr></table></figure>
-<h1 id="启动-Kafka"><a href="#启动-Kafka" class="headerlink" title="启动 Kafka"></a>启动 Kafka</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
-<h1 id="验证-Kafka-启动成功"><a href="#验证-Kafka-启动成功" class="headerlink" title="验证 Kafka 启动成功"></a>验证 Kafka 启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div></pre></td></tr></table></figure>
-<h1 id="查看测试-Topic-test-配置"><a href="#查看测试-Topic-test-配置" class="headerlink" title="查看测试 Topic test 配置"></a>查看测试 Topic test 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">分区 3，复制因子 2</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line"></div><div class="line">Topic:test PartitionCount:3 ReplicationFactor:2 Configs:</div><div class="line">Topic: test Partition: 0 Leader: 2 Replicas: 2,0 Isr: 2,0</div><div class="line">Topic: test Partition: 1 Leader: 0 Replicas: 0,1 Isr: 0,1</div><div class="line">Topic: test Partition: 2 Leader: 1 Replicas: 1,2 Isr: 1,2</div></pre></td></tr></table></figure>
-<h1 id="在某一台-Kafka-安装机器上启动消费者"><a href="#在某一台-Kafka-安装机器上启动消费者" class="headerlink" title="在某一台 Kafka 安装机器上启动消费者"></a>在某一台 Kafka 安装机器上启动消费者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-consumer.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --zookeeper 192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181 --new-consumer --topic test</div><div class="line"></div><div class="line">--new-consumer 添加了这个参数后，需要添加 bootstrap-server</div></pre></td></tr></table></figure>
-<h1 id="启动控制台生产者"><a href="#启动控制台生产者" class="headerlink" title="启动控制台生产者"></a>启动控制台生产者</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-console-producer.sh --broker-list 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --topic test</div></pre></td></tr></table></figure>
-<h1 id="查看-kafka-已经注册的-group"><a href="#查看-kafka-已经注册的-group" class="headerlink" title="查看 kafka 已经注册的 group"></a>查看 kafka 已经注册的 group</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --new-consumer --list</div><div class="line"></div><div class="line">console-consumer-18858</div><div class="line">console-consumer-43333</div><div class="line">console-consumer-14208</div></pre></td></tr></table></figure>
-<h1 id="查看消费情况"><a href="#查看消费情况" class="headerlink" title="查看消费情况"></a>查看消费情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-consumer-groups.sh --new-consumer --bootstrap-server 192.168.16.22:9092,192.168.16.23:9092,192.168.16.31:9092 --describe --group console-consumer-18858</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">console-consumer-18858, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 1, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line">console-consumer-18858, test, 2, 0, 0, 0, consumer-1_/192.168.16.31</div><div class="line"></div><div class="line">一条消息没有发送时，所有分区的 offset 都是 0</div><div class="line"></div><div class="line">发送一条测试消息 m1 192.168.16.31 消费了</div><div class="line"></div><div class="line">GROUP, TOPIC, PARTITION, CURRENT OFFSET, LOG END OFFSET, LAG, OWNER</div><div class="line">test-consumer-group, test, 0, 1, 1, 0, consumer-1_/192.168.16.31</div><div class="line">test-consumer-group, test, 2, 0, 0, 0, consumer-1_/192.168.16.23</div><div class="line">test-consumer-group, test, 1, 0, 0, 0, consumer-1_/192.168.16.22</div><div class="line"></div><div class="line">消息发送后，可以看到 192.168.16.31 这台机器消费了消息</div></pre></td></tr></table></figure>
-<h1 id="关闭-Kafka-server"><a href="#关闭-Kafka-server" class="headerlink" title="关闭 Kafka server"></a>关闭 Kafka server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
-<h1 id="关闭-Zookeeper"><a href="#关闭-Zookeeper" class="headerlink" title="关闭 Zookeeper"></a>关闭 Zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/zookeeper-3.4.6/bin/zkServer.sh stop</div></pre></td></tr></table></figure>
+            <p>我所理解的对象和状态和上下文</p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>所谓对象,使用类型创造出来的实例,instance ,我们也经常用 instance 来表示,<br>构建一个 instance,然后操作 instance 的状态</p>
+<p>对象最开始创造的时候,是在内存中的,根据业务需求,经过我们业务流程逻辑操作之后,<br>状态变更完成后,平常的操作是持久化到数据库中,当然也可以直接写到文件里,或者<br>经过网络发送,或者就放到内存里</p>
+<p>当我们下次在使用某一个对象时,针对持久化到数据库的情况,在程序中构建一个空白的对象,<br>然后从之前选择的持久化方式中在将对象 load 出来,赋值给这个空白对象,就又还原了状态,<br>又可以根据业务需求,做响应的逻辑操作</p>
+<p>其实这里可以想到整个对象的变化过程,理解平常自己干的工作的本质</p>
+<h1 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h1><p>对象的状态,也可以理解成对象的值,比如一个 User 对象,如果 name 属性是 favoorr, 当前的<br>值就是 favoorr,别人使用这个对象的时候,值就是 favoorr,当然这个值可以修改,就是修改对象<br>的状态,多线程修改下还是很容易出问题的</p>
+<h1 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h1><p>平常经常使用的是 context,可以理解为某一个对象的管理范围,一个对象给你构造的是一个世界,<br>获取这个世界里的任何东西,都可以理解成从上下文获取</p>
+<h1 id="说的有点悬了-来个具体的例子"><a href="#说的有点悬了-来个具体的例子" class="headerlink" title="说的有点悬了,来个具体的例子"></a>说的有点悬了,来个具体的例子</h1><p>一个操作系统上面,运行了一个 Tomcat 容器,容器内运行了一个 webapp 监听 8080 端口,<br>处理用户请求</p>
+<h2 id="操作系统启动了"><a href="#操作系统启动了" class="headerlink" title="操作系统启动了"></a>操作系统启动了</h2><p>目前的计算机都是状态机,一个操作系统软件在硬件上启动后,就会初始化自己的状态,构建自己<br>上下文,所有构件好之后,操作系统有自己的状态,例如当前的端口使用情况,当前运行的进程数,<br>当前内存的使用量,这些从整个操作系统的上下文中都可以去获取,首先要知道,这些都会有,至于<br>自己会不会去获取这是另外一回事</p>
+<h2 id="进程启动了"><a href="#进程启动了" class="headerlink" title="进程启动了"></a>进程启动了</h2><p>然后安装了 Java 运行环境,启动了 Tomcat,启动了一个 Java  进程,初始化了 webapp,全部启动<br>完成后,webapp 监听 8080 端口处理用户请求</p>
+<p>整个过程中,操作系统的状态改变了,内存进程用了,端口被用了,进程增加了</p>
+<p>Tomcat 进程完成了初始化,有了自己的状态,而且可以通过很多命令来获取当前的状态</p>
+<p>状态重要有了,就看应用是否愿意让你获取,开发者是否用心给你提供了方便查询的接口</p>
+<h2 id="用户请求来了"><a href="#用户请求来了" class="headerlink" title="用户请求来了"></a>用户请求来了</h2><p>当一个用户在浏览器访问 localhost:8080/index.jsp 时,通过层层处理,到了 Tomcat 进程,这个进程<br>就开始处理了,在处理的过程中,有个 Servlet 的抽象,这个请求进来后,构建了一个实例,可以观察<br>各种状态,例如请求地址,请求 ip,都可以获取,同时这些所有对象都活在当前的 Tomcat 容器<br>上下文中</p>
+<p>进程内根据自己的处理,返回请求数据后,请求结束了,这个请求构建的对象生命周期结束了</p>
+<h1 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h1><p>这些概念,如果自己理解了,可以去描述计算机的状态机,可以去猜很多东西,有些东西自己<br>不知道,但是一定有,可以直接去查,去搜,缩小自己不知道的不知道,迎接更大的不知道</p>
+
           
         
       
@@ -538,8 +537,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/09/kafka-topic-ops/" itemprop="url">
-                  Kafka Topic 运维经验
+                <a class="post-title-link" href="/2017/02/11/update-kernel-for-ubuntu/" itemprop="url">
+                  ubuntu-16.04-更新内核到-4.9.9
                 </a>
               
             
@@ -552,8 +551,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:48:05+08:00" content="2017-02-09">
-              2017-02-09
+            <time itemprop="dateCreated" datetime="2017-02-11T11:10:53+08:00" content="2017-02-11">
+              2017-02-11
             </time>
           </span>
 
@@ -566,8 +565,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -582,8 +581,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-topic-ops/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-topic-ops/" itemprop="commentsCount"></span>
+                <a href="/2017/02/11/update-kernel-for-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/11/update-kernel-for-ubuntu/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -593,7 +592,7 @@
 
           
           
-             <span id="/2017/02/09/kafka-topic-ops/" class="leancloud_visitors" data-flag-title="Kafka Topic 运维经验">
+             <span id="/2017/02/11/update-kernel-for-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu-16.04-更新内核到-4.9.9">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -617,16 +616,20 @@
       
         
           
-            <p>Kafka Topic 运维操作记录</p>
-<p>会有全局的配置，但是如果每个 topic 自己配置，会覆盖掉全局配置</p>
-<h1 id="查看-Topic-列表"><a href="#查看-Topic-列表" class="headerlink" title="查看 Topic 列表"></a>查看 Topic 列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
-<h1 id="查看单个-Topic-详情"><a href="#查看单个-Topic-详情" class="headerlink" title="查看单个 Topic 详情"></a>查看单个 Topic 详情</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">这个查看到的信息比较全，含分区和复制因子信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line"></div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=64000,flush.messages=1</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div><div class="line"></div><div class="line">这个查看的只有配置信息</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div><div class="line"></div><div class="line">Configs for topics:my-topic are max.message.bytes=256001,flush.messages=2001</div></pre></td></tr></table></figure>
-<h1 id="自定义配置创建-Topic"><a href="#自定义配置创建-Topic" class="headerlink" title="自定义配置创建 Topic"></a>自定义配置创建 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">三个分区，二个复制因子</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 3 --topic test</div><div class="line"></div><div class="line">三个分区，三个复制因子，加自定义参数</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line">Created topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">查看创建结果</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
-<h1 id="更改-topic-配置"><a href="#更改-topic-配置" class="headerlink" title="更改 topic 配置"></a>更改 topic 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">更改配置的命令</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic my-topic --config max.message.bytes=128000 --config flush.messages=1000</div><div class="line"></div><div class="line">WARNING: Altering topic configuration from this script has been deprecated and may be removed in future releases.</div><div class="line">Going forward, please use kafka-configs.sh for this functionality</div><div class="line">Updated config for topic &quot;my-topic&quot;.</div><div class="line"></div><div class="line">更改之后，查看最新配置</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-topic</div><div class="line">Topic:my-topic PartitionCount:3 ReplicationFactor:3 Configs:max.message.bytes=128000,flush.messages=1000</div><div class="line">Topic: my-topic Partition: 0 Leader: 1 Replicas: 1,0,2 Isr: 1,0,2</div><div class="line">Topic: my-topic Partition: 1 Leader: 2 Replicas: 2,1,0 Isr: 2,1,0</div><div class="line">Topic: my-topic Partition: 2 Leader: 0 Replicas: 0,2,1 Isr: 0,2,1</div></pre></td></tr></table></figure>
-<h1 id="最新的-topic-维护命令"><a href="#最新的-topic-维护命令" class="headerlink" title="最新的 topic 维护命令"></a>最新的 topic 维护命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">更改配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name=my-topic --alter --add-config max.message.bytes=256001 --add-config flush.messages=2001</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">这里一次性更改多个，需要添加多个 --add-config 命令，如果只写一个，后面的会被忽略</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --describe --entity-type=topics --entity-name my-topic</div></pre></td></tr></table></figure>
-<h1 id="删除一个配置项"><a href="#删除一个配置项" class="headerlink" title="删除一个配置项"></a>删除一个配置项</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --alter --delete-config max.message.bytes --entity-type topics --entity-name my-topic</div><div class="line">Updated config for topic: &quot;my-topic&quot;.</div><div class="line"></div><div class="line">删除后，查看配置项</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type=topics --entity-name my-topic --describe</div><div class="line"></div><div class="line">Configs for topics:my-topic are flush.messages=2001</div></pre></td></tr></table></figure>
-<h1 id="删除一个-Topic"><a href="#删除一个-Topic" class="headerlink" title="删除一个 Topic"></a>删除一个 Topic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">为了测试，先创建</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic1 --partitions 3 --replication-factor 3 --config max.message.bytes=64000 --config flush.messages=1</div><div class="line"></div><div class="line">查看创建的结果</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div><div class="line"></div><div class="line">删除</div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic my-topic1</div><div class="line">如果配置参数，就会直接删除</div><div class="line">Topic my-topic1 is marked for deletion.</div><div class="line">Note: This will have no impact if delete.topic.enable is not set to true.</div><div class="line">delete.topic.enable=true</div></pre></td></tr></table></figure>
-<h1 id="修改-Topic-分区数"><a href="#修改-Topic-分区数" class="headerlink" title="修改 Topic 分区数"></a>修改 Topic 分区数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic test --partitions 5</div><div class="line"></div><div class="line">分区数只能增加</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</div><div class="line">分区数 * 复制因子 = 10</div><div class="line"></div><div class="line">三台 broker 平均分布</div><div class="line">0 1 3 4</div><div class="line">1 2 4</div><div class="line">0 2 3</div><div class="line">433 分布</div><div class="line">对应的消费者最好是 5 个，每个消费者对应一个分区，多于 5 个，在没有消费者挂掉的</div><div class="line">情况下，只能等待</div></pre></td></tr></table></figure>
+            <p>Brendan 最新推崇的动态跟踪工具 BCC 很多不少功能建议使用最新版本的内核,目前使用的操作系统是 ubuntu 16.04 想升级内核到 4.9,下面记录过程</p>
+<h1 id="1-查看目前系统-kernel-情况"><a href="#1-查看目前系统-kernel-情况" class="headerlink" title="1.查看目前系统 kernel 情况"></a>1.查看目前系统 kernel 情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">uname -a</div><div class="line"></div><div class="line">Linux xenial64-157 4.4.0-53-generic #74-Ubuntu SMP Fri Dec 2 15:59:10 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux</div></pre></td></tr></table></figure>
+<h1 id="2-下载-Ubuntu-编译好的内核"><a href="#2-下载-Ubuntu-编译好的内核" class="headerlink" title="2.下载 Ubuntu 编译好的内核"></a>2.下载 Ubuntu 编译好的内核</h1><p>ubuntu 编译好的最新版本内核地址</p>
+<p><a href="http://kernel.ubuntu.com/~kernel-ppa/mainline" target="_blank" rel="external">http://kernel.ubuntu.com/~kernel-ppa/mainline</a></p>
+<p>获取最新 4.9.9 的内核</p>
+<p>很多命令最好直接使用 root 操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo su</div><div class="line"></div><div class="line">cd</div><div class="line"></div><div class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.9/linux-headers-4.9.9-040909_4.9.9-040909.201702090333_all.deb</div><div class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.9/linux-headers-4.9.9-040909-generic_4.9.9-040909.201702090333_amd64.deb</div><div class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.9/linux-image-4.9.9-040909-generic_4.9.9-040909.201702090333_amd64.deb</div></pre></td></tr></table></figure>
+<h1 id="3-安装内核"><a href="#3-安装内核" class="headerlink" title="3.安装内核"></a>3.安装内核</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg -i *.deb</div></pre></td></tr></table></figure>
+<h1 id="4-卸载旧内核"><a href="#4-卸载旧内核" class="headerlink" title="4.卸载旧内核"></a>4.卸载旧内核</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">查询目前安装的内核</div><div class="line"></div><div class="line">dpkg -l | grep linux-image</div><div class="line">ii  linux-image-4.4.0-53-generic       4.4.0-53.74                        amd64        Linux kernel image for version 4.4.0 on 64 bit x86 SMP</div><div class="line">ii  linux-image-4.9.9-040909-generic   4.9.9-040909.201702090333          amd64        Linux kernel image for version 4.9.9 on 64 bit x86 SMP</div><div class="line">ii  linux-image-virtual                4.4.0.53.56                        amd64        This package will always depend on the latest minimal generic kernel image.</div><div class="line"></div><div class="line">卸载旧内核</div><div class="line"></div><div class="line">apt remove linux-image-4.4.0-53-generic</div></pre></td></tr></table></figure>
+<h1 id="5-更新启动引导"><a href="#5-更新启动引导" class="headerlink" title="5.更新启动引导"></a>5.更新启动引导</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">update-grub</div><div class="line"></div><div class="line">Generating grub configuration file ...</div><div class="line">Found linux image: /boot/vmlinuz-4.9.9-040909-generic</div><div class="line">Found initrd image: /boot/initrd.img-4.9.9-040909-generic</div><div class="line">done</div></pre></td></tr></table></figure>
+<h1 id="6-确认最新内核安装情况"><a href="#6-确认最新内核安装情况" class="headerlink" title="6.确认最新内核安装情况"></a>6.确认最新内核安装情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ls /boot/vmlinuz*</div><div class="line">/boot/4.9.0-040900-generic</div></pre></td></tr></table></figure>
+<h1 id="7-重启"><a href="#7-重启" class="headerlink" title="7.重启"></a>7.重启</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reboot</div></pre></td></tr></table></figure>
+<h1 id="8-重启后验证"><a href="#8-重启后验证" class="headerlink" title="8.重启后验证"></a>8.重启后验证</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">uname -a</div><div class="line">Linux xenial64-157 4.9.9-040909-generic #201702090333 SMP Thu Feb 9 08:35:27 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</div></pre></td></tr></table></figure>
+<h1 id="9-开启最新的拥塞控制算法"><a href="#9-开启最新的拥塞控制算法" class="headerlink" title="9.开启最新的拥塞控制算法"></a>9.开启最新的拥塞控制算法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">重启后,修改内核参数</div><div class="line"></div><div class="line">vim /etc/sysctl.conf</div><div class="line"></div><div class="line">net.core.default_qdisc=fq</div><div class="line">net.ipv4.tcp_congestion_control=bbr</div><div class="line"></div><div class="line">生效</div><div class="line"></div><div class="line">sysctl -p</div><div class="line">net.ipv4.tcp_congestion_control = bbr</div><div class="line"></div><div class="line">sysctl net.ipv4.tcp_available_congestion_control</div><div class="line">net.ipv4.tcp_available_congestion_control = bbr cubic reno</div></pre></td></tr></table></figure>
           
         
       
@@ -675,8 +678,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/09/kafka-cluster-ops/" itemprop="url">
-                  Kafka 集群运维
+                <a class="post-title-link" href="/2017/02/10/learn-gdb-from-brendan/" itemprop="url">
+                  从 Brendan 的例子里面学到的 GDB 知识
                 </a>
               
             
@@ -689,8 +692,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:47:51+08:00" content="2017-02-09">
-              2017-02-09
+            <time itemprop="dateCreated" datetime="2017-02-10T14:40:25+08:00" content="2017-02-10">
+              2017-02-10
             </time>
           </span>
 
@@ -703,8 +706,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
+                  <a href="/categories/debbug/" itemprop="url" rel="index">
+                    <span itemprop="name">debbug</span>
                   </a>
                 </span>
 
@@ -719,8 +722,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/kafka-cluster-ops/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-cluster-ops/" itemprop="commentsCount"></span>
+                <a href="/2017/02/10/learn-gdb-from-brendan/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/learn-gdb-from-brendan/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -730,7 +733,7 @@
 
           
           
-             <span id="/2017/02/09/kafka-cluster-ops/" class="leancloud_visitors" data-flag-title="Kafka 集群运维">
+             <span id="/2017/02/10/learn-gdb-from-brendan/" class="leancloud_visitors" data-flag-title="从 Brendan 的例子里面学到的 GDB 知识">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -754,19 +757,73 @@
       
         
           
-            <p>记录 Kafka 集群的启动和关闭，日志目录，及日志查看</p>
-<p>公司可能会有很多套环境，每套环境安装方式不一定相同，使用时要维护自己的脚本，提高效率</p>
-<p>脚本里面最好是用绝对路径，方便操作</p>
-<h1 id="启动前，先启动-zookeeper"><a href="#启动前，先启动-zookeeper" class="headerlink" title="启动前，先启动 zookeeper"></a>启动前，先启动 zookeeper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-start.sh -daemon /data/kafka_2.11-0.9.0.1/config/server.properties</div></pre></td></tr></table></figure>
-<h1 id="验证启动成功"><a href="#验证启动成功" class="headerlink" title="验证启动成功"></a>验证启动成功</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可以查看系统日志</div><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div><div class="line"></div><div class="line">或者查看 Topic 列表</div><div class="line"></div><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
-<h1 id="集群关闭"><a href="#集群关闭" class="headerlink" title="集群关闭"></a>集群关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/data/kafka_2.11-0.9.0.1/bin/kafka-server-stop.sh</div></pre></td></tr></table></figure>
-<h1 id="暴力关闭"><a href="#暴力关闭" class="headerlink" title="暴力关闭"></a>暴力关闭</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep &quot;kafka&quot; | grep -v grep|awk &apos;&#123;print $2&#125;&apos;| xargs kill -9</div></pre></td></tr></table></figure>
-<h1 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">tail -100f /data/kafka_2.11-0.9.0.1/logs/server.log</div></pre></td></tr></table></figure>
-<h1 id="查看日志目录"><a href="#查看日志目录" class="headerlink" title="查看日志目录"></a>查看日志目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka_2.11-0.9.0.1/logs</div></pre></td></tr></table></figure>
-<p>查看 kafka 持久化文件保存情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll /data/kafka/kafka-logs</div></pre></td></tr></table></figure>
-<h1 id="删除所有-Kafka-日志"><a href="#删除所有-Kafka-日志" class="headerlink" title="删除所有 Kafka 日志"></a>删除所有 Kafka 日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /data/kafka_2.11-0.9.0.1/logs/*</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep java</div><div class="line">cd /data/kafka_2.11-0.9.0.1</div><div class="line">ll /data/kafka_2.11-0.9.0.1</div></pre></td></tr></table></figure>
+            <p>原文地址</p>
+<p><a href="http://www.brendangregg.com/blog/2016-08-09/gdb-example-ncurses.html" target="_blank" rel="external">http://www.brendangregg.com/blog/2016-08-09/gdb-example-ncurses.html</a></p>
+<p>跟着 Brendan 大神学习 GDB 一些调试技巧</p>
+<h1 id="1-Core-Dumps-说明"><a href="#1-Core-Dumps-说明" class="headerlink" title="1.Core Dumps 说明"></a>1.Core Dumps 说明</h1><p>如果 Core Dumps 打开了，那么当进程崩溃时，会生成 dump 文件，如果 Core Dumps 关闭了，那么就不会生成，收到的报错信息也不一样</p>
+<p>如果 Core Dumps 关闭了，收到的信息是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Segmentation fault</div></pre></td></tr></table></figure>
+<p>如果 Core Dumps 打开了，收到信息应该是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Segmentation fault (core dumped)</div></pre></td></tr></table></figure>
+<h1 id="2-设置-Core-Dumps"><a href="#2-设置-Core-Dumps" class="headerlink" title="2.设置 Core Dumps"></a>2.设置 Core Dumps</h1><p>查看 Core Dumps 配置选项，并打开 Core dumps</p>
+<p>如果有如下输出，表示 Core Dumps 是关闭的，需要打开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ulimit -c</div><div class="line">0</div><div class="line"></div><div class="line">0 表示输出文件大小是 0 字节</div></pre></td></tr></table></figure>
+<p>设置 Core Dumps 文件大小不受限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ulimit -c unlimited</div></pre></td></tr></table></figure>
+<h1 id="3-设置-Core-Dumps-文件输出格式"><a href="#3-设置-Core-Dumps-文件输出格式" class="headerlink" title="3.设置 Core Dumps 文件输出格式"></a>3.设置 Core Dumps 文件输出格式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ubuntu 16.04.1</div><div class="line"></div><div class="line">默认格式为</div><div class="line">cat /proc/sys/kernel/core_pattern</div><div class="line">|/usr/share/apport/apport %p %s %c %P</div><div class="line"></div><div class="line">可以这么修改</div><div class="line">echo &quot;/var/cores/core.%e.%p&quot; &gt; /proc/sys/kernel/core_pattern</div></pre></td></tr></table></figure>
+<p>具体缩写含义参考</p>
+<p><a href="https://www.kernel.org/doc/Documentation/sysctl/kernel.txt" target="_blank" rel="external">https://www.kernel.org/doc/Documentation/sysctl/kernel.txt</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">core_pattern:</div><div class="line"></div><div class="line">core_pattern is used to specify a core dumpfile pattern name.</div><div class="line">. max length 128 characters; default value is &quot;core&quot;</div><div class="line">. core_pattern is used as a pattern template for the output filename;</div><div class="line">  certain string patterns (beginning with &apos;%&apos;) are substituted with</div><div class="line">  their actual values.</div><div class="line">. backward compatibility with core_uses_pid:</div><div class="line">	If core_pattern does not include &quot;%p&quot; (default does not)</div><div class="line">	and core_uses_pid is set, then .PID will be appended to</div><div class="line">	the filename.</div><div class="line">. corename format specifiers:</div><div class="line">	%&lt;NUL&gt;	&apos;%&apos; is dropped</div><div class="line">	%%	output one &apos;%&apos;</div><div class="line">	%p	pid</div><div class="line">	%P	global pid (init PID namespace)</div><div class="line">	%i	tid</div><div class="line">	%I	global tid (init PID namespace)</div><div class="line">	%u	uid (in initial user namespace)</div><div class="line">	%g	gid (in initial user namespace)</div><div class="line">	%d	dump mode, matches PR_SET_DUMPABLE and</div><div class="line">		/proc/sys/fs/suid_dumpable</div><div class="line">	%s	signal number</div><div class="line">	%t	UNIX time of dump</div><div class="line">	%h	hostname</div><div class="line">	%e	executable filename (may be shortened)</div><div class="line">	%E	executable path</div><div class="line">	%&lt;OTHER&gt; both are dropped</div><div class="line">. If the first character of the pattern is a &apos;|&apos;, the kernel will treat</div><div class="line">  the rest of the pattern as a command to run.  The core dump will be</div><div class="line">  written to the standard input of that program instead of to a file.</div></pre></td></tr></table></figure>
+<h1 id="4-启动-GDB-参考"><a href="#4-启动-GDB-参考" class="headerlink" title="4.启动 GDB 参考"></a>4.启动 GDB 参考</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb `which python` /var/cores/core.python.30520</div></pre></td></tr></table></figure>
+<h1 id="5-查看系统共享库"><a href="#5-查看系统共享库" class="headerlink" title="5.查看系统共享库"></a>5.查看系统共享库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg -l | grep libncursesw</div></pre></td></tr></table></figure>
+<h1 id="6-Back-Trace"><a href="#6-Back-Trace" class="headerlink" title="6.Back Trace"></a>6.Back Trace</h1><p>查看目前的函数调用栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bt</div><div class="line"></div><div class="line">short for backtrace</div></pre></td></tr></table></figure>
+<h1 id="7-disas-反汇编具体方法"><a href="#7-disas-反汇编具体方法" class="headerlink" title="7.disas 反汇编具体方法"></a>7.disas 反汇编具体方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">disas doupdate</div><div class="line"></div><div class="line">doupdate 是符号，即方法名</div></pre></td></tr></table></figure>
+<p>8.查看寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">i r</div><div class="line"></div><div class="line">short for info registers</div></pre></td></tr></table></figure>
+<p>9.查看整个进程内存映射</p>
+<p>可以看到进程起始地址及合法范围地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">i proc m</div><div class="line"></div><div class="line">short for info proc mappings</div></pre></td></tr></table></figure>
+<p>10.设置断点</p>
+<p>设置断点时，可以设置到具体的行，符号名，或者指令地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">b 11</div><div class="line"></div><div class="line">b doupdate</div><div class="line"></div><div class="line">b *doupdate + 289</div><div class="line"></div><div class="line">b *0x00007f0a37aac40d</div></pre></td></tr></table></figure>
+<p>11.单步调试机器码 native code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">si 单步进入</div><div class="line">ni 单步执行</div><div class="line"></div><div class="line">short for stepi</div></pre></td></tr></table></figure>
+<p>12.下载共享库的 Debug 信息包</p>
+<p>一般的程序发布后，我们安装的时候，只安装代码部分，为了减小体积，<br>符号等信息都会被压缩或直接去掉，调试时候需要安装对应的调试包</p>
+<p>查找调试包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apt-cache search libncursesw</div><div class="line"></div><div class="line">libncursesw5 - shared libraries for terminal handling (wide character support)</div><div class="line">libncursesw5-dbg - debugging/profiling libraries for ncursesw</div><div class="line">libncursesw5-dev - developer&apos;s libraries for ncursesw</div><div class="line"></div><div class="line">dpkg -l | grep libncursesw</div><div class="line"></div><div class="line">ii  libncursesw5:amd64                 6.0+20160213-1ubuntu1                    amd64        shared libraries for terminal handling (wide character support)</div><div class="line"></div><div class="line">apt-get install -y libncursesw5-dbg</div></pre></td></tr></table></figure>
+<p>在安装调试包之后，在执行 bt 查看时，信息就会全面很多</p>
+<h1 id="13-查看机器码对应的源码"><a href="#13-查看机器码对应的源码" class="headerlink" title="13.查看机器码对应的源码"></a>13.查看机器码对应的源码</h1><p>在调试包安装之后，可以查看机器码和源码的对应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disas/s</div></pre></td></tr></table></figure>
+<p>14.TUI 协助查看源代码</p>
+<p>Text User Interface</p>
+<p>使用方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb --tui `which python` /var/cores/core.python.30520</div></pre></td></tr></table></figure>
+<p>15.动态追踪某个方法执行</p>
+<p>使用 perf 动态跟踪函数的执行，并获取第一个参数值</p>
+<p>首先找到函数的位置，在哪个贡献库？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(gdb) info symbol set_curterm</div><div class="line">set_curterm in section .text of /lib/x86_64-linux-gnu/libtinfo.so.5</div><div class="line"></div><div class="line"># objdump -tT /lib/x86_64-linux-gnu/libncursesw.so.5 | grep cur_term</div><div class="line">0000000000000000      DO *UND*  0000000000000000  NCURSES_TINFO_5.0.19991023 cur_term</div><div class="line"></div><div class="line"># objdump -tT /lib/x86_64-linux-gnu/libtinfo.so.5 | grep cur_term</div><div class="line">0000000000228948 g    DO .bss   0000000000000008  NCURSES_TINFO_5.0.19991023 cur_term</div><div class="line"></div><div class="line">可以看到 gdb 更好用</div></pre></td></tr></table></figure>
+<p>使用 perf 动态追踪方法执行，并打印第一个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># /apps/perf-tools/bin/uprobe &apos;p:/lib/x86_64-linux-gnu/libtinfo.so.5:set_curterm %di&apos;</div><div class="line">Tracing uprobe set_curterm (p:set_curterm /lib/x86_64-linux-gnu/libtinfo.so.5:0xfa80 %di). Ctrl-C to end.</div><div class="line">          python-31617 [007] d... 24236402.719959: set_curterm: (0x7f116fcc2a80) arg1=0x1345d70</div><div class="line">          python-31617 [007] d... 24236402.720033: set_curterm: (0x7f116fcc2a80) arg1=0x13a22e0</div><div class="line">          python-31617 [007] d... 24236402.723804: set_curterm: (0x7f116fcc2a80) arg1=0x14cdfa0</div><div class="line">          python-31617 [007] d... 24236402.723838: set_curterm: (0x7f116fcc2a80) arg1=0x0</div><div class="line"></div><div class="line">%di 存放第一个参数</div><div class="line"></div><div class="line">不同ABI下，参数与寄存器对应关系</div><div class="line"></div><div class="line"># man syscall</div><div class="line">[...]</div><div class="line">       arch/ABI      arg1  arg2  arg3  arg4  arg5  arg6  arg7  Notes</div><div class="line">       ──────────────────────────────────────────────────────────────────</div><div class="line">       arm/OABI      a1    a2    a3    a4    v1    v2    v3</div><div class="line">       arm/EABI      r0    r1    r2    r3    r4    r5    r6</div><div class="line">       arm64         x0    x1    x2    x3    x4    x5    -</div><div class="line">       blackfin      R0    R1    R2    R3    R4    R5    -</div><div class="line">       i386          ebx   ecx   edx   esi   edi   ebp   -</div><div class="line">       ia64          out0  out1  out2  out3  out4  out5  -</div><div class="line">       mips/o32      a0    a1    a2    a3    -     -     -     See below</div><div class="line">       mips/n32,64   a0    a1    a2    a3    a4    a5    -</div><div class="line">       parisc        r26   r25   r24   r23   r22   r21   -</div><div class="line">       s390          r2    r3    r4    r5    r6    r7    -</div><div class="line">       s390x         r2    r3    r4    r5    r6    r7    -</div><div class="line">       sparc/32      o0    o1    o2    o3    o4    o5    -</div><div class="line">       sparc/64      o0    o1    o2    o3    o4    o5    -</div><div class="line">       x86_64        rdi   rsi   rdx   r10   r8    r9    -</div></pre></td></tr></table></figure>
+<h1 id="16-使用-BCC-动态跟踪方法执行"><a href="#16-使用-BCC-动态跟踪方法执行" class="headerlink" title="16.使用 BCC 动态跟踪方法执行"></a>16.使用 BCC 动态跟踪方法执行</h1><p>动态跟踪方法执行，并打印第一个参数，这里使用 BCC 调试 BCC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd bcc/tools</div><div class="line"></div><div class="line"># ./trace.py &apos;p:tinfo:set_curterm &quot;%d&quot;, arg1&apos;</div><div class="line"></div><div class="line">PID    TID    COMM         FUNC             -</div><div class="line">2376   2376   python       set_curterm      24284384</div><div class="line">2376   2376   python       set_curterm      24580656</div></pre></td></tr></table></figure>
+<h1 id="17-改写寄存器的内存"><a href="#17-改写寄存器的内存" class="headerlink" title="17.改写寄存器的内存"></a>17.改写寄存器的内存</h1><p>假设一个场景，某个程序内执行一个方法 4 次，第四次会出现错误，那么在<br>调试模式下，可以观察最后一次成功执行时某个寄存器的值，在第四次发生错误前，<br>修改寄存器的值，看是否能绕过错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">(gdb) p/x $rdi</div><div class="line">$1 = 0x0</div><div class="line">(gdb) set $rdi=0xbecb90</div><div class="line">(gdb) p/x $rdi</div><div class="line">$2 = 0xbecb90</div><div class="line">(gdb) i r</div><div class="line">rax            0x100    256</div><div class="line">rbx            0x1  1</div><div class="line">rcx            0xe71    3697</div><div class="line">rdx            0x0  0</div><div class="line">rsi            0x7ffff5dd45d3   140737318307283</div><div class="line">rdi            0xbecb90 12503952</div><div class="line">rbp            0x100    0x100</div><div class="line">rsp            0x7fffffffa5b8   0x7fffffffa5b8</div><div class="line">r8             0xbf0050 12517456</div><div class="line">r9             0x1999999999999999   1844674407370955161</div><div class="line">r10            0xbf0040 12517440</div><div class="line">r11            0x7ffff7bb4b78   140737349634936</div><div class="line">r12            0xbecb70 12503920</div><div class="line">r13            0xbeaea0 12496544</div><div class="line">r14            0x7fffffffa9a0   140737488333216</div><div class="line">r15            0x7fffffffa8a0   140737488332960</div><div class="line">rip            0x7ffff3c76a80   0x7ffff3c76a80 &lt;set_curterm&gt;</div><div class="line">eflags         0x246    [ PF ZF IF ]</div><div class="line">cs             0x33 51</div><div class="line">ss             0x2b 43</div><div class="line">ds             0x0  0</div><div class="line">es             0x0  0</div><div class="line">fs             0x0  0</div><div class="line">gs             0x0  0</div></pre></td></tr></table></figure>
+<h1 id="18-条件断点"><a href="#18-条件断点" class="headerlink" title="18.条件断点"></a>18.条件断点</h1><p>某个寄存器等于一个特定值时，设置断点，例如 0 ,0x0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cond 1 $rdi==0x0</div></pre></td></tr></table></figure>
+<h1 id="18-强制到某条机器指令后，返回方法，不继续执行"><a href="#18-强制到某条机器指令后，返回方法，不继续执行" class="headerlink" title="18.强制到某条机器指令后，返回方法，不继续执行"></a>18.强制到某条机器指令后，返回方法，不继续执行</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ret</div></pre></td></tr></table></figure>
+<h1 id="19-Python-上下文"><a href="#19-Python-上下文" class="headerlink" title="19.Python 上下文"></a>19.Python 上下文</h1><p>可以安装 Python 的调试信息，如方法符号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install -y python-dbg</div><div class="line"></div><div class="line">2.7 版本</div></pre></td></tr></table></figure>
+<h1 id="20-Reverse-Stepping"><a href="#20-Reverse-Stepping" class="headerlink" title="20.Reverse Stepping "></a>20.Reverse Stepping </h1><p>这个功能应该算是高级功能了，录制，并且回放之前走的步骤</p>
+<p>加断点并且录制执行过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(gdb) b doupdate</div><div class="line">Function &quot;doupdate&quot; not defined.</div><div class="line">Make breakpoint pending on future shared library load? (y or [n]) y</div><div class="line">Breakpoint 1 (doupdate) pending.</div><div class="line">(gdb) r cachetop.py</div><div class="line">Starting program: /usr/bin/python cachetop.py</div><div class="line">[Thread debugging using libthread_db enabled]</div><div class="line">Using host libthread_db library &quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;.</div><div class="line">warning: JITed object file architecture unknown is not compatible with target architecture i386:x86-64.</div><div class="line"></div><div class="line">Breakpoint 1, 0x00007ffff34ad2e0 in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) record</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Program received signal SIGSEGV, Segmentation fault.</div><div class="line">0x00007ffff34ad40d in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div></pre></td></tr></table></figure>
+<p>回放，并查询寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">(gdb) reverse-stepi</div><div class="line">0x00007ffff34ad40d in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) reverse-stepi</div><div class="line">0x00007ffff34ad40b in doupdate () from /lib/x86_64-linux-gnu/libncursesw.so.5</div><div class="line">(gdb) i r</div><div class="line">rax            0x7ffff3e8f948   140737285519688</div><div class="line">rbx            0xaea060 11444320</div><div class="line">rcx            0xae72a0 11432608</div><div class="line">rdx            0xa403d0 10748880</div><div class="line">rsi            0x0  0</div><div class="line">rdi            0xa403d0 10748880</div><div class="line">rbp            0x7ffff3e8fb10   0x7ffff3e8fb10 &lt;SP&gt;</div><div class="line">rsp            0x7fffffffd390   0x7fffffffd390</div><div class="line">r8             0x7ffff36ba3e0   140737277305824</div><div class="line">r9             0x0  0</div><div class="line">r10            0x8  8</div><div class="line">r11            0x302    770</div><div class="line">r12            0x0  0</div><div class="line">r13            0x0  0</div><div class="line">r14            0x7ffff3e8fb10   140737285520144</div><div class="line">r15            0xa403d0 10748880</div><div class="line">rip            0x7ffff34ad40b   0x7ffff34ad40b &lt;doupdate+299&gt;</div><div class="line">eflags         0x202    [ IF ]</div><div class="line">cs             0x33 51</div><div class="line">ss             0x2b 43</div><div class="line">ds             0x0  0</div><div class="line">es             0x0  0</div><div class="line">fs             0x0  0</div><div class="line">gs             0x0  0</div><div class="line">(gdb) p/a 0x7ffff3e8f948</div><div class="line">$1 = 0x7ffff3e8f948 &lt;cur_term&gt;</div></pre></td></tr></table></figure>
+<h1 id="21-总结"><a href="#21-总结" class="headerlink" title="21.总结"></a>21.总结</h1><p>最重要的是学习思路</p>
+<p>这里学习到了几个高级技巧，例如：</p>
+<p>设置 Core dumps，并直接调试进程 dump 文件<br>下载 debug info 安装包<br>对程序调用错误的现场分析<br>一个方法被调用多次，尝试修改寄存器的值为最后一次成功调用的值来跳过错误<br>直接不执行方法内的错误代码，手工使用 ret 返回函数，当错误函数被多次调用时，尝试多次 ret<br>使用 BCC 动态跟踪技术来跟踪程序内函数的调用，并获取函数的参数值<br>录制 GDB 的执行过程，并返回查看<br>条件断点<br>查看源代码</p>
+
           
         
       
@@ -815,8 +872,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/09/install-config-kafka/" itemprop="url">
-                  配置安装运行 Kafka
+                <a class="post-title-link" href="/2017/02/09/zookeeper-server-ops/" itemprop="url">
+                  使用短命令和 Zookeeper 服务端通信
                 </a>
               
             
@@ -829,7 +886,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:47:41+08:00" content="2017-02-09">
+            <time itemprop="dateCreated" datetime="2017-02-09T15:25:27+08:00" content="2017-02-09">
               2017-02-09
             </time>
           </span>
@@ -859,8 +916,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/install-config-kafka/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/install-config-kafka/" itemprop="commentsCount"></span>
+                <a href="/2017/02/09/zookeeper-server-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-server-ops/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -870,7 +927,7 @@
 
           
           
-             <span id="/2017/02/09/install-config-kafka/" class="leancloud_visitors" data-flag-title="配置安装运行 Kafka">
+             <span id="/2017/02/09/zookeeper-server-ops/" class="leancloud_visitors" data-flag-title="使用短命令和 Zookeeper 服务端通信">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -894,10 +951,18 @@
       
         
           
-            <p>Kafka 集群安装时，也是现在一台配置好，然后发送到其他机器，然后在修改个性化配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">备份配置文件</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/server.properties /data/kafka_2.11-0.9.0.1/config/server.properties.bak</div><div class="line"></div><div class="line">------第一台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line"></div><div class="line">设置 broker id</div><div class="line">broker.id=0</div><div class="line"></div><div class="line">访问方式</div><div class="line">listeners=PLAINTEXT://192.168.16.22:9092</div><div class="line"></div><div class="line">设置 host.name</div><div class="line">host.name=192.168.16.22</div><div class="line"></div><div class="line">设置持久化文件存放地点</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line"></div><div class="line">设置 Zookeeper 集群地址</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line"></div><div class="line">启用删除 Topic</div><div class="line">delete.topic.enable=true</div><div class="line"></div><div class="line">禁用自动创建 Topic，当 Topic 不存在时，必须手工创建</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第二台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=1</div><div class="line">listeners=PLAINTEXT://192.168.16.23:9092</div><div class="line">host.name=192.168.16.23</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第三台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=2</div><div class="line">listeners=PLAINTEXT://192.168.16.31:9092</div><div class="line">host.name=192.168.16.31</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
+            <p>ZooKeeper 支持某些特定的四字命令字母与其的交互。<br>它们大多是查询命令，用来获取 ZooKeeper 服务的当前状态及相关信息。<br>用户在客户端可以通过 telnet 或 nc 向 ZooKeeper 提交相应的命令    </p>
+<h1 id="来查看哪个节点被选择作为follower或者leader"><a href="#来查看哪个节点被选择作为follower或者leader" class="headerlink" title="来查看哪个节点被选择作为follower或者leader"></a>来查看哪个节点被选择作为follower或者leader</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo stat | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="测试是否启动了该Server，若回复-imok-表示已经启动"><a href="#测试是否启动了该Server，若回复-imok-表示已经启动" class="headerlink" title="测试是否启动了该Server，若回复 imok 表示已经启动"></a>测试是否启动了该Server，若回复 imok 表示已经启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo ruok | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的会话和临时节点"><a href="#列出未经处理的会话和临时节点" class="headerlink" title="列出未经处理的会话和临时节点"></a>列出未经处理的会话和临时节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo dump | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="关掉server"><a href="#关掉server" class="headerlink" title="关掉server"></a>关掉server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo kill | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出相关服务配置的详细信息"><a href="#输出相关服务配置的详细信息" class="headerlink" title="输出相关服务配置的详细信息"></a>输出相关服务配置的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo conf | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出所有连接到服务器的客户端的完全的连接-会话的详细信息"><a href="#列出所有连接到服务器的客户端的完全的连接-会话的详细信息" class="headerlink" title="列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息"></a>列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo cons | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出关于服务环境的详细信息-区别于-conf-命令"><a href="#输出关于服务环境的详细信息-区别于-conf-命令" class="headerlink" title="输出关于服务环境的详细信息(区别于 conf 命令)"></a>输出关于服务环境的详细信息(区别于 conf 命令)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo envi | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的请求"><a href="#列出未经处理的请求" class="headerlink" title="列出未经处理的请求"></a>列出未经处理的请求</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo reqs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出服务器-watch-的详细信息"><a href="#列出服务器-watch-的详细信息" class="headerlink" title="列出服务器 watch 的详细信息"></a>列出服务器 watch 的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表"><a href="#通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表" class="headerlink" title="通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表"></a>通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchc | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径"><a href="#通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径" class="headerlink" title="通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径"></a>通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchp | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
           
         
       
@@ -929,7 +994,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -970,7 +1035,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-count">114</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -978,7 +1043,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -987,7 +1052,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

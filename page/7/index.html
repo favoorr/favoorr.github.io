@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="url">
-                  升级 python 后，原有依赖老版本 python 问题解决
+                <a class="post-title-link" href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="url">
+                  vagrant 多节点集群虚拟机配置指南
                 </a>
               
             
@@ -272,7 +272,576 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-05T16:19:51+08:00" content="2017-01-05">
+            <time itemprop="dateCreated" datetime="2017-01-06T14:58:55+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 多节点集群虚拟机配置指南">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>favoorr 平时使用的 vagrant 集群配置实践</p>
+<p>一个配置文件管理一个集群，嗯，相对于以前想玩一个集群需要搞 三个机器，😔，想想之前，都是泪</p>
+<p>这里要区分 vagrant box 配置，和虚拟机配置，3 台集群的虚拟机都是用同一版本 box 镜像</p>
+<p>核心配置说明：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">     <span class="comment"># 配置主机名</span></div><div class="line">    node1.vm.hostname = <span class="string">"node1"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置私有 IP</span></div><div class="line">    node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line"></div><div class="line">    <span class="comment"># 配置虚拟机提供者配置，我用的 virtualbox</span></div><div class="line">    node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置在 virtualbox 中显示名字，不配置默认是 vagrant 自动生成的 id，</span></div><div class="line">      <span class="comment"># vagrant-globalstatus 可以查看 id</span></div><div class="line">      v.name = <span class="string">"node1-121"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置内存大小</span></div><div class="line">      v.memory = <span class="string">"1024"</span></div><div class="line"></div><div class="line">      <span class="comment"># 配置 CPU 核数</span></div><div class="line">      v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">    node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">    node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">    node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node2-122"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">    node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">    node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">    node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node3-123"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>配置好之后 <code>vagrant up</code> 启动集群</p>
+<p>启动成功后， <code>vagrant ssh node1</code> 即可登录集群服务器 1</p>
+<p>完整详细参考配置如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"bento/centos-7.2"</span></div><div class="line">  config.vm.box_version = <span class="string">"2.3.1"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  config.vm.box_check_update = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  <span class="comment"># config.vm.network "private_network", ip: "192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.define <span class="symbol">:node1</span> <span class="keyword">do</span> <span class="params">|node1|</span></div><div class="line">      node1.vm.hostname = <span class="string">"node1"</span></div><div class="line">      node1.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.121"</span></div><div class="line">      node1.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">        v.name = <span class="string">"node1-121"</span></div><div class="line">        v.memory = <span class="string">"1024"</span></div><div class="line">        v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node2</span> <span class="keyword">do</span> <span class="params">|node2|</span></div><div class="line">      node2.vm.hostname = <span class="string">"node2"</span></div><div class="line">      node2.vm.network <span class="symbol">:private_network</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.122"</span></div><div class="line">      node2.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node2-122"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  config.vm.define <span class="symbol">:node3</span> <span class="keyword">do</span> <span class="params">|node3|</span></div><div class="line">      node3.vm.hostname = <span class="string">"node3"</span></div><div class="line">      node3.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.123"</span></div><div class="line">      node3.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">          v.name = <span class="string">"node3-123"</span></div><div class="line">          v.memory = <span class="string">"1024"</span></div><div class="line">          v.cpus = <span class="string">"2"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/import-vagrant-box-manually/" itemprop="url">
+                  手工下载和导入 vagrant 镜像
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T14:46:34+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/import-vagrant-box-manually/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/import-vagrant-box-manually/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/import-vagrant-box-manually/" class="leancloud_visitors" data-flag-title="手工下载和导入 vagrant 镜像">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vagrant box 手工导入</p>
+<p>这篇文章主要写给中国程序员，第一因为网速慢，第二因为有墙，第三因为下载的镜像可能会损坏，<br>所以需要手工下载包，然后再倒入进去</p>
+<p>操作过程如下：</p>
+<p>第一步：按照 Vagrantfile 配置好虚拟机后，启动虚拟机时可能会看到类似如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Bringing machine &apos;default&apos; up with &apos;virtualbox&apos; provider...</div><div class="line">==&gt; default: Box &apos;ubuntu/xenial64&apos; could not be found. Attempting to find and install...</div><div class="line">    default: Box Provider: virtualbox</div><div class="line">    default: Box Version: 20161209.0.0</div><div class="line">==&gt; default: Loading metadata for box &apos;ubuntu/xenial64&apos;</div><div class="line">    default: URL: https://atlas.hashicorp.com/ubuntu/xenial64</div><div class="line">==&gt; default: Adding box &apos;ubuntu/xenial64&apos; (v20161209.0.0) for provider: virtualbox</div><div class="line">    default: Downloading: https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
+<p>下载地址已经显示出来了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20161209.0.0/providers/virtualbox.box</div></pre></td></tr></table></figure>
+<p>手工下载会保险点，有 VPN 的，下载的镜像没损坏的请忽略本文章，我遇到过一次挂 VPN 下载失败的情况</p>
+<p>第二步：创建镜像元数据信息描述文件</p>
+<p>下载完成后，在 <code>virtualbox.box</code> 相同目录下，创建原始文件 <code>metadata.json</code>，内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"ubuntu/trusty64"</span>,</div><div class="line">    <span class="attr">"versions"</span>: [&#123;</div><div class="line">        <span class="attr">"version"</span>: <span class="string">"20160822.0.2"</span>,</div><div class="line">        <span class="attr">"providers"</span>: [&#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"virtualbox"</span>,</div><div class="line">            <span class="attr">"url"</span>: <span class="string">"file://virtualbox.box"</span></div><div class="line">        &#125;]</div><div class="line">    &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单配置说明：</p>
+<p>name 是镜像名<br>version 版本描述信息<br>version.version 是版本号<br>version.providers 是配置提供者信息，比如我用的 virtualbox<br>version.url 这里可以是 http 等其他协议，我放在本地目录，简单的 file 协议即可      </p>
+<p>第三步：执行命令导入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant box add metadata.json</div></pre></td></tr></table></figure>
+<p>第四步：导入成功验证</p>
+<p>导入成功后，<code>vagrant box list</code> 就可以看到信息了</p>
+<p>之前最开始不知道这种方式的时候，自己用 <code>vagrant box add</code> 方式导入过，然后发现导入的 box 没有版本号，🤕，后来发现这种方式问题成功解决</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这种方式导入，没有版本号</div><div class="line">vagrant box add centos/7 --box-version 1605.01 file://virtualbox.box</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="url">
+                  vagrant 虚拟机配置最佳实践
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T14:21:53+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/vagrant-virtualbox-vagrantfile-config-best-practices/" class="leancloud_visitors" data-flag-title="vagrant 虚拟机配置最佳实践">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Mac-VirtualBox-Vagrant-管理虚拟机"><a href="#Mac-VirtualBox-Vagrant-管理虚拟机" class="headerlink" title="Mac VirtualBox Vagrant 管理虚拟机"></a>Mac VirtualBox Vagrant 管理虚拟机</h2><p>这篇文章定位是在理解了 vagrant 相关概念之后，教你如何灵活玩转自己的虚拟机配置</p>
+<p>本文为 @favoorr 常用的 Mac VirtualBox Vagrant 管理虚拟机的通用配置向导</p>
+<p>我的云梯 VPN 连接是 <a href="http://referyt.com/?r=9ea6f6df9967e57c" target="_blank" rel="external">http://referyt.com/?r=9ea6f6df9967e57c</a></p>
+<p>使用这个连接，你优惠 10 元，我获得 10 元</p>
+<p>1.去官方找自己想要的镜像文件信息<br><a href="https://atlas.hashicorp.com/search" target="_blank" rel="external">https://atlas.hashicorp.com/search</a></p>
+<p>例如想来个 ubuntu 16.04 64位，那么关键字就是 <code>xenial64</code></p>
+<p>找到的地址就是 <a href="https://atlas.hashicorp.com/ubuntu/boxes/xenial64" target="_blank" rel="external">https://atlas.hashicorp.com/ubuntu/boxes/xenial64</a></p>
+<p>2.在本地文件系统建立对应的存放目录，本地目录按照自己意愿，任意位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">该目录存放所有使用 vagrant 管理的虚拟机</div><div class="line">$ cd ~/Documents/try/vagrant/</div></pre></td></tr></table></figure>
+<p>3.初始化虚拟机存放目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">新建存放 ubuntu 16.04 64 位的文件位置</div><div class="line">$ mkdir xenial64 &amp;&amp; cd xenial64</div><div class="line"></div><div class="line">使用 vagrant 命令初始化虚拟机</div><div class="line">$ vagrant init ubuntu/xenial64</div><div class="line"></div><div class="line">执行完之后，发现 xenial64 目录下多了个配置文件 Vagrantfile</div></pre></td></tr></table></figure>
+<p>4.修改 Vagrantfile ，配置自己的虚拟机，</p>
+<p>其实什么都不修改，按照默认配置，这时候执行 <code>vagrant up</code> 的时候已经可以运行虚拟机了，这个是 hello world 的做法，实际使用中，还是要自己学会修改配置，知道每个配置项会带来的影响<br>有些配置是没有的，有些是有的默认是注释的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">配置主机名，进入操作系统执行 hostname 显示的名字，我用的规则是 系统版本-IP</div><div class="line">系统是 xenial64，IP 最后一位是 <span class="number">155</span></div><div class="line">config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line"></div><div class="line">vagrant box 的版本，如果不配置，会自动去下载最新版本</div><div class="line">我用的是 daily build 的版本，这个看自己喜好，我这个本来就是尝试一些新东西玩的</div><div class="line">config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">配置端口映射，通过访问本机的 <span class="number">8080</span> 端口，访问安装后虚拟机的 <span class="number">8080</span> 端口</div><div class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">8080</span>, <span class="symbol">host:</span> <span class="number">8080</span></div><div class="line"></div><div class="line">配置虚拟机的 ip，默认网卡一是 NAT 方式，不需要配置</div><div class="line">这里创建网卡二 Host-Only，对应 VirtualBox 的 vbox<span class="number">0</span></div><div class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">配置共享文件夹目录，进入系统后，自动挂载 /lesson</div><div class="line">config.vm.synced_folder <span class="string">"/Users/User/zl/python/lesson"</span>, <span class="string">"/lesson"</span></div><div class="line"></div><div class="line">VirtualBox 的配置</div><div class="line">config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">  <span class="comment"># 这里配置显示在 VirtualBox 的名字，要不然是默认的一长串字符，太丑了</span></div><div class="line">  vb.name = <span class="string">"xenial64-155"</span></div><div class="line">  </div><div class="line">  <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">  vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">  <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">  vb.memory = <span class="string">"1024"</span></div><div class="line">  vb.cpus = <span class="string">"2"</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>5.在 xenial64 目录下执行命令，初始化并启动虚拟机</p>
+<p>这里要注意，如果是第一次启动，会自动下载 vagrant box，最好挂 VPN了，不多解释，<br>如果没有 VPN，就手工下载包，导入后续会有文章介绍</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant up --provider virtualbox</div></pre></td></tr></table></figure>
+<p>6.在 xenial64 目录下执行命令，进入虚拟机，测试网络</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">进入虚拟机</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">测试网络，我全程 VPN，虚拟机内部访问 google 也是无压力的</div><div class="line">ping www.google.com</div></pre></td></tr></table></figure>
+<h2 id="参考-Vagrantfile-配置文件"><a href="#参考-Vagrantfile-配置文件" class="headerlink" title="参考 Vagrantfile 配置文件"></a>参考 Vagrantfile 配置文件</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"ubuntu/xenial64"</span></div><div class="line">  config.vm.hostname = <span class="string">"xenial64-155"</span></div><div class="line">  config.vm.box_version = <span class="string">"20161209.0.0"</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.56.155"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "../data", "/vagrant_data"</span></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">    vb.name = <span class="string">"xenial64-155"</span></div><div class="line">    <span class="comment"># Display the VirtualBox GUI when booting the machine</span></div><div class="line">    vb.gui = <span class="literal">false</span></div><div class="line"></div><div class="line">    <span class="comment"># Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"1024"</span></div><div class="line">    vb.cpus = <span class="string">"2"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get upgrade</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/06/getting-started-with-vagrant/" itemprop="url">
+                  Vagrant 介绍及使用理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T13:58:58+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/getting-started-with-vagrant/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/getting-started-with-vagrant/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/getting-started-with-vagrant/" class="leancloud_visitors" data-flag-title="Vagrant 介绍及使用理解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Vagrant-的定位"><a href="#Vagrant-的定位" class="headerlink" title="Vagrant 的定位"></a>Vagrant 的定位</h2><p>一个第三方的虚拟机管理软件，平常的虚拟机比如 VirtualBox 是自己下载 iso 文件，<br>然后建立虚拟机，配置管理环境</p>
+<p>使用 vagrant ，它会给你做一些事情，让你更加方便和快捷的使用各种虚拟机，<br>有个概念要知道，vagrant 本身不是虚拟机，它可以通过 <code>vagrant up --provider virtualbox</code> 显式指定启动的时候使用 VirtualBox 作为虚拟机提供者</p>
+<h2 id="为什么要用-vagrant"><a href="#为什么要用-vagrant" class="headerlink" title="为什么要用 vagrant"></a>为什么要用 vagrant</h2><p>还有个问题就是为什么要用 vagrant，因为它提供了很方便的配置和使用，相对于自己手工去做，<br>要方便太多，提供了很多基础的功能，例如虚拟机的建立，启动，销毁，ssh 登录，等等</p>
+<h2 id="使用-vagrant-要分清楚的概念"><a href="#使用-vagrant-要分清楚的概念" class="headerlink" title="使用 vagrant 要分清楚的概念"></a>使用 vagrant 要分清楚的概念</h2><p>vagrant 新手首先要搞清楚的几个概念，这里简单列举下我的理解方式：</p>
+<p>1.首先 vagrant 是一个管理虚拟机的软件，官网地址  <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>2.首先需要安装一个 vagrant 的应用程序，跨平台 Mac Win，都有，官方下载地址 <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">https://www.vagrantup.com/downloads.html</a></p>
+<p>3.vagrant box，这个是 vagrant 官方推出的一种镜像文件，类似之前的 iso 文件，官方搜索地址是 <a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="external">https://atlas.hashicorp.com/boxes/search</a>，比如说想找 centos 的包，或者 ubuntu 的包，都可以来这里找</p>
+<p>4.vagrant 安装好之后，可以直接命令行管理，例如 <code>vagrant up</code> 启动一个虚拟机</p>
+<p>5.vagrant box 镜像是需要专门管理的，例如 <code>vagrant box list</code> 列出本地所有的包</p>
+<p>6.官方有 hello world ，地址在 <a href="https://docs.vagrantup.com" target="_blank" rel="external">https://docs.vagrantup.com</a> 可以跟着做，针对国内程序员，要能翻墙，因为 vagrant box 在 Vagrantfile 配置后，是自动下载的，对国内程序员是很不友好的</p>
+<p>7.这种工具类的软件知道皮毛最受折磨，后续除了问题会狠狠消耗时间，vagrant 的作者写了一本书 《Creating Development Environments with Vagrant, Second Edition》</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/05/programming-road-environment/" itemprop="url">
+                  一路编程，一路环境折腾
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-05T17:02:09+08:00" content="2017-01-05">
               2017-01-05
             </time>
           </span>
@@ -286,8 +855,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
                   </a>
                 </span>
 
@@ -302,8 +871,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" itemprop="commentsCount"></span>
+                <a href="/2017/01/05/programming-road-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +882,7 @@
 
           
           
-             <span id="/2017/01/05/python-3-5-2-upgrade-3-6-0-virtualenvwrapper-error-tips/" class="leancloud_visitors" data-flag-title="升级 python 后，原有依赖老版本 python 问题解决">
+             <span id="/2017/01/05/programming-road-environment/" class="leancloud_visitors" data-flag-title="一路编程，一路环境折腾">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,586 +906,14 @@
       
         
           
-            <p>python3.5.2 安装的 virtualenvwrapper 环境，更新到  3.6.0 之后，手残直接把 3.5.2 删除了</p>
-<p>原来环境就挂了，错误信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">User@favoorr-mac: ~/Documents/github/favoorr-programming-road/Python/python-lesson master!</div><div class="line"> $ ipython                                                                     [14:28:16]</div><div class="line">dyld: Library not loaded: @executable_path/../.Python</div><div class="line">  Referenced from: /Users/User/zl/python/project/venv/python-lesson/bin/python3.5</div><div class="line">  Reason: image not found</div><div class="line">[1]    43935 abort      ipython</div><div class="line">(python-lesson) FAIL</div></pre></td></tr></table></figure>
-<p>解决方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">断开工作台</div><div class="line">deactivate</div><div class="line"></div><div class="line">删除原来的虚拟环境，这里删除虚拟环境，原来的项目其实不会删除</div><div class="line">rmvirtualenv python-lesson</div><div class="line"></div><div class="line">重新创建虚拟环境</div><div class="line">mkvirtualenv python-lesson</div><div class="line"></div><div class="line">再次激活虚拟环境</div><div class="line">workon python-lesson</div><div class="line"></div><div class="line">跳转到原来的项目目录</div><div class="line">cd ~/Documents/github/favoorr-programming-road/Python/python-lesson</div><div class="line"></div><div class="line">原来的项目重新关联虚拟环境</div><div class="line">setvirtualenvproject</div><div class="line"></div><div class="line">重新安装需要的类库</div><div class="line">pip install -U ipython jupyter pycodestyle yapf pdb</div></pre></td></tr></table></figure>
-<p>记录,备忘</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="url">
-                  python 升级到 3.6 virtualenvwrapper 报错问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-03T10:48:35+08:00" content="2017-01-03">
-              2017-01-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/03/python3-6-virtualenvwrapper-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/python3-6-virtualenvwrapper-problem/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/03/python3-6-virtualenvwrapper-problem/" class="leancloud_visitors" data-flag-title="python 升级到 3.6 virtualenvwrapper 报错问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Yesterday, I install the <code>you-get</code>, and Python upgrade to newest version 3.6 by this<br>install, Then the <code>virtualenvwrapper</code> could’t work well any more.</p>
-<p>I got the error as:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Last login: Tue Jan  3 09:38:53 on ttys002</div><div class="line">/usr/local/opt/python3/bin/python3.6: Error while finding module specification for &apos;virtualenvwrapper.hook_loader&apos; (ModuleNotFoundError: No module named &apos;virtualenvwrapper&apos;)</div><div class="line">virtualenvwrapper.sh: There was a problem running the initialization hooks.</div><div class="line"></div><div class="line">If Python could not import the module virtualenvwrapper.hook_loader,</div><div class="line">check that virtualenvwrapper has been installed for</div><div class="line">VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 and that PATH is</div><div class="line">set properly.</div></pre></td></tr></table></figure>
-<p>And in my ~/.zshrc file, I already config as:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=/Users/User/zl/python/project/venv</div><div class="line">export PROJECT_HOME=/Users/User/zl/python/project</div><div class="line">export VIRTUALENVWRAPPER_PYTHON=`which python3`</div><div class="line">source /usr/local/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
-<p>Do the follow tips may solve the problem:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">First: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U pip</div><div class="line"></div><div class="line">Second: upgrade pip to the newest version</div><div class="line"></div><div class="line">pip3 install -U virtualenvwrapper</div></pre></td></tr></table></figure>
-<p>One more thing:</p>
-<p>macOS will install the python2.7.10 by default,</p>
-<p>I use brew to install python instead of the macOS default.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">/usr/bin/python</div><div class="line"></div><div class="line">rm the default python</div><div class="line"></div><div class="line">sudo rm /usr/bin/python</div></pre></td></tr></table></figure>
-<p>If need python2, the newest version of python2 is python-2.7.13</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install python</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/28/macos-python3/" itemprop="url">
-                  macOS 安装使用 python 记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-28T21:33:22+08:00" content="2016-11-28">
-              2016-11-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/28/macos-python3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/macos-python3/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/28/macos-python3/" class="leancloud_visitors" data-flag-title="macOS 安装使用 python 记录">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前些天学习了下 python3，使用的是官方下载的 <code>python-3.5.2-macosx10.6pkg</code><br>这种安装方式安装的文件位置是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库安装路径</div><div class="line">/System/Library/Frameworks/Python.framework/Versions/3.5</div><div class="line"></div><div class="line">pip3 安装第三方库路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-package</div><div class="line"></div><div class="line">pip3 安装第三方库可执行文件路径</div><div class="line">/Library/Frameworks/Python.framework/Versions/3.5/bin</div></pre></td></tr></table></figure>
-<p>当时使用这种方式是因为 10.11.13 没有升级到最新版本的 <code>macOS</code>，brew 方式不能<br>安装，升级了最新的系统之后，还是应该使用 <code>brew install python3</code> 的方式安装</p>
-<p>使用 <code>brew install python3</code> 安装后，部分经常使用的路径位置是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">系统库路径</div><div class="line">/usr/local/Cellar/python3/</div><div class="line"></div><div class="line">第三方库安装路径</div><div class="line">/usr/local/lib/python3.5/site-packages/</div><div class="line"></div><div class="line">第三方库可执行文件目录</div><div class="line">/usr/local/bin/</div></pre></td></tr></table></figure>
-<p>python3 pip3 安装时，官方镜像速度慢，改为国内镜像，操作步骤是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">vim .pip/pip.conf</div><div class="line"></div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div></pre></td></tr></table></figure>
-<p>国内其他可选镜像如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://pypi.v2ex.com/simple/</div><div class="line">http://pypi.doubanio.com/simple/</div><div class="line">http://mirrors.aliyun.com/pypi/simple/</div><div class="line">https://pypi.Python.org/simple/</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/31/zsh-summary/" itemprop="url">
-                  ZSH 使用总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-31T11:20:40+08:00" content="2015-08-31">
-              2015-08-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zsh/" itemprop="url" rel="index">
-                    <span itemprop="name">zsh</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/31/zsh-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/31/zsh-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/08/31/zsh-summary/" class="leancloud_visitors" data-flag-title="ZSH 使用总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Mac 下好用软件很多，多使用，多总结</p>
-<p>1.插件</p>
-<p>plugins=(git sudo extract cp)</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">插件列表</a></p>
-<p>2.autojump 工具</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview#fs-jumping" target="_blank" rel="external">官方地址</a></p>
-<p>3.d </p>
-<p>显示历史进入的目录，输入数字进入历史目录，0是当前目录，其他依次记录</p>
-<p>4.清屏，输入 ls</p>
-<p>ctrl + l,我用的 command + r</p>
-<p>5.zsh_stats 可以统计使用最多的前20命令</p>
-<p>6.zsh-autosuggestions 就更好用的自动补全</p>
-<p>7.<a href="http://zshthem.es/" target="_blank" rel="external">http://zshthem.es/</a> 这里挑选喜欢的 theme</p>
-<p>… 待续</p>
-<p>参考</p>
-<p><a href="http://www.jiang-di.org/tools/2015/04/08/i-hope-know-when-first-use-zsh.html" target="_blank" rel="external">那些我希望在一开始使用 Zsh(oh-my-zsh) 时就知道的</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/24/network-server-idc/" itemprop="url">
-                  服务器-交换机的一次上架经验
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-24T12:55:57+08:00" content="2015-08-24">
-              2015-08-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/24/network-server-idc/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/24/network-server-idc/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/08/24/network-server-idc/" class="leancloud_visitors" data-flag-title="服务器-交换机的一次上架经验">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参与了一次网络结构整改的项目，记下遇到的东西，为<br>以后能够好的安排资源和时间</p>
-<p>首先总结实施的步骤及要点：</p>
-<ol>
-<li><p>服务器扩容规划<br> 评估服务器总数</p>
-</li>
-<li><p>服务器采购<br> 一般来说公司都会有固定的服务器供应商，直接签订新的采购合同就好了，关键就是采购清单如果有更新，一定要同步，还有设备型号等等，中途有改动，要同步相关人员知会</p>
-</li>
-<li><p>网络拓扑结构<br> 根据现有的网络拓扑和新增的服务器总数，规划出新的网络拓扑结构，比如内网整改、核心交换位置、接入交换规划、内网和管理网分离、逻辑子网或者物理内网等。这个方案也可以让网络设备商和公司一起来商讨。考虑点，一方面是预算，另外一方面就是扩展和需求，网络拓扑，建议还是一次性做好了，劳民伤财</p>
-</li>
-<li><p>网络设备采购<br> 最主要得就是交换机了，思科、华三、华为、Juniper，都可以考虑，然后就看自己想要的交货日期他们是否能满足，以及自己的预算了。最好是每家厂商能找多个代理，然后让他们自己先砍下价格。虽然价格很坑，但是设备还是要买的，毕竟网络整改最终完成时间摆在那里。最后说合同，签订的时候付款一般是3，6，1，半年才会给清全款</p>
-</li>
-<li><p>整体的迁移计划<br> 在动手前，一定要有靠谱核心员工输出整体方案，然后按照方案一步一步实施，看机器规模和变更需求。还有就是能够应变，计划做的再好，到现场后，还是根据现实情况走，再次强调，完整的迁移计划很重要，而且有很多坑，就是时间的计算</p>
-</li>
-<li><p>IDC 管理方式<br> 有可能 IDC 的管理方式是，基地是某公司的，IDC是某公司的，然后机柜也是某公司的，然后上电又是某公司的，对的，你没看错，现实情况，基地自己为了方便自己管理，流程审批能把你搞到烦死，审批往往都是很耗时间的，周期3天是比较常见的，对应设备也要到机柜，sn号也要一个一个对应</p>
-</li>
-<li><p>机柜隔板<br> 机房一般最先问你要部署结构图，设备分布，比如某机柜放几个N U的设备，拿到分布图之后，会先去安装机柜的隔板，当然这个也是耗时间的，螺丝要一个一个来安装</p>
-</li>
-<li><p>机柜跳线<br> 假设一个机柜放置12台1U设备，连接线也是个麻烦事，而且根据机房实际情况不同，人员素质不同，布线质量也是区别很大，大概的时间是一个机柜的线路布局要1个半小时</p>
-</li>
-<li><p>设备安装调试<br> 所有的准备工作做好之后，就到了设备安装阶段，进出 IDC 都要工单审批，要提前做好，人员、车辆、身份证，然后到机房安装设备，打螺丝，然后交换机之间连接光纤，服务器之间连接五类、六类线缆，然后开始安装操作系统，PXE 等，然后修改管理网IP，修改内网IP，这些一点都不简单，不节省时间。</p>
-</li>
-</ol>
-<p>一切顺利的话，然后就交付机器</p>
-<p>一般来说，这种工程，时间预估上都不能太乐观，而且现场要有应变能力，要有决定权的人在场，很多事情，过了这个点，做的再好都已经没有意义了</p>
-<p>资源和时间，很珍贵，往往也是永远都不够的，做方案的时候，万分考虑</p>
-<p>-EOF-</p>
+            <h1 id="折腾之路"><a href="#折腾之路" class="headerlink" title="折腾之路"></a>折腾之路</h1><p>编程之路，踉踉跄跄就进来了，干了 2 年后，越发感觉有 N 多东西自己不知道，<br>有一个居安思危的心，有一颗对未知知识探索的心，一步，一步，自己去探索，<br>从未停止过。</p>
+<p>现在回头看，路走的很艰难，目前还在路上，庆幸自己有一颗百折不挠的心，虐<br>我千百遍，我待你如初恋 😂 </p>
+<p>细细想，折腾的入门是环境，但是环境往往是最难的，所以很多人第一步没迈进<br>来，这里记录我在自己的测试环境的探索之路，希望并介绍自己使用的系列工具，<br>前路漫漫，希望能帮一些人节省时间，毕竟时间很珍贵。</p>
+<h2 id="曾经的双系统"><a href="#曾经的双系统" class="headerlink" title="曾经的双系统"></a>曾经的双系统</h2><p>首先定位是后台开发，给自己选 os，是 Linux 系，比如 Ubuntu，centos，最开始<br>我尝试的是一台电脑装两个系统，最早是联想 Y460，安装了 Ubuntu-12.04 之后，<br>运行双系统，结果就是电脑已经使用了4， 5 年了，有些卡，好惨也没钱，这样<br>照着 Linux 书开始学命令，记笔记，想想都是泪</p>
+<h2 id="宿主机上建立虚拟机"><a href="#宿主机上建立虚拟机" class="headerlink" title="宿主机上建立虚拟机"></a>宿主机上建立虚拟机</h2><p>第二个是自己终于攒够钱买了 Mac Pro，当年最大的动力就是公司让研究 hadoop，<br>结果测试机最好是 3 台起步，然后脑海里就一直在想，什么时候我才能有自己 3 台<br>机器，任意完，买了 Mac 后终于实现了，Mac Book Pro 15 + VirtualBox ，最多时<br>开了5 台，一点不卡，照样该干啥干啥，网络配置是当时比较难的，文章记录在这里，<br><a href="https://favoorr.github.io/2015/01/23/mac-use-virtualbox-config-network/">mac上使用虚拟机网络配置总结</a></p>
+<h2 id="Vagrant-时代"><a href="#Vagrant-时代" class="headerlink" title="Vagrant 时代"></a>Vagrant 时代</h2><p>后来很长一段时间都是 Mac Book Pro + VirtualBox，直到后来知道了 Vagrant，以及新生<br>的 docker，进化了几代后，目前这个暂时是最终代，下面是我的使用场景：</p>
+<p>1.想玩一个新的 Linux，那么就用 vagrant 管理虚拟机，后续会有博客详细介绍<br>2.想玩 docker，一般不再宿主机上直接玩，某台 Linux 虚拟机，然后安装其他 docker 镜像<br>3.alpine 超小的 Linux 镜像，然后在安装自己想要的软件，比如 bash 也是手工安装</p>
+<p>后续会介绍在 vagrant 以及 docker 方面的使用实践，偏向于小折腾，不具备生产条件</p>
 
           
         
@@ -949,7 +946,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -990,7 +987,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-count">114</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -998,7 +995,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1007,7 +1004,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

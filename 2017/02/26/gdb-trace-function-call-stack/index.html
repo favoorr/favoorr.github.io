@@ -1,0 +1,823 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gdb,c,go," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="说明本篇涵盖使用 GDB 查看函数调用栈帧，理解函数调用过程，并学习 GDB 相关指令
+Go 的符号和 C 的符号不一样，这个要注意下
+参考书籍《Go 学习笔记》雨痕《C 学习笔记》雨痕《程序员的自我修养-链接，装载，库》
+C语言示例12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GDB 查看函数调用栈帧">
+<meta property="og:url" content="https://favoorr.github.io/2017/02/26/gdb-trace-function-call-stack/index.html">
+<meta property="og:site_name" content="favoorr's blog">
+<meta property="og:description" content="说明本篇涵盖使用 GDB 查看函数调用栈帧，理解函数调用过程，并学习 GDB 相关指令
+Go 的符号和 C 的符号不一样，这个要注意下
+参考书籍《Go 学习笔记》雨痕《C 学习笔记》雨痕《程序员的自我修养-链接，装载，库》
+C语言示例12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+<meta property="og:updated_time" content="2017-02-27T03:21:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GDB 查看函数调用栈帧">
+<meta name="twitter:description" content="说明本篇涵盖使用 GDB 查看函数调用栈帧，理解函数调用过程，并学习 GDB 相关指令
+Go 的符号和 C 的符号不一样，这个要注意下
+参考书籍《Go 学习笔记》雨痕《C 学习笔记》雨痕《程序员的自我修养-链接，装载，库》
+C语言示例12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 8936411,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://favoorr.github.io/2017/02/26/gdb-trace-function-call-stack/"/>
+
+  <title> GDB 查看函数调用栈帧 | favoorr's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f95fe4bd64019414c93e0effeabc5001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">favoorr's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GDB 查看函数调用栈帧
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-26T10:54:42+08:00" content="2017-02-26">
+              2017-02-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gdb/" itemprop="url" rel="index">
+                    <span itemprop="name">gdb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/26/gdb-trace-function-call-stack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/gdb-trace-function-call-stack/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/26/gdb-trace-function-call-stack/" class="leancloud_visitors" data-flag-title="GDB 查看函数调用栈帧">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本篇涵盖使用 GDB 查看函数调用栈帧，理解函数调用过程，并学习 GDB 相关指令</p>
+<p>Go 的符号和 C 的符号不一样，这个要注意下</p>
+<h2 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h2><p>《Go 学习笔记》雨痕<br>《C 学习笔记》雨痕<br>《程序员的自我修养-链接，装载，库》</p>
+<h2 id="C语言示例"><a href="#C语言示例" class="headerlink" title="C语言示例"></a>C语言示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">gcc -g -O0 -o ctest1 test.c</div><div class="line"></div><div class="line">-O0 阻止编译器优化</div><div class="line"></div><div class="line">(gdb) b main // 设置断点</div><div class="line">Breakpoint 1 at 0x400585: file test.c, line 19.</div><div class="line">(gdb) b add</div><div class="line">Breakpoint 2 at 0x40055c: file test.c, line 11.</div><div class="line">(gdb) b info</div><div class="line">Breakpoint 3 at 0x400538: file test.c, line 6.</div><div class="line">(gdb) info b // 查看所有断点</div><div class="line">Num     Type           Disp Enb Address            What</div><div class="line">1       breakpoint     keep y   0x0000000000400585 in main at test.c:19</div><div class="line">2       breakpoint     keep y   0x000000000040055c in add at test.c:11</div><div class="line">3       breakpoint     keep y   0x0000000000400538 in info at test.c:6</div><div class="line">(gdb) r // 执行当前程序</div><div class="line">Starting program: /go/go.lesson/src/function-call-stack/ctest1</div><div class="line"></div><div class="line">Breakpoint 1, main (argc=1, argv=0x7fffffffe628) at test.c:19</div><div class="line">19		int x = 0x100;</div><div class="line">(gdb) bt // 查看函数调用栈</div><div class="line">#0  main (argc=1, argv=0x7fffffffe628) at test.c:19</div><div class="line">(gdb) l main // 查看 main 函数源代码，main 为符号名</div><div class="line">13</div><div class="line">14		return z;</div><div class="line">15	&#125;</div><div class="line">16</div><div class="line">17	int main(int argc, char **argv)</div><div class="line">18	&#123;</div><div class="line">19		int x = 0x100;</div><div class="line">20		int y = 0x200;</div><div class="line">21		int z = add(x, y);</div><div class="line">22</div><div class="line">(gdb) c // 从当前位置继续执行程序，设置多个断点时使用</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Breakpoint 2, add (x=256, y=512) at test.c:11</div><div class="line">11		int z = x + y;</div><div class="line">(gdb) bt</div><div class="line">#0  add (x=256, y=512) at test.c:11</div><div class="line">#1  0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">(gdb) l add</div><div class="line">5	&#123;</div><div class="line">6		printf(&quot;info %d\n&quot;, x);</div><div class="line">7	&#125;</div><div class="line">8</div><div class="line">9	__attribute__((noinline)) int add(int x, int y)</div><div class="line">10	&#123;</div><div class="line">11		int z = x + y;</div><div class="line">12		info(z);</div><div class="line">13</div><div class="line">14		return z;</div><div class="line">(gdb) info frame // 查看当前栈帧</div><div class="line">Stack level 0, frame at 0x7fffffffe520:</div><div class="line"> rip = 0x40055c in add (test.c:11); saved rip = 0x4005a2</div><div class="line"> called by frame at 0x7fffffffe550</div><div class="line"> source language c.</div><div class="line"> Arglist at 0x7fffffffe510, args: x=256, y=512</div><div class="line"> Locals at 0x7fffffffe510, Previous frame&apos;s sp is 0x7fffffffe520</div><div class="line"> Saved registers:</div><div class="line">  rbp at 0x7fffffffe510, rip at 0x7fffffffe518</div><div class="line">(gdb) info args // 查看参数</div><div class="line">x = 256</div><div class="line">y = 512</div><div class="line">(gdb) info locals</div><div class="line">z = 0</div><div class="line">(gdb) frame 1 // 根据编号切换当前栈帧为 main</div><div class="line">#1  0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">21		int z = add(x, y);</div><div class="line">(gdb) info frame</div><div class="line">Stack level 1, frame at 0x7fffffffe550:</div><div class="line"> rip = 0x4005a2 in main (test.c:21); saved rip = 0x7ffff7a36f45</div><div class="line"> caller of frame at 0x7fffffffe520</div><div class="line"> source language c.</div><div class="line"> Arglist at 0x7fffffffe540, args: argc=1, argv=0x7fffffffe628</div><div class="line"> Locals at 0x7fffffffe540, Previous frame&apos;s sp is 0x7fffffffe550</div><div class="line"> Saved registers:</div><div class="line">  rbp at 0x7fffffffe540, rip at 0x7fffffffe548</div><div class="line">(gdb) down 1 // 当前是 main ，向下 1，就是 add</div><div class="line">#0  add (x=256, y=512) at test.c:11</div><div class="line">11		int z = x + y;</div><div class="line">(gdb) bt</div><div class="line">#0  add (x=256, y=512) at test.c:11</div><div class="line">#1  0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">(gdb) up 1 // 当前是 add，向上 1 就是 main</div><div class="line">#1  0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">21		int z = add(x, y);</div><div class="line">(gdb) bt</div><div class="line">#0  add (x=256, y=512) at test.c:11</div><div class="line">#1  0x00000000004005a2 in main (argc=1, argv=0x7fffffffe628) at test.c:21</div><div class="line">(gdb) info proc mappings</div><div class="line">process 2572</div><div class="line">Mapped address spaces:</div><div class="line"></div><div class="line">          Start Addr           End Addr       Size     Offset objfile</div><div class="line">            0x400000           0x401000     0x1000        0x0 /go/go.lesson/src/function-call-stack/ctest1</div><div class="line">            0x600000           0x601000     0x1000        0x0 /go/go.lesson/src/function-call-stack/ctest1</div><div class="line">            0x601000           0x602000     0x1000     0x1000 /go/go.lesson/src/function-call-stack/ctest1</div><div class="line">      0x7ffff7a15000     0x7ffff7bcf000   0x1ba000        0x0 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7bcf000     0x7ffff7dcf000   0x200000   0x1ba000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dcf000     0x7ffff7dd3000     0x4000   0x1ba000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dd3000     0x7ffff7dd5000     0x2000   0x1be000 /lib/x86_64-linux-gnu/libc-2.19.so</div><div class="line">      0x7ffff7dd5000     0x7ffff7dda000     0x5000        0x0</div><div class="line">      0x7ffff7dda000     0x7ffff7dfd000    0x23000        0x0 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7fed000     0x7ffff7ff0000     0x3000        0x0</div><div class="line">      0x7ffff7ff8000     0x7ffff7ffa000     0x2000        0x0</div><div class="line">      0x7ffff7ffa000     0x7ffff7ffc000     0x2000        0x0 [vdso]</div><div class="line">      0x7ffff7ffc000     0x7ffff7ffd000     0x1000    0x22000 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7ffd000     0x7ffff7ffe000     0x1000    0x23000 /lib/x86_64-linux-gnu/ld-2.19.so</div><div class="line">      0x7ffff7ffe000     0x7ffff7fff000     0x1000        0x0</div><div class="line">      0x7ffffffde000     0x7ffffffff000    0x21000        0x0 [stack]</div><div class="line">  0xffffffffff600000 0xffffffffff601000     0x1000        0x0 [vsyscall]</div></pre></td></tr></table></figure>
+<h2 id="Go-语言示例"><a href="#Go-语言示例" class="headerlink" title="Go 语言示例"></a>Go 语言示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">构建调试文件</div><div class="line"></div><div class="line">go build -gcflags &quot;-N -l&quot; -o gtest1 test.go</div><div class="line"></div><div class="line">-N -l 编译器优化</div><div class="line"></div><div class="line">查看 Go 提供的符号</div><div class="line">nm gtest1 | grep &quot;main\.&quot;</div><div class="line"></div><div class="line">0000000000401120 T main.add                           // add()</div><div class="line">0000000000401000 T main.info                           // info()</div><div class="line">00000000004011f0 T main.init</div><div class="line">00000000005a3ac3 B main.initdone.</div><div class="line">0000000000401180 T main.main                         // main()</div><div class="line">000000000052e460 R runtime.main.f</div><div class="line">000000000044aac0 T runtime.main.func1</div><div class="line">000000000052e448 R runtime.main.func1.f</div><div class="line">000000000044ab00 T runtime.main.func2</div><div class="line">000000000052e450 R runtime.main.func2.f</div><div class="line"></div><div class="line">(gdb) b main.main // 根据符号设置断点</div><div class="line">Breakpoint 1 at 0x401180: file /go/go.lesson/src/function-call-stack/test.go, line 16.</div><div class="line">(gdb) b main.add</div><div class="line">Breakpoint 2 at 0x401120: file /go/go.lesson/src/function-call-stack/test.go, line 9.</div><div class="line">(gdb) b main.info</div><div class="line">Breakpoint 3 at 0x401000: file /go/go.lesson/src/function-call-stack/test.go, line 5.</div><div class="line">(gdb) info b // 查看所有断点</div><div class="line">Num     Type           Disp Enb Address            What</div><div class="line">1       breakpoint     keep y   0x0000000000401180 in main.main at /go/go.lesson/src/function-call-stack/test.go:16</div><div class="line">2       breakpoint     keep y   0x0000000000401120 in main.add at /go/go.lesson/src/function-call-stack/test.go:9</div><div class="line">3       breakpoint     keep y   0x0000000000401000 in main.info at /go/go.lesson/src/function-call-stack/test.go:5</div><div class="line">(gdb) l // 查看源代码</div><div class="line">7 &#125;</div><div class="line">8</div><div class="line">9 func add(x, y int) int &#123;</div><div class="line">10    z := x + y</div><div class="line">11    info(z)</div><div class="line">12</div><div class="line">13    return z</div><div class="line">14  &#125;</div><div class="line">15</div><div class="line">16  func main() &#123;</div><div class="line">(gdb) l</div><div class="line">17    x, y := 0x100, 0x200</div><div class="line">18    z := add(x, y)</div><div class="line">19</div><div class="line">20    println(z)</div><div class="line">21  &#125;</div><div class="line">(gdb) r // 执行程序</div><div class="line">Starting program: /go/go.lesson/src/function-call-stack/gtest1</div><div class="line"></div><div class="line">Breakpoint 1, main.main () at /go/go.lesson/src/function-call-stack/test.go:16</div><div class="line">16  func main() &#123;</div><div class="line">(gdb) bt // 查看调用堆栈</div><div class="line">#0  main.main () at /go/go.lesson/src/function-call-stack/test.go:16</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Breakpoint 2, main.add (x=256, y=512, ~r2=859530748064) at /go/go.lesson/src/function-call-stack/test.go:9</div><div class="line">9 func add(x, y int) int &#123;</div><div class="line">(gdb) bt</div><div class="line">#0  main.add (x=256, y=512, ~r2=859530748064) at /go/go.lesson/src/function-call-stack/test.go:9</div><div class="line">#1  0x00000000004011bd in main.main () at /go/go.lesson/src/function-call-stack/test.go:18</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line"></div><div class="line">Breakpoint 3, main.info (x=768) at /go/go.lesson/src/function-call-stack/test.go:5</div><div class="line">5 func info(x int) &#123;</div><div class="line">(gdb) bt</div><div class="line">#0  main.info (x=768) at /go/go.lesson/src/function-call-stack/test.go:5</div><div class="line">#1  0x000000000040115c in main.add (x=256, y=512, ~r2=0) at /go/go.lesson/src/function-call-stack/test.go:11</div><div class="line">#2  0x00000000004011bd in main.main () at /go/go.lesson/src/function-call-stack/test.go:18</div><div class="line">(gdb) info proc mappings</div><div class="line">process 2787</div><div class="line">Mapped address spaces:</div><div class="line"></div><div class="line">          Start Addr           End Addr       Size     Offset objfile</div><div class="line">            0x400000           0x4ad000    0xad000        0x0 /go/go.lesson/src/function-call-stack/gtest1</div><div class="line">            0x4ad000           0x585000    0xd8000    0xad000 /go/go.lesson/src/function-call-stack/gtest1</div><div class="line">            0x585000           0x58a000     0x5000   0x185000 /go/go.lesson/src/function-call-stack/gtest1</div><div class="line">            0x58a000           0x5a9000    0x1f000        0x0 [heap]</div><div class="line">        0xc000000000       0xc000001000     0x1000        0x0</div><div class="line">        0xc81fff8000       0xc820100000   0x108000        0x0 [stack:2791]</div><div class="line">      0x7ffff7f2d000     0x7ffff7ffd000    0xd0000        0x0</div><div class="line">      0x7ffff7ffd000     0x7ffff7fff000     0x2000        0x0 [vdso]</div><div class="line">      0x7ffffffde000     0x7ffffffff000    0x21000        0x0 [stack]</div><div class="line">  0xffffffffff600000 0xffffffffff601000     0x1000        0x0 [vsyscall]</div><div class="line">(gdb) c // 最后一个断点执行后，程序正常退出</div><div class="line">Continuing.</div><div class="line">2017/02/26 03:19:03 info 768</div><div class="line">768</div><div class="line">[LWP 2756 exited]</div><div class="line">[Inferior 1 (process 2756) exited normally]</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇算是基础入门，学习使用 GDB，并能查看函数调用大致过程</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechat-reward.png" alt="favoorr WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/alipay-reward.jpg" alt="favoorr Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gdb/" rel="tag">#gdb</a>
+          
+            <a href="/tags/c/" rel="tag">#c</a>
+          
+            <a href="/tags/go/" rel="tag">#go</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/gdb-commands-summary/" rel="next" title="GDB 命令使用总结">
+                <i class="fa fa-chevron-left"></i> GDB 命令使用总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/gdb-trace-c-function-call/" rel="prev" title="GDB 跟踪 C 语言函数执行过程">
+                GDB 跟踪 C 语言函数执行过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/26/gdb-trace-function-call-stack/"
+           data-title="GDB 查看函数调用栈帧" data-url="https://favoorr.github.io/2017/02/26/gdb-trace-function-call-stack/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://s.gravatar.com/avatar/1201556b6846d721f1f1a49691a558b2?s=80&r=g"
+               alt="favoorr" />
+          <p class="site-author-name" itemprop="name">favoorr</p>
+          <p class="site-description motion-element" itemprop="description">行大于言</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/favoorr" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考书籍"><span class="nav-number">2.</span> <span class="nav-text">参考书籍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C语言示例"><span class="nav-number">3.</span> <span class="nav-text">C语言示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-语言示例"><span class="nav-number">4.</span> <span class="nav-text">Go 语言示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">favoorr</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"favoorr"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("M2FQAkfbJbv4CwKXhJe5Egt6-gzGzoHsz", "2rPdNb288trrULLw1QQzBUSs");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

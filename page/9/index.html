@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/22/crontab-ntp-synchronized-date/" itemprop="url">
-                  cron表达式同步Linux服务器时间
+                <a class="post-title-link" href="/2015/07/26/using-npm/" itemprop="url">
+                  npm 使用记录
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T09:54:42+08:00" content="2015-07-22">
-              2015-07-22
+            <time itemprop="dateCreated" datetime="2015-07-26T00:46:44+08:00" content="2015-07-26">
+              2015-07-26
             </time>
           </span>
 
@@ -286,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodejs</span>
                   </a>
                 </span>
 
@@ -302,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/22/crontab-ntp-synchronized-date/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/crontab-ntp-synchronized-date/" itemprop="commentsCount"></span>
+                <a href="/2015/07/26/using-npm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/26/using-npm/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2015/07/22/crontab-ntp-synchronized-date/" class="leancloud_visitors" data-flag-title="cron表达式同步Linux服务器时间">
+             <span id="/2015/07/26/using-npm/" class="leancloud_visitors" data-flag-title="npm 使用记录">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -337,11 +337,28 @@
       
         
           
-            <p>环境 centos 6.6 64位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">1.安装</div><div class="line">yum install ntp</div><div class="line"></div><div class="line">2.以 time.nist.gov 为基准同步时间</div><div class="line">ntpdate pool.ntp.org</div><div class="line"></div><div class="line">3.通过 crontab 定时同步时间</div><div class="line">crontab -e</div><div class="line"></div><div class="line">*/10 * * * * ntpdate pool.ntp.org</div><div class="line"></div><div class="line">这样写，会出现错误，root会收到错误邮件，内容包含 </div><div class="line"></div><div class="line">/bin/sh: ntpdate: command not found</div><div class="line"></div><div class="line">所以要使用 </div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org </div><div class="line"></div><div class="line">查看配置结果</div><div class="line">crontab -l</div><div class="line"></div><div class="line">4.可用的其他时间服务器</div><div class="line"></div><div class="line">pool.ntp.org</div><div class="line">time.nist.gov</div><div class="line">time.nuri.net</div><div class="line">0.asia.pool.ntp.org</div><div class="line">1.asia.pool.ntp.org</div><div class="line">2.asia.pool.ntp.org</div><div class="line">3.asia.pool.ntp.org</div><div class="line"></div><div class="line">自己选择，选择 ping 值最低的一个</div><div class="line"></div><div class="line">5.配置执行 crontab 命令，不给 root 用户发送邮件</div><div class="line"></div><div class="line">vim /etc/crontab </div><div class="line"></div><div class="line">SHELL=/bin/bash</div><div class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">MAILTO=&quot;&quot; # 这里设置为空</div><div class="line">HOME=/</div><div class="line"></div><div class="line">MAILTO 设置为空，不让每次执行命令都给 root 用户发送邮件，</div><div class="line">后来发现改 MAILTO=&quot;&quot; 没用，需要使用命令</div><div class="line"></div><div class="line">*/10 * * * * /usr/sbin/ntpdate pool.ntp.org &gt;/dev/null 2&gt;&amp;1</div><div class="line"></div><div class="line">这样就不会每次执行，都给 root 用户发送邮件了</div></pre></td></tr></table></figure>
-<p>cron表达式 简单教程</p>
-<p>0 <em>/2 </em> <em> </em> /sbin/service httpd restart  # 每两个小时重启一次apache<br>50 7 <em> </em> <em> /sbin/service sshd start  # 每天7：50开启ssh服务<br>50 22 </em> <em> </em> /sbin/service sshd stop  # 每天22：50关闭ssh服务<br>0 0 1,15 <em> </em> fsck /home  # 每月1号和15号检查/home 磁盘<br>1 <em> </em> <em> </em> /home/bruce/backup  # 每小时的第一分执行 /home/bruce/backup这个文件<br>00 03 <em> </em> 1-5 find /home “<em>.xxx” -mtime +4 -exec rm {} /;  # 每周一至周五3点钟，在目录/home中，查找文件名为</em>.xxx的文件，并删除4天前的文件。<br>30 6 <em>/10 </em> <em> ls  # 每月的1、11、21、31日是的6：30执行一次ls命令    
-</em>:1 <em> </em> <em> </em> /usr/bin/php /data/api/setup_server.php  &gt;/dev/null  # 每隔一秒执行一次    这个待确认</p>
+            <p>使用 npm 下载软件包，但是各种蛋碎，一直下载不了，不管使用 淘宝或者cnpm，<br>最后找到问题是曲径的事情，曲径不知道绕了几次，没绕出来</p>
+<p>配置其他源过程</p>
+<p>1.通过config命令</p>
+<p>npm config set registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a>  npm info underscore<br>（如果上面配置正确这个命令会有字符串response）</p>
+<p>2.命令行指定</p>
+<p>npm –registry <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a> info underscore<br>3.编辑node_modules\npm.npmrc加入下面内容</p>
+<p>registry = <a href="http://registry.cnpmjs.org" target="_blank" rel="external">http://registry.cnpmjs.org</a><br>如果上面的npm地址不行的话，大家可以试试淘宝的npm，非常稳定:</p>
+<p>地址：<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a></p>
+<p>最后能访问安装时，我的曲径列表是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">npmjs.org</div><div class="line">cnpmjs.org</div></pre></td></tr></table></figure>
+<p>参考配置，用这个配置，明天在试一下，确认问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gitter.im</div><div class="line">travis-ci.org</div><div class="line">coveralls.io</div><div class="line">iojs.org</div><div class="line">nodejs.org</div><div class="line">ssllabs.com</div><div class="line">digitalocean.com</div><div class="line">bitbucket.org</div><div class="line">atlassian.com</div><div class="line">cnpmjs.org</div><div class="line">readthedocs.org</div><div class="line">dtrace.org</div><div class="line">npmjs.com</div><div class="line">domdex.com</div><div class="line">seleniumhq.org</div><div class="line">caesarchi.com</div><div class="line">lvv2.com</div><div class="line">speakerdeck.com</div><div class="line">koajs.com</div><div class="line">goo.gl</div></pre></td></tr></table></figure>
+<p>目前我的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat .npmrc</div><div class="line">registry=http://registry.cnpmjs.org</div></pre></td></tr></table></figure>
+<p>验证 npm ok</p>
+<p>1.浏览器访问 <a href="http://registry.cnpmjs.org/jshint" target="_blank" rel="external">http://registry.cnpmjs.org/jshint</a><br>2.<code>npm info underscore</code></p>
+<p>注意事项</p>
+<p>1.<a href="https://getqujing.com/zh-CN/my/pac" target="_blank" rel="external">https://getqujing.com/zh-CN/my/pac</a>修改曲径配置，要等10分钟左右才生效<br>2.必须重启自己的 iterm2 </p>
+<p>参考</p>
+<p><a href="http://segmentfault.com/a/1190000002642514" target="_blank" rel="external">[玩玩Node] npm 包下载很慢的解决办法</a></p>
+<p><a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝 NPM 镜像</a></p>
+<p><a href="https://gist.github.com/fengmk2/e95b1bb0e152ce443123" target="_blank" rel="external">参考曲径配置</a></p>
 <p>-EOF-</p>
 
           
@@ -392,8 +409,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/22/compile-youcompleteme/" itemprop="url">
-                  编译YouCompleteMe
+                <a class="post-title-link" href="/2015/07/25/mac-brew-summary/" itemprop="url">
+                  mac 下的 brew 总结
                 </a>
               
             
@@ -406,8 +423,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-22T09:39:42+08:00" content="2015-07-22">
-              2015-07-22
+            <time itemprop="dateCreated" datetime="2015-07-25T16:37:07+08:00" content="2015-07-25">
+              2015-07-25
             </time>
           </span>
 
@@ -420,8 +437,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
+                  <a href="/categories/brew/" itemprop="url" rel="index">
+                    <span itemprop="name">brew</span>
                   </a>
                 </span>
 
@@ -436,8 +453,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/22/compile-youcompleteme/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/compile-youcompleteme/" itemprop="commentsCount"></span>
+                <a href="/2015/07/25/mac-brew-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/25/mac-brew-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -447,7 +464,7 @@
 
           
           
-             <span id="/2015/07/22/compile-youcompleteme/" class="leancloud_visitors" data-flag-title="编译YouCompleteMe">
+             <span id="/2015/07/25/mac-brew-summary/" class="leancloud_visitors" data-flag-title="mac 下的 brew 总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -471,155 +488,45 @@
       
         
           
-            <p>centos 6.6 下编译 YouCompleteMe</p>
-<p>vundle 管理插件下载的时候，可以直接从 github 下载后，移动到目录 <code>~/.vim/bundle/</code> 下，<br>vundle 安装看不到进度，真心痛苦，昨天夜里下载了至少 5 个多小时吧，一整晚没关机</p>
-<p>编译完 gcc  4.8.1 参考博客文章 &lt;&gt;</p>
-<p>编译完 clang 3.8.0 参考博客文章 &lt;&gt;</p>
-<p>开始编译 ycm</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">cd ~/.vim/bundle/YouCompleteMe</div><div class="line"></div><div class="line">sh install.sh</div><div class="line"></div><div class="line">开始时大概是这样的</div><div class="line"></div><div class="line">[  0%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/errors.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/dict.cpp.o</div><div class="line">[  2%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/slice.cpp.o</div><div class="line">[  3%] Building CXX object BoostParts/CMakeFiles/BoostParts.dir/libs/python/src/tuple.cpp.o</div><div class="line">...</div><div class="line"></div><div class="line">90% 之后就报错了</div><div class="line"></div><div class="line">[ 90%] Building CXX object ycm/CMakeFiles/ycm_client_support.dir/versioning.cpp.o</div><div class="line">Linking CXX shared library /root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so</div><div class="line">/usr/bin/ld: /usr/local/lib/libpython2.7.a(abstract.o): relocation R_X86_64_32 against `.rodata.str1.8&apos; can not be used when making a shared object; recompile with -fPIC</div><div class="line">/usr/local/lib/libpython2.7.a: could not read symbols: Bad value</div><div class="line">collect2: 错误：ld 返回 1</div><div class="line">make[3]: *** [/root/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so] 错误 1</div><div class="line">make[2]: *** [ycm/CMakeFiles/ycm_client_support.dir/all] 错误 2</div><div class="line">make[1]: *** [ycm/CMakeFiles/ycm_support_libs.dir/rule] 错误 2</div><div class="line">make: *** [ycm_support_libs] 错误 2</div><div class="line"></div><div class="line">作者给出的解答是 </div><div class="line"></div><div class="line">Your libpython2.7.a was not compiled with -fPIC so it can&apos;t be linked into ycm_core.so. Use the -DPYTHON_LIBRARY= cmake flag to point it to a .so version of libpython on your machine (for instance, -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so). Naturally, this means you&apos;ll have to go through the full installation guide by hand.</div><div class="line"></div><div class="line">我的做法是增加参数 --enable-shared 重新编译 python</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/python2.7 --with-threads --enable-shared</div><div class="line"></div><div class="line">编译完 Python 后，再次执行 sh install.sh</div></pre></td></tr></table></figure>
-<p>成功验证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">最后看到 </div><div class="line"></div><div class="line">[100%] Built target ycm_client_support</div><div class="line">Scanning dependencies of target ycm_support_libs</div><div class="line">[100%] Built target ycm_support_libs</div><div class="line"></div><div class="line">说明编译成功了，再次 vim file ，不会看到错误</div><div class="line"></div><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
+            <p>mac 下 brew 使用总结</p>
+<p>1.no sudo</p>
+<pre><code>sudo chown -R `whoami` /usr/local
+</code></pre><p>2.brew 常用命令</p>
+<pre><code>brew install wget # 安装源码
+brew info svn # 显示软件的各种信息，包括版本啊源码地址啊等等
+brew uninstall wget # 卸载软件，很爽，一键静默卸载
+brew search git # 模糊搜索brew 支持的软件。如果不加软件名，就会列出所有它支持的软件。多的很。
+brew list # 列出本机通过brew安装的所有软件
+brew update # 跟新brew软件自身
+brew upgrade wget # 更新安装过的软件,如果不加软件名，就更新所有可以更新的软件
+brew cleanup # 清除下载的各种缓存
 
-    <div>
-      
-    </div>
+brew deps wget  显示依赖信息
+brew --cache
+/Library/Caches/Homebrew
+</code></pre><p>5.安装目录 /usr/local</p>
+<pre><code>brew 默认安装在 /usr/local
 
-    <div>
-      
-    </div>
+/usr/local/bin  :  可执行文件会安装在这边
+/usr/local/lib  :  c语言的动态库和静态库，编译的时候直接通过-l xx  可以依赖
+/usr/local/etc:  配置相关文件
+/usr/local/include: c语言头文件
+/Library/Caches/Homebrew : 你所有安装的软件，都会先下载到这个缓存文件夹中。
+</code></pre><p>6.brew cask 常用命令</p>
+<pre><code>brew install caskroom/cask/brew-cask
 
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="url">
-                  Cento6.6 编译安装 the_silver_searcher
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-21T19:03:16+08:00" content="2015-07-21">
-              2015-07-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/centos6.6-build-the_silver_searcher-from-source/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/21/centos6.6-build-the_silver_searcher-from-source/" class="leancloud_visitors" data-flag-title="Cento6.6 编译安装 the_silver_searcher">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>the_silver_searcher 好像是个神奇，摸索vim时候一个依赖包，</p>
-<p>在使用 kvm9.0 时 (git地址: <a href="https://github.com/wklken/k-vim" target="_blank" rel="external">https://github.com/wklken/k-vim</a>) 需要安装</p>
-<p>github地址 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="external">https://github.com/ggreer/the_silver_searcher</a></p>
-<p>Centos7 下安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</div><div class="line">yum install the_silver_searche</div></pre></td></tr></table></figure>
-<p>如果在 centos 6.6 下执行上面的安装命令，会遇到错误</p>
-<p>错误：xz compression not available，并且 yum 不能使用</p>
-<p>xz 版本如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@dev1 .vim]# xz --version</div><div class="line">xz (XZ Utils) 4.999.9beta</div><div class="line">liblzma 4.999.9beta</div></pre></td></tr></table></figure>
-<p>需要执行 <code>rm -rf /etc/yum.repos.d/epel*</code>，使 yum 恢复ok</p>
-<p>Centos6 下编译安装</p>
-<p>1.下载源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">wget http://geoff.greer.fm/ag/releases/the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">2.安装依赖</div><div class="line">yum -y groupinstall &quot;Development Tools&quot;</div><div class="line">yum -y install pcre-devel xz-devel</div><div class="line"></div><div class="line">tar -zxv -f the_silver_searcher-0.30.0.tar.gz</div><div class="line"></div><div class="line">cd the_silver_searcher-0.30.0</div><div class="line"></div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
-<p>执行成功，没有错误，则安装成功</p>
+brew cask install qq # 下载安装软件
+brew cask uninstall qq # 卸载软件
+brew cask search qq # 模糊搜索软件，如果不加软件名，就列出所有它支持的软件
+brew cask info qq # 显示这个软件的详细信息，如果已经用cask安装了，也会显示其安装目录信息等
+brew cask list # 列出本机按照过的软件列表
+brew cask cleanup #  清除下载的缓存以及各种链接信息
+brew update &amp;&amp; brew upgrade brew-cask # 更新cask自身
+</code></pre><p>一次维护记录</p>
+<p>执行 brew update 时候，提醒，必须先把本地的stash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local</div><div class="line">git stash</div><div class="line">git stash list</div><div class="line">brew update</div></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="https://www.zybuluo.com/phper/note/87055" target="_blank" rel="external">https://www.zybuluo.com/phper/note/87055</a></p>
 <p>-EOF-</p>
 
           
@@ -670,8 +577,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/07/21/use-kvim/" itemprop="url">
-                  Centos6.6安装使用k-vim
+                <a class="post-title-link" href="/2015/07/23/compile-python2.7.10-from-source/" itemprop="url">
+                  编译python2.7.10
                 </a>
               
             
@@ -684,8 +591,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-21T18:43:32+08:00" content="2015-07-21">
-              2015-07-21
+            <time itemprop="dateCreated" datetime="2015-07-23T14:13:01+08:00" content="2015-07-23">
+              2015-07-23
             </time>
           </span>
 
@@ -698,8 +605,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -714,8 +621,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/07/21/use-kvim/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/21/use-kvim/" itemprop="commentsCount"></span>
+                <a href="/2015/07/23/compile-python2.7.10-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/compile-python2.7.10-from-source/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -725,7 +632,273 @@
 
           
           
-             <span id="/2015/07/21/use-kvim/" class="leancloud_visitors" data-flag-title="Centos6.6安装使用k-vim">
+             <span id="/2015/07/23/compile-python2.7.10-from-source/" class="leancloud_visitors" data-flag-title="编译python2.7.10">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>环境 centos 6.6 , python 2.7.10</p>
+<p>编译 ycm ，我需要 libpython2.7.so ，但是默认的编译 ./configure 只有 /usr/local/lib/libpython2.7.a 不能被其他共享并链接</p>
+<p>手工编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum -y install python-devel openssl openssl-devel gcc sqlite-devel</div><div class="line"></div><div class="line">建立安装目录</div><div class="line">mkdir /usr/local/python2.7.10</div><div class="line"></div><div class="line">假设 已经解压 到 Python-2.7.10</div><div class="line">cd Python-2.7.10</div><div class="line">./configure --prefix=/usr/local/python2.7.10 --with-threads --enable-shared</div><div class="line">make</div><div class="line">make install altinstall</div><div class="line"></div><div class="line"></div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/lib/libpython2.7.so.1.0 /usr/local/lib</div><div class="line">ln -s /usr/local/python2.7.10/bin/python2.7 /usr/local/bin</div><div class="line">/sbin/ldconfig -v</div><div class="line"></div><div class="line">locate libpython2.7.so</div><div class="line"></div><div class="line">如果安装这个方式，就不需要修改默认的 </div><div class="line"></div><div class="line">vim /usr/bin/yum</div><div class="line">mv /usr/bin/python /usr/bin/python2.6.6</div><div class="line"></div><div class="line">这个根据自己环境而定</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/22/build-clang-from-source/" itemprop="url">
+                  centos6.6 源码编译 clang
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T14:23:39+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/clang/" itemprop="url" rel="index">
+                    <span itemprop="name">clang</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/build-clang-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/build-clang-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/build-clang-from-source/" class="leancloud_visitors" data-flag-title="centos6.6 源码编译 clang">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>源码编译clang</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">1.新建文件夹</div><div class="line">mkdir /root/buildllvm #放置clang源码位置</div><div class="line">mkdir /root/buildllvm/build #放置clang编译文件位置</div><div class="line"></div><div class="line">2.svn 下载在新版 3.8.0 源代码</div><div class="line">cd /root/buildllvm</div><div class="line"></div><div class="line">svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm</div><div class="line"> </div><div class="line">cd llvm/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/cfe/trunk clang</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd llvm/tools/clang/tools</div><div class="line">svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra</div><div class="line">cd ../../../..</div><div class="line"></div><div class="line">cd llvm/projects</div><div class="line">svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt</div><div class="line">cd ../..</div><div class="line"></div><div class="line">cd /root/buildllvm/build</div><div class="line"></div><div class="line">3.安装文件放在 /usr/local/llvm 下；优化+只编译适应本机的代码</div><div class="line">../llvm/configure --prefix=/usr/local/llvm --enable-optimized --enable-targets=host-only</div><div class="line"> </div><div class="line">4.编译和安装，整个过程耗时 4小时 左右，在我的 mac 虚拟机上</div><div class="line">make   -j4  # 如果多核的话，可以 make -j4 (4个工作线程)</div><div class="line">make install    # 安装，如果有权限问题请 sudo make install</div><div class="line"></div><div class="line"></div><div class="line">都编译完成后</div><div class="line"></div><div class="line">vim .bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:/usr/local/llvm/bin:$PATH</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">整个安装过程结束</div></pre></td></tr></table></figure>
+<p>验证整个安装过程成功和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">clang --version</div><div class="line"></div><div class="line">clang version 3.8.0 (trunk 242872)</div><div class="line">Target: x86_64-unknown-linux-gnu</div><div class="line">Thread model: posix</div></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85llvmclang" target="_blank" rel="external">centos下安装llvm+clang</a></p>
+<p><a href="http://m.blog.csdn.net/blog/ccc64524422/46876499" target="_blank" rel="external">[转]CentOS 7+vim+ycm(clang)</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="url">
+                  centos6.6源码安装gcc4.8.1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T13:58:16+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gcc/" itemprop="url" rel="index">
+                    <span itemprop="name">gcc</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/centos6.6-build-gcc5.2-from-source/" class="leancloud_visitors" data-flag-title="centos6.6源码安装gcc4.8.1">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -750,207 +923,34 @@
         
           
             <p>环境 </p>
-<p>centos 6.6 64 位</p>
-<p>没敢在自己的 mac 上直接撸，怕把 mac 上的 vim 搞残了 …</p>
-<p>新手配置vim比较困难，先暂且使用别人的 vim </p>
-<p>曾经试着参考别人教程，搞一个属于自己的 vim，可惜 c c++ 基础太弱，一直没实现</p>
-<p>正文开始，参考 k-vim readme，和自己跳的坑</p>
-<p>1.从 github 克隆到本地</p>
-<pre><code>git clone https://github.com/wklken/k-vim.git
-</code></pre><p>2.安装依赖包</p>
-<pre><code># ctags, ag(the_silver_searcher)
-</code></pre><p>2.1 系统依赖</p>
-<pre><code>yum install python-devel.x86_64 or yum info python-devel.x86_64
-
-yum groupinstall &apos;Development Tools&apos;
-
-rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
-
-yum install the_silver_searcher 如果是centos6，需要自己安装，会出现错误 错误：xz compression not available 
-
-需要执行 rm -rf /etc/yum.repos.d/epel* ，使 yum 恢复ok
-</code></pre><p>centos6.6 安装 the_silver_searcher 参考 ，我写的教程</p>
-<p>2.2 使用 python</p>
-<pre><code>pip install pyflakes
-pip install pylint
-pip install pep8
-</code></pre><p>要安装很多东西 pip ，参考 </p>
-<p>2.3 如果使用Javascript, 不需要的跳过</p>
-<pre><code># 安装jshint和jslint,用于javascript语法检查
-# 需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
-
-# todo 没用 javascript 暂时跳过
-</code></pre><p>3 安装</p>
-<p>3.1 进入目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd k-vim/</div><div class="line"></div><div class="line">sh -x install.sh</div></pre></td></tr></table></figure>
-<p>一执行，就是好多个小时，至少5小时，具体我也不知道，还跟个人网速有关，我一整晚电脑放公司没关机 ….</p>
-<p>安装完成后，第二天来看到有错误，没理会，很想知道 k-vim 安装完成后是个什么样，vim 是残了还是变高大上了 </p>
-<p>于是执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>具体经历如下：</p>
-<p>错误一：一直提示 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need to compile YCM before using it. Read the docs!</div><div class="line">Press ENTER or type command to continue</div><div class="line"></div><div class="line">这个提示要去 编译 ycm ，好吧，本来以为3两下搞定，结果有此我漫长的编译之路，这个不简单，下面是我的苦逼经历</div><div class="line"></div><div class="line">后来才知道 ycm 依赖 clang，</div><div class="line">后来才知道 手贱选择了 clang 最新版 3.8.0</div><div class="line">后来才知道 clang 3.8.0 需要 gcc 4.7.0 以上</div><div class="line">后来才知道 centos 6.6 默认安装的 gcc 为 4.4.7</div><div class="line">后来才知道 自己需要编译 gcc，选择 v4.8.1</div><div class="line"></div><div class="line">困难在我这种人面前，并不可怕，结果是，我愣是把 ycm 撸出来了</div></pre></td></tr></table></figure>
-<p>成功编译 ycm 之后，上面提示从此不再出现</p>
-<p>错误二：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/.vimrc:</div><div class="line">line  166:</div><div class="line">E518: Unknown option: foldenable</div><div class="line">line  174:</div><div class="line">E518: Unknown option: foldmethod=indent</div><div class="line">line  175:</div><div class="line">E518: Unknown option: foldlevel=99</div><div class="line">line  213:</div><div class="line">E518: Unknown option: relativenumber</div><div class="line">  number</div><div class="line">line  568:</div><div class="line">E185: Cannot find color scheme solarized</div><div class="line">Press ENTER or type command to continue</div></pre></td></tr></table></figure>
-<p>奇怪的是这个错误只出现一次，Press 任意键进入 vim 后，再也没有继续出现该错误</p>
-<p>然并卵</p>
-<p>我之前自己参考过 <a href="https://github.com/yangyangwithgnu/use_vim_as_ide" target="_blank" rel="external">https://github.com/yangyangwithgnu/use_vim_as_ide</a> 里面的 readme 撸过 vim，然后配置 <code>colorscheme solarized</code> 想自己搞个主题，</p>
-<p>但是哪，我按照教程没撸出来，也就暂时放弃了，于是很想看看作者是如何搞的，我是 vim 新手，就看过 陈浩 的教程，自己能活下来  …</p>
-<p>我是直接给root安装的vim，所以，我就去 /root/.vim/ 目录里面看了下，竟然没有 colors 目录，我于是自己新建目录，scp 上传了自己上次下载的 solarized.vim ，结果上面这个不在出现的错误竟然又开始出现了，并且，注意是并且它还带来了新错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error detected while processing /root/k-vim/colors/solarized.vim</div></pre></td></tr></table></figure>
-<p>和一堆自己上次搞 主题时候碰到的一样的错误 ，还有 k-vim 作者更新到了 9.0 ，安装好之后的目录下 vim ~/.vim/vimrc ，Version: 8.1 没有更新，赶紧删除 新建的 colors 目录，让世界恢复平静 </p>
-<p>有此看到，错误二 还是必须要解决，一个个开始 google </p>
-<p>查了资料，发现问题解决并没有那么容易，我得先分解下 k-vim 作者这 30++ 插件</p>
-<p>记一</p>
-<p>准备在 mac 上使用 k-vim 了，</p>
-<p>brew install vim ，brew 里面的版本已经 404 了，需要自己手工修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brew edit vim</div><div class="line"></div><div class="line">修改如下</div><div class="line">  url &apos;http://ftp.debian.org/debian/pool/main/v/vim/vim_7.4.712.orig.tar.gz&apos;</div><div class="line">  sha1 &apos;284940b08956e30ee73e4751543076dc6ade99c7&apos;</div></pre></td></tr></table></figure>
-<p>记二</p>
-<p>mac 自带了 vim，新安装了vim之后，没有必要必须删除老版本，在使用的 shell 里面设置即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div><div class="line"></div><div class="line">alias vim=&apos;/usr/local/Cellar/vim/7.4.712/bin/vim&apos;</div><div class="line"></div><div class="line">source ~/.zshrc</div><div class="line"></div><div class="line">再次 执行 vim 就可以看到 最新版</div></pre></td></tr></table></figure>
-<p>待续 …</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/20/getting-start-with-atlas/" itemprop="url">
-                  Mysql-分库分表-Atlas试用笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-20T15:24:41+08:00" content="2015-07-20">
-              2015-07-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/20/getting-start-with-atlas/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/getting-start-with-atlas/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/20/getting-start-with-atlas/" class="leancloud_visitors" data-flag-title="Mysql-分库分表-Atlas试用笔记">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里使用的是 sharding 版本，    </p>
-<p>操作 MySQL-proxy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql-proxy/bin/mysql-proxyd test stop|start|status</div></pre></td></tr></table></figure>
-<p>遇到错误，原因是配置端口的时候不能加注释，需要去掉 <code># master</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306 # master</div><div class="line"></div><div class="line">2015-07-15 01:45:46: (message) chassis-unix-daemon.c:138: [angel] we try to keep PID=31372 alive</div><div class="line">2015-07-15 01:45:46: (message) mysql-proxy 0.8.2 started - instance: test</div><div class="line">2015-07-15 01:45:46: (message) proxy listening on port 0.0.0.0:1234</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 127.0.0.1:3306</div><div class="line">2015-07-15 01:45:46: (critical) network-address.c:253: IP-address has to be in the form [&lt;ip&gt;][:&lt;port&gt;], is &apos;127.0.0.1:3306  # master&apos;. Failed to parse the port at &apos;  # master&apos;</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 192.168.56.112:3306</div><div class="line">2015-07-15 01:45:46: (critical) chassis-unix-daemon.c:210: [angel] PID=31372 died on signal=11 (it used 5 kBytes max) ... waiting 2sec before restart</div></pre></td></tr></table></figure>
-<p>最终配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[shardrule-0]</div><div class="line">table = test.sharding_test</div><div class="line">type = range</div><div class="line">shard-key = id</div><div class="line">groups = 0:0-999,1:1000-1999</div><div class="line"></div><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3308 # slave</div><div class="line"></div><div class="line">[group-1]</div><div class="line">proxy-backend-addresses=192.168.56.114:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3310</div></pre></td></tr></table></figure>
-<p>atlas 官方的测试语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS `sharding_test`;</div><div class="line">CREATE TABLE `sharding_test` (</div><div class="line">      `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">      `name` char(50) COLLATE utf8_bin NOT NULL,</div><div class="line">      `age` int(11) DEFAULT NULL,</div><div class="line">      `birthday` date DEFAULT NULL,</div><div class="line">      `nickname` char(50) COLLATE utf8_bin DEFAULT NULL,</div><div class="line">      PRIMARY KEY (`id`)</div><div class="line">);</div><div class="line"></div><div class="line">连接 proxy</div><div class="line"></div><div class="line">$ mysql -h127.0.0.1 -P1234 -uroot -proot -c</div><div class="line"></div><div class="line">初始化 dbgroup0 数据值</div><div class="line"></div><div class="line">mysql&gt; use test;</div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1, &apos;test&apos;, 0);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(50, &apos;test&apos;, 0), (999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div><div class="line"></div><div class="line">如果跨 shard , sql 会报错</div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(100, &apos;test&apos;, 0), (1500, &apos;test&apos;, 0);</div><div class="line">ERROR 1105 (HY000): Proxy Warning - write operation is only allow to one dbgroup!</div><div class="line"></div><div class="line">初始化 dbgroup1 数据值</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1000, &apos;test&apos;, 0), (1999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
-<p>参考地址</p>
-<p><a href="https://github.com/Qihoo360/Atlas/wiki/Atlas-Sharding" target="_blank" rel="external">Atlas Sharding</a></p>
-<p><a href="http://www.guokr.com/blog/475765/" target="_blank" rel="external">mysql中间件研究(Atlas，cobar，TDDL)</a></p>
-<p><a href="http://www.gpfeng.com/?p=657" target="_blank" rel="external">谈谈MySQL水平扩展</a></p>
+<p>CentOS 6.6 64位<br>gcc 4.8.1</p>
+<p>为何要手工编译 gcc 4.8.1</p>
+<p>为了编译 ycm YouCompleteMe 一个vim自动补全插件，<br>我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0<br>自己动手 …</p>
+<p>YouCompleteMe –&gt; clang –&gt; gcc</p>
+<p>下载 gcc4.8.1 源码</p>
+<p>国内gcc下载地址 <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> 华科的下载略慢 、、、</p>
+<p>官方 ftp地址  <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> <a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看 CentOS 6.6 自带的 gcc 信息</div><div class="line">[root@dev1 build]# gcc -v</div><div class="line"></div><div class="line">使用内建 specs。</div><div class="line">目标：x86_64-redhat-linux</div><div class="line">配置为：../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</div><div class="line">线程模型：posix</div><div class="line">gcc 版本 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">执行安装命令</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++</div><div class="line"></div><div class="line">检查安装配置，报错如下</div><div class="line">configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.</div><div class="line">Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify</div><div class="line">their locations.  Source code for these libraries can be found at</div><div class="line">their respective hosting sites as well as at</div><div class="line">ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also</div><div class="line">http://gcc.gnu.org/install/prerequisites.html for additional info.  If</div><div class="line">you obtained GMP, MPFR and/or MPC from a vendor distribution package,</div><div class="line">make sure that you have installed both the libraries and the header</div><div class="line">files.  They may be located in separate packages.</div><div class="line"></div><div class="line">开始配置安装环境</div><div class="line"></div><div class="line">1.安装 GMP https://gmplib.org/</div><div class="line"></div><div class="line">wget http://mirrors.ustc.edu.cn/gnu/gmp/gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">cd gmp-6.0.0</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">2.安装 mpfr</div><div class="line"></div><div class="line">wget  http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">mkdir /usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">cd mpfr-3.1.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpfr-3.1.3 --with-gmp=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">3.安装 mpc</div><div class="line"></div><div class="line">wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">tar -zxv -f mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">cd mpc-1.0.3</div><div class="line"></div><div class="line">mkdir /usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpc-1.0.3 --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">4.设置环境变量 $LD_LIBRARY_PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.0.0/lib:/usr/local/mpfr-3.1.3/lib</div><div class="line"></div><div class="line">不然会碰到错误 configure: error: cannot compute suffix of object files: cannot compile</div><div class="line"></div><div class="line">5.需要安装 32 位的 glibc-devel</div><div class="line"></div><div class="line">yum list | grep glibc-devel</div><div class="line"></div><div class="line">yum install glibc-devel.i686</div><div class="line"></div><div class="line">不然会遇到错误 </div><div class="line"></div><div class="line">/usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: 没有那个文件或目录</div><div class="line"> # include &lt;gnu/stubs-32.h&gt; </div><div class="line"></div><div class="line">6.全部安装完之后，再次执行安装，执行 make 会耗时很长，需要耐心等待</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++ --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3 --with-mpc=/usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">执行命令</div><div class="line"></div><div class="line">ln -s /usr/local/gcc-4.8.1/include/c++/4.8.1 /usr/include/c++/4.8.1 # 在 include/c++ 文件夹下添加最新的 c++ 4.8.1 版本(这是个符号链接)；</div><div class="line"></div><div class="line">配置系统环境变量</div><div class="line">vim ~/.bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:$PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div><div class="line">export C_INCLUDE_PATH=/usr/include</div><div class="line">export CPLUS_INCLUDE_PATH=/usr/include/c++/4.8.1:/usr/include/c++/4.8.1/x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">至此，整个 gcc 4.8.1 源码编译安装完成</div></pre></td></tr></table></figure>
+<p>后续</p>
+<p>1.在使用 gcc 编译 clang 时，由于 LD_LIBRARY_PATH 配置错误，会碰到如下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/gcc/libexec/gcc/x86_64-unknown-linux-gnu/4.8.1/cc1plus: error while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>google 答案<a href="http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984" target="_blank" rel="external">http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div></pre></td></tr></table></figure>
+<p>一开始我写成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=/usr/local/lib</div></pre></td></tr></table></figure>
+<p>然后就跪的很彻底</p>
+<p>2.编译 clang 碰到错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/buildllvm/build/Release+Asserts/bin/llvm-tblgen: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15&apos; not found (required by /root/buildllvm/build/Release+Asserts/bin/llvm-tblgen)</div></pre></td></tr></table></figure></p>
+<p>google答案<a href="http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found" target="_blank" rel="external">http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found</a></p>
+<p>解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">替换 libstdc++.so.6 为最新编译的 libstdc++.so.6.0.18</div><div class="line">cp ~/buildgcc/x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.18 /usr/lib64/ # ~/buildgcc 为gcc 安装的路径</div><div class="line"></div><div class="line">rm /usr/lib64/libstdc++.so.6</div><div class="line"></div><div class="line">ln -s libstdc++.so.6.0.18 libstdc++.so.6</div></pre></td></tr></table></figure>
+<p>验证编译成功，和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# gcc --version</div><div class="line">gcc (GCC) 4.8.1</div><div class="line">Copyright © 2013 Free Software Foundation, Inc.</div><div class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</div><div class="line">包括没有适销性和某一专用目的下的适用性担保。</div></pre></td></tr></table></figure>
+<p>参考文档</p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/" target="_blank" rel="external">gcc官方文档</a></p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85gcc-481" target="_blank" rel="external">centos下安装gcc-4.8.1</a></p>
+<p><a href="http://www.cnblogs.com/peterpanzsy/archive/2013/04/10/3006838.html" target="_blank" rel="external">centos 6 升级gcc</a></p>
+<p><a href="http://robbiefeng.iteye.com/blog/2163305" target="_blank" rel="external">centos6.5上升级gcc到gcc4.9.2</a></p>
 <p>-EOF-</p>
 
           
@@ -984,7 +984,7 @@ pip install pep8
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1025,7 +1025,7 @@ pip install pep8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-count">114</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1033,7 +1033,7 @@ pip install pep8
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1042,7 +1042,7 @@ pip install pep8
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
