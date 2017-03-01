@@ -258,6 +258,158 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/20/config-non-password-login-for-ubuntu/" itemprop="url">
+                  ubuntu-配置无密码登录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-20T11:31:14+08:00" content="2015-04-20">
+              2015-04-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/20/config-non-password-login-for-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/20/config-non-password-login-for-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/20/config-non-password-login-for-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu-配置无密码登录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ubuntu-配置无密码登录"><a href="#ubuntu-配置无密码登录" class="headerlink" title="ubuntu-配置无密码登录"></a>ubuntu-配置无密码登录</h1><p>给Ubuntu设置无密码登录，必须做的工作，有时会耗费时间，积累，下次节约时间</p>
+<p>需求</p>
+<p>主机免密码登录 elk1 和 elk2</p>
+<p>第一步，主机添加host解析</p>
+<pre><code>192.168.137.251 elk1
+192.168.137.252 elk2
+</code></pre><p>第二步，elk1生成.ssh目录</p>
+<pre><code>ssh-keygen ,一路回车，执行后，生成本机的.ssh目录
+</code></pre><p>第三步，打开elk1的ssh公钥保存文件，第一次配置需要打开，后续不需要</p>
+<pre><code>sudo vi /etc/ssh/sshd_config
+
+AuthorizedKeysFile      %h/.ssh/authorized_keys 这一行，取消注释
+</code></pre><p>第四步，elk1加入主机的公钥</p>
+<pre><code>cd ~/.ssh
+
+vim authorized_keys 把主机的公钥粘贴进来，ok
+</code></pre><p>第五步，重启 elk1 的 ssh 服务</p>
+<pre><code>/etc/init.d/ssh stop
+/etc/init.d/ssh start
+</code></pre><p>第六步，验证</p>
+<pre><code>主机输入
+
+ssh elk1@elk1 成功无密码登录，ok
+</code></pre><p>以上描述的是第一次添加，如果不是第一次添加，只需要第四步，就ok</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/05/install-start-zookeeper/" itemprop="url">
                   zookeeper入门-安装和启动-关闭服务
                 </a>
@@ -1029,195 +1181,6 @@ Starting MySQL. ERROR! The server quit without updating PID file (/var/lib/mysql
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="url">
-                  LInux实战--Mac配置ssh免密码登录到虚拟主机
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-27T23:04:02+08:00" content="2015-01-27">
-              2015-01-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/27/macosx-config-ssh-login-virtual-machine-without-password/" class="leancloud_visitors" data-flag-title="LInux实战--Mac配置ssh免密码登录到虚拟主机">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="LInux实战–Mac配置ssh免密码登录到虚拟主机"><a href="#LInux实战–Mac配置ssh免密码登录到虚拟主机" class="headerlink" title="LInux实战–Mac配置ssh免密码登录到虚拟主机"></a>LInux实战–Mac配置ssh免密码登录到虚拟主机</h1><h1 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h1><p>mbp系统：Mac os x 10.10.1<br>Linux： centos 6.6（可以参照<a href="/free-mirrors/">这里</a>下载ios镜像）<br>虚拟机软件：virtualbox4.3.20，<a href="/mac-use-virtualbox/">使用帮助</a></p>
-<p>写在最前</p>
-<p>2014年3月份新购了Mac Book Pro 15，然后喜欢在上面使用VirtualBox安装虚拟机鼓捣东西,<br>最开始是鼓捣hadoop集群，由于13年花时间仔细阅读了Linux私房菜基础版，所以被轻轻虐待，<br>到最后能轻轻松给集群删除节点，配置新节点，当然，因为没有太多运维经验，所以是手工rsync+vim<br>虽然古老且笨拙，但是孰能生巧，中间好几个月搞其他东西，而且那时候也没有开始写博客，所以<br>东西都压在印象笔记里面，现在有新想法，搞gitlab + Java + Python + jenkins + test，而且<br>想玩自动化的，所以重新搞虚拟机，而且配置要求比较高点的。</p>
-<p>这次一步一步，把所做的，都记录下来，下面回到正文：</p>
-<h1 id="主机的配置"><a href="#主机的配置" class="headerlink" title="主机的配置"></a>主机的配置</h1><p>首先在Mac上使用virtualbox安装虚拟机，详细可以参照<a href="/mac-use-virtualbox/">博客文章</a></p>
-<pre><code>网络配置为：
-
-主机跟虚拟机之间建立独立的局域网，    
-主机ip 192.168.56.1     
-虚拟机ip192.168.56.110,     
-虚拟机hostname=centos65，    
-主机和虚拟机都添加host域名解析
-
-sudo vim /etc/hosts
-
-新增
-192.168.56.110 centos65
-
-主机和虚拟机执行
-
-ping centos65 都没有错误
-
-主机生成ssh公钥和私钥
-
-cd ~ &amp;&amp; ssh-keygen 
-然后一路回车
-</code></pre><h1 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h1><p>首先在虚拟机上生成ssh公钥和私钥</p>
-<pre><code>cd /root &amp;&amp; ssh-keygen
-</code></pre><p>编辑虚拟机ssh配置，开启ssh，此步骤不必须</p>
-<pre><code>vim /etc/ssh/sshd_config
- 47 RSAAuthentication yes
- 48 PubkeyAuthentication yes
- 49 AuthorizedKeysFile      .ssh/authorized_keys
-</code></pre><p> 这三行取消注释<br> 编辑后，退出保存</p>
-<p> 重启ssh服务</p>
-<pre><code>service sshd restart
-</code></pre><p>验证ssh服务</p>
-<pre><code>netstat -tlnp | grep ssh
-</code></pre><p>新增ssh认证文件，保存其他主机的公钥</p>
-<pre><code>vim /root/.ssh/authorized_keys
-</code></pre><p>这时候，需要把mac上面的</p>
-<pre><code>cat ~/.ssh/id_rsa.pub 
-</code></pre><p>内容全部copy进来，不能有空格，保存退出</p>
-<p>验证配置正确性</p>
-<p>主机输入</p>
-<pre><code>ssh root@centos65
-</code></pre><p>可能遇到问题</p>
-<p>1.主机上~/.ssh/目录权限要是700<br>2.主机上~/.ssh/id_rsa权限要是600，并且属于当前用户    </p>
-<p>例如我的主机favoorr-mac,当前用户名User,</p>
-<pre><code>执行 ls -ld ~/.ssh/ ; ll ~/.ssh/ ，结果如下
-
-favoorr-mac:~ User$ ls -ld ~/.ssh/ ; ll ~/.ssh/
-drwx------  5 User  staff  170  5 14 23:44 /Users/User/.ssh/
-total 24
--rw-------  1 User  staff  1679  5 14 23:44 id_rsa
--rw-r--r--  1 User  staff   398  5 14 23:44 id_rsa.pub
-</code></pre><p>3.虚拟机上新建目录~/.ssh权限为644，文件~/.ssh/authorized_keys权限为644<br>4.可以发送主机上的id_rsa.pub到虚拟机上，然后cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>5.如果手工复制 id_rsa.pub 里面的内容，注意选中之后不要修改，直接粘贴，修改就可能报错了，权限那些其实不容易出问题，默认即可，这里比较容易出错</p>
-<pre><code>ssh -v root@dev1  调试 ssh 信息，比如本地多个私钥，
-ssh -o GSSAPIAuthentication=no xxx@dev1
-</code></pre><p>6.几个月后，一次爬坑经历发现，/etc/ssh/sshd_config里面的内容，是可以不注释的</p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1263,7 +1226,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1271,7 +1234,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1280,7 +1243,7 @@ ssh -o GSSAPIAuthentication=no xxx@dev1
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

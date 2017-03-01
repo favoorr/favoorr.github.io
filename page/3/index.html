@@ -258,6 +258,145 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/09/zookeeper-server-ops/" itemprop="url">
+                  使用短命令和 Zookeeper 服务端通信
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T15:25:27+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/09/zookeeper-server-ops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/zookeeper-server-ops/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/09/zookeeper-server-ops/" class="leancloud_visitors" data-flag-title="使用短命令和 Zookeeper 服务端通信">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ZooKeeper 支持某些特定的四字命令字母与其的交互。<br>它们大多是查询命令，用来获取 ZooKeeper 服务的当前状态及相关信息。<br>用户在客户端可以通过 telnet 或 nc 向 ZooKeeper 提交相应的命令    </p>
+<h1 id="来查看哪个节点被选择作为follower或者leader"><a href="#来查看哪个节点被选择作为follower或者leader" class="headerlink" title="来查看哪个节点被选择作为follower或者leader"></a>来查看哪个节点被选择作为follower或者leader</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo stat | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="测试是否启动了该Server，若回复-imok-表示已经启动"><a href="#测试是否启动了该Server，若回复-imok-表示已经启动" class="headerlink" title="测试是否启动了该Server，若回复 imok 表示已经启动"></a>测试是否启动了该Server，若回复 imok 表示已经启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo ruok | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的会话和临时节点"><a href="#列出未经处理的会话和临时节点" class="headerlink" title="列出未经处理的会话和临时节点"></a>列出未经处理的会话和临时节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo dump | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="关掉server"><a href="#关掉server" class="headerlink" title="关掉server"></a>关掉server</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo kill | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出相关服务配置的详细信息"><a href="#输出相关服务配置的详细信息" class="headerlink" title="输出相关服务配置的详细信息"></a>输出相关服务配置的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo conf | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出所有连接到服务器的客户端的完全的连接-会话的详细信息"><a href="#列出所有连接到服务器的客户端的完全的连接-会话的详细信息" class="headerlink" title="列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息"></a>列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo cons | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="输出关于服务环境的详细信息-区别于-conf-命令"><a href="#输出关于服务环境的详细信息-区别于-conf-命令" class="headerlink" title="输出关于服务环境的详细信息(区别于 conf 命令)"></a>输出关于服务环境的详细信息(区别于 conf 命令)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo envi | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出未经处理的请求"><a href="#列出未经处理的请求" class="headerlink" title="列出未经处理的请求"></a>列出未经处理的请求</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo reqs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="列出服务器-watch-的详细信息"><a href="#列出服务器-watch-的详细信息" class="headerlink" title="列出服务器 watch 的详细信息"></a>列出服务器 watch 的详细信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchs | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表"><a href="#通过-session-列出服务器-watch-的详细信息，它的输出是一个与-watch-相关的会话的列表" class="headerlink" title="通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表"></a>通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchc | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+<h1 id="通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径"><a href="#通过路径列出服务器-watch-的详细信息。它输出一个与-session-相关的路径" class="headerlink" title="通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径"></a>通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo wchp | nc 127.0.0.1 2181</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/09/kafka-queue-config/" itemprop="url">
                   配置 Kafka Topic Queue 模式
                 </a>
@@ -794,137 +933,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/09/install-config-kafka/" itemprop="url">
-                  配置安装运行 Kafka
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T14:47:41+08:00" content="2017-02-09">
-              2017-02-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">distributed</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/09/install-config-kafka/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/install-config-kafka/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/09/install-config-kafka/" class="leancloud_visitors" data-flag-title="配置安装运行 Kafka">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Kafka 集群安装时，也是现在一台配置好，然后发送到其他机器，然后在修改个性化配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">备份配置文件</div><div class="line"></div><div class="line">cp /data/kafka_2.11-0.9.0.1/config/server.properties /data/kafka_2.11-0.9.0.1/config/server.properties.bak</div><div class="line"></div><div class="line">------第一台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line"></div><div class="line">设置 broker id</div><div class="line">broker.id=0</div><div class="line"></div><div class="line">访问方式</div><div class="line">listeners=PLAINTEXT://192.168.16.22:9092</div><div class="line"></div><div class="line">设置 host.name</div><div class="line">host.name=192.168.16.22</div><div class="line"></div><div class="line">设置持久化文件存放地点</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line"></div><div class="line">设置 Zookeeper 集群地址</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line"></div><div class="line">启用删除 Topic</div><div class="line">delete.topic.enable=true</div><div class="line"></div><div class="line">禁用自动创建 Topic，当 Topic 不存在时，必须手工创建</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第二台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=1</div><div class="line">listeners=PLAINTEXT://192.168.16.23:9092</div><div class="line">host.name=192.168.16.23</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------第三台配置</div><div class="line">vim /data/kafka_2.11-0.9.0.1/config/server.properties</div><div class="line">broker.id=2</div><div class="line">listeners=PLAINTEXT://192.168.16.31:9092</div><div class="line">host.name=192.168.16.31</div><div class="line">log.dirs=/data/kafka/kafka-logs</div><div class="line">zookeeper.connect=192.168.16.22:2181,192.168.16.23:2181,192.168.16.31:2181</div><div class="line">delete.topic.enable=true</div><div class="line">auto.create.topics.enable=false</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -970,7 +978,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -978,7 +986,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -987,7 +995,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

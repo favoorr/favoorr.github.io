@@ -258,6 +258,179 @@
             
               
                 
+                <a class="post-title-link" href="/2015/01/23/use-plantuml-install-graphviz/" itemprop="url">
+                  安装Graphviz记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-23T15:55:55+08:00" content="2015-01-23">
+              2015-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/plantuml/" itemprop="url" rel="index">
+                    <span itemprop="name">plantuml</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/23/use-plantuml-install-graphviz/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/use-plantuml-install-graphviz/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/01/23/use-plantuml-install-graphviz/" class="leancloud_visitors" data-flag-title="安装Graphviz记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用plantUML，安装Graphviz小记"><a href="#使用plantUML，安装Graphviz小记" class="headerlink" title="使用plantUML，安装Graphviz小记"></a>使用plantUML，安装Graphviz小记</h1><p>首先简单介绍</p>
+<p><a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a> 可以直接用文本画各种常用uml图，某些图的渲染依赖于graphviz<br><a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a> 一个可以用文字画图的工具，非常强大好用</p>
+<p>2014年前先后看了在markdown里面直接用文字写流程图和用js插件解析，用文字编写流程图，<br>在这之前都是用visio画图，然后再复制过来，有了之后，感觉节省了不少时间，每次打开visio修改<br>打开很慢</p>
+<p>后来看了 @江南白衣 推荐的<a href="http://www.plantuml.com/" target="_blank" rel="external">plantuml</a>感觉彻底爱上了，然后一边也在推动公司引进gitlab，显示做了<br>git培训，然后再来个gitlab使用培训吧</p>
+<p>下面进入正文，想使用plantUML，需要安装<a href="http://graphviz.org/" target="_blank" rel="external">graphviz</a>，来使用dot命令支持plantUML的所有特性，<br>详细见plantuml官网，这里记录mac ox x10.10 安装时候遇到的问题</p>
+<p>简单看了下官网，使用brew是可以直接安装的，但是过程中有些小问题，libpng的链接地址改变了，导致下载报错</p>
+<pre><code>brew install graphviz
+
+中间遇到错误，看了下libpng这个包路径已经改变，所以
+
+brew edit libpng
+
+将地址
+
+https://downloads.sf.net/project/libpng/libpng16/1.6.13/libpng-1.6.13.tar.xz
+
+修改地址，增加 older-releases ,应该是做过目录整理
+
+https://downloads.sf.net/project/libpng/libpng16/older-releases/1.6.13/libpng-1.6.13.tar.xz
+</code></pre><p>然后继续</p>
+<p>安装完成后</p>
+<p>按照<a href="http://www.plantuml.com/graphvizdot.html" target="_blank" rel="external">官方说明</a>进行测试</p>
+<pre><code>java -jar plantuml.jar -testdot
+
+The environment variable GRAPHVIZ_DOT has not been set
+Dot executable is /usr/local/bin/dot
+Dot version: dot - graphviz version 2.38.0 (20140413.2041)
+Installation seems OK. File generation OK
+
+vim ~/.zshrc
+
+在末尾加入
+
+export GRAPHVIZ_DOT=/usr/local/bin/dot
+source ~/.zshrc
+
+再次运行
+
+The environment variable GRAPHVIZ_DOT has been set to /usr/local/bin/dot
+Dot executable is /usr/local/bin/dot
+Dot version: dot - graphviz version 2.38.0 (20140413.2041)
+Installation seems OK. File generation OK
+</code></pre><p>目前的使用方式</p>
+<p>Eclipse里面集成了plantUML插件，然后编辑<br>编辑完成后，粘贴到gitlab里面</p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/01/20/after-reading-and-about-learning/" itemprop="url">
                   享受读书-写下心中所想
                 </a>
@@ -906,260 +1079,6 @@ git fetch --all; git branch -vv   拉取最新，并且显示本地分支与远�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/29/git-learn-summary/" itemprop="url">
-                  git 入门学习笔记-备忘
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-29T17:46:42+08:00" content="2014-12-29">
-              2014-12-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/29/git-learn-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/29/git-learn-summary/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/12/29/git-learn-summary/" class="leancloud_visitors" data-flag-title="git 入门学习笔记-备忘">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习参照连接：</p>
-<p>廖雪峰老师的git教程</p>
-<p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
-<h1 id="下面是学习笔记"><a href="#下面是学习笔记" class="headerlink" title="下面是学习笔记"></a>下面是学习笔记</h1><p>再次推荐程序员使用mac笔记本，不多说</p>
-<h2 id="单机功能"><a href="#单机功能" class="headerlink" title="单机功能"></a>单机功能</h2><pre><code>git init 初始化本地仓库
-git add filename ... 添加到暂存区 
-
-git commit -m &quot;a tip&quot; 添加到本地仓库 没有add的，不会 commit
-git commit readme.txt -m &quot;test1&quot;   会提交所有的改动，即使没有add，
-
-git status 查看本地工作区状态
-git log 查看本地提交日志
-git reflog 查看本地所有操作记录
-git reset --hard xxxxx 从本地仓库恢复到某个版本，改变head指针
-git reset --hard HEAD^  恢复上一个稳定版本
-
-log的几种用法 截取的zsh下的alias  ，alias | grep &apos;git log&apos;
-glg=&apos;git log --stat --max-count=10&apos;
-glgg=&apos;git log --graph --max-count=10&apos;
-glgga=&apos;git log --graph --decorate --all&apos;
-glo=&apos;git log --oneline --decorate --color&apos;
-glog=&apos;git log --oneline --decorate --color --graph&apos;
-
-git log --pretty=oneline --abbrev-commit   简短显示提交内容
-git log -p -2 展示每次提交的差异,显示的是行层面的对比
-git log -U1 --word-diff  显示的是单词层面的对比
-git log --stat  显示增改行数统计
-git log --pretty=oneline 一行显示  glo ,会显示最后一次提交的
-
-gitk 一个查看git发布的工具，执行命令后，直接显示
-</code></pre><p>概念部分</p>
-<pre><code>工作区 新建文件，就在工作区
-暂存区 通过add 就添加到暂存区
-本地仓库 通过commit，就添加到本地仓库，进行版本管理
-</code></pre><p>git 管理的是提交，而不是文件，下面是示例</p>
-<p>git对同一个文件修改两次，但是只有一次会被提交到仓库</p>
-<p>第一次修改 – add – 第二次修改 – commit – 只有第一次add的被commit到本地库</p>
-<p>上面操作过后，第二次对文件的修改并没有被提交</p>
-<p>撤销修改</p>
-<pre><code>git checkout -- readme.txt  恢复一次修改
-</code></pre><p>一种可能是还没有add到暂存区，那么直接可以恢复到修改之前</p>
-<p>一种是add到暂存区，还没有到本地仓库,然后又修改了，这样子会回到上一次add的状态，没有add的会回退</p>
-<p>会回到上次 add 之前的状态</p>
-<pre><code>git reset HEAD  file 回到 add 前的状态，从暂存区拉倒工作区
-
-git checkout -- file 从工作区拉倒修改前
-</code></pre><p>删除文件</p>
-<pre><code>git rm file  删除文件，否则不能提交
-</code></pre><p>分支</p>
-<pre><code>分支使用：创建分支--添加功能--分支提交--切换主分支--主分支合并--删除子分支
-git checkout -b dev  创建并切换
-git branch dev 创建dev分支
-git checkout dev  切换dev分支
-vim readme.txt
-git add readme.txt
-git commit -m &quot;branch test&quot;
-git checkout master
-git merge dev
-git branch -d dev
-</code></pre><p>当出现同时编辑一行的时候，会出现冲突，冲突后需要手工合并，在提交</p>
-<p>合并分支中，</p>
-<pre><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev
-</code></pre><p>通过参数，禁用fast-forward,产生合并记录</p>
-<pre><code>git log --graph --pretty=oneline --abbrev-commit  查看分支合并图
-</code></pre><p>分支使用场景：暂停手头工作–拉取分支–修改bug–提交–合并</p>
-<p>工作进行到一半，需要修改bug，</p>
-<pre><code>git stash 
-
-fix bug
-
-git merge
-
-git stash pop
-
-git stash list
-
-git stash apply 
-
-对于没有合并的分支
-
-git branch -D branchName 强行删除
-</code></pre><p>标签tag</p>
-<pre><code>git tag v1.0  为当前提交打tag 1.0
-git tag 列出当前有的 tag
-git show v0.9 显示某个标签信息
-git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164  从以往的提交建立带说明的标签
-git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 私钥签名的标签
-git tag -d v0.1 删除本地标签
-git push origin v1.0  将本地标签推送远程
-git push origin --tags  一次性将本地未推送的标签全部推送
-如果标签已经推送远程仓库，删除需要两步
-git tag -d v0.9  删除本地
-git push origin :refs/tags/v0.9 删除远程标签
-</code></pre><h2 id="github作为远程仓库"><a href="#github作为远程仓库" class="headerlink" title="github作为远程仓库"></a>github作为远程仓库</h2><pre><code>加入ssh key方法
-https://help.github.com/articles/generating-ssh-keys/ 
-
-ssh -T git@github.com
-Hi favoorr! You&apos;ve successfully authenticated, but GitHub does not provide shell access.
-
-git clone git@github.com:michaelliao/gitskills.git   克隆远程项目到本地
-git clone user@server:/path.git 协议规范
-git clone https://github.com/favoorr/gitdemo.git  使用https协议
-
-git remote add origin https://github.com/favoorr/gitdemo.git  关联远程仓库
-
-git push -u origin master 第一次关联后，推送本地仓库到远程仓库，需要输入账号和密码
-
-git push origin master 如果已经和远程仓库关联，将本地的内容推送到远程的master分支
-
-git remote 显示远程仓库信息 
-git remote -v
-
-git pull 拉取最新修改 ，可能会失败，要先让本地分支和远程分支关联
-
-git checkout -b dev origin/dev  创建远程分支到本地
-
-git push origin dev  将本地仓库内容推送到远程dev分支，如果远程分支版本高于自己，会失败，要先拉取，合并，在push
-</code></pre><h2 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h2><p>设置颜色</p>
-<pre><code>git config --global color.ui true
-</code></pre><p>忽略特殊文件，如果某些文件不想提交，可以写在这个文件里面</p>
-<pre><code>.gitignore
-</code></pre><p>手工别名</p>
-<pre><code>git config --global alias.st status
-</code></pre><p>配置文件</p>
-<pre><code>.git/config
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>以上为学习过程中的笔记，整体来说，学完这个简单的教程，会有一个整体的理解，<br>但是要在在工作中使用git，还需要多问Google</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1205,7 +1124,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1213,7 +1132,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1222,7 +1141,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

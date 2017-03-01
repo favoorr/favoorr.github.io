@@ -258,6 +258,170 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/27/git-more-sshkeys-more-host/" itemprop="url">
+                  git配置多个不同邮箱
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-27T17:26:50+08:00" content="2015-05-27">
+              2015-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/27/git-more-sshkeys-more-host/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/git-more-sshkeys-more-host/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/27/git-more-sshkeys-more-host/" class="leancloud_visitors" data-flag-title="git配置多个不同邮箱">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git-账号配置多个不同邮箱"><a href="#git-账号配置多个不同邮箱" class="headerlink" title="git 账号配置多个不同邮箱"></a>git 账号配置多个不同邮箱</h1><p>之前使用git仅限于提交到 github ，其他平台如 gitlab bitbucket 目前没有使用，<br>现在公司私服 gitlab 需要添加独立的邮箱和用户名，要不然每次提交都是自己<br>Gmail的地址</p>
+<p>1.生成公司 gitlab 私服的 ssh key</p>
+<pre><code>ssh-keygen -t rsa -f ~/.ssh/id_rsa_yourdomain_gitlab -C &quot;qingyun@xxx.com&quot;
+</code></pre><p>2.ssh 服务默认制度去 id_rsa 默认的，现在需要添加让它认识 id_rsa_yourdomain_gitlab</p>
+<pre><code>ssh-add ~/.ssh/id_rsa_yourdomain_gitlab
+</code></pre><p>3.新建本地认证文件 ~/.ssh/config</p>
+<pre><code>vim ~/.ssh/config
+
+Host github.com
+    HostName github.com
+    User favoorr
+    IdentityFile ~/.ssh/id_rsa
+
+Host dev1
+    HostName dev1
+    User youname
+    IdentityFile ~/.ssh/id_rsa_yourdomain_gitlab
+</code></pre><p>4.取消全局配置</p>
+<pre><code>git config --global --unset user.name
+git config --global --unset user.email
+</code></pre><p>5.项目单独配置 name 和 email</p>
+<pre><code>git config user.name &quot;youname&quot;
+git config user.email &quot;qingyun@yourdomain.com&quot;
+</code></pre><p>如果不设置user.name 和 user.email 就不能使用，必须指定用户名和邮箱</p>
+<p>6.新问题，ssh-add 之后，每次重启mac，重现执行<code>ssh-add -l</code>都是 提示 <code>the agent has no identities</code> </p>
+<p>Google查资料后，找到这篇文章 <a href="http://segmentfault.com/q/1010000000835302" target="_blank" rel="external">是否必须每次添加ssh-add</a></p>
+<p>需要使用</p>
+<pre><code>ssh-add -K  ~/.ssh/id_rsa_yourdomain_gitlab 
+</code></pre><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://gist.github.com/suziewong/4378434" target="_blank" rel="external">Git的多账号如何处理？ 1.同一台电脑多个git（不同网站的）账号 2.同一台电脑多个git（同一个网站的比如github的）多个账号</a></p>
+<p><a href="http://blog.ixtr.me/2013/09/%E4%BD%BF%E7%94%A8SSHCONFIG%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAssh%E5%B8%90%E5%8F%B7/" target="_blank" rel="external">使用SSH CONFIG 管理多个ssh帐号</a></p>
+<p><a href="http://f10.moe/2014/10/16/git-ssh-%E5%A4%9A%E4%B8%AA%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">git ssh 多个账号管理配置</a></p>
+<p><a href="http://www.cnblogs.com/dubaokun/p/3550870.html" target="_blank" rel="external">ssh-key 与 git账户配置以及多账户配置</a></p>
+<p><a href="http://www.liaohuqiu.net/cn/posts/using-diffrent-user-config-for-different-repository/" target="_blank" rel="external">git: 提交前强制检查各个项目用户名邮箱设置</a></p>
+<p><a href="http://stormzhang.com/other/2013/10/16/github-multiply-ssh-key/" target="_blank" rel="external">多个github帐号的SSH key切换</a></p>
+<p><a href="http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/" target="_blank" rel="external">一个客户端设置多个github账号</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/27/gitlab-admin-best-practise/" itemprop="url">
                   gitlab admin 使用实践
                 </a>
@@ -872,135 +1036,6 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/18/install-zabbix-agentd/" itemprop="url">
-                  zabbix agentd 安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-18T17:49:21+08:00" content="2015-05-18">
-              2015-05-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/zabbix/" itemprop="url" rel="index">
-                    <span itemprop="name">zabbix</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/18/install-zabbix-agentd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-agentd/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/18/install-zabbix-agentd/" class="leancloud_visitors" data-flag-title="zabbix agentd 安装">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="agentd-install"><a href="#agentd-install" class="headerlink" title="agentd install"></a>agentd install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">groupadd zabbix -g 201</div><div class="line"></div><div class="line">useradd -g zabbix -u 201 -m zabbix</div><div class="line"></div><div class="line">tar -zxv -f zabbix-2.4.5.tar.gz</div><div class="line"></div><div class="line">cd zabbix-2.4.5</div><div class="line"></div><div class="line">yum -y install gcc gcc-c++ autoconf  mod_ssl mod_perl  net-snmp-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-agent</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; /etc/zabbix/zabbix_agentd.conf</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=192.168.56.110</div><div class="line">ServerActive=192.168.56.110</div><div class="line">Hostname=dev1</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1046,7 +1081,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1054,7 +1089,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1063,7 +1098,7 @@ external_url &apos;http://192.168.143.129:9002&apos;  监听 9002 端口，如�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

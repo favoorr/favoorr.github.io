@@ -258,6 +258,164 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="url">
+                  centos6.6源码安装gcc4.8.1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-22T13:58:16+08:00" content="2015-07-22">
+              2015-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gcc/" itemprop="url" rel="index">
+                    <span itemprop="name">gcc</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/22/centos6.6-build-gcc5.2-from-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/centos6.6-build-gcc5.2-from-source/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/07/22/centos6.6-build-gcc5.2-from-source/" class="leancloud_visitors" data-flag-title="centos6.6源码安装gcc4.8.1">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>环境 </p>
+<p>CentOS 6.6 64位<br>gcc 4.8.1</p>
+<p>为何要手工编译 gcc 4.8.1</p>
+<p>为了编译 ycm YouCompleteMe 一个vim自动补全插件，<br>我需要安装 clang，这里我选择最新版，我需要 gcc 4.7以上版本，CentOS 6.6上预装的 gcc 版本4.4.7，不能编译 clang 3.8.0<br>自己动手 …</p>
+<p>YouCompleteMe –&gt; clang –&gt; gcc</p>
+<p>下载 gcc4.8.1 源码</p>
+<p>国内gcc下载地址 <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> 华科的下载略慢 、、、</p>
+<p>官方 ftp地址  <a href="http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/" target="_blank" rel="external">http://mirror.hust.edu.cn/gnu/gcc/gcc-4.8.1/</a> <a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">http://ftp.gnu.org/gnu/gcc</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">查看 CentOS 6.6 自带的 gcc 信息</div><div class="line">[root@dev1 build]# gcc -v</div><div class="line"></div><div class="line">使用内建 specs。</div><div class="line">目标：x86_64-redhat-linux</div><div class="line">配置为：../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</div><div class="line">线程模型：posix</div><div class="line">gcc 版本 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">执行安装命令</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++</div><div class="line"></div><div class="line">检查安装配置，报错如下</div><div class="line">configure: error: Building GCC requires GMP 4.2+, MPFR 2.4.0+ and MPC 0.8.0+.</div><div class="line">Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify</div><div class="line">their locations.  Source code for these libraries can be found at</div><div class="line">their respective hosting sites as well as at</div><div class="line">ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also</div><div class="line">http://gcc.gnu.org/install/prerequisites.html for additional info.  If</div><div class="line">you obtained GMP, MPFR and/or MPC from a vendor distribution package,</div><div class="line">make sure that you have installed both the libraries and the header</div><div class="line">files.  They may be located in separate packages.</div><div class="line"></div><div class="line">开始配置安装环境</div><div class="line"></div><div class="line">1.安装 GMP https://gmplib.org/</div><div class="line"></div><div class="line">wget http://mirrors.ustc.edu.cn/gnu/gmp/gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f gmp-6.0.0a.tar.bz2</div><div class="line"></div><div class="line">cd gmp-6.0.0</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">2.安装 mpfr</div><div class="line"></div><div class="line">wget  http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">tar -jxv -f mpfr-3.1.3.tar.bz2</div><div class="line"></div><div class="line">mkdir /usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">cd mpfr-3.1.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpfr-3.1.3 --with-gmp=/usr/local/gmp-6.0.0/</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">3.安装 mpc</div><div class="line"></div><div class="line">wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">tar -zxv -f mpc-1.0.3.tar.gz</div><div class="line"></div><div class="line">cd mpc-1.0.3</div><div class="line"></div><div class="line">mkdir /usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">./configure --prefix=/usr/local/mpc-1.0.3 --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make check</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">4.设置环境变量 $LD_LIBRARY_PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.0.0/lib:/usr/local/mpfr-3.1.3/lib</div><div class="line"></div><div class="line">不然会碰到错误 configure: error: cannot compute suffix of object files: cannot compile</div><div class="line"></div><div class="line">5.需要安装 32 位的 glibc-devel</div><div class="line"></div><div class="line">yum list | grep glibc-devel</div><div class="line"></div><div class="line">yum install glibc-devel.i686</div><div class="line"></div><div class="line">不然会遇到错误 </div><div class="line"></div><div class="line">/usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: 没有那个文件或目录</div><div class="line"> # include &lt;gnu/stubs-32.h&gt; </div><div class="line"></div><div class="line">6.全部安装完之后，再次执行安装，执行 make 会耗时很长，需要耐心等待</div><div class="line"></div><div class="line">../gcc-4.8.1/configure   --prefix=/usr/local/gcc-4.8.1 --exec-prefix=/usr/local/gcc --enable-languages=c,c++ --with-gmp=/usr/local/gmp-6.0.0/ --with-mpfr=/usr/local/mpfr-3.1.3 --with-mpc=/usr/local/mpc-1.0.3</div><div class="line"></div><div class="line">make</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">执行命令</div><div class="line"></div><div class="line">ln -s /usr/local/gcc-4.8.1/include/c++/4.8.1 /usr/include/c++/4.8.1 # 在 include/c++ 文件夹下添加最新的 c++ 4.8.1 版本(这是个符号链接)；</div><div class="line"></div><div class="line">配置系统环境变量</div><div class="line">vim ~/.bash_profile</div><div class="line"></div><div class="line">export PATH=/usr/local/gcc/bin:$PATH</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div><div class="line">export C_INCLUDE_PATH=/usr/include</div><div class="line">export CPLUS_INCLUDE_PATH=/usr/include/c++/4.8.1:/usr/include/c++/4.8.1/x86_64-unknown-linux-gnu</div><div class="line"></div><div class="line">source ~/.bash_profile</div><div class="line"></div><div class="line">至此，整个 gcc 4.8.1 源码编译安装完成</div></pre></td></tr></table></figure>
+<p>后续</p>
+<p>1.在使用 gcc 编译 clang 时，由于 LD_LIBRARY_PATH 配置错误，会碰到如下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/gcc/libexec/gcc/x86_64-unknown-linux-gnu/4.8.1/cc1plus: error while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>google 答案<a href="http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984" target="_blank" rel="external">http://stackoverflow.com/questions/17425982/cannot-open-libmpc-so-3-while-making-gcc4-8-1/17498984#comment51087412_17498984</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</div></pre></td></tr></table></figure>
+<p>一开始我写成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export LD_LIBRARY_PATH=/usr/local/lib</div></pre></td></tr></table></figure>
+<p>然后就跪的很彻底</p>
+<p>2.编译 clang 碰到错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/buildllvm/build/Release+Asserts/bin/llvm-tblgen: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15&apos; not found (required by /root/buildllvm/build/Release+Asserts/bin/llvm-tblgen)</div></pre></td></tr></table></figure></p>
+<p>google答案<a href="http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found" target="_blank" rel="external">http://stackoverflow.com/questions/5216399/usr-lib-libstdc-so-6-version-glibcxx-3-4-15-not-found</a></p>
+<p>解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">替换 libstdc++.so.6 为最新编译的 libstdc++.so.6.0.18</div><div class="line">cp ~/buildgcc/x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.18 /usr/lib64/ # ~/buildgcc 为gcc 安装的路径</div><div class="line"></div><div class="line">rm /usr/lib64/libstdc++.so.6</div><div class="line"></div><div class="line">ln -s libstdc++.so.6.0.18 libstdc++.so.6</div></pre></td></tr></table></figure>
+<p>验证编译成功，和环境变量设置正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@dev1 ~]# gcc --version</div><div class="line">gcc (GCC) 4.8.1</div><div class="line">Copyright © 2013 Free Software Foundation, Inc.</div><div class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</div><div class="line">包括没有适销性和某一专用目的下的适用性担保。</div></pre></td></tr></table></figure>
+<p>参考文档</p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/" target="_blank" rel="external">gcc官方文档</a></p>
+<p><a href="http://ilovers.sinaapp.com/article/centos%E4%B8%8B%E5%AE%89%E8%A3%85gcc-481" target="_blank" rel="external">centos下安装gcc-4.8.1</a></p>
+<p><a href="http://www.cnblogs.com/peterpanzsy/archive/2013/04/10/3006838.html" target="_blank" rel="external">centos 6 升级gcc</a></p>
+<p><a href="http://robbiefeng.iteye.com/blog/2163305" target="_blank" rel="external">centos6.5上升级gcc到gcc4.9.2</a></p>
+<p>-EOF-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/22/crontab-ntp-synchronized-date/" itemprop="url">
                   cron表达式同步Linux服务器时间
                 </a>
@@ -838,148 +996,6 @@ pip install pep8
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/20/getting-start-with-atlas/" itemprop="url">
-                  Mysql-分库分表-Atlas试用笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-20T15:24:41+08:00" content="2015-07-20">
-              2015-07-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/20/getting-start-with-atlas/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/getting-start-with-atlas/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/07/20/getting-start-with-atlas/" class="leancloud_visitors" data-flag-title="Mysql-分库分表-Atlas试用笔记">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里使用的是 sharding 版本，    </p>
-<p>操作 MySQL-proxy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql-proxy/bin/mysql-proxyd test stop|start|status</div></pre></td></tr></table></figure>
-<p>遇到错误，原因是配置端口的时候不能加注释，需要去掉 <code># master</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306 # master</div><div class="line"></div><div class="line">2015-07-15 01:45:46: (message) chassis-unix-daemon.c:138: [angel] we try to keep PID=31372 alive</div><div class="line">2015-07-15 01:45:46: (message) mysql-proxy 0.8.2 started - instance: test</div><div class="line">2015-07-15 01:45:46: (message) proxy listening on port 0.0.0.0:1234</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 127.0.0.1:3306</div><div class="line">2015-07-15 01:45:46: (critical) network-address.c:253: IP-address has to be in the form [&lt;ip&gt;][:&lt;port&gt;], is &apos;127.0.0.1:3306  # master&apos;. Failed to parse the port at &apos;  # master&apos;</div><div class="line">2015-07-15 01:45:46: (message) added read/write backend: 192.168.56.112:3306</div><div class="line">2015-07-15 01:45:46: (critical) chassis-unix-daemon.c:210: [angel] PID=31372 died on signal=11 (it used 5 kBytes max) ... waiting 2sec before restart</div></pre></td></tr></table></figure>
-<p>最终配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[shardrule-0]</div><div class="line">table = test.sharding_test</div><div class="line">type = range</div><div class="line">shard-key = id</div><div class="line">groups = 0:0-999,1:1000-1999</div><div class="line"></div><div class="line">[group-0]</div><div class="line">proxy-backend-addresses=192.168.56.112:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3308 # slave</div><div class="line"></div><div class="line">[group-1]</div><div class="line">proxy-backend-addresses=192.168.56.114:3306</div><div class="line">#proxy-read-only-backend-addresses=127.0.0.1:3310</div></pre></td></tr></table></figure>
-<p>atlas 官方的测试语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS `sharding_test`;</div><div class="line">CREATE TABLE `sharding_test` (</div><div class="line">      `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">      `name` char(50) COLLATE utf8_bin NOT NULL,</div><div class="line">      `age` int(11) DEFAULT NULL,</div><div class="line">      `birthday` date DEFAULT NULL,</div><div class="line">      `nickname` char(50) COLLATE utf8_bin DEFAULT NULL,</div><div class="line">      PRIMARY KEY (`id`)</div><div class="line">);</div><div class="line"></div><div class="line">连接 proxy</div><div class="line"></div><div class="line">$ mysql -h127.0.0.1 -P1234 -uroot -proot -c</div><div class="line"></div><div class="line">初始化 dbgroup0 数据值</div><div class="line"></div><div class="line">mysql&gt; use test;</div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1, &apos;test&apos;, 0);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(50, &apos;test&apos;, 0), (999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div><div class="line"></div><div class="line">如果跨 shard , sql 会报错</div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(100, &apos;test&apos;, 0), (1500, &apos;test&apos;, 0);</div><div class="line">ERROR 1105 (HY000): Proxy Warning - write operation is only allow to one dbgroup!</div><div class="line"></div><div class="line">初始化 dbgroup1 数据值</div><div class="line"></div><div class="line">mysql&gt; insert into sharding_test(id, name, age) values(1000, &apos;test&apos;, 0), (1999, &apos;test&apos;, 0);</div><div class="line">Query OK, 2 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
-<p>参考地址</p>
-<p><a href="https://github.com/Qihoo360/Atlas/wiki/Atlas-Sharding" target="_blank" rel="external">Atlas Sharding</a></p>
-<p><a href="http://www.guokr.com/blog/475765/" target="_blank" rel="external">mysql中间件研究(Atlas，cobar，TDDL)</a></p>
-<p><a href="http://www.gpfeng.com/?p=657" target="_blank" rel="external">谈谈MySQL水平扩展</a></p>
-<p>-EOF-</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1025,7 +1041,7 @@ pip install pep8
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1033,7 +1049,7 @@ pip install pep8
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1042,7 +1058,7 @@ pip install pep8
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -258,6 +258,170 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="url">
+                  mac os x 设置 jenkins开机启动遇到的问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-19T17:29:26+08:00" content="2014-11-19">
+              2014-11-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" class="leancloud_visitors" data-flag-title="mac os x 设置 jenkins开机启动遇到的问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mac-os-x-设置-jenkins开机启动遇到的问题"><a href="#mac-os-x-设置-jenkins开机启动遇到的问题" class="headerlink" title="mac os x 设置 jenkins开机启动遇到的问题"></a>mac os x 设置 jenkins开机启动遇到的问题</h1><p>设置命令</p>
+<p>取消开机启动</p>
+<pre><code>sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist
+</code></pre><p>设置开机启动</p>
+<pre><code>sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist
+</code></pre><h2 id="我的问题描述"><a href="#我的问题描述" class="headerlink" title="我的问题描述"></a>我的问题描述</h2><p>第一次安装jenkins之后，是可以开机启动的，但是由于开机占用400++M内存，就被禁掉了，<br>然后现在回头想恢复让其开机启动，死活不成功，折腾过程记录如下</p>
+<p>查看 plist 文件找出脚本，手工启动</p>
+<pre><code>zsh /Library/Application\ Support/Jenkins/jenkins-runner.sh
+</code></pre><p>会出现以下错误</p>
+<pre><code>十一月 19, 2014 4:13:10 下午 hudson.UDPBroadcastThread run
+警告: UDP handling problem
+java.net.SocketException: Can&apos;t assign requested address
+    at java.net.PlainDatagramSocketImpl.join(Native Method)
+    at java.net.AbstractPlainDatagramSocketImpl.join(AbstractPlainDatagramSocketImpl.java:178)
+    at java.net.MulticastSocket.joinGroup(MulticastSocket.java:319)
+    at hudson.UDPBroadcastThread.run(UDPBroadcastThread.java:76)
+</code></pre><p>这个错误不需要理会</p>
+<p>出现错误 </p>
+<pre><code>十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
+警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
+十一月 19, 2014 4:13:12 下午 javax.jmdns.impl.DNSIncoming readAnswer
+警告: There was an OPT answer. Not currently handled. Option code: 65002 data: 6DE368DADD8543B8
+</code></pre><p>解决办法为，增加如下参数，升级1.634版，也没用这个问题</p>
+<pre><code>java -Dhudson.DNSMultiCast.disabled=true
+
+/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -jar /Applications/Jenkins/jenkins.war
+</code></pre><h2 id="恢复jenkins开机启动办法"><a href="#恢复jenkins开机启动办法" class="headerlink" title="恢复jenkins开机启动办法"></a>恢复jenkins开机启动办法</h2><p>1.删除文件</p>
+<pre><code>sudo rm /Library/LaunchDaemons/org.jenkins-ci.plist
+</code></pre><p>2.重新安装pkg安装包，</p>
+<p>mac版下载地址 <a href="http://jenkins-ci.org/content/thank-you-downloading-os-x-installer" target="_blank" rel="external">http://jenkins-ci.org/content/thank-you-downloading-os-x-installer</a></p>
+<p>通过以上步骤，我的问题解决，祝君好运</p>
+<p>3.以上两步是一种解决方法，或者通过 brew install jenkins 重新安装jenkins</p>
+<p>4.手工在mac上启动 jenkins</p>
+<pre><code>/usr/bin/java -Dfile.encoding=UTF-8 -Dhudson.DNSMultiCast.disabled=true -XX:PermSize=256m -XX:MaxPermSize=512m -Xms256m -Xmx512m -Djava.io.tmpdir=/Users/Shared/Jenkins/tmp -jar /Applications/Jenkins/jenkins.war --httpPort=8080
+</code></pre><p>5.Jenkins 默认日志路径</p>
+<pre><code>tail -f /var/log/jenkins/jenkins.log
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/18/mysql-integer-type/" itemprop="url">
                   mysql 整数表示详细介绍
                 </a>
@@ -727,146 +891,6 @@ tags:
 </code></pre><p>保存文件为 /Users/User/Library/Application Support/Sublime Text 3/Packages/User/md-post.sublime-snippet</p>
 <p>编写博客时，输入post，然后Tab 就可以调用snippet</p>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/10/browsers-security-ports/" itemprop="url">
-                  浏览器限制端口处理方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-10T14:35:29+08:00" content="2014-11-10">
-              2014-11-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/10/browsers-security-ports/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/browsers-security-ports/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/11/10/browsers-security-ports/" class="leancloud_visitors" data-flag-title="浏览器限制端口处理方法">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="浏览器限制端口处理方法"><a href="#浏览器限制端口处理方法" class="headerlink" title="浏览器限制端口处理方法"></a>浏览器限制端口处理方法</h1><h2 id="浏览器端口限制问题描述"><a href="#浏览器端口限制问题描述" class="headerlink" title="浏览器端口限制问题描述"></a>浏览器端口限制问题描述</h2><p>有时候本机调试服务端程序时会使用一些特殊的端口，例如6666，6000等，浏览器由于内部安全机制<br>会限制这类端口的访问，下面介绍Firefox浏览器和Google chrome浏览器遇到端口限制时的处理方法<br>记录备忘</p>
-<h2 id="chrome-处理方法"><a href="#chrome-处理方法" class="headerlink" title="chrome 处理方法"></a>chrome 处理方法</h2><p>Mac 下</p>
-<pre><code>open /Applications/Google\ Chrome.app --args --explicitly-allowed-ports=6000
-</code></pre><p>可以使用Automator</p>
-<p>windows下</p>
-<p>右键属性，选择启动exe路径，添加参数 </p>
-<pre><code>--args --explicitly-allowed-ports=6000
-</code></pre><p>参考文章 <a href="http://cubewot.de/node/266" target="_blank" rel="external">http://cubewot.de/node/266</a></p>
-<h2 id="FireFox-处理方法"><a href="#FireFox-处理方法" class="headerlink" title="FireFox 处理方法"></a>FireFox 处理方法</h2><p>1.地址栏输入</p>
-<pre><code>about:config
-</code></pre><p>2.添加以下内容</p>
-<pre><code>network.security.ports.banned.override 6000
-</code></pre>
           
         
       
@@ -1815,7 +1839,7 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1823,7 +1847,7 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1832,7 +1856,7 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

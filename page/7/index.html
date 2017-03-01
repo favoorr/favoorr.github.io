@@ -258,6 +258,136 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/06/vagrant-management-best-practices/" itemprop="url">
+                  常用的 vagrant 管理命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T15:36:39+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">programming</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/vagrant-management-best-practices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/vagrant-management-best-practices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/vagrant-management-best-practices/" class="leancloud_visitors" data-flag-title="常用的 vagrant 管理命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>favoorr 经常使用的 vagrant 管理命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant list-commands 查看完整的命令列表</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">找一个目录，初始化 vagrant</div><div class="line">vagrant init</div><div class="line">初始化，执行之后，会创建一个文件 Vagrantfile</div><div class="line"></div><div class="line">编辑 Vagrantfile 配置好自己的虚拟机后，启动</div><div class="line">vagrant up</div><div class="line"></div><div class="line">登录自己的虚拟机，如果是集群 vagrant ssh docker1</div><div class="line">vagrant ssh</div><div class="line"></div><div class="line">查看当前文件夹下虚拟机状态</div><div class="line">vagrant status</div><div class="line"></div><div class="line">强制关机</div><div class="line">vagrant halt</div><div class="line"></div><div class="line">修改了 Vagrantfile 配置，例如修改了 IP，主机名，内存，重新配置虚拟机</div><div class="line">vagrant reload</div><div class="line"></div><div class="line">重启虚拟机，例如重新修改了 Vagrantfile 的 provision 配置</div><div class="line">vagrant resume</div><div class="line"></div><div class="line">查看当前虚拟机的 ssh 配置</div><div class="line">vagrant ssh-config</div><div class="line"></div><div class="line">仅仅暂停虚拟机</div><div class="line">vagrant <span class="built_in">suspend</span></div><div class="line"></div><div class="line">全局查看 vagrant 的状态，这个命令在哪里都能执行，不一定非要在 vagrant 虚拟机目录下</div><div class="line">vagrant global-status</div><div class="line"></div><div class="line">根据查找的全局状态，删除自己不在使用的虚拟机</div><div class="line">vagrant destroy</div><div class="line"></div><div class="line">查看当前使用的 vagrant 版本</div><div class="line">vagrant version</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/01/06/vagrant-multiple-servers-cluster-config-best-practices/" itemprop="url">
                   vagrant 多节点集群虚拟机配置指南
                 </a>
@@ -806,142 +936,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/05/programming-road-environment/" itemprop="url">
-                  一路编程，一路环境折腾
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-05T17:02:09+08:00" content="2017-01-05">
-              2017-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">programming</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/05/programming-road-environment/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/05/programming-road-environment/" class="leancloud_visitors" data-flag-title="一路编程，一路环境折腾">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="折腾之路"><a href="#折腾之路" class="headerlink" title="折腾之路"></a>折腾之路</h1><p>编程之路，踉踉跄跄就进来了，干了 2 年后，越发感觉有 N 多东西自己不知道，<br>有一个居安思危的心，有一颗对未知知识探索的心，一步，一步，自己去探索，<br>从未停止过。</p>
-<p>现在回头看，路走的很艰难，目前还在路上，庆幸自己有一颗百折不挠的心，虐<br>我千百遍，我待你如初恋 😂 </p>
-<p>细细想，折腾的入门是环境，但是环境往往是最难的，所以很多人第一步没迈进<br>来，这里记录我在自己的测试环境的探索之路，希望并介绍自己使用的系列工具，<br>前路漫漫，希望能帮一些人节省时间，毕竟时间很珍贵。</p>
-<h2 id="曾经的双系统"><a href="#曾经的双系统" class="headerlink" title="曾经的双系统"></a>曾经的双系统</h2><p>首先定位是后台开发，给自己选 os，是 Linux 系，比如 Ubuntu，centos，最开始<br>我尝试的是一台电脑装两个系统，最早是联想 Y460，安装了 Ubuntu-12.04 之后，<br>运行双系统，结果就是电脑已经使用了4， 5 年了，有些卡，好惨也没钱，这样<br>照着 Linux 书开始学命令，记笔记，想想都是泪</p>
-<h2 id="宿主机上建立虚拟机"><a href="#宿主机上建立虚拟机" class="headerlink" title="宿主机上建立虚拟机"></a>宿主机上建立虚拟机</h2><p>第二个是自己终于攒够钱买了 Mac Pro，当年最大的动力就是公司让研究 hadoop，<br>结果测试机最好是 3 台起步，然后脑海里就一直在想，什么时候我才能有自己 3 台<br>机器，任意完，买了 Mac 后终于实现了，Mac Book Pro 15 + VirtualBox ，最多时<br>开了5 台，一点不卡，照样该干啥干啥，网络配置是当时比较难的，文章记录在这里，<br><a href="https://favoorr.github.io/2015/01/23/mac-use-virtualbox-config-network/">mac上使用虚拟机网络配置总结</a></p>
-<h2 id="Vagrant-时代"><a href="#Vagrant-时代" class="headerlink" title="Vagrant 时代"></a>Vagrant 时代</h2><p>后来很长一段时间都是 Mac Book Pro + VirtualBox，直到后来知道了 Vagrant，以及新生<br>的 docker，进化了几代后，目前这个暂时是最终代，下面是我的使用场景：</p>
-<p>1.想玩一个新的 Linux，那么就用 vagrant 管理虚拟机，后续会有博客详细介绍<br>2.想玩 docker，一般不再宿主机上直接玩，某台 Linux 虚拟机，然后安装其他 docker 镜像<br>3.alpine 超小的 Linux 镜像，然后在安装自己想要的软件，比如 bash 也是手工安装</p>
-<p>后续会介绍在 vagrant 以及 docker 方面的使用实践，偏向于小折腾，不具备生产条件</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -987,7 +981,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -995,7 +989,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1004,7 +998,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

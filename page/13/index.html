@@ -258,6 +258,135 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/18/install-zabbix-agentd/" itemprop="url">
+                  zabbix agentd 安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-18T17:49:21+08:00" content="2015-05-18">
+              2015-05-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/18/install-zabbix-agentd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/18/install-zabbix-agentd/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/18/install-zabbix-agentd/" class="leancloud_visitors" data-flag-title="zabbix agentd 安装">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="agentd-install"><a href="#agentd-install" class="headerlink" title="agentd install"></a>agentd install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">groupadd zabbix -g 201</div><div class="line"></div><div class="line">useradd -g zabbix -u 201 -m zabbix</div><div class="line"></div><div class="line">tar -zxv -f zabbix-2.4.5.tar.gz</div><div class="line"></div><div class="line">cd zabbix-2.4.5</div><div class="line"></div><div class="line">yum -y install gcc gcc-c++ autoconf  mod_ssl mod_perl  net-snmp-devel</div><div class="line"></div><div class="line">./configure --prefix=/usr --sysconfdir=/etc/zabbix --enable-agent</div><div class="line"></div><div class="line">--prefix 指定安装路径 默认是 /usr/local</div><div class="line">--sysconfdir 指定配置文件路径 /usr/local/zabbix/etc</div><div class="line"></div><div class="line">make install</div><div class="line"></div><div class="line">mkdir /var/log/zabbix</div><div class="line"></div><div class="line">chown zabbix.zabbix /var/log/zabbix</div><div class="line"></div><div class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/</div><div class="line"></div><div class="line">chmod 755 /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">sed -i &quot;s#BASEDIR=/usr/local#BASEDIR=/usr#g&quot; /etc/init.d/zabbix_agentd</div><div class="line"></div><div class="line">cat /etc/services | grep zabbix</div><div class="line"></div><div class="line">egrep -v &quot;(#|^$)&quot; /etc/zabbix/zabbix_agentd.conf</div><div class="line"></div><div class="line">LogFile=/var/log/zabbix/zabbix_agentd.log</div><div class="line">EnableRemoteCommands=0</div><div class="line">Server=192.168.56.110</div><div class="line">ServerActive=192.168.56.110</div><div class="line">Hostname=dev1</div><div class="line">Include=/etc/zabbix/zabbix_agentd.conf.d/</div><div class="line">UnsafeUserParameters=1</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/18/install-zabbix-server/" itemprop="url">
                   zabbix server安装
                 </a>
@@ -826,158 +955,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/20/config-non-password-login-for-ubuntu/" itemprop="url">
-                  ubuntu-配置无密码登录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-20T11:31:14+08:00" content="2015-04-20">
-              2015-04-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">ssh</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/20/config-non-password-login-for-ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/20/config-non-password-login-for-ubuntu/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/20/config-non-password-login-for-ubuntu/" class="leancloud_visitors" data-flag-title="ubuntu-配置无密码登录">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="ubuntu-配置无密码登录"><a href="#ubuntu-配置无密码登录" class="headerlink" title="ubuntu-配置无密码登录"></a>ubuntu-配置无密码登录</h1><p>给Ubuntu设置无密码登录，必须做的工作，有时会耗费时间，积累，下次节约时间</p>
-<p>需求</p>
-<p>主机免密码登录 elk1 和 elk2</p>
-<p>第一步，主机添加host解析</p>
-<pre><code>192.168.137.251 elk1
-192.168.137.252 elk2
-</code></pre><p>第二步，elk1生成.ssh目录</p>
-<pre><code>ssh-keygen ,一路回车，执行后，生成本机的.ssh目录
-</code></pre><p>第三步，打开elk1的ssh公钥保存文件，第一次配置需要打开，后续不需要</p>
-<pre><code>sudo vi /etc/ssh/sshd_config
-
-AuthorizedKeysFile      %h/.ssh/authorized_keys 这一行，取消注释
-</code></pre><p>第四步，elk1加入主机的公钥</p>
-<pre><code>cd ~/.ssh
-
-vim authorized_keys 把主机的公钥粘贴进来，ok
-</code></pre><p>第五步，重启 elk1 的 ssh 服务</p>
-<pre><code>/etc/init.d/ssh stop
-/etc/init.d/ssh start
-</code></pre><p>第六步，验证</p>
-<pre><code>主机输入
-
-ssh elk1@elk1 成功无密码登录，ok
-</code></pre><p>以上描述的是第一次添加，如果不是第一次添加，只需要第四步，就ok</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1023,7 +1000,7 @@ ssh elk1@elk1 成功无密码登录，ok
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1031,7 +1008,7 @@ ssh elk1@elk1 成功无密码登录，ok
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1040,7 +1017,7 @@ ssh elk1@elk1 成功无密码登录，ok
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
