@@ -104,8 +104,8 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -303,7 +303,7 @@
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/19/mac-os-x-jenkins-auto-running-on-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/19/mac-os-x-jenkins-auto-running-on-startup/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -467,7 +467,7 @@ java.net.SocketException: Can&apos;t assign requested address
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/18/mysql-integer-type/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/18/mysql-integer-type/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/18/mysql-integer-type/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -672,7 +672,7 @@ java.net.SocketException: Can&apos;t assign requested address
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/12/mac-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/mac-tips/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/12/mac-tips/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -819,7 +819,7 @@ defaults delete com.apple.finder PathBarRootAtHome;killall Finder
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/11/new-snippet-in-sublime/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/11/new-snippet-in-sublime/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/11/new-snippet-in-sublime/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -984,7 +984,7 @@ tags:
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/10/mysql-date-api/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/10/mysql-date-api/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/10/mysql-date-api/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1995,32 +1995,28 @@ SELECT CONVERT_TZ(&apos;2004-01-01 12:00:00&apos;,&apos;+00:00&apos;,&apos;+10:0
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = 'page/20/index.html';
+      var disqus_title = "";
+      var disqus_url = '';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+    </script>
   
-
-
 
 
 

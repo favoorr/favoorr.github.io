@@ -104,8 +104,8 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -303,7 +303,7 @@
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/12/29/git-learn-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/29/git-learn-summary/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/29/git-learn-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -557,7 +557,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/12/24/sequal-pro-not-execute-sql-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/24/sequal-pro-not-execute-sql-error/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -691,7 +691,7 @@ git push origin dev  将本地仓库内容推送到远程dev分支，如果远�
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/12/23/mysql-sytax-not-all/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/23/mysql-sytax-not-all/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/23/mysql-sytax-not-all/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -851,7 +851,7 @@ SHOW INDEX FROM `user_call_log`;
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/12/04/maven-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/maven-tips/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/04/maven-tips/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1033,7 +1033,7 @@ invalid target release: 1.8
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/12/04/mac-os-x-subeclipse-sqlite-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/04/mac-os-x-subeclipse-sqlite-error/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1327,32 +1327,28 @@ Could&apos;t open rep-cache database
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = 'page/17/index.html';
+      var disqus_title = "";
+      var disqus_url = '';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+    </script>
   
-
-
 
 
 

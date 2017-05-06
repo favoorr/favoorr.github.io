@@ -100,7 +100,7 @@ uptime查看平均负载
 1234uptime09:42:17 up 22 min,  1 user,  load average: 0.00, 0.04, 0.051 5 15 分钟内的评价负载，可以看到负载是在上升、下降、还是平稳
 vmstat包括系统范围的平均负载
 12345vmstatp">
-<meta property="og:updated_time" content="2017-02-13T03:40:17.000Z">
+<meta property="og:updated_time" content="2017-05-06T14:43:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以 Ubuntu 为例列举 CPU 性能分析常用命令">
 <meta name="twitter:description" content="操作系统版本 Ubuntu 16.04.1
@@ -120,8 +120,8 @@ vmstat包括系统范围的平均负载
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -314,7 +314,7 @@ vmstat包括系统范围的平均负载
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/linux-performance-cpu-analysis-on-ubuntu/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/09/linux-performance-cpu-analysis-on-ubuntu/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -401,7 +401,7 @@ vmstat包括系统范围的平均负载
 <p>annotate 读取 per.data (由perf record 创建) 并显示注释过的代码<br>diff 读取两份 perf.data 文件，并显示两份剖析文件之间的差异<br>evlist 列出一个 per.data 文件中事件名称<br>inject 过滤加强事件流，在其中加入额外的信息<br>kmem 跟踪/测量 内核内存 slab 属性的工具<br>kvm 跟踪/测量 kvm 客户机操作系统的工具<br>list 列出所有的符号事件类型<br>lock 分析锁事件<br>probe 定义新的动态跟踪点<br>record 运行一个命令，并把剖析信息记录在 perf.data 中<br>report 读取 perf.data 并显示跟踪输出<br>stat 运行一个命令并收集性能计数器统计信息<br>timechart 可视化某一个负载期间系统总体性能的工具<br>top 系统剖析工具    </p>
 <p>系统剖析</p>
 <p>perf 可以用来剖析 CPU 调用路径，对 CPU 时间如何消耗在内核和用户空间进行概括总结。这项工作又 record 命令完成，该命令以一定间隔进行取样，并导出到一个 perf.data 文件，然后使用 report 命令查看文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perf record -a -g -F 997 sleep10</div><div class="line">[ perf record: Woken up 7 times to write data ]</div><div class="line">[ perf record: Captured and wrote 2.049 MB perf.data (16491 samples) ]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perf record -a -g -F 997 sleep 10</div><div class="line">[ perf record: Woken up 7 times to write data ]</div><div class="line">[ perf record: Captured and wrote 2.049 MB perf.data (16491 samples) ]</div></pre></td></tr></table></figure>
 <p>-a 采样所有 CPU<br>-F 997 以 997HZ 频率<br>-g 采样调用栈<br>sleep 10 采样持续 10s    </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">查看 perf.data 文件</div><div class="line"></div><div class="line">sudo perf report --stdio</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">对单个进程进行剖析</div><div class="line"></div><div class="line">perf record -g ls 会显示整个 ls 命令的调用栈</div></pre></td></tr></table></figure>
@@ -500,8 +500,11 @@ vmstat包括系统范围的平均负载
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/09/linux-performance-cpu-analysis-on-ubuntu/"
-           data-title="以 Ubuntu 为例列举 CPU 性能分析常用命令" data-url="https://favoorr.github.io/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -717,32 +720,30 @@ vmstat包括系统范围的平均负载
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = '2017/02/09/linux-performance-cpu-analysis-on-ubuntu/';
+      var disqus_title = "以 Ubuntu 为例列举 CPU 性能分析常用命令";
+      var disqus_url = 'https://favoorr.github.io/2017/02/09/linux-performance-cpu-analysis-on-ubuntu/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+        run_disqus_script('embed.js');
+      
+    </script>
   
-
-
 
 
 

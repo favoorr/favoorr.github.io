@@ -111,8 +111,8 @@ Zookeeper 首先启动1/data/zookeeper-3.4.6/bin/zkSer">
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -305,7 +305,7 @@ Zookeeper 首先启动1/data/zookeeper-3.4.6/bin/zkSer">
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2017/02/09/kafka-pub-sub-config/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/kafka-pub-sub-config/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/09/kafka-pub-sub-config/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -436,8 +436,11 @@ Zookeeper 首先启动1/data/zookeeper-3.4.6/bin/zkSer">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/09/kafka-pub-sub-config/"
-           data-title="命令行配置测试 Kafka Pub-Sub 模式" data-url="https://favoorr.github.io/2017/02/09/kafka-pub-sub-config/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -653,32 +656,30 @@ Zookeeper 首先启动1/data/zookeeper-3.4.6/bin/zkSer">
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = '2017/02/09/kafka-pub-sub-config/';
+      var disqus_title = "命令行配置测试 Kafka Pub-Sub 模式";
+      var disqus_url = 'https://favoorr.github.io/2017/02/09/kafka-pub-sub-config/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+        run_disqus_script('embed.js');
+      
+    </script>
   
-
-
 
 
 

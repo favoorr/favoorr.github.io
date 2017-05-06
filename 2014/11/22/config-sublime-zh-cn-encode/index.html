@@ -117,8 +117,8 @@ codec33">
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -311,7 +311,7 @@ codec33">
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2014/11/22/config-sublime-zh-cn-encode/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/22/config-sublime-zh-cn-encode/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/22/config-sublime-zh-cn-encode/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -435,8 +435,11 @@ codec33
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2014/11/22/config-sublime-zh-cn-encode/"
-           data-title="Sublime打开中文文件乱码解决" data-url="https://favoorr.github.io/2014/11/22/config-sublime-zh-cn-encode/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -652,32 +655,30 @@ codec33
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = '2014/11/22/config-sublime-zh-cn-encode/';
+      var disqus_title = "Sublime打开中文文件乱码解决";
+      var disqus_url = 'https://favoorr.github.io/2014/11/22/config-sublime-zh-cn-encode/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+        run_disqus_script('embed.js');
+      
+    </script>
   
-
-
 
 
 

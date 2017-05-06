@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux,vagrant,docker," />
+  <meta name="keywords" content="linux,docker,vagrant," />
 
 
 
@@ -111,8 +111,8 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 8936411,
-      author: 'Author'
+      userId: undefined,
+      author: '博主'
     }
   };
 </script>
@@ -305,7 +305,7 @@
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2017/01/05/programming-road-environment/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/05/programming-road-environment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -389,9 +389,9 @@
           
             <a href="/tags/linux/" rel="tag">#linux</a>
           
-            <a href="/tags/vagrant/" rel="tag">#vagrant</a>
-          
             <a href="/tags/docker/" rel="tag">#docker</a>
+          
+            <a href="/tags/vagrant/" rel="tag">#vagrant</a>
           
         </div>
       
@@ -436,8 +436,11 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/05/programming-road-environment/"
-           data-title="一路编程，一路环境折腾" data-url="https://favoorr.github.io/2017/01/05/programming-road-environment/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -653,32 +656,30 @@
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"favoorr"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'https-favoorr-github-io';
+      var disqus_identifier = '2017/01/05/programming-road-environment/';
+      var disqus_title = "一路编程，一路环境折腾";
+      var disqus_url = 'https://favoorr.github.io/2017/01/05/programming-road-environment/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
       
-      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
+        run_disqus_script('embed.js');
+      
+    </script>
   
-
-
 
 
 
